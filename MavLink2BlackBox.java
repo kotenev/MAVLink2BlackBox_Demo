@@ -260,9 +260,9 @@ public class MavLink2BlackBox {
 						if (is_MAV_CMD)
 						{
 							if (MAV_CMD == "")
-								MAV_CMD +=  ENUM + ";\n final int\n";
+								MAV_CMD += ENUM + ";\n final int\n";
 						}
-						else enums +=  ENUM;
+						else enums += ENUM;
 						ENUM = "";
 					}
 					
@@ -314,7 +314,7 @@ public class MavLink2BlackBox {
 				case "field":
 					if (MSG != "")
 					{
-						packs +=  MSG;
+						packs += MSG;
 						MSG = "";
 					}
 					
@@ -348,6 +348,7 @@ public class MavLink2BlackBox {
 	static String path = "";
 	
 	static boolean skip = true;
+	
 	// command argument: path to the folder with MavLink XML description files
 	public static void main(String[] args) {
 		
