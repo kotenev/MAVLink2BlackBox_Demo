@@ -48,8 +48,21 @@ public class MavLink2BlackBox {
 	
 	static String MAV_CMD = "";
 	
+	private static int msgs_count = 0;
+	private static int msgs_part  = 0;
 	
 	static class MyHandler extends DefaultHandler {
+		
+		public void parse(File file) {
+			try
+			{
+				SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+				SAXParser        saxParser        = saxParserFactory.newSAXParser();
+				saxParser.parse(file, this);
+				
+			} catch (Exception e) {}
+		}
+		
 		public String enums = "";
 		public String packs = "";
 		
@@ -66,6 +79,7 @@ public class MavLink2BlackBox {
 		private boolean is_File            = false;
 		private boolean is_MAV_CMD         = false;
 		private boolean is_opt             = false;
+		
 		
 		@Override public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			super.startElement(uri, localName, qName, attributes);
@@ -102,6 +116,9 @@ public class MavLink2BlackBox {
 					break;
 				case "message":
 					MSG = "@id(" + attributes.getValue("id") + ") class " + attributes.getValue("name") + "{";
+					msgs_count--;
+					if (0 < msgs_count && msgs_count % msgs_part == 0)
+						packs += "@@@@@@@%%%%%@@@@@";
 					break;
 				case "enum":
 					if (attributes.getValue("name").equals("MAV_CMD"))
@@ -133,7 +150,7 @@ public class MavLink2BlackBox {
 		}
 		
 		String  description = null;
-		boolean breaked     = false;
+		boolean breaked     = false;//string already breaked
 		
 		@Override public void characters(char[] chs, int start, int length) throws SAXException {
 			
@@ -150,7 +167,7 @@ public class MavLink2BlackBox {
 				return;
 			}
 			
-			if (is_File)
+			if (is_File)//include other xml descriptor
 			{
 				final MyHandler handler = new MyHandler();
 				handler.parse(new File(path + File.separator + new String(chs, start, length)));
@@ -197,8 +214,6 @@ public class MavLink2BlackBox {
 			
 			description = sb.length() == 0 ? new String(chs, start, length) : sb.toString();
 		}
-		
-		int anInt = 0;
 		
 		@Override public void endElement(String uri, String localName, String qName) throws SAXException {
 			super.endElement(uri, localName, qName);
@@ -313,19 +328,11 @@ public class MavLink2BlackBox {
 			breaked = false;
 			description = null;
 		}
-		
-		public void parse(File file) {
-			try
-			{
-				SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-				SAXParser        saxParser        = saxParserFactory.newSAXParser();
-				saxParser.parse(file, this);
-				
-			} catch (Exception e) {}
-		}
 	}
 	
 	static String path = "";
+	
+	static boolean skip = true;
 	
 	public static void main(String[] args) {
 		
@@ -333,28 +340,77 @@ public class MavLink2BlackBox {
 		File            dir     = new File(path = args[0]);
 		File[]          files   = dir.listFiles((dir1, name) -> name.endsWith(".xml"));
 		
-		//File f= new File(path + "\\" + "minimal.xml");
-		//handler.parse(f);
-		
+		String protocol = "SimpleProtocol";
 		try
 		{
 			if (files != null)
 				for (File file : files)
 				{
-					handler.parse(file);
+					SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+					SAXParser        saxParser        = saxParserFactory.newSAXParser();
 					
-					Files.write(Paths.get(file.getPath().replace(".xml", ".java")),
-							("import org.unirail.BlackBox.*;\npublic class " + file.getName().replace(".xml", "") +
-							 "{}\n class LoopBackDemoChannel extends SimpleProtocol implements DemoDevice.MainInterface, DemoDevice.LoopBack {}\n" +
-							 "class LoopBackDemoChannel_ADV extends AdvancedProtocol implements DemoDevice.MainInterface, DemoDevice.LoopBack {}\n" +
-							 "class DemoDevice implements InC, InJAVA, InCS{\n" +
-							 "interface LoopBack extends MainInterface {}" +
-							 "interface MainInterface {\n  " + handler.packs +
-							 "}}\n " + (MAV_CMD == "" ? "" : MAV_CMD.substring(0, MAV_CMD.lastIndexOf(",")) + ";\n}\n") +
-							 handler.enums).getBytes("UTF8"));
+					msgs_count = 0;
+					
+					skip = true;
+					
+					saxParser.parse(file, new DefaultHandler() {
+						boolean is_File = false;
+						
+						@Override public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+							if (qName.equals("message")) msgs_count++;
+							else
+								if (qName.equals("include")) is_File = true;
+						}
+						
+						@Override public void characters(char[] chs, int start, int length) throws SAXException {
+							super.characters(chs, start, length);
+							for (; (chs[start] < 33) && 0 < length; start++, length--) ;
+							if (length < 1) return;
+							
+							if (is_File)//include other xml descriptor
+							{
+								skip = false;
+								is_File = false;
+								try
+								{
+									
+									SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+									SAXParser        saxParser        = saxParserFactory.newSAXParser();
+									
+									saxParser.parse(new File(path + File.separator + new String(chs, start, length)), this);
+								} catch (Exception e)
+								{
+									e.printStackTrace();
+								}
+							}
+						}
+					});
+					
+					if (skip) continue;
+					msgs_part = msgs_count / 3 + 1;
+					
 					handler.packs = "";
 					handler.enums = "";
 					MAV_CMD = "";
+					
+					handler.parse(file);
+					String[] splited = handler.packs.split("@@@@@@@%%%%%@@@@@");
+					
+					Files.write(Paths.get(file.getPath().replace(".xml", ".java")),
+							("import org.unirail.BlackBox.*;\n" +
+							 "public class " + file.getName().replace(".xml", "") + "{}\n " +
+							 "class CommunicationChannel extends " + protocol + " implements GroundControl.CommunicationInterface, MicroAirVehicle.CommunicationInterface {}\n" +
+							 "class GroundControl implements  InJAVA, InCS{\n"
+							 + "interface CommunicationInterface extends GroundControlHandledPacks, CommonPacks {}"
+							 + "interface GroundControlHandledPacks  { " + splited[0] + " }\n"
+							 + "interface CommonPacks {  " + splited[1] + " }}\n" +
+							 "class MicroAirVehicle implements  InC{\n"
+							 + "interface CommunicationInterface extends MicroAirVehicleHandledPacks, GroundControl.CommonPacks {}\n"
+							 + "interface MicroAirVehicleHandledPacks  {\n" + splited[2] + "}}\n" +
+							 (MAV_CMD == "" ? "" : MAV_CMD.substring(0, MAV_CMD.lastIndexOf(",")) + ";\n}\n") +
+							 handler.enums).getBytes("UTF8"));
+					
+					protocol = protocol.equals("SimpleProtocol") ? "AdvancedProtocol" : "SimpleProtocol";
 				}
 		} catch (Exception e)
 		{
