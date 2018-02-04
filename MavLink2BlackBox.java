@@ -96,7 +96,7 @@ public class MavLink2BlackBox {
 					if (0 < pos)
 					{
 						String len = datatype.substring(pos + 1).replace("]", "");
-						if (-1 < datatype.indexOf("char"))
+						if (datatype.contains("char"))
 							datatype = "@A(" + len + ") String ";
 						else
 							datatype = "@D (" + len + ")" + trans(datatype.substring(0, pos)) + "[] ";
@@ -260,9 +260,9 @@ public class MavLink2BlackBox {
 						if (is_MAV_CMD)
 						{
 							if (MAV_CMD == "")
-								MAV_CMD += "\n/*\n" + description + "*/\n" + ENUM + ";\n final int\n";
+								MAV_CMD +=  ENUM + ";\n final int\n";
 						}
-						else enums += "\n/*\n" + description + "*/\n" + ENUM;
+						else enums +=  ENUM;
 						ENUM = "";
 					}
 					
@@ -271,7 +271,7 @@ public class MavLink2BlackBox {
 						if (breaked)
 						{
 							ENUM_INITED_POS = 2;
-							ENUM_INITED += "\n" + ("/*\n" + description + "*/\n" + ENTRY);
+							ENUM_INITED += "\n" + ("/**\n" + description + "*/\n" + ENTRY);
 						}
 						else
 							if (description == null || description.trim().length() == 0)
@@ -289,7 +289,7 @@ public class MavLink2BlackBox {
 						if (breaked)
 						{
 							ENUM_NOTINITED_POS = 2;
-							ENUM_NOTINITED += "\n" + ("/*\n" + description + "*/\n" + ENTRY);
+							ENUM_NOTINITED += "\n" + ("/**\n" + description + "*/\n" + ENTRY);
 						}
 						else
 							if (description == null || description.trim().length() == 0)
@@ -312,16 +312,31 @@ public class MavLink2BlackBox {
 					is_opt = false;
 					break;
 				case "field":
-					
 					if (MSG != "")
 					{
-						packs += "\n/*\n" + description + "*/\n" + MSG;
+						packs +=  MSG;
 						MSG = "";
 					}
 					
-					packs += "\n" + (breaked ? "/*\n" + description + "*/\n" + FIELD : FIELD + "//" + description);
+					packs += "\n" + (breaked ? "/**\n" + description + "*/\n" + FIELD : FIELD + "//" + description);
 					break;
 				case "description":
+					if (MSG != "")
+					{
+						packs += "\n/**\n" + description + "*/\n" + MSG;
+						MSG = "";
+					}
+					
+					if (ENUM != "")
+					{
+						if (is_MAV_CMD)
+						{
+							if (MAV_CMD == "")
+								MAV_CMD += "\n/**\n" + description + "*/\n" + ENUM + ";\n final int\n";
+						}
+						else enums += "\n/**\n" + description + "*/\n" + ENUM;
+						ENUM = "";
+					}
 					return;
 			}
 			
@@ -333,7 +348,7 @@ public class MavLink2BlackBox {
 	static String path = "";
 	
 	static boolean skip = true;
-	
+	// command argument: path to the folder with MavLink XML description files
 	public static void main(String[] args) {
 		
 		final MyHandler handler = new MyHandler();
@@ -394,7 +409,7 @@ public class MavLink2BlackBox {
 					MAV_CMD = "";
 					
 					handler.parse(file);
-					String[] splited = handler.packs.split("@@@@@@@%%%%%@@@@@");
+					String[] splited = handler.packs.split("@@@@@@@%%%%%@@@@@");//marker  - split point
 					
 					Files.write(Paths.get(file.getPath().replace(".xml", ".java")),
 							("import org.unirail.BlackBox.*;\n" +
