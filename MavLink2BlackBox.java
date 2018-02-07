@@ -198,19 +198,18 @@ public class MavLink2BlackBox {
 					sb.append(chs, i - w, w);
 					break;
 				}
-				else
-					if (chs[i] == ' ' && max_width < w)
+				else if (chs[i] == ' ' && max_width < w)
+				{
+					breaked = true;
+					chs[i] = '\n';
+					sb.append(chs, i - w, w);
+					w = 0;
+					if (end - i < max_width)
 					{
-						breaked = true;
-						chs[i] = '\n';
-						sb.append(chs, i - w, w);
-						w = 0;
-						if (end - i < max_width)
-						{
-							sb.append(chs, i, end - i);
-							break;
-						}
+						sb.append(chs, i, end - i);
+						break;
 					}
+				}
 			
 			description = sb.length() == 0 ? new String(chs, start, length) : sb.toString();
 		}
@@ -273,35 +272,32 @@ public class MavLink2BlackBox {
 							ENUM_INITED_POS = 2;
 							ENUM_INITED += "\n" + ("/**\n" + description + "*/\n" + ENTRY);
 						}
-						else
-							if (description == null || description.trim().length() == 0)
-							{
-								ENUM_INITED_POS = 2;
-								ENUM_INITED += "\n" + ENTRY;
-							}
-							else
-							{
-								ENUM_INITED_POS = description.length() + 4;
-								ENUM_INITED += "\n" + (ENTRY + "//" + description);
-							}
-					}
-					else
-						if (breaked)
+						else if (description == null || description.trim().length() == 0)
 						{
-							ENUM_NOTINITED_POS = 2;
-							ENUM_NOTINITED += "\n" + ("/**\n" + description + "*/\n" + ENTRY);
+							ENUM_INITED_POS = 2;
+							ENUM_INITED += "\n" + ENTRY;
 						}
 						else
-							if (description == null || description.trim().length() == 0)
-							{
-								ENUM_NOTINITED_POS = 2;
-								ENUM_NOTINITED += "\n" + ENTRY;
-							}
-							else
-							{
-								ENUM_NOTINITED_POS = description.length() + 4;
-								ENUM_NOTINITED += "\n" + (ENTRY + "//" + description);
-							}
+						{
+							ENUM_INITED_POS = description.length() + 4;
+							ENUM_INITED += "\n" + (ENTRY + "//" + description);
+						}
+					}
+					else if (breaked)
+					{
+						ENUM_NOTINITED_POS = 2;
+						ENUM_NOTINITED += "\n" + ("/**\n" + description + "*/\n" + ENTRY);
+					}
+					else if (description == null || description.trim().length() == 0)
+					{
+						ENUM_NOTINITED_POS = 2;
+						ENUM_NOTINITED += "\n" + ENTRY;
+					}
+					else
+					{
+						ENUM_NOTINITED_POS = description.length() + 4;
+						ENUM_NOTINITED += "\n" + (ENTRY + "//" + description);
+					}
 					
 					break;
 				case "param":
@@ -374,8 +370,7 @@ public class MavLink2BlackBox {
 						
 						@Override public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 							if (qName.equals("message")) msgs_count++;
-							else
-								if (qName.equals("include")) is_File = true;
+							else if (qName.equals("include")) is_File = true;
 						}
 						
 						@Override public void characters(char[] chs, int start, int length) throws SAXException {

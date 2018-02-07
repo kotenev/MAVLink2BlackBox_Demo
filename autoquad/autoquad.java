@@ -684,7 +684,7 @@ class GroundControl implements InJAVA, InCS {
 		 * Quaternion order is w, x, y, z and a zero rotation would be expressed as (1 0 0 0)
 		 */
 		@id(61) class ATTITUDE_QUATERNION_COV {
-			@A long time_usec;//Timestamp (microseconds since system boot or since UNIX epoch)
+			@A    long    time_usec;//Timestamp (microseconds since system boot or since UNIX epoch)
 			@D(4) float[] q;//Quaternion components, w, x, y, z (1 0 0 0 is the null-rotation)
 			float rollspeed;//Roll angular speed (rad/s)
 			float pitchspeed;//Pitch angular speed (rad/s)
@@ -970,14 +970,14 @@ class GroundControl implements InJAVA, InCS {
 		 * or other system)
 		 */
 		@id(82) class SET_ATTITUDE_TARGET {
-			@A int  time_boot_ms;//Timestamp in milliseconds since system boot
-			@A byte target_system;//System ID
-			@A byte target_component;//Component ID
+			@A    int     time_boot_ms;//Timestamp in milliseconds since system boot
+			@A    byte    target_system;//System ID
+			@A    byte    target_component;//Component ID
 			/**
 			 * Mappings: If any of these bits are set, the corresponding input should be ignored: bit 1: body roll rate,
 			 * bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 6: reserved, bit 7: throttle, bit 8: attitud
 			 */
-			@A byte type_mask;
+			@A    byte    type_mask;
 			@D(4) float[] q;//Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
 			float body_roll_rate;//Body roll rate in radians per second
 			float body_pitch_rate;//Body roll rate in radians per second
@@ -990,12 +990,12 @@ class GroundControl implements InJAVA, InCS {
 		 * the commands sent in a SET_ATTITUDE_TARGET message if the vehicle is being controlled this way
 		 */
 		@id(83) class ATTITUDE_TARGET {
-			@A int  time_boot_ms;//Timestamp in milliseconds since system boot
+			@A    int     time_boot_ms;//Timestamp in milliseconds since system boot
 			/**
 			 * Mappings: If any of these bits are set, the corresponding input should be ignored: bit 1: body roll rate,
 			 * bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 7: reserved, bit 8: attitud
 			 */
-			@A byte type_mask;
+			@A    byte    type_mask;
 			@D(4) float[] q;//Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
 			float body_roll_rate;//Body roll rate in radians per second
 			float body_pitch_rate;//Body pitch rate in radians per second
@@ -1229,7 +1229,7 @@ class GroundControl implements InJAVA, InCS {
 		 * Sent from autopilot to simulation. Hardware in the loop control outputs (replacement for HIL_CONTROLS
 		 */
 		@id(93) class HIL_ACTUATOR_CONTROLS {
-			@A long time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
+			@A     long    time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
 			@D(16) float[] controls;//Control outputs -1 .. 1. Channel assignment depends on the simulated hardware.
 			MAV_MODE mode;//System mode (MAV_MODE), includes arming state.
 			@A long flags;//Flags as bitfield, reserved for future use.
@@ -1507,7 +1507,7 @@ class GroundControl implements InJAVA, InCS {
 		 * for high throughput applications such as hardware in the loop simulations
 		 */
 		@id(115) class HIL_STATE_QUATERNION {
-			@A long time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
+			@A    long    time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
 			@D(4) float[] attitude_quaternion;//Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation
 			float rollspeed;//Body frame roll / phi angular speed (rad/s)
 			float pitchspeed;//Body frame pitch / theta angular speed (rad/s)
@@ -1762,8 +1762,8 @@ class GroundControl implements InJAVA, InCS {
 		@id(134) class TERRAIN_DATA {
 			int lat;//Latitude of SW corner of first grid (degrees *10^7)
 			int lon;//Longitude of SW corner of first grid (in degrees *10^7)
-			@A short grid_spacing;//Grid spacing in meters
-			@A byte  gridbit;//bit within the terrain request mask
+			@A     short   grid_spacing;//Grid spacing in meters
+			@A     byte    gridbit;//bit within the terrain request mask
 			@D(16) short[] data;//Terrain data in meters AMSL
 		}
 		
@@ -1803,7 +1803,7 @@ class GroundControl implements InJAVA, InCS {
 		 * Motion capture attitude and position
 		 */
 		@id(138) class ATT_POS_MOCAP {
-			@A long time_usec;//Timestamp (micros since boot or Unix epoch)
+			@A    long    time_usec;//Timestamp (micros since boot or Unix epoch)
 			@D(4) float[] q;//Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
 			float x;//X position in meters (NED)
 			float y;//Y position in meters (NED)
@@ -1821,14 +1821,14 @@ class MicroAirVehicle implements InC {
 		 * Set the vehicle attitude and body angular rates.
 		 */
 		@id(139) class SET_ACTUATOR_CONTROL_TARGET {
-			@A long time_usec;//Timestamp (micros since boot or Unix epoch)
+			@A    long    time_usec;//Timestamp (micros since boot or Unix epoch)
 			/**
 			 * Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use
 			 * this field to difference between instances
 			 */
-			@A byte group_mlx;
-			@A byte target_system;//System ID
-			@A byte target_component;//Component ID
+			@A    byte    group_mlx;
+			@A    byte    target_system;//System ID
+			@A    byte    target_component;//Component ID
 			/**
 			 * Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction
 			 * motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
@@ -1842,12 +1842,12 @@ class MicroAirVehicle implements InC {
 		 * Set the vehicle attitude and body angular rates.
 		 */
 		@id(140) class ACTUATOR_CONTROL_TARGET {
-			@A long time_usec;//Timestamp (micros since boot or Unix epoch)
+			@A    long    time_usec;//Timestamp (micros since boot or Unix epoch)
 			/**
 			 * Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use
 			 * this field to difference between instances
 			 */
-			@A byte group_mlx;
+			@A    byte    group_mlx;
 			/**
 			 * Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction
 			 * motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
@@ -1938,7 +1938,7 @@ class MicroAirVehicle implements InC {
 			@D(4) float[] attitude_q;//(1 0 0 0 for unknown)
 			@D(3) float[] rates;//(0 0 0 for unknown)
 			@D(3) float[] position_cov;//eph epv
-			@A long custom_state;//button states or switches of a tracker device
+			@A    long    custom_state;//button states or switches of a tracker device
 		}
 		
 		/**
@@ -2033,9 +2033,9 @@ class MicroAirVehicle implements InC {
 			float     distance;//Distance to the target from the vehicle in meters
 			float     size_x;//Size in radians of target along x-axis
 			float     size_y;//Size in radians of target along y-axis
-			@I_ float x;//X Position of the landing target on MAV_FRAME
-			@I_ float y;//Y Position of the landing target on MAV_FRAME
-			@I_ float z;//Z Position of the landing target on MAV_FRAME
+			@I_    float   x;//X Position of the landing target on MAV_FRAME
+			@I_    float   y;//Y Position of the landing target on MAV_FRAME
+			@I_    float   z;//Z Position of the landing target on MAV_FRAME
 			@D_(4) float[] q;//Quaternion of landing target orientation (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
 			LANDING_TARGET_TYPE type;//LANDING_TARGET_TYPE enum specifying the type of landing target
 			/**
@@ -2339,9 +2339,9 @@ class MicroAirVehicle implements InC {
 		 * way for testing new messages and getting experimental debug output
 		 */
 		@id(249) class MEMORY_VECT {
-			@A short address;//Starting address of the debug variables
-			@A byte  ver;//Version code of the type variable. 0=unknown, type ignored and assumed int16_t. 1=as below
-			@A byte  type;//Type code of the memory variables. for ver = 1: 0=16 x int16_t, 1=16 x uint16_t, 2=16 x Q15, 3=16 x 1Q1
+			@A     short  address;//Starting address of the debug variables
+			@A     byte   ver;//Version code of the type variable. 0=unknown, type ignored and assumed int16_t. 1=as below
+			@A     byte   type;//Type code of the memory variables. for ver = 1: 0=16 x int16_t, 1=16 x uint16_t, 2=16 x Q15, 3=16 x 1Q1
 			@D(32) byte[] value;//Memory contents at specified address
 		}
 		

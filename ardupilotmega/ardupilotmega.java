@@ -6,7 +6,7 @@ class CommunicationChannel extends SimpleProtocol implements GroundControl.Commu
 
 class GroundControl implements InJAVA, InCS {
 	interface CommunicationInterface extends GroundControlHandledPacks, CommonPacks {}
-
+	
 	interface GroundControlHandledPacks {
 		/**
 		 * The heartbeat message shows that a system is present and responding. The type of the MAV and Autopilot
@@ -21,7 +21,7 @@ class GroundControl implements InJAVA, InCS {
 			MAV_STATE system_status;//System status flag, see MAV_STATE ENUM
 			@A byte mavlink_version;//MAVLink version, not writable by user, gets added by protocol because of magic data type: uint8_t_mavlink_versio
 		}
-
+		
 		/**
 		 * The general system state. If the system is following the MAVLink standard, the system state is mainly
 		 * defined by three orthogonal states/modes: The system mode, which is either LOCKED (motors shut down and
@@ -69,7 +69,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short errors_count3;//Autopilot-specific errors
 			@A short errors_count4;//Autopilot-specific errors
 		}
-
+		
 		/**
 		 * The system time is the time of the master clock, typically the computer clock of the main onboard computer
 		 */
@@ -77,7 +77,7 @@ class GroundControl implements InJAVA, InCS {
 			@A long time_unix_usec;//Timestamp of the master clock in microseconds since UNIX epoch.
 			@A int  time_boot_ms;//Timestamp of the component clock since boot time in milliseconds.
 		}
-
+		
 		/**
 		 * A ping message either requesting or responding to a ping. This allows to measure the system latencies,
 		 * including serial port, radio modem and UDP connections
@@ -96,7 +96,7 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			@A byte target_component;
 		}
-
+		
 		/**
 		 * Request to control this MAV
 		 */
@@ -115,7 +115,7 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			@A(25) String passkey;
 		}
-
+		
 		/**
 		 * Accept / deny control of this MAV
 		 */
@@ -128,7 +128,7 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			@A byte ack;
 		}
-
+		
 		/**
 		 * Emit an encrypted signature / key identifying this system. PLEASE NOTE: This protocol has been kept simple,
 		 * so transmitting the key requires an encrypted channel for true safety
@@ -136,7 +136,7 @@ class GroundControl implements InJAVA, InCS {
 		@id(7) class AUTH_KEY {
 			@A(32) String key;//key
 		}
-
+		
 		/**
 		 * THIS INTERFACE IS DEPRECATED. USE COMMAND_LONG with MAV_CMD_DO_SET_MODE INSTEAD. Set the system mode,
 		 * as defined by enum MAV_MODE. There is no target component id as the mode is by definition for the overall
@@ -147,7 +147,7 @@ class GroundControl implements InJAVA, InCS {
 			MAV_MODE base_mode;//The new base mode
 			@A int custom_mode;//The new autopilot-specific mode. This field can be ignored by an autopilot.
 		}
-
+		
 		/**
 		 * value[float]. This allows to send a parameter to any other component (such as the GCS) without the need
 		 * of previous knowledge of possible parameter names. Thus the same GCS can store different parameters for
@@ -165,7 +165,7 @@ class GroundControl implements InJAVA, InCS {
 			@A(16) String param_id;
 			short param_index;//Parameter index. Send -1 to use the param ID field as identifier (else the param id will be ignored
 		}
-
+		
 		/**
 		 * Request all parameters of this component. After this request, all parameters are emitted.
 		 */
@@ -173,7 +173,7 @@ class GroundControl implements InJAVA, InCS {
 			@A byte target_system;//System ID
 			@A byte target_component;//Component ID
 		}
-
+		
 		/**
 		 * Emit the value of a onboard parameter. The inclusion of param_count and param_index in the message allows
 		 * the recipient to keep track of received parameters and allows him to re-request missing parameters after
@@ -191,7 +191,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short param_count;//Total number of onboard parameters
 			@A short param_index;//Index of this onboard parameter
 		}
-
+		
 		/**
 		 * Set a parameter value TEMPORARILY to RAM. It will be reset to default on system reboot. Send the ACTION
 		 * MAV_ACTION_STORAGE_WRITE to PERMANENTLY write the RAM contents to EEPROM. IMPORTANT: The receiving component
@@ -211,7 +211,7 @@ class GroundControl implements InJAVA, InCS {
 			float          param_value;//Onboard parameter value
 			MAV_PARAM_TYPE param_type;//Onboard parameter type: see the MAV_PARAM_TYPE enum for supported data types.
 		}
-
+		
 		/**
 		 * The global position, as returned by the Global Positioning System (GPS). This is
 		 * NOT the global position estimate of the system, but rather a RAW sensor value. See message GLOBAL_POSITION for the global position estimate. Coordinate frame is right-handed, Z-axis up (GPS frame).
@@ -241,7 +241,7 @@ class GroundControl implements InJAVA, InCS {
 			@A_ int   vel_acc;//Speed uncertainty in meters * 1000 (positive for up).
 			@A_ int   hdg_acc;//Heading / track uncertainty in degrees * 1e5.
 		}
-
+		
 		/**
 		 * The positioning status, as reported by GPS. This message is intended to display status information about
 		 * each satellite visible to the receiver. See message GLOBAL_POSITION for the global position estimate.
@@ -255,7 +255,7 @@ class GroundControl implements InJAVA, InCS {
 			@D(20) @A byte[] satellite_azimuth;//Direction of satellite, 0: 0 deg, 255: 360 deg.
 			@D(20) @A byte[] satellite_snr;//Signal to noise ratio of satellite
 		}
-
+		
 		/**
 		 * The RAW IMU readings for the usual 9DOF sensor setup. This message should contain the scaled values to
 		 * the described unit
@@ -272,7 +272,7 @@ class GroundControl implements InJAVA, InCS {
 			short ymag;//Y Magnetic field (milli tesla)
 			short zmag;//Z Magnetic field (milli tesla)
 		}
-
+		
 		/**
 		 * The RAW IMU readings for the usual 9DOF sensor setup. This message should always contain the true raw
 		 * values without any scaling to allow data capture and system debugging
@@ -289,7 +289,7 @@ class GroundControl implements InJAVA, InCS {
 			short ymag;//Y Magnetic field (raw)
 			short zmag;//Z Magnetic field (raw)
 		}
-
+		
 		/**
 		 * The RAW pressure readings for the typical setup of one absolute pressure and one differential pressure
 		 * sensor. The sensor values should be the raw, UNSCALED ADC values
@@ -301,7 +301,7 @@ class GroundControl implements InJAVA, InCS {
 			short press_diff2;//Differential pressure 2 (raw, 0 if nonexistant)
 			short temperature;//Raw Temperature measurement (raw)
 		}
-
+		
 		/**
 		 * The pressure readings for the typical setup of one absolute and differential pressure sensor. The units
 		 * are as specified in each field
@@ -312,7 +312,7 @@ class GroundControl implements InJAVA, InCS {
 			float press_diff;//Differential pressure 1 (hectopascal)
 			short temperature;//Temperature measurement (0.01 degrees celsius)
 		}
-
+		
 		/**
 		 * The attitude in the aeronautical frame (right-handed, Z-down, X-front, Y-right).
 		 */
@@ -325,7 +325,7 @@ class GroundControl implements InJAVA, InCS {
 			float pitchspeed;//Pitch angular speed (rad/s)
 			float yawspeed;//Yaw angular speed (rad/s)
 		}
-
+		
 		/**
 		 * The attitude in the aeronautical frame (right-handed, Z-down, X-front, Y-right), expressed as quaternion.
 		 * Quaternion order is w, x, y, z and a zero rotation would be expressed as (1 0 0 0)
@@ -340,7 +340,7 @@ class GroundControl implements InJAVA, InCS {
 			float pitchspeed;//Pitch angular speed (rad/s)
 			float yawspeed;//Yaw angular speed (rad/s)
 		}
-
+		
 		/**
 		 * The filtered local position (e.g. fused computer vision and accelerometers). Coordinate frame is right-handed,
 		 * Z-axis down (aeronautical frame, NED / north-east-down convention
@@ -354,7 +354,7 @@ class GroundControl implements InJAVA, InCS {
 			float vy;//Y Speed
 			float vz;//Z Speed
 		}
-
+		
 		/**
 		 * nt.
 		 */
@@ -373,7 +373,7 @@ class GroundControl implements InJAVA, InCS {
 			short vz;//Ground Z Speed (Altitude, positive down), expressed as m/s * 100
 			@A short hdg;//Vehicle heading (yaw angle) in degrees * 100, 0.0..359.99 degrees. If unknown, set to: UINT16_MAX
 		}
-
+		
 		/**
 		 * The scaled values of the RC channels received. (-100%) -10000, (0%) 0, (100%) 10000. Channels that are
 		 * inactive should be set to UINT16_MAX
@@ -395,7 +395,7 @@ class GroundControl implements InJAVA, InCS {
 			short chan8_scaled;//RC channel 8 value scaled, (-100%) -10000, (0%) 0, (100%) 10000, (invalid) INT16_MAX.
 			@A byte rssi;//Receive signal strength indicator, 0: 0%, 100: 100%, 255: invalid/unknown.
 		}
-
+		
 		/**
 		 * The RAW values of the RC channels received. The standard PPM modulation is as follows: 1000 microseconds:
 		 * 0%, 2000 microseconds: 100%. Individual receivers/transmitters might violate this specification
@@ -417,7 +417,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short chan8_raw;//RC channel 8 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
 			@A byte  rssi;//Receive signal strength indicator, 0: 0%, 100: 100%, 255: invalid/unknown.
 		}
-
+		
 		/**
 		 * The RAW values of the servo outputs (for RC input from the remote, use the RC_CHANNELS messages). The
 		 * standard PPM modulation is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%
@@ -446,7 +446,7 @@ class GroundControl implements InJAVA, InCS {
 			@A_ short servo15_raw;//Servo output 15 value, in microseconds
 			@A_ short servo16_raw;//Servo output 16 value, in microseconds
 		}
-
+		
 		/**
 		 * Request a partial list of mission items from the system/component. http://qgroundcontrol.org/mavlink/waypoint_protocol.
 		 * If start and end index are the same, just send one waypoint
@@ -458,7 +458,7 @@ class GroundControl implements InJAVA, InCS {
 			short            end_index;//End index, -1 by default (-1: send list to end). Else a valid index of the list
 			MAV_MISSION_TYPE mission_type;//Mission type, see MAV_MISSION_TYPE
 		}
-
+		
 		/**
 		 * This message is sent to the MAV to write a partial list. If start index == end index, only one item will
 		 * be transmitted / updated. If the start index is NOT 0 and above the current list size, this request should
@@ -471,7 +471,7 @@ class GroundControl implements InJAVA, InCS {
 			short            end_index;//End index, equal or greater than start index.
 			MAV_MISSION_TYPE mission_type;//Mission type, see MAV_MISSION_TYPE
 		}
-
+		
 		/**
 		 * Message encoding a mission item. This message is emitted to announce
 		 * the presence of a mission item and to set a mission item on the system. The mission item can be either in x, y, z meters (type: LOCAL) or x:lat, y:lon, z:altitude. Local frame is Z-down, right handed (NED), global frame is Z-up, right handed (ENU). See also http://qgroundcontrol.org/mavlink/waypoint_protocol.
@@ -493,7 +493,7 @@ class GroundControl implements InJAVA, InCS {
 			float            z;//PARAM7 / z position: global: altitude (relative or absolute, depending on frame.
 			MAV_MISSION_TYPE mission_type;//Mission type, see MAV_MISSION_TYPE
 		}
-
+		
 		/**
 		 * Request the information of the mission item with the sequence number seq. The response of the system to
 		 * this message should be a MISSION_ITEM message. http://qgroundcontrol.org/mavlink/waypoint_protoco
@@ -504,7 +504,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short seq;//Sequence
 			MAV_MISSION_TYPE mission_type;//Mission type, see MAV_MISSION_TYPE
 		}
-
+		
 		/**
 		 * Set the mission item with sequence number seq as current item. This means that the MAV will continue to
 		 * this mission item on the shortest path (not following the mission items in-between)
@@ -514,7 +514,7 @@ class GroundControl implements InJAVA, InCS {
 			@A byte  target_component;//Component ID
 			@A short seq;//Sequence
 		}
-
+		
 		/**
 		 * Message that announces the sequence number of the current active mission item. The MAV will fly towards
 		 * this mission item
@@ -522,7 +522,7 @@ class GroundControl implements InJAVA, InCS {
 		@id(42) class MISSION_CURRENT {
 			@A short seq;//Sequence
 		}
-
+		
 		/**
 		 * Request the overall list of mission items from the system/component.
 		 */
@@ -531,7 +531,7 @@ class GroundControl implements InJAVA, InCS {
 			@A byte target_component;//Component ID
 			MAV_MISSION_TYPE mission_type;//Mission type, see MAV_MISSION_TYPE
 		}
-
+		
 		/**
 		 * This message is emitted as response to MISSION_REQUEST_LIST by the MAV and to initiate a write transaction.
 		 * The GCS can then request the individual mission item based on the knowledge of the total number of waypoints
@@ -542,7 +542,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short count;//Number of mission items in the sequence
 			MAV_MISSION_TYPE mission_type;//Mission type, see MAV_MISSION_TYPE
 		}
-
+		
 		/**
 		 * Delete all mission items at once.
 		 */
@@ -551,7 +551,7 @@ class GroundControl implements InJAVA, InCS {
 			@A byte target_component;//Component ID
 			MAV_MISSION_TYPE mission_type;//Mission type, see MAV_MISSION_TYPE
 		}
-
+		
 		/**
 		 * A certain mission item has been reached. The system will either hold this position (or circle on the orbit)
 		 * or (if the autocontinue on the WP was set) continue to the next waypoint
@@ -559,7 +559,7 @@ class GroundControl implements InJAVA, InCS {
 		@id(46) class MISSION_ITEM_REACHED {
 			@A short seq;//Sequence
 		}
-
+		
 		/**
 		 * Ack message during waypoint handling. The type field states if this message is a positive ack (type=0)
 		 * or if an error happened (type=non-zero)
@@ -570,7 +570,7 @@ class GroundControl implements InJAVA, InCS {
 			MAV_MISSION_RESULT type;//See MAV_MISSION_RESULT enum
 			MAV_MISSION_TYPE   mission_type;//Mission type, see MAV_MISSION_TYPE
 		}
-
+		
 		/**
 		 * As local waypoints exist, the global waypoint reference allows to transform between the local coordinate
 		 * frame and the global (GPS) coordinate frame. This can be necessary when e.g. in- and outdoor settings
@@ -583,7 +583,7 @@ class GroundControl implements InJAVA, InCS {
 			int altitude;//Altitude (AMSL), in meters * 1000 (positive for up)
 			@A_ long time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
 		}
-
+		
 		/**
 		 * Once the MAV sets a new GPS-Local correspondence, this message announces the origin (0,0,0) positio
 		 */
@@ -593,7 +593,7 @@ class GroundControl implements InJAVA, InCS {
 			int altitude;//Altitude (AMSL), in meters * 1000 (positive for up)
 			@A_ long time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
 		}
-
+		
 		/**
 		 * Bind a RC channel to a parameter. The parameter should change accoding to the RC channel value.
 		 */
@@ -629,7 +629,7 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			float param_value_max;
 		}
-
+		
 		/**
 		 * Request the information of the mission item with the sequence number seq. The response of the system to
 		 * this message should be a MISSION_ITEM_INT message. http://qgroundcontrol.org/mavlink/waypoint_protoco
@@ -640,7 +640,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short seq;//Sequence
 			MAV_MISSION_TYPE mission_type;//Mission type, see MAV_MISSION_TYPE
 		}
-
+		
 		/**
 		 * Set a safety zone (volume), which is defined by two corners of a cube. This message can be used to tell
 		 * the MAV which setpoints/waypoints to accept and which to reject. Safety areas are often enforced by national
@@ -661,7 +661,7 @@ class GroundControl implements InJAVA, InCS {
 			float     p2y;//y position 2 / Longitude 2
 			float     p2z;//z position 2 / Altitude 2
 		}
-
+		
 		/**
 		 * Read out the safety zone the MAV currently assumes.
 		 */
@@ -678,20 +678,20 @@ class GroundControl implements InJAVA, InCS {
 			float     p2y;//y position 2 / Longitude 2
 			float     p2z;//z position 2 / Altitude 2
 		}
-
+		
 		/**
 		 * The attitude in the aeronautical frame (right-handed, Z-down, X-front, Y-right), expressed as quaternion.
 		 * Quaternion order is w, x, y, z and a zero rotation would be expressed as (1 0 0 0)
 		 */
 		@id(61) class ATTITUDE_QUATERNION_COV {
-			@A long time_usec;//Timestamp (microseconds since system boot or since UNIX epoch)
+			@A    long    time_usec;//Timestamp (microseconds since system boot or since UNIX epoch)
 			@D(4) float[] q;//Quaternion components, w, x, y, z (1 0 0 0 is the null-rotation)
 			float rollspeed;//Roll angular speed (rad/s)
 			float pitchspeed;//Pitch angular speed (rad/s)
 			float yawspeed;//Yaw angular speed (rad/s)
 			@D(9) float[] covariance;//Attitude covariance
 		}
-
+		
 		/**
 		 * The state of the fixed wing navigation and position controller.
 		 */
@@ -705,7 +705,7 @@ class GroundControl implements InJAVA, InCS {
 			float aspd_error;//Current airspeed error in meters/second
 			float xtrack_error;//Current crosstrack error on x-y plane in meters
 		}
-
+		
 		/**
 		 * The filtered global position (e.g. fused GPS and accelerometers). The position is in GPS-frame (right-handed,
 		 * Z-up). It  is designed as scaled integer message since the resolution of float is not sufficient. NOTE:
@@ -724,7 +724,7 @@ class GroundControl implements InJAVA, InCS {
 			float              vz;//Ground Z Speed (Altitude), expressed as m/s
 			@D(36) float[] covariance;//Covariance matrix (first six entries are the first ROW, next six entries are the second row, etc.)
 		}
-
+		
 		/**
 		 * The filtered local position (e.g. fused computer vision and accelerometers). Coordinate frame is right-handed,
 		 * Z-axis down (aeronautical frame, NED / north-east-down convention
@@ -747,7 +747,7 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			@D(45) float[] covariance;
 		}
-
+		
 		/**
 		 * The PPM values of the RC channels received. The standard PPM modulation is as follows: 1000 microseconds:
 		 * 0%, 2000 microseconds: 100%. Individual receivers/transmitters might violate this specification
@@ -779,7 +779,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short chan18_raw;//RC channel 18 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
 			@A byte  rssi;//Receive signal strength indicator, 0: 0%, 100: 100%, 255: invalid/unknown.
 		}
-
+		
 		/**
 		 * THIS INTERFACE IS DEPRECATED. USE SET_MESSAGE_INTERVAL INSTEAD.
 		 */
@@ -790,7 +790,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short req_message_rate;//The requested message rate
 			@A byte  start_stop;//1 to start sending, 0 to stop sending.
 		}
-
+		
 		/**
 		 * THIS INTERFACE IS DEPRECATED. USE MESSAGE_INTERVAL INSTEAD.
 		 */
@@ -799,7 +799,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short message_rate;//The message rate
 			@A byte  on_off;//1 stream is enabled, 0 stream is stopped.
 		}
-
+		
 		/**
 		 * This message provides an API for manually controlling the vehicle using standard joystick axes nomenclature,
 		 * along with a joystick-like input device. Unused axes can be disabled an buttons are also transmit as
@@ -836,7 +836,7 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			@A short buttons;
 		}
-
+		
 		/**
 		 * The RAW values of the RC channels sent to the MAV to override info received from the RC radio. A value
 		 * of UINT16_MAX means no change to that channel. A value of 0 means control of that channel should be released
@@ -855,7 +855,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short chan7_raw;//RC channel 7 value, in microseconds. A value of UINT16_MAX means to ignore this field.
 			@A short chan8_raw;//RC channel 8 value, in microseconds. A value of UINT16_MAX means to ignore this field.
 		}
-
+		
 		/**
 		 * Message encoding a mission item. This message is emitted to announce
 		 * the presence of a mission item and to set a mission item on the system. The mission item can be either in x, y, z meters (type: LOCAL) or x:lat, y:lon, z:altitude. Local frame is Z-down, right handed (NED), global frame is Z-up, right handed (ENU). See alsohttp://qgroundcontrol.org/mavlink/waypoint_protocol.
@@ -881,7 +881,7 @@ class GroundControl implements InJAVA, InCS {
 			float            z;//PARAM7 / z position: global: altitude in meters (relative or absolute, depending on frame.
 			MAV_MISSION_TYPE mission_type;//Mission type, see MAV_MISSION_TYPE
 		}
-
+		
 		/**
 		 * Metrics typically displayed on a HUD for fixed wing aircraft
 		 */
@@ -893,7 +893,7 @@ class GroundControl implements InJAVA, InCS {
 			float alt;//Current altitude (MSL), in meters
 			float climb;//Current climb rate in meters/second
 		}
-
+		
 		/**
 		 * Message encoding a command with parameters as scaled integers. Scaling depends on the actual command value
 		 */
@@ -912,7 +912,7 @@ class GroundControl implements InJAVA, InCS {
 			int   y;//PARAM6 / local: y position in meters * 1e4, global: longitude in degrees * 10^7
 			float z;//PARAM7 / z position: global: altitude in meters (relative or absolute, depending on frame.
 		}
-
+		
 		/**
 		 * Send a command with up to seven parameters to the MAV
 		 */
@@ -929,7 +929,7 @@ class GroundControl implements InJAVA, InCS {
 			float param6;//Parameter 6, as defined by MAV_CMD enum.
 			float param7;//Parameter 7, as defined by MAV_CMD enum.
 		}
-
+		
 		/**
 		 * Report status of a command. Includes feedback whether the command was executed.
 		 */
@@ -949,7 +949,7 @@ class GroundControl implements InJAVA, InCS {
 			@A_ byte target_system;//WIP: System which requested the command to be executed
 			@A_ byte target_component;//WIP: Component which requested the command to be executed
 		}
-
+		
 		/**
 		 * Setpoint in roll, pitch, yaw and thrust from the operator
 		 */
@@ -962,45 +962,45 @@ class GroundControl implements InJAVA, InCS {
 			@A byte mode_switch;//Flight mode switch position, 0.. 255
 			@A byte manual_override_switch;//Override mode switch position, 0.. 255
 		}
-
+		
 		/**
 		 * Sets a desired vehicle attitude. Used by an external controller to command the vehicle (manual controller
 		 * or other system)
 		 */
 		@id(82) class SET_ATTITUDE_TARGET {
-			@A int  time_boot_ms;//Timestamp in milliseconds since system boot
-			@A byte target_system;//System ID
-			@A byte target_component;//Component ID
+			@A    int     time_boot_ms;//Timestamp in milliseconds since system boot
+			@A    byte    target_system;//System ID
+			@A    byte    target_component;//Component ID
 			/**
 			 * Mappings: If any of these bits are set, the corresponding input should be ignored: bit 1: body roll rate,
 			 * bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 6: reserved, bit 7: throttle, bit 8: attitud
 			 */
-			@A byte type_mask;
+			@A    byte    type_mask;
 			@D(4) float[] q;//Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
 			float body_roll_rate;//Body roll rate in radians per second
 			float body_pitch_rate;//Body roll rate in radians per second
 			float body_yaw_rate;//Body roll rate in radians per second
 			float thrust;//Collective thrust, normalized to 0 .. 1 (-1 .. 1 for vehicles capable of reverse trust)
 		}
-
+		
 		/**
 		 * Reports the current commanded attitude of the vehicle as specified by the autopilot. This should match
 		 * the commands sent in a SET_ATTITUDE_TARGET message if the vehicle is being controlled this way
 		 */
 		@id(83) class ATTITUDE_TARGET {
-			@A int  time_boot_ms;//Timestamp in milliseconds since system boot
+			@A    int     time_boot_ms;//Timestamp in milliseconds since system boot
 			/**
 			 * Mappings: If any of these bits are set, the corresponding input should be ignored: bit 1: body roll rate,
 			 * bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 7: reserved, bit 8: attitud
 			 */
-			@A byte type_mask;
+			@A    byte    type_mask;
 			@D(4) float[] q;//Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
 			float body_roll_rate;//Body roll rate in radians per second
 			float body_pitch_rate;//Body pitch rate in radians per second
 			float body_yaw_rate;//Body yaw rate in radians per second
 			float thrust;//Collective thrust, normalized to 0 .. 1 (-1 .. 1 for vehicles capable of reverse trust)
 		}
-
+		
 		/**
 		 * Sets a desired vehicle position in a local north-east-down coordinate frame. Used by an external controller
 		 * to command the vehicle (manual controller or other system)
@@ -1034,7 +1034,7 @@ class GroundControl implements InJAVA, InCS {
 			float yaw;//yaw setpoint in rad
 			float yaw_rate;//yaw rate setpoint in rad/s
 		}
-
+		
 		/**
 		 * Reports the current commanded vehicle position, velocity, and acceleration as specified by the autopilot.
 		 * This should match the commands sent in SET_POSITION_TARGET_LOCAL_NED if the vehicle is being controlled
@@ -1067,7 +1067,7 @@ class GroundControl implements InJAVA, InCS {
 			float yaw;//yaw setpoint in rad
 			float yaw_rate;//yaw rate setpoint in rad/s
 		}
-
+		
 		/**
 		 * Sets a desired vehicle position, velocity, and/or acceleration in a global coordinate system (WGS84).
 		 * Used by an external controller to command the vehicle (manual controller or other system)
@@ -1106,7 +1106,7 @@ class GroundControl implements InJAVA, InCS {
 			float yaw;//yaw setpoint in rad
 			float yaw_rate;//yaw rate setpoint in rad/s
 		}
-
+		
 		/**
 		 * Reports the current commanded vehicle position, velocity, and acceleration as specified by the autopilot.
 		 * This should match the commands sent in SET_POSITION_TARGET_GLOBAL_INT if the vehicle is being controlled
@@ -1144,7 +1144,7 @@ class GroundControl implements InJAVA, InCS {
 			float yaw;//yaw setpoint in rad
 			float yaw_rate;//yaw rate setpoint in rad/s
 		}
-
+		
 		/**
 		 * The offset in X, Y, Z and yaw between the LOCAL_POSITION_NED messages of MAV X and the global coordinate
 		 * frame in NED coordinates. Coordinate frame is right-handed, Z-axis down (aeronautical frame, NED / north-east-down
@@ -1159,7 +1159,7 @@ class GroundControl implements InJAVA, InCS {
 			float pitch;//Pitch
 			float yaw;//Yaw
 		}
-
+		
 		/**
 		 * DEPRECATED PACKET! Suffers from missing airspeed fields and singularities due to Euler angles. Please
 		 * use HIL_STATE_QUATERNION instead. Sent from simulation to autopilot. This packet is useful for high throughput
@@ -1183,7 +1183,7 @@ class GroundControl implements InJAVA, InCS {
 			short yacc;//Y acceleration (mg)
 			short zacc;//Z acceleration (mg)
 		}
-
+		
 		/**
 		 * Sent from autopilot to simulation. Hardware in the loop control outputs
 		 */
@@ -1200,7 +1200,7 @@ class GroundControl implements InJAVA, InCS {
 			MAV_MODE mode;//System mode (MAV_MODE)
 			@A byte nav_mode;//Navigation mode (MAV_NAV_MODE)
 		}
-
+		
 		/**
 		 * Sent from simulation to autopilot. The RAW values of the RC channels received. The standard PPM modulation
 		 * is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%. Individual receivers/transmitters might
@@ -1222,17 +1222,17 @@ class GroundControl implements InJAVA, InCS {
 			@A short chan12_raw;//RC channel 12 value, in microseconds
 			@A byte  rssi;//Receive signal strength indicator, 0: 0%, 255: 100%
 		}
-
+		
 		/**
 		 * Sent from autopilot to simulation. Hardware in the loop control outputs (replacement for HIL_CONTROLS
 		 */
 		@id(93) class HIL_ACTUATOR_CONTROLS {
-			@A long time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
+			@A     long    time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
 			@D(16) float[] controls;//Control outputs -1 .. 1. Channel assignment depends on the simulated hardware.
 			MAV_MODE mode;//System mode (MAV_MODE), includes arming state.
 			@A long flags;//Flags as bitfield, reserved for future use.
 		}
-
+		
 		/**
 		 * Optical flow from a flow sensor (e.g. optical mouse sensor)
 		 */
@@ -1248,7 +1248,7 @@ class GroundControl implements InJAVA, InCS {
 			@I_ float flow_rate_x;//Flow rate in radians/second about X axis
 			@I_ float flow_rate_y;//Flow rate in radians/second about Y axis
 		}
-
+		
 		@id(101) class GLOBAL_VISION_POSITION_ESTIMATE {
 			@A long usec;//Timestamp (microseconds, synced to UNIX time or since system boot)
 			float x;//Global X position
@@ -1259,7 +1259,7 @@ class GroundControl implements InJAVA, InCS {
 			float yaw;//Yaw angle in rad
 		}
 	}
-
+	
 	interface CommonPacks {
 		@id(102) class VISION_POSITION_ESTIMATE {
 			@A long usec;//Timestamp (microseconds, synced to UNIX time or since system boot)
@@ -1270,14 +1270,14 @@ class GroundControl implements InJAVA, InCS {
 			float pitch;//Pitch angle in rad
 			float yaw;//Yaw angle in rad
 		}
-
+		
 		@id(103) class VISION_SPEED_ESTIMATE {
 			@A long usec;//Timestamp (microseconds, synced to UNIX time or since system boot)
 			float x;//Global X speed
 			float y;//Global Y speed
 			float z;//Global Z speed
 		}
-
+		
 		@id(104) class VICON_POSITION_ESTIMATE {
 			@A long usec;//Timestamp (microseconds, synced to UNIX time or since system boot)
 			float x;//Global X position
@@ -1287,7 +1287,7 @@ class GroundControl implements InJAVA, InCS {
 			float pitch;//Pitch angle in rad
 			float yaw;//Yaw angle in rad
 		}
-
+		
 		/**
 		 * The IMU readings in SI units in NED body frame
 		 */
@@ -1308,7 +1308,7 @@ class GroundControl implements InJAVA, InCS {
 			float temperature;//Temperature in degrees celsius
 			@A short fields_updated;//Bitmask for fields that have updated since last message, bit 0 = xacc, bit 12: temperature
 		}
-
+		
 		/**
 		 * Optical flow from an angular rate flow sensor (e.g. PX4FLOW or mouse sensor)
 		 */
@@ -1342,7 +1342,7 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			float distance;
 		}
-
+		
 		/**
 		 * The IMU readings in SI units in NED body frame
 		 */
@@ -1367,7 +1367,7 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			@A int fields_updated;
 		}
-
+		
 		/**
 		 * Status of simulation environment, if used
 		 */
@@ -1394,7 +1394,7 @@ class GroundControl implements InJAVA, InCS {
 			float ve;//True velocity in m/s in EAST direction in earth-fixed NED frame
 			float vd;//True velocity in m/s in DOWN direction in earth-fixed NED frame
 		}
-
+		
 		/**
 		 * Status generated by radio and injected into MAVLink stream.
 		 */
@@ -1407,7 +1407,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short rxerrors;//Receive errors
 			@A short fixed;//Count of error corrected packets
 		}
-
+		
 		/**
 		 * File transfer message
 		 */
@@ -1423,7 +1423,7 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			@D(251) @A byte[] payload;
 		}
-
+		
 		/**
 		 * Time synchronization message.
 		 */
@@ -1431,7 +1431,7 @@ class GroundControl implements InJAVA, InCS {
 			long tc1;//Time sync timestamp 1
 			long ts1;//Time sync timestamp 2
 		}
-
+		
 		/**
 		 * Camera-IMU triggering and synchronisation message.
 		 */
@@ -1439,7 +1439,7 @@ class GroundControl implements InJAVA, InCS {
 			@A long time_usec;//Timestamp for the image frame in microseconds
 			@A int  seq;//Image frame sequence
 		}
-
+		
 		/**
 		 * The global position, as returned by the Global Positioning System (GPS). This is
 		 * NOT the global position estimate of the sytem, but rather a RAW sensor value. See message GLOBAL_POSITION for the global position estimate. Coordinate frame is right-handed, Z-axis up (GPS frame).
@@ -1467,7 +1467,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short cog;
 			@A byte  satellites_visible;//Number of satellites visible. If unknown, set to 255
 		}
-
+		
 		/**
 		 * Simulated optical flow from a flow sensor (e.g. PX4FLOW or optical mouse sensor)
 		 */
@@ -1501,13 +1501,13 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			float distance;
 		}
-
+		
 		/**
 		 * Sent from simulation to autopilot, avoids in contrast to HIL_STATE singularities. This packet is useful
 		 * for high throughput applications such as hardware in the loop simulations
 		 */
 		@id(115) class HIL_STATE_QUATERNION {
-			@A long time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
+			@A    long    time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
 			@D(4) float[] attitude_quaternion;//Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation
 			float rollspeed;//Body frame roll / phi angular speed (rad/s)
 			float pitchspeed;//Body frame pitch / theta angular speed (rad/s)
@@ -1524,7 +1524,7 @@ class GroundControl implements InJAVA, InCS {
 			short yacc;//Y acceleration (mg)
 			short zacc;//Z acceleration (mg)
 		}
-
+		
 		/**
 		 * The RAW IMU readings for secondary 9DOF sensor setup. This message should contain the scaled values to
 		 * the described unit
@@ -1541,7 +1541,7 @@ class GroundControl implements InJAVA, InCS {
 			short ymag;//Y Magnetic field (milli tesla)
 			short zmag;//Z Magnetic field (milli tesla)
 		}
-
+		
 		/**
 		 * Request a list of available logs. On some systems calling this may stop on-board logging until LOG_REQUEST_END
 		 * is called
@@ -1552,7 +1552,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short start;//First log id (0 for first available)
 			@A short end;//Last log id (0xffff for last available)
 		}
-
+		
 		/**
 		 * Reply to LOG_REQUEST_LIST
 		 */
@@ -1563,7 +1563,7 @@ class GroundControl implements InJAVA, InCS {
 			@A int   time_utc;//UTC timestamp of log in seconds since 1970, or 0 if not available
 			@A int   size;//Size of the log (may be approximate) in bytes
 		}
-
+		
 		/**
 		 * Request a chunk of a log
 		 */
@@ -1574,7 +1574,7 @@ class GroundControl implements InJAVA, InCS {
 			@A int   ofs;//Offset into the log
 			@A int   count;//Number of bytes
 		}
-
+		
 		/**
 		 * Reply to LOG_REQUEST_DATA
 		 */
@@ -1584,7 +1584,7 @@ class GroundControl implements InJAVA, InCS {
 			@A        byte   count;//Number of bytes (zero for end of log)
 			@D(90) @A byte[] data;//log data
 		}
-
+		
 		/**
 		 * Erase all logs
 		 */
@@ -1592,7 +1592,7 @@ class GroundControl implements InJAVA, InCS {
 			@A byte target_system;//System ID
 			@A byte target_component;//Component ID
 		}
-
+		
 		/**
 		 * Stop log transfer and resume normal logging
 		 */
@@ -1600,7 +1600,7 @@ class GroundControl implements InJAVA, InCS {
 			@A byte target_system;//System ID
 			@A byte target_component;//Component ID
 		}
-
+		
 		/**
 		 * data for injecting into the onboard GPS (used for DGPS)
 		 */
@@ -1610,7 +1610,7 @@ class GroundControl implements InJAVA, InCS {
 			@A         byte   len;//data length
 			@D(110) @A byte[] data;//raw data (110 is enough for 12 satellites of RTCMv2)
 		}
-
+		
 		/**
 		 * Second GPS data. Coordinate frame is right-handed, Z-axis up (GPS frame).
 		 */
@@ -1632,7 +1632,7 @@ class GroundControl implements InJAVA, InCS {
 			@A byte  dgps_numch;//Number of DGPS satellites
 			@A int   dgps_age;//Age of DGPS info
 		}
-
+		
 		/**
 		 * Power supply status
 		 */
@@ -1641,7 +1641,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short Vservo;//servo rail voltage in millivolts
 			MAV_POWER_STATUS flags;//power supply status flags (see MAV_POWER_STATUS enum)
 		}
-
+		
 		/**
 		 * Control a serial port. This can be used for raw access to an onboard serial peripheral such as a GPS or
 		 * telemetry radio. It is designed to make it possible to update the devices firmware via MAVLink messages
@@ -1655,7 +1655,7 @@ class GroundControl implements InJAVA, InCS {
 			@A        byte   count;//how many bytes in this transfer
 			@D(70) @A byte[] data;//serial data
 		}
-
+		
 		/**
 		 * RTK GPS data. Gives information on the relative baseline calculation the GPS is reporting
 		 */
@@ -1674,7 +1674,7 @@ class GroundControl implements InJAVA, InCS {
 			@A int accuracy;//Current estimate of baseline accuracy.
 			int iar_num_hypotheses;//Current number of integer ambiguity hypotheses.
 		}
-
+		
 		/**
 		 * RTK GPS data. Gives information on the relative baseline calculation the GPS is reporting
 		 */
@@ -1693,7 +1693,7 @@ class GroundControl implements InJAVA, InCS {
 			@A int accuracy;//Current estimate of baseline accuracy.
 			int iar_num_hypotheses;//Current number of integer ambiguity hypotheses.
 		}
-
+		
 		/**
 		 * The RAW IMU readings for 3rd 9DOF sensor setup. This message should contain the scaled values to the described
 		 * unit
@@ -1710,7 +1710,7 @@ class GroundControl implements InJAVA, InCS {
 			short ymag;//Y Magnetic field (milli tesla)
 			short zmag;//Z Magnetic field (milli tesla)
 		}
-
+		
 		@id(130) class DATA_TRANSMISSION_HANDSHAKE {
 			@A byte  type;//type of requested/acknowledged data (as defined in ENUM DATA_TYPES in mavlink/include/mavlink_types.h
 			@A int   size;//total data size in bytes (set on ACK only)
@@ -1724,12 +1724,12 @@ class GroundControl implements InJAVA, InCS {
 			@A byte  payload;
 			@A byte  jpg_quality;//JPEG quality out of [1,100]
 		}
-
+		
 		@id(131) class ENCAPSULATED_DATA {
 			@A         short  seqnr;//sequence number (starting with 0 on every transmission)
 			@D(253) @A byte[] data;//image data bytes
 		}
-
+		
 		@id(132) class DISTANCE_SENSOR {
 			@A int   time_boot_ms;//Time since system boot
 			@A short min_distance;//Minimum distance the sensor can measure in centimeters
@@ -1745,7 +1745,7 @@ class GroundControl implements InJAVA, InCS {
 			MAV_SENSOR_ORIENTATION orientation;
 			@A byte covariance;//Measurement covariance in centimeters, 0 for unknown / invalid readings
 		}
-
+		
 		/**
 		 * Request for terrain data and terrain status
 		 */
@@ -1755,18 +1755,18 @@ class GroundControl implements InJAVA, InCS {
 			@A short grid_spacing;//Grid spacing in meters
 			@A long  mask;//Bitmask of requested 4x4 grids (row major 8x7 array of grids, 56 bits)
 		}
-
+		
 		/**
 		 * Terrain data sent from GCS. The lat/lon and grid_spacing must be the same as a lat/lon from a TERRAIN_REQUES
 		 */
 		@id(134) class TERRAIN_DATA {
 			int lat;//Latitude of SW corner of first grid (degrees *10^7)
 			int lon;//Longitude of SW corner of first grid (in degrees *10^7)
-			@A short grid_spacing;//Grid spacing in meters
-			@A byte  gridbit;//bit within the terrain request mask
+			@A     short   grid_spacing;//Grid spacing in meters
+			@A     byte    gridbit;//bit within the terrain request mask
 			@D(16) short[] data;//Terrain data in meters AMSL
 		}
-
+		
 		/**
 		 * Request that the vehicle report terrain height at the given location. Used by GCS to check if vehicle
 		 * has all terrain data needed for a mission
@@ -1775,7 +1775,7 @@ class GroundControl implements InJAVA, InCS {
 			int lat;//Latitude (degrees *10^7)
 			int lon;//Longitude (degrees *10^7)
 		}
-
+		
 		/**
 		 * Response from a TERRAIN_CHECK request
 		 */
@@ -1788,7 +1788,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short pending;//Number of 4x4 terrain blocks waiting to be received or read from disk
 			@A short loaded;//Number of 4x4 terrain blocks in memory
 		}
-
+		
 		/**
 		 * Barometer readings for 2nd barometer
 		 */
@@ -1798,30 +1798,30 @@ class GroundControl implements InJAVA, InCS {
 			float press_diff;//Differential pressure 1 (hectopascal)
 			short temperature;//Temperature measurement (0.01 degrees celsius)
 		}
-
+		
 		/**
 		 * Motion capture attitude and position
 		 */
 		@id(138) class ATT_POS_MOCAP {
-			@A long time_usec;//Timestamp (micros since boot or Unix epoch)
+			@A    long    time_usec;//Timestamp (micros since boot or Unix epoch)
 			@D(4) float[] q;//Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
 			float x;//X position in meters (NED)
 			float y;//Y position in meters (NED)
 			float z;//Z position in meters (NED)
 		}
-
+		
 		/**
 		 * Set the vehicle attitude and body angular rates.
 		 */
 		@id(139) class SET_ACTUATOR_CONTROL_TARGET {
-			@A long time_usec;//Timestamp (micros since boot or Unix epoch)
+			@A    long    time_usec;//Timestamp (micros since boot or Unix epoch)
 			/**
 			 * Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use
 			 * this field to difference between instances
 			 */
-			@A byte group_mlx;
-			@A byte target_system;//System ID
-			@A byte target_component;//Component ID
+			@A    byte    group_mlx;
+			@A    byte    target_system;//System ID
+			@A    byte    target_component;//Component ID
 			/**
 			 * Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction
 			 * motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
@@ -1830,17 +1830,17 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			@D(8) float[] controls;
 		}
-
+		
 		/**
 		 * Set the vehicle attitude and body angular rates.
 		 */
 		@id(140) class ACTUATOR_CONTROL_TARGET {
-			@A long time_usec;//Timestamp (micros since boot or Unix epoch)
+			@A    long    time_usec;//Timestamp (micros since boot or Unix epoch)
 			/**
 			 * Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use
 			 * this field to difference between instances
 			 */
-			@A byte group_mlx;
+			@A    byte    group_mlx;
 			/**
 			 * Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction
 			 * motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
@@ -1849,7 +1849,7 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			@D(8) float[] controls;
 		}
-
+		
 		/**
 		 * The current system altitude.
 		 */
@@ -1887,7 +1887,7 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			float bottom_clearance;
 		}
-
+		
 		/**
 		 * The autopilot is requesting a resource (file, binary, other type of data)
 		 */
@@ -1906,7 +1906,7 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			@D(120) @A byte[] storage;
 		}
-
+		
 		/**
 		 * Barometer readings for 3rd barometer
 		 */
@@ -1916,7 +1916,7 @@ class GroundControl implements InJAVA, InCS {
 			float press_diff;//Differential pressure 1 (hectopascal)
 			short temperature;//Temperature measurement (0.01 degrees celsius)
 		}
-
+		
 		/**
 		 * current motion information from a designated system
 		 */
@@ -1931,9 +1931,9 @@ class GroundControl implements InJAVA, InCS {
 			@D(4) float[] attitude_q;//(1 0 0 0 for unknown)
 			@D(3) float[] rates;//(0 0 0 for unknown)
 			@D(3) float[] position_cov;//eph epv
-			@A long custom_state;//button states or switches of a tracker device
+			@A    long    custom_state;//button states or switches of a tracker device
 		}
-
+		
 		/**
 		 * The smoothed, monotonic system state used to feed the control loops of the system.
 		 */
@@ -1956,7 +1956,7 @@ class GroundControl implements InJAVA, InCS {
 			float pitch_rate;//Angular rate in pitch axis
 			float yaw_rate;//Angular rate in yaw axis
 		}
-
+		
 		/**
 		 * Battery information
 		 */
@@ -1979,7 +1979,7 @@ class GroundControl implements InJAVA, InCS {
 			int   energy_consumed;
 			byte  battery_remaining;//Remaining battery energy: (0%: 0, 100%: 100), -1: autopilot does not estimate the remaining battery
 		}
-
+		
 		/**
 		 * Version and capability of autopilot software
 		 */
@@ -2013,7 +2013,7 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			@D_(18) @A byte[] uid2;
 		}
-
+		
 		/**
 		 * The location of a landing area captured from a downward facing camera
 		 */
@@ -2026,9 +2026,9 @@ class GroundControl implements InJAVA, InCS {
 			float     distance;//Distance to the target from the vehicle in meters
 			float     size_x;//Size in radians of target along x-axis
 			float     size_y;//Size in radians of target along y-axis
-			@I_ float x;//X Position of the landing target on MAV_FRAME
-			@I_ float y;//Y Position of the landing target on MAV_FRAME
-			@I_ float z;//Z Position of the landing target on MAV_FRAME
+			@I_    float   x;//X Position of the landing target on MAV_FRAME
+			@I_    float   y;//Y Position of the landing target on MAV_FRAME
+			@I_    float   z;//Z Position of the landing target on MAV_FRAME
 			@D_(4) float[] q;//Quaternion of landing target orientation (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
 			LANDING_TARGET_TYPE type;//LANDING_TARGET_TYPE enum specifying the type of landing target
 			/**
@@ -2037,7 +2037,7 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			@A_ byte position_valid;
 		}
-
+		
 		/**
 		 * Estimator status message including flags, innovation test ratios and estimated accuracies. The flags message
 		 * is an integer bitmask containing information on which EKF outputs are valid. See the ESTIMATOR_STATUS_FLAGS
@@ -2060,7 +2060,7 @@ class GroundControl implements InJAVA, InCS {
 			float                  pos_horiz_accuracy;//Horizontal position 1-STD accuracy relative to the EKF local origin (m)
 			float                  pos_vert_accuracy;//Vertical position 1-STD accuracy relative to the EKF local origin (m)
 		}
-
+		
 		@id(231) class WIND_COV {
 			@A long time_usec;//Timestamp (micros since boot or Unix epoch)
 			float wind_x;//Wind in X (NED) direction in m/s
@@ -2072,7 +2072,7 @@ class GroundControl implements InJAVA, InCS {
 			float horiz_accuracy;//Horizontal speed 1-STD accuracy
 			float vert_accuracy;//Vertical speed 1-STD accuracy
 		}
-
+		
 		/**
 		 * GPS sensor input message.  This is a raw sensor value sent by the GPS. This is NOT the global position
 		 * estimate of the sytem
@@ -2097,7 +2097,7 @@ class GroundControl implements InJAVA, InCS {
 			float vert_accuracy;//GPS vertical accuracy in m
 			@A byte satellites_visible;//Number of satellites visible.
 		}
-
+		
 		/**
 		 * RTCM message for injecting into the onboard GPS (used for DGPS)
 		 */
@@ -2115,7 +2115,7 @@ class GroundControl implements InJAVA, InCS {
 			@A         byte   len;//data length
 			@D(180) @A byte[] data;//RTCM message (may be fragmented)
 		}
-
+		
 		/**
 		 * Message appropriate for high latency connections like Iridium
 		 */
@@ -2149,7 +2149,7 @@ class GroundControl implements InJAVA, InCS {
 			@A byte  wp_num;//current waypoint number
 			@A short wp_distance;//distance to target (meters)
 		}
-
+		
 		/**
 		 * Vibration levels and accelerometer clipping
 		 */
@@ -2162,7 +2162,7 @@ class GroundControl implements InJAVA, InCS {
 			@A int clipping_1;//second accelerometer clipping count
 			@A int clipping_2;//third accelerometer clipping count
 		}
-
+		
 		/**
 		 * This message can be requested by sending the MAV_CMD_GET_HOME_POSITION command. The position the system
 		 * will return to and land on. The position is set automatically by the system during the takeoff in case
@@ -2208,7 +2208,7 @@ class GroundControl implements InJAVA, InCS {
 			float approach_z;
 			@A_ long time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
 		}
-
+		
 		/**
 		 * The position the system will return to and land on. The position is set automatically by the system during
 		 * the takeoff in case it was not explicitely set by the operator before or after. The global and local
@@ -2253,7 +2253,7 @@ class GroundControl implements InJAVA, InCS {
 			float approach_z;
 			@A_ long time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
 		}
-
+		
 		/**
 		 * This interface replaces DATA_STREAM
 		 */
@@ -2261,7 +2261,7 @@ class GroundControl implements InJAVA, InCS {
 			@A short message_id;//The ID of the requested MAVLink message. v1.0 is limited to 254 messages.
 			int interval_us;//0 indicates the interval at which it is sent.
 		}
-
+		
 		/**
 		 * Provides state for additional features
 		 */
@@ -2269,7 +2269,7 @@ class GroundControl implements InJAVA, InCS {
 			MAV_VTOL_STATE   vtol_state;//The VTOL state if applicable. Is set to MAV_VTOL_STATE_UNDEFINED if UAV is not in VTOL configuration
 			MAV_LANDED_STATE landed_state;//The landed state. Is set to MAV_LANDED_STATE_UNDEFINED if landed state is unknown.
 		}
-
+		
 		/**
 		 * The location and information of an ADSB vehicle
 		 */
@@ -2288,7 +2288,7 @@ class GroundControl implements InJAVA, InCS {
 			ADSB_FLAGS flags;//Flags to indicate various statuses including valid data fields
 			@A short squawk;//Squawk code
 		}
-
+		
 		/**
 		 * Information about a potential collision
 		 */
@@ -2301,7 +2301,7 @@ class GroundControl implements InJAVA, InCS {
 			float                      altitude_minimum_delta;//Closest vertical distance in meters between vehicle and object
 			float                      horizontal_minimum_delta;//Closest horizontal distance in meteres between vehicle and object
 		}
-
+		
 		/**
 		 * Message implementing parts of the V2 payload specs in V1 frames for transitional support.
 		 */
@@ -2326,18 +2326,18 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			@D(249) @A byte[] payload;
 		}
-
+		
 		/**
 		 * Send raw controller memory. The use of this message is discouraged for normal packets, but a quite efficient
 		 * way for testing new messages and getting experimental debug output
 		 */
 		@id(249) class MEMORY_VECT {
-			@A short address;//Starting address of the debug variables
-			@A byte  ver;//Version code of the type variable. 0=unknown, type ignored and assumed int16_t. 1=as below
-			@A byte  type;//Type code of the memory variables. for ver = 1: 0=16 x int16_t, 1=16 x uint16_t, 2=16 x Q15, 3=16 x 1Q1
+			@A     short  address;//Starting address of the debug variables
+			@A     byte   ver;//Version code of the type variable. 0=unknown, type ignored and assumed int16_t. 1=as below
+			@A     byte   type;//Type code of the memory variables. for ver = 1: 0=16 x int16_t, 1=16 x uint16_t, 2=16 x Q15, 3=16 x 1Q1
 			@D(32) byte[] value;//Memory contents at specified address
 		}
-
+		
 		@id(250) class DEBUG_VECT {
 			@A(10) String name;//Name
 			@A     long   time_usec;//Timestamp
@@ -2345,7 +2345,7 @@ class GroundControl implements InJAVA, InCS {
 			float y;//y
 			float z;//z
 		}
-
+		
 		/**
 		 * Send a key-value pair as float. The use of this message is discouraged for normal packets, but a quite
 		 * efficient way for testing new messages and getting experimental debug output
@@ -2355,7 +2355,7 @@ class GroundControl implements InJAVA, InCS {
 			@A(10) String name;//Name of the debug variable
 			float value;//Floating point value
 		}
-
+		
 		/**
 		 * Send a key-value pair as integer. The use of this message is discouraged for normal packets, but a quite
 		 * efficient way for testing new messages and getting experimental debug output
@@ -2365,7 +2365,7 @@ class GroundControl implements InJAVA, InCS {
 			@A(10) String name;//Name of the debug variable
 			int value;//Signed integer value
 		}
-
+		
 		/**
 		 * Status text message. These messages are printed in yellow in the COMM console of QGroundControl. WARNING:
 		 * They consume quite some bandwidth, so use only for important status and error messages. If implemented
@@ -2375,7 +2375,7 @@ class GroundControl implements InJAVA, InCS {
 			MAV_SEVERITY severity;//Severity of status. Relies on the definitions within RFC-5424. See enum MAV_SEVERITY.
 			@A(50) String text;//Status text message, without null termination character
 		}
-
+		
 		/**
 		 * Send a debug value. The index is used to discriminate between values. These values show up in the plot
 		 * of QGroundControl as DEBUG N
@@ -2385,7 +2385,7 @@ class GroundControl implements InJAVA, InCS {
 			@A byte ind;//index of debug variable
 			float value;//DEBUG value
 		}
-
+		
 		/**
 		 * Setup a MAVLink2 signing key. If called with secret_key of all zero and zero initial_timestamp will disable
 		 * signin
@@ -2396,7 +2396,7 @@ class GroundControl implements InJAVA, InCS {
 			@D(32) @A byte[] secret_key;//signing key
 			@A        long   initial_timestamp;//initial timestamp
 		}
-
+		
 		/**
 		 * Report button state change
 		 */
@@ -2405,7 +2405,7 @@ class GroundControl implements InJAVA, InCS {
 			@A int  last_change_ms;//Time of last change of button state
 			@A byte state;//Bitmap state of buttons
 		}
-
+		
 		/**
 		 * Control vehicle tone generation (buzzer)
 		 */
@@ -2414,7 +2414,7 @@ class GroundControl implements InJAVA, InCS {
 			@A     byte   target_component;//Component ID
 			@A(30) String tune;//tune in board specific format
 		}
-
+		
 		/**
 		 * WIP: Information about a camera
 		 */
@@ -2433,7 +2433,7 @@ class GroundControl implements InJAVA, InCS {
 			@A      short  cam_definition_version;//Camera definition version (iteration)
 			@A(140) String cam_definition_uri;//Camera definition URI (if any, otherwise only basic functions will be available).
 		}
-
+		
 		/**
 		 * WIP: Settings of a camera, can be requested using MAV_CMD_REQUEST_CAMERA_SETTINGS.
 		 */
@@ -2441,7 +2441,7 @@ class GroundControl implements InJAVA, InCS {
 			@A int time_boot_ms;//Timestamp (milliseconds since system boot)
 			CAMERA_MODE mode_id;//Camera mode (CAMERA_MODE)
 		}
-
+		
 		/**
 		 * WIP: Information about a storage medium.
 		 */
@@ -2456,7 +2456,7 @@ class GroundControl implements InJAVA, InCS {
 			float read_speed;//Read speed in MiB/s
 			float write_speed;//Write speed in MiB/s
 		}
-
+		
 		/**
 		 * WIP: Information about the status of a capture
 		 */
@@ -2472,7 +2472,7 @@ class GroundControl implements InJAVA, InCS {
 			@A int recording_time_ms;//Time in milliseconds since recording started
 			float available_capacity;//Available storage capacity in MiB
 		}
-
+		
 		/**
 		 * Information about a captured image
 		 */
@@ -2494,9 +2494,9 @@ class GroundControl implements InJAVA, InCS {
 
 class MicroAirVehicle implements InC {
 	interface CommunicationInterface extends MicroAirVehicleHandledPacks, GroundControl.CommonPacks {}
-
+	
 	interface MicroAirVehicleHandledPacks {
-
+		
 		/**
 		 * WIP: Information about flight since last arming
 		 */
@@ -2506,7 +2506,7 @@ class MicroAirVehicle implements InC {
 			@A long takeoff_time_utc;//Timestamp at takeoff (microseconds since UNIX epoch) in UTC, 0 for unknown
 			@A long flight_uuid;//Universally unique identifier (UUID) of flight, should correspond to name of logfiles
 		}
-
+		
 		/**
 		 * WIP: Orientation of a mount
 		 */
@@ -2516,7 +2516,7 @@ class MicroAirVehicle implements InC {
 			float pitch;//Pitch in degrees
 			float yaw;//Yaw in degrees
 		}
-
+		
 		/**
 		 * A message containing logged data (see also MAV_CMD_LOGGING_START)
 		 */
@@ -2532,7 +2532,7 @@ class MicroAirVehicle implements InC {
 			@A         byte   first_message_offset;
 			@D(249) @A byte[] data;//logged data
 		}
-
+		
 		/**
 		 * A message containing logged data which requires a LOGGING_ACK to be sent back
 		 */
@@ -2548,7 +2548,7 @@ class MicroAirVehicle implements InC {
 			@A         byte   first_message_offset;
 			@D(249) @A byte[] data;//logged data
 		}
-
+		
 		/**
 		 * An ack for a LOGGING_DATA_ACKED message
 		 */
@@ -2557,7 +2557,7 @@ class MicroAirVehicle implements InC {
 			@A byte  target_component;//component ID of the target
 			@A short sequence;//sequence number (must match the one in LOGGING_DATA_ACKED)
 		}
-
+		
 		/**
 		 * WIP: Information about video stream
 		 */
@@ -2571,7 +2571,7 @@ class MicroAirVehicle implements InC {
 			@A      short  rotation;//Video image rotation clockwise
 			@A(230) String uri;//Video stream URI
 		}
-
+		
 		/**
 		 * WIP: Message that sets video stream settings
 		 */
@@ -2586,7 +2586,7 @@ class MicroAirVehicle implements InC {
 			@A      short  rotation;//Video image rotation clockwise (0-359 degrees)
 			@A(230) String uri;//Video stream URI
 		}
-
+		
 		/**
 		 * Configure AP SSID and Password.
 		 */
@@ -2594,7 +2594,7 @@ class MicroAirVehicle implements InC {
 			@A(32) String ssid;//Name of Wi-Fi network (SSID). Leave it blank to leave it unchanged.
 			@A(64) String password;//Password. Leave it blank for an open AP.
 		}
-
+		
 		/**
 		 * WIP: Version and capability of protocol version. This message is the response to REQUEST_PROTOCOL_VERSION
 		 * and is used as part of the handshaking to establish which MAVLink version should be used on the network.
@@ -2609,7 +2609,7 @@ class MicroAirVehicle implements InC {
 			@D(8) @A byte[] spec_version_hash;//The first 8 bytes (not characters printed in hex!) of the git hash.
 			@D(8) @A byte[] library_version_hash;//The first 8 bytes (not characters printed in hex!) of the git hash.
 		}
-
+		
 		/**
 		 * General status information of an UAVCAN node. Please refer to the definition of the UAVCAN message "uavcan.protocol.NodeStatus"
 		 * for the background information. The UAVCAN specification is available at http://uavcan.org
@@ -2622,7 +2622,7 @@ class MicroAirVehicle implements InC {
 			@A byte  sub_mode;//Not used currently.
 			@A short vendor_specific_status_code;//Vendor-specific status information.
 		}
-
+		
 		/**
 		 * General information describing a particular UAVCAN node. Please refer to the definition of the UAVCAN
 		 * service "uavcan.protocol.GetNodeInfo" for the background information. This message should be emitted
@@ -2642,7 +2642,7 @@ class MicroAirVehicle implements InC {
 			@A        byte   sw_version_minor;//Software minor version number.
 			@A        int    sw_vcs_commit;//Version control system (VCS) revision identifier (e.g. git short commit hash). Zero if unknown.
 		}
-
+		
 		/**
 		 * Request to read the value of a parameter with the either the param_id string id or param_index.
 		 */
@@ -2657,7 +2657,7 @@ class MicroAirVehicle implements InC {
 			@A(16) String param_id;
 			short param_index;//Parameter index. Set to -1 to use the Parameter ID field as identifier (else param_id will be ignored
 		}
-
+		
 		/**
 		 * Request all parameters of this component. After this request, all parameters are emitted.
 		 */
@@ -2665,7 +2665,7 @@ class MicroAirVehicle implements InC {
 			@A byte target_system;//System ID
 			@A byte target_component;//Component ID
 		}
-
+		
 		/**
 		 * Emit the value of a parameter. The inclusion of param_count and param_index in the message allows the
 		 * recipient to keep track of received parameters and allows them to re-request missing parameters after
@@ -2683,7 +2683,7 @@ class MicroAirVehicle implements InC {
 			@A short param_count;//Total number of parameters
 			@A short param_index;//Index of this parameter
 		}
-
+		
 		/**
 		 * Set a parameter value. In order to deal with message loss (and retransmission of PARAM_EXT_SET), when
 		 * setting a parameter value and the new value is the same as the current value, you will immediately get
@@ -2702,7 +2702,7 @@ class MicroAirVehicle implements InC {
 			@A(128) String param_value;//Parameter value
 			MAV_PARAM_EXT_TYPE param_type;//Parameter type: see the MAV_PARAM_EXT_TYPE enum for supported data types.
 		}
-
+		
 		/**
 		 * Response from a PARAM_EXT_SET message.
 		 */
@@ -2717,7 +2717,7 @@ class MicroAirVehicle implements InC {
 			MAV_PARAM_EXT_TYPE param_type;//Parameter type: see the MAV_PARAM_EXT_TYPE enum for supported data types.
 			PARAM_ACK          param_result;//Result code: see the PARAM_ACK enum for possible codes.
 		}
-
+		
 		/**
 		 * Obstacle distances in front of the sensor, starting from the left in increment degrees to the right
 		 */
@@ -2734,7 +2734,7 @@ class MicroAirVehicle implements InC {
 			@A        short   min_distance;//Minimum distance the sensor can measure in centimeters
 			@A        short   max_distance;//Maximum distance the sensor can measure in centimeters
 		}
-
+		
 		/**
 		 * Static data to configure the ADS-B transponder (send within 10 sec of a POR and every 10 sec thereafter
 		 */
@@ -2752,7 +2752,7 @@ class MicroAirVehicle implements InC {
 			@A short stallSpeed;//Aircraft stall speed in cm/s
 			UAVIONIX_ADSB_OUT_RF_SELECT rfSelect;//ADS-B transponder reciever and transmit enable flags
 		}
-
+		
 		/**
 		 * Dynamic data used to generate ADS-B out transponder data (send at 5Hz)
 		 */
@@ -2778,14 +2778,14 @@ class MicroAirVehicle implements InC {
 			UAVIONIX_ADSB_OUT_DYNAMIC_STATE state;//ADS-B transponder dynamic input state flags
 			@A short squawk;//Mode A code (typically 1200 [0x04B0] for VFR)
 		}
-
+		
 		/**
 		 * Transceiver heartbeat with health report (updated every 10s)
 		 */
 		@id(10003) class UAVIONIX_ADSB_TRANSCEIVER_HEALTH_REPORT {
 			UAVIONIX_ADSB_RF_HEALTH rfHealth;//ADS-B transponder messages
 		}
-
+		
 		/**
 		 * Offsets and calibrations values for hardware sensors. This makes it easier to debug the calibration process
 		 */
@@ -2803,7 +2803,7 @@ class MicroAirVehicle implements InC {
 			float accel_cal_y;//accel Y calibration
 			float accel_cal_z;//accel Z calibration
 		}
-
+		
 		/**
 		 * Deprecated. Use MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS instead. Set the magnetometer offsets
 		 */
@@ -2814,7 +2814,7 @@ class MicroAirVehicle implements InC {
 			short mag_ofs_y;//magnetometer Y offset
 			short mag_ofs_z;//magnetometer Z offset
 		}
-
+		
 		/**
 		 * state of APM memory
 		 */
@@ -2823,7 +2823,7 @@ class MicroAirVehicle implements InC {
 			@A  short freemem;//free memory
 			@A_ int   freemem32;//free memory (32 bit)
 		}
-
+		
 		/**
 		 * raw ADC output
 		 */
@@ -2835,7 +2835,7 @@ class MicroAirVehicle implements InC {
 			@A short adc5;//ADC output 5
 			@A short adc6;//ADC output 6
 		}
-
+		
 		/**
 		 * Configure on-board Camera Control System.
 		 */
@@ -2856,7 +2856,7 @@ class MicroAirVehicle implements InC {
 			@A byte  extra_param;//Extra parameters enumeration (0 means ignore)
 			float extra_value;//Correspondent value to given extra_param
 		}
-
+		
 		/**
 		 * Control on-board Camera Control System to take shots.
 		 */
@@ -2876,7 +2876,7 @@ class MicroAirVehicle implements InC {
 			@A byte extra_param;//Extra parameters enumeration (0 means ignore)
 			float extra_value;//Correspondent value to given extra_param
 		}
-
+		
 		/**
 		 * Message to configure a camera mount, directional antenna, etc.
 		 */
@@ -2888,7 +2888,7 @@ class MicroAirVehicle implements InC {
 			@A byte stab_pitch;//(1 = yes, 0 = no)
 			@A byte stab_yaw;//(1 = yes, 0 = no)
 		}
-
+		
 		/**
 		 * Message to control a camera mount, directional antenna, etc.
 		 */
@@ -2900,7 +2900,7 @@ class MicroAirVehicle implements InC {
 			int input_c;//yaw(deg*100) or alt (in cm) depending on mount mode
 			@A byte save_position;//if "1" it will save current trimmed position on EEPROM (just valid for NEUTRAL and LANDING)
 		}
-
+		
 		/**
 		 * Message with some status from APM to GCS about camera or antenna mount
 		 */
@@ -2911,7 +2911,7 @@ class MicroAirVehicle implements InC {
 			int pointing_b;//roll(deg*100)
 			int pointing_c;//yaw(deg*100)
 		}
-
+		
 		/**
 		 * GCS
 		 */
@@ -2923,7 +2923,7 @@ class MicroAirVehicle implements InC {
 			float lat;//Latitude of point
 			float lng;//Longitude of point
 		}
-
+		
 		/**
 		 * Request a current fence point from MAV
 		 */
@@ -2932,7 +2932,7 @@ class MicroAirVehicle implements InC {
 			@A byte target_component;//Component ID
 			@A byte idx;//point index (first point is 1, 0 is for return point)
 		}
-
+		
 		/**
 		 * Status of geo-fencing. Sent in extended status stream when fencing enabled
 		 */
@@ -2942,7 +2942,7 @@ class MicroAirVehicle implements InC {
 			FENCE_BREACH breach_type;//last breach type (see FENCE_BREACH_* enum)
 			@A int breach_time;//time of last breach in milliseconds since boot
 		}
-
+		
 		/**
 		 * Status of DCM attitude estimator
 		 */
@@ -2955,7 +2955,7 @@ class MicroAirVehicle implements InC {
 			float error_rp;//average error_roll_pitch value
 			float error_yaw;//average error_yaw value
 		}
-
+		
 		/**
 		 * Status of simulation environment, if used
 		 */
@@ -2972,7 +2972,7 @@ class MicroAirVehicle implements InC {
 			int   lat;//Latitude in degrees * 1E7
 			int   lng;//Longitude in degrees * 1E7
 		}
-
+		
 		/**
 		 * Status of key hardware
 		 */
@@ -2980,7 +2980,7 @@ class MicroAirVehicle implements InC {
 			@A short Vcc;//board voltage (mV)
 			@A byte  I2Cerr;//I2C error count
 		}
-
+		
 		/**
 		 * Status generated by radio
 		 */
@@ -2993,7 +2993,7 @@ class MicroAirVehicle implements InC {
 			@A short rxerrors;//receive errors
 			@A short fixed;//count of error corrected packets
 		}
-
+		
 		/**
 		 * Status of AP_Limits. Sent in extended status stream when AP_Limits is enabled
 		 */
@@ -3008,7 +3008,7 @@ class MicroAirVehicle implements InC {
 			LIMIT_MODULE mods_required;//AP_Limit_Module bitfield of required modules, (see enum moduleid or LIMIT_MODULE)
 			LIMIT_MODULE mods_triggered;//AP_Limit_Module bitfield of triggered modules, (see enum moduleid or LIMIT_MODULE)
 		}
-
+		
 		/**
 		 * Wind estimation
 		 */
@@ -3017,7 +3017,7 @@ class MicroAirVehicle implements InC {
 			float speed;//wind speed in ground plane (m/s)
 			float speed_z;//vertical wind speed (m/s)
 		}
-
+		
 		/**
 		 * Data packet, size 16
 		 */
@@ -3026,7 +3026,7 @@ class MicroAirVehicle implements InC {
 			@A        byte   len;//data length
 			@D(16) @A byte[] data;//raw data
 		}
-
+		
 		/**
 		 * Data packet, size 32
 		 */
@@ -3035,7 +3035,7 @@ class MicroAirVehicle implements InC {
 			@A        byte   len;//data length
 			@D(32) @A byte[] data;//raw data
 		}
-
+		
 		/**
 		 * Data packet, size 64
 		 */
@@ -3044,7 +3044,7 @@ class MicroAirVehicle implements InC {
 			@A        byte   len;//data length
 			@D(64) @A byte[] data;//raw data
 		}
-
+		
 		/**
 		 * Data packet, size 96
 		 */
@@ -3053,7 +3053,7 @@ class MicroAirVehicle implements InC {
 			@A        byte   len;//data length
 			@D(96) @A byte[] data;//raw data
 		}
-
+		
 		/**
 		 * Rangefinder reporting
 		 */
@@ -3061,7 +3061,7 @@ class MicroAirVehicle implements InC {
 			float distance;//distance in meters
 			float voltage;//raw voltage if available, zero otherwise
 		}
-
+		
 		/**
 		 * Airspeed auto-calibration
 		 */
@@ -3079,7 +3079,7 @@ class MicroAirVehicle implements InC {
 			float Pby;//EKF Pby
 			float Pcz;//EKF Pcz
 		}
-
+		
 		/**
 		 * GCS
 		 */
@@ -3095,7 +3095,7 @@ class MicroAirVehicle implements InC {
 			@A short land_dir;//Heading to aim for when landing. In centi-degrees.
 			RALLY_FLAGS flags;//See RALLY_FLAGS enum for definition of the bitmask.
 		}
-
+		
 		/**
 		 * Request a current rally point from MAV. MAV should respond with a RALLY_POINT message. MAV should not
 		 * respond if the request is invalid
@@ -3105,7 +3105,7 @@ class MicroAirVehicle implements InC {
 			@A byte target_component;//Component ID
 			@A byte idx;//point index (first point is 0)
 		}
-
+		
 		/**
 		 * Status of compassmot calibration
 		 */
@@ -3117,7 +3117,7 @@ class MicroAirVehicle implements InC {
 			float CompensationY;//Motor Compensation Y
 			float CompensationZ;//Motor Compensation Z
 		}
-
+		
 		/**
 		 * Status of secondary AHRS filter if available
 		 */
@@ -3129,7 +3129,7 @@ class MicroAirVehicle implements InC {
 			int   lat;//Latitude in degrees * 1E7
 			int   lng;//Longitude in degrees * 1E7
 		}
-
+		
 		/**
 		 * Camera Event
 		 */
@@ -3144,7 +3144,7 @@ class MicroAirVehicle implements InC {
 			float               p3;//Parameter 3 (meaning depends on event, see CAMERA_STATUS_TYPES enum)
 			float               p4;//Parameter 4 (meaning depends on event, see CAMERA_STATUS_TYPES enum)
 		}
-
+		
 		/**
 		 * Camera Capture Feedback
 		 */
@@ -3167,7 +3167,7 @@ class MicroAirVehicle implements InC {
 			float                 foc_len;//Focal Length (mm)
 			CAMERA_FEEDBACK_FLAGS flags;//See CAMERA_FEEDBACK_FLAGS enum for definition of the bitmask
 		}
-
+		
 		/**
 		 * 2nd Battery status
 		 */
@@ -3175,7 +3175,7 @@ class MicroAirVehicle implements InC {
 			@A short voltage;//voltage in millivolts
 			short current_battery;//Battery current, in 10*milliamperes (1 = 10 milliampere), -1: autopilot does not measure the curren
 		}
-
+		
 		/**
 		 * Status of third AHRS filter if available. This is for ANU research group (Ali and Sean)
 		 */
@@ -3191,7 +3191,7 @@ class MicroAirVehicle implements InC {
 			float v3;//test variable3
 			float v4;//test variable4
 		}
-
+		
 		/**
 		 * Request the autopilot version from the system/component.
 		 */
@@ -3199,7 +3199,7 @@ class MicroAirVehicle implements InC {
 			@A byte target_system;//System ID
 			@A byte target_component;//Component ID
 		}
-
+		
 		/**
 		 * Send a block of log data to remote location
 		 */
@@ -3209,7 +3209,7 @@ class MicroAirVehicle implements InC {
 			MAV_REMOTE_LOG_DATA_BLOCK_COMMANDS seqno;//log data block sequence number
 			@D(200) @A byte[] data;//log data block
 		}
-
+		
 		/**
 		 * Send Status of each log block that autopilot board might have sent
 		 */
@@ -3219,7 +3219,7 @@ class MicroAirVehicle implements InC {
 			@A int  seqno;//log data block sequence number
 			MAV_REMOTE_LOG_DATA_BLOCK_STATUSES status;//log data block status
 		}
-
+		
 		/**
 		 * Control vehicle LEDs
 		 */
@@ -3231,7 +3231,7 @@ class MicroAirVehicle implements InC {
 			@A        byte   custom_len;//Custom Byte Length
 			@D(24) @A byte[] custom_bytes;//Custom Bytes
 		}
-
+		
 		/**
 		 * Reports progress of compass calibration.
 		 */
@@ -3246,7 +3246,7 @@ class MicroAirVehicle implements InC {
 			float direction_y;//Body frame direction vector for display
 			float direction_z;//Body frame direction vector for display
 		}
-
+		
 		/**
 		 * Reports results of completed compass calibration. Sent until MAG_CAL_ACK received.
 		 */
@@ -3266,7 +3266,7 @@ class MicroAirVehicle implements InC {
 			float offdiag_y;//Y off-diagonal (matrix 13 and 31)
 			float offdiag_z;//Z off-diagonal (matrix 32 and 23)
 		}
-
+		
 		/**
 		 * EKF Status message including flags and variances
 		 */
@@ -3278,7 +3278,7 @@ class MicroAirVehicle implements InC {
 			float            compass_variance;//Compass variance
 			float            terrain_alt_variance;//Terrain Altitude variance
 		}
-
+		
 		/**
 		 * PID tuning information
 		 */
@@ -3291,7 +3291,7 @@ class MicroAirVehicle implements InC {
 			float           I;//I component
 			float           D;//D component
 		}
-
+		
 		/**
 		 * 3 axis gimbal mesuraments
 		 */
@@ -3309,7 +3309,7 @@ class MicroAirVehicle implements InC {
 			float joint_el;//Joint EL (radians)
 			float joint_az;//Joint AZ (radians)
 		}
-
+		
 		/**
 		 * Control message for rate gimbal
 		 */
@@ -3320,7 +3320,7 @@ class MicroAirVehicle implements InC {
 			float demanded_rate_y;//Demanded angular rate Y (rad/s)
 			float demanded_rate_z;//Demanded angular rate Z (rad/s)
 		}
-
+		
 		/**
 		 * 100 Hz gimbal torque command telemetry
 		 */
@@ -3331,7 +3331,7 @@ class MicroAirVehicle implements InC {
 			short el_torque_cmd;//Elevation Torque Command
 			short az_torque_cmd;//Azimuth Torque Command
 		}
-
+		
 		/**
 		 * Heartbeat from a HeroBus attached GoPro
 		 */
@@ -3340,7 +3340,7 @@ class MicroAirVehicle implements InC {
 			GOPRO_CAPTURE_MODE     capture_mode;//Current capture mode
 			GOPRO_HEARTBEAT_FLAGS  flags;//additional status bits
 		}
-
+		
 		/**
 		 * Request a GOPRO_COMMAND response from the GoPro
 		 */
@@ -3349,7 +3349,7 @@ class MicroAirVehicle implements InC {
 			@A byte target_component;//Component ID
 			GOPRO_COMMAND cmd_id;//Command ID
 		}
-
+		
 		/**
 		 * Response from a GOPRO_COMMAND get request
 		 */
@@ -3358,7 +3358,7 @@ class MicroAirVehicle implements InC {
 			GOPRO_REQUEST_STATUS status;//Status
 			@D(4) @A byte[] value;//Value
 		}
-
+		
 		/**
 		 * Request to set a GOPRO_COMMAND with a desired
 		 */
@@ -3368,7 +3368,7 @@ class MicroAirVehicle implements InC {
 			GOPRO_COMMAND cmd_id;//Command ID
 			@D(4) @A byte[] value;//Value
 		}
-
+		
 		/**
 		 * Response from a GOPRO_COMMAND set request
 		 */
@@ -3376,7 +3376,7 @@ class MicroAirVehicle implements InC {
 			GOPRO_COMMAND        cmd_id;//Command ID
 			GOPRO_REQUEST_STATUS status;//Status
 		}
-
+		
 		/**
 		 * RPM sensor output
 		 */
@@ -3384,7 +3384,7 @@ class MicroAirVehicle implements InC {
 			float rpm1;//RPM Sensor1
 			float rpm2;//RPM Sensor2
 		}
-
+		
 		/**
 		 * Read registers for a device
 		 */
@@ -3399,7 +3399,7 @@ class MicroAirVehicle implements InC {
 			@A     byte   regstart;//First register to read
 			@A     byte   count;//count of registers to read
 		}
-
+		
 		/**
 		 * Read registers reply
 		 */
@@ -3410,7 +3410,7 @@ class MicroAirVehicle implements InC {
 			@A         byte   count;//count of bytes read
 			@D(128) @A byte[] data;//reply data
 		}
-
+		
 		/**
 		 * Write registers for a device
 		 */
@@ -3426,7 +3426,7 @@ class MicroAirVehicle implements InC {
 			@A         byte   count;//count of registers to write
 			@D(128) @A byte[] data;//write data
 		}
-
+		
 		/**
 		 * Write registers reply
 		 */
@@ -3434,7 +3434,7 @@ class MicroAirVehicle implements InC {
 			@A int  request_id;//request ID - copied from request
 			@A byte result;//0 for success, anything else is failure code
 		}
-
+		
 		/**
 		 * Adaptive Controller tuning information
 		 */
@@ -3453,13 +3453,13 @@ class MicroAirVehicle implements InC {
 			float           f_dot;//projection operator derivative
 			float           u;//u adaptive controlled output command
 		}
-
+		
 		/**
 		 * camera vision based attitude and position deltas
 		 */
 		@id(11011) class VISION_POSITION_DELTA {
-			@A long time_usec;//Timestamp (microseconds, synced to UNIX time or since system boot)
-			@A long time_delta_usec;//Time in microseconds since the last reported camera frame
+			@A    long    time_usec;//Timestamp (microseconds, synced to UNIX time or since system boot)
+			@A    long    time_delta_usec;//Time in microseconds since the last reported camera frame
 			@D(3) float[] angle_delta;//Defines a rotation vector in body frame that rotates the vehicle from the previous to the current orientatio
 			/**
 			 * Change in position in meters from previous to current frame rotated into body frame (0=forward, 1=right,
@@ -3480,7 +3480,7 @@ class MicroAirVehicle implements InC {
 enum MAV_CMD {
 	;
 	final int
-
+			
 			/**
 			 Navigate to waypoint.
 			 1	Hold time in decimal seconds. (ignored by fixed wing, time to stay at waypoint for rotary wing)
@@ -4981,7 +4981,7 @@ enum MAV_CMD {
  */
 enum MAV_AUTOPILOT {
 	;
-
+	
 	final int
 			MAV_AUTOPILOT_GENERIC                                      = 0, //Generic autopilot, full support for everything
 			MAV_AUTOPILOT_RESERVED                                     = 1, //Reserved for future use.
@@ -5009,7 +5009,7 @@ enum MAV_AUTOPILOT {
  */
 enum MAV_TYPE {
 	;
-
+	
 	final int
 			MAV_TYPE_GENERIC            = 0, //Generic micro air vehicle.
 			MAV_TYPE_FIXED_WING         = 1, //Fixed wing aircraft.
@@ -5048,7 +5048,7 @@ enum MAV_TYPE {
  */
 enum FIRMWARE_VERSION_TYPE {
 	;
-
+	
 	final int
 			FIRMWARE_VERSION_TYPE_DEV      = 0, //development release
 			FIRMWARE_VERSION_TYPE_ALPHA    = 64, //alpha release
@@ -5062,7 +5062,7 @@ enum FIRMWARE_VERSION_TYPE {
  */
 enum MAV_MODE_FLAG {
 	;
-
+	
 	final int
 			/**
 			 0b10000000 MAV safety set to armed. Motors are enabled / running / can start. Ready to fly. Additional
@@ -5101,7 +5101,7 @@ enum MAV_MODE_FLAG {
  */
 enum MAV_MODE_FLAG_DECODE_POSITION {
 	;
-
+	
 	final int
 			MAV_MODE_FLAG_DECODE_POSITION_SAFETY      = 128, //First bit:  10000000
 			MAV_MODE_FLAG_DECODE_POSITION_MANUAL      = 64, //Second bit: 01000000
@@ -5118,7 +5118,7 @@ enum MAV_MODE_FLAG_DECODE_POSITION {
  */
 enum MAV_GOTO {
 	;
-
+	
 	final int
 			MAV_GOTO_DO_HOLD                    = 0, //Hold at the current position.
 			MAV_GOTO_DO_CONTINUE                = 1, //Continue with the next item in mission execution.
@@ -5132,7 +5132,7 @@ enum MAV_GOTO {
  */
 enum MAV_MODE {
 	;
-
+	
 	final int
 			MAV_MODE_PREFLIGHT          = 0, //System is not ready to fly, booting, calibrating, etc. No flag is set.
 			MAV_MODE_STABILIZE_DISARMED = 80, //System is allowed to be active, under assisted RC control.
@@ -5179,7 +5179,7 @@ enum MAV_STATE {
  */
 enum MAV_COMPONENT {
 	;
-
+	
 	final int
 			MAV_COMP_ID_ALL            = 0,
 			MAV_COMP_ID_AUTOPILOT1     = 1,
@@ -5227,7 +5227,7 @@ enum MAV_COMPONENT {
  */
 enum MAV_SYS_STATUS_SENSOR {
 	;
-
+	
 	final int
 			MAV_SYS_STATUS_SENSOR_3D_GYRO                = 1, //0x01 3D gyro
 			MAV_SYS_STATUS_SENSOR_3D_ACCEL               = 2, //0x02 3D accelerometer
@@ -5263,7 +5263,7 @@ enum MAV_SYS_STATUS_SENSOR {
  */
 enum MAV_FRAME {
 	;
-
+	
 	final int
 			/**
 			 Global coordinate frame, WGS84 coordinate system. First value / x: latitude, second value / y: longitude,
@@ -5336,7 +5336,7 @@ enum MAVLINK_DATA_STREAM_TYPE {
  */
 enum FENCE_ACTION {
 	;
-
+	
 	final int
 			FENCE_ACTION_NONE            = 0, //Disable fenced mode
 			FENCE_ACTION_GUIDED          = 1, //Switched to guided mode to return point (fence point 0)
@@ -5350,7 +5350,7 @@ enum FENCE_ACTION {
  */
 enum FENCE_BREACH {
 	;
-
+	
 	final int
 			FENCE_BREACH_NONE     = 0, //No last fence breach
 			FENCE_BREACH_MINALT   = 1, //Breached minimum altitude
@@ -5363,7 +5363,7 @@ enum FENCE_BREACH {
  */
 enum MAV_MOUNT_MODE {
 	;
-
+	
 	final int
 			MAV_MOUNT_MODE_RETRACT           = 0, //Load and keep safe position (Roll,Pitch,Yaw) from permant memory and stop stabilization
 			MAV_MOUNT_MODE_NEUTRAL           = 1, //Load and keep neutral position (Roll,Pitch,Yaw) from permanent memory.
@@ -5377,7 +5377,7 @@ enum MAV_MOUNT_MODE {
  */
 enum UAVCAN_NODE_HEALTH {
 	;
-
+	
 	final int
 			UAVCAN_NODE_HEALTH_OK       = 0, //The node is functioning properly.
 			UAVCAN_NODE_HEALTH_WARNING  = 1, //A critical parameter went out of range or the node has encountered a minor failure.
@@ -5390,7 +5390,7 @@ enum UAVCAN_NODE_HEALTH {
  */
 enum UAVCAN_NODE_MODE {
 	;
-
+	
 	final int
 			UAVCAN_NODE_MODE_OPERATIONAL     = 0, //The node is performing its primary functions.
 			UAVCAN_NODE_MODE_INITIALIZATION  = 1, //The node is initializing; this mode is entered immediately after startup.
@@ -5404,7 +5404,7 @@ enum UAVCAN_NODE_MODE {
  */
 enum MAV_DATA_STREAM {
 	;
-
+	
 	final int
 			MAV_DATA_STREAM_ALL             = 0, //Enable all data streams
 			MAV_DATA_STREAM_RAW_SENSORS     = 1, //Enable IMU_RAW, GPS_RAW, GPS_STATUS packets.
@@ -5422,7 +5422,7 @@ enum MAV_DATA_STREAM {
  */
 enum MAV_ROI {
 	;
-
+	
 	final int
 			MAV_ROI_NONE     = 0, //No region of interest.
 			MAV_ROI_WPNEXT   = 1, //Point toward next waypoint, with optional pitch/roll/yaw offset.
@@ -5455,7 +5455,7 @@ enum MAV_CMD_ACK {
  */
 enum MAV_PARAM_TYPE {
 	;
-
+	
 	final int
 			MAV_PARAM_TYPE_UINT8  = 1, //8-bit unsigned integer
 			MAV_PARAM_TYPE_INT8   = 2, //8-bit signed integer
@@ -5474,7 +5474,7 @@ enum MAV_PARAM_TYPE {
  */
 enum MAV_PARAM_EXT_TYPE {
 	;
-
+	
 	final int
 			MAV_PARAM_EXT_TYPE_UINT8  = 1, //8-bit unsigned integer
 			MAV_PARAM_EXT_TYPE_INT8   = 2, //8-bit signed integer
@@ -5494,7 +5494,7 @@ enum MAV_PARAM_EXT_TYPE {
  */
 enum MAV_RESULT {
 	;
-
+	
 	final int
 			MAV_RESULT_ACCEPTED             = 0, //Command ACCEPTED and EXECUTED
 			MAV_RESULT_TEMPORARILY_REJECTED = 1, //Command TEMPORARY REJECTED/DENIED
@@ -5509,7 +5509,7 @@ enum MAV_RESULT {
  */
 enum MAV_MISSION_RESULT {
 	;
-
+	
 	final int
 			MAV_MISSION_ACCEPTED          = 0, //mission accepted OK
 			MAV_MISSION_ERROR             = 1, //generic error / not accepting mission commands at all right now
@@ -5534,7 +5534,7 @@ enum MAV_MISSION_RESULT {
  */
 enum MAV_SEVERITY {
 	;
-
+	
 	final int
 			MAV_SEVERITY_EMERGENCY = 0, //System is unusable. This is a "panic" condition.
 			MAV_SEVERITY_ALERT     = 1, //Action should be taken immediately. Indicates error in non-critical systems.
@@ -5559,7 +5559,7 @@ enum MAV_SEVERITY {
  */
 enum MAV_POWER_STATUS {
 	;
-
+	
 	final int
 			MAV_POWER_STATUS_BRICK_VALID                = 1, //main brick power supply valid
 			MAV_POWER_STATUS_SERVO_VALID                = 2, //main servo power supply valid for FMU
@@ -5574,7 +5574,7 @@ enum MAV_POWER_STATUS {
  */
 enum SERIAL_CONTROL_DEV {
 	;
-
+	
 	final int
 			SERIAL_CONTROL_DEV_TELEM1 = 0, //First telemetry port
 			SERIAL_CONTROL_DEV_TELEM2 = 1, //Second telemetry port
@@ -5588,7 +5588,7 @@ enum SERIAL_CONTROL_DEV {
  */
 enum SERIAL_CONTROL_FLAG {
 	;
-
+	
 	final int
 			SERIAL_CONTROL_FLAG_REPLY   = 1, //Set if this is a reply
 			SERIAL_CONTROL_FLAG_RESPOND = 2, //Set if the sender wants the receiver to send a response as another SERIAL_CONTROL message
@@ -5607,7 +5607,7 @@ enum SERIAL_CONTROL_FLAG {
  */
 enum MAV_DISTANCE_SENSOR {
 	;
-
+	
 	final int
 			MAV_DISTANCE_SENSOR_LASER      = 0, //Laser rangefinder, e.g. LightWare SF02/F or PulsedLight units
 			MAV_DISTANCE_SENSOR_ULTRASOUND = 1, //Ultrasound rangefinder, e.g. MaxBotix units
@@ -5621,7 +5621,7 @@ enum MAV_DISTANCE_SENSOR {
  */
 enum MAV_SENSOR_ORIENTATION {
 	;
-
+	
 	final int
 			MAV_SENSOR_ROTATION_NONE                       = 0, //Roll: 0, Pitch: 0, Yaw: 0
 			MAV_SENSOR_ROTATION_YAW_45                     = 1, //Roll: 0, Pitch: 0, Yaw: 45
@@ -5669,7 +5669,7 @@ enum MAV_SENSOR_ORIENTATION {
  */
 enum MAV_PROTOCOL_CAPABILITY {
 	;
-
+	
 	final int
 			MAV_PROTOCOL_CAPABILITY_MISSION_FLOAT                  = 1, //Autopilot supports MISSION float message type.
 			MAV_PROTOCOL_CAPABILITY_PARAM_FLOAT                    = 2, //Autopilot supports the new param float message type.
@@ -5695,7 +5695,7 @@ enum MAV_PROTOCOL_CAPABILITY {
  */
 enum MAV_MISSION_TYPE {
 	;
-
+	
 	final int
 			MAV_MISSION_TYPE_MISSION = 0, //Items are mission commands for main mission.
 			MAV_MISSION_TYPE_FENCE   = 1, //Specifies GeoFence area(s). Items are MAV_CMD_FENCE_ GeoFence items.
@@ -5712,7 +5712,7 @@ enum MAV_MISSION_TYPE {
  */
 enum MAV_ESTIMATOR_TYPE {
 	;
-
+	
 	final int
 			MAV_ESTIMATOR_TYPE_NAIVE   = 1, //This is a naive estimator without any real covariance feedback.
 			MAV_ESTIMATOR_TYPE_VISION  = 2, //Computer vision based estimate. Might be up to scale.
@@ -5726,7 +5726,7 @@ enum MAV_ESTIMATOR_TYPE {
  */
 enum MAV_BATTERY_TYPE {
 	;
-
+	
 	final int
 			MAV_BATTERY_TYPE_UNKNOWN = 0, //Not specified.
 			MAV_BATTERY_TYPE_LIPO    = 1, //Lithium polymer battery
@@ -5740,7 +5740,7 @@ enum MAV_BATTERY_TYPE {
  */
 enum MAV_BATTERY_FUNCTION {
 	;
-
+	
 	final int
 			MAV_BATTERY_FUNCTION_UNKNOWN    = 0, //Battery function is unknown
 			MAV_BATTERY_FUNCTION_ALL        = 1, //Battery supports all flight systems
@@ -5754,7 +5754,7 @@ enum MAV_BATTERY_FUNCTION {
  */
 enum MAV_VTOL_STATE {
 	;
-
+	
 	final int
 			MAV_VTOL_STATE_UNDEFINED        = 0, //MAV is not configured as VTOL
 			MAV_VTOL_STATE_TRANSITION_TO_FW = 1, //VTOL is in transition from multicopter to fixed-wing
@@ -5768,7 +5768,7 @@ enum MAV_VTOL_STATE {
  */
 enum MAV_LANDED_STATE {
 	;
-
+	
 	final int
 			MAV_LANDED_STATE_UNDEFINED = 0, //MAV landed state is unknown
 			MAV_LANDED_STATE_ON_GROUND = 1, //MAV is landed (on ground)
@@ -5782,7 +5782,7 @@ enum MAV_LANDED_STATE {
  */
 enum ADSB_ALTITUDE_TYPE {
 	;
-
+	
 	final int
 			ADSB_ALTITUDE_TYPE_PRESSURE_QNH = 0, //Altitude reported from a Baro source using QNH reference
 			ADSB_ALTITUDE_TYPE_GEOMETRIC    = 1;  //Altitude reported from a GNSS source
@@ -5793,7 +5793,7 @@ enum ADSB_ALTITUDE_TYPE {
  */
 enum ADSB_EMITTER_TYPE {
 	;
-
+	
 	final int
 			ADSB_EMITTER_TYPE_NO_INFO           = 0, //ADSB classification for the type of vehicle emitting the transponder signal
 			ADSB_EMITTER_TYPE_LIGHT             = 1,
@@ -5822,7 +5822,7 @@ enum ADSB_EMITTER_TYPE {
  */
 enum ADSB_FLAGS {
 	;
-
+	
 	final int
 			ADSB_FLAGS_VALID_COORDS   = 1, //These flags indicate status such as data validity of each data source. Set = data valid
 			ADSB_FLAGS_VALID_ALTITUDE = 2,
@@ -5838,7 +5838,7 @@ enum ADSB_FLAGS {
  */
 enum MAV_DO_REPOSITION_FLAGS {
 	;
-
+	
 	final int
 			MAV_DO_REPOSITION_FLAGS_CHANGE_MODE = 1;  //The aircraft should immediately transition into guided. This should not be set for follow me application
 }
@@ -5848,7 +5848,7 @@ enum MAV_DO_REPOSITION_FLAGS {
  */
 enum ESTIMATOR_STATUS_FLAGS {
 	;
-
+	
 	final int
 			ESTIMATOR_ATTITUDE       = 1, //True if the attitude estimate is good
 			ESTIMATOR_VELOCITY_HORIZ = 2, //True if the horizontal velocity estimate is good
@@ -5872,7 +5872,7 @@ enum ESTIMATOR_STATUS_FLAGS {
  */
 enum MOTOR_TEST_THROTTLE_TYPE {
 	;
-
+	
 	final int
 			MOTOR_TEST_THROTTLE_PERCENT = 0, //throttle as a percentage from 0 ~ 100
 			MOTOR_TEST_THROTTLE_PWM     = 1, //throttle as an absolute PWM value (normally in range of 1000~2000)
@@ -5884,7 +5884,7 @@ enum MOTOR_TEST_THROTTLE_TYPE {
  */
 enum GPS_INPUT_IGNORE_FLAGS {
 	;
-
+	
 	final int
 			GPS_INPUT_IGNORE_FLAG_ALT                 = 1, //ignore altitude field
 			GPS_INPUT_IGNORE_FLAG_HDOP                = 2, //ignore hdop field
@@ -5901,7 +5901,7 @@ enum GPS_INPUT_IGNORE_FLAGS {
  */
 enum MAV_COLLISION_ACTION {
 	;
-
+	
 	final int
 			MAV_COLLISION_ACTION_NONE               = 0, //Ignore any potential collisions
 			MAV_COLLISION_ACTION_REPORT             = 1, //Report potential collision
@@ -5917,7 +5917,7 @@ enum MAV_COLLISION_ACTION {
  */
 enum MAV_COLLISION_THREAT_LEVEL {
 	;
-
+	
 	final int
 			MAV_COLLISION_THREAT_LEVEL_NONE = 0, //Not a threat
 			MAV_COLLISION_THREAT_LEVEL_LOW  = 1, //Craft is mildly concerned about this threat
@@ -5929,7 +5929,7 @@ enum MAV_COLLISION_THREAT_LEVEL {
  */
 enum MAV_COLLISION_SRC {
 	;
-
+	
 	final int
 			MAV_COLLISION_SRC_ADSB                   = 0, //ID field references ADSB_VEHICLE packets
 			MAV_COLLISION_SRC_MAVLINK_GPS_GLOBAL_INT = 1;  //ID field references MAVLink SRC ID
@@ -5940,7 +5940,7 @@ enum MAV_COLLISION_SRC {
  */
 enum GPS_FIX_TYPE {
 	;
-
+	
 	final int
 			GPS_FIX_TYPE_NO_GPS    = 0, //No GPS connected
 			GPS_FIX_TYPE_NO_FIX    = 1, //No position information, GPS is connected
@@ -5958,7 +5958,7 @@ enum GPS_FIX_TYPE {
  */
 enum LANDING_TARGET_TYPE {
 	;
-
+	
 	final int
 			LANDING_TARGET_TYPE_LIGHT_BEACON    = 0, //Landing target signaled by light beacon (ex: IR-LOCK)
 			LANDING_TARGET_TYPE_RADIO_BEACON    = 1, //Landing target signaled by radio beacon (ex: ILS, NDB)
@@ -5971,7 +5971,7 @@ enum LANDING_TARGET_TYPE {
  */
 enum VTOL_TRANSITION_HEADING {
 	;
-
+	
 	final int
 			VTOL_TRANSITION_HEADING_VEHICLE_DEFAULT = 0, //Respect the heading configuration of the vehicle.
 			VTOL_TRANSITION_HEADING_NEXT_WAYPOINT   = 1, //Use the heading pointing towards the next waypoint.
@@ -5989,7 +5989,7 @@ enum VTOL_TRANSITION_HEADING {
  */
 enum CAMERA_CAP_FLAGS {
 	;
-
+	
 	final int
 			CAMERA_CAP_FLAGS_CAPTURE_VIDEO                   = 1, //Camera is able to record video.
 			CAMERA_CAP_FLAGS_CAPTURE_IMAGE                   = 2, //Camera is able to capture images.
@@ -6004,7 +6004,7 @@ enum CAMERA_CAP_FLAGS {
  */
 enum PARAM_ACK {
 	;
-
+	
 	final int
 			PARAM_ACK_ACCEPTED          = 0, //Parameter value ACCEPTED and SET
 			PARAM_ACK_VALUE_UNSUPPORTED = 1, //Parameter value UNKNOWN/UNSUPPORTED
@@ -6023,7 +6023,7 @@ enum PARAM_ACK {
  */
 enum CAMERA_MODE {
 	;
-
+	
 	final int
 			CAMERA_MODE_IMAGE        = 0, //Camera is in image/photo capture mode.
 			CAMERA_MODE_VIDEO        = 1, //Camera is in video capture mode.
@@ -6035,7 +6035,7 @@ enum CAMERA_MODE {
  */
 enum MAV_ARM_AUTH_DENIED_REASON {
 	;
-
+	
 	final int
 			MAV_ARM_AUTH_DENIED_REASON_GENERIC          = 0, //Not a specific reason
 			MAV_ARM_AUTH_DENIED_REASON_NONE             = 1, //Authorizer will send the error as string to GCS
@@ -6054,7 +6054,7 @@ enum MAV_ARM_AUTH_DENIED_REASON {
  */
 enum UAVIONIX_ADSB_OUT_DYNAMIC_STATE {
 	;
-
+	
 	final int
 			UAVIONIX_ADSB_OUT_DYNAMIC_STATE_INTENT_CHANGE        = 1, //State flags for ADS-B transponder dynamic report
 			UAVIONIX_ADSB_OUT_DYNAMIC_STATE_AUTOPILOT_ENABLED    = 2,
@@ -6068,7 +6068,7 @@ enum UAVIONIX_ADSB_OUT_DYNAMIC_STATE {
  */
 enum UAVIONIX_ADSB_OUT_RF_SELECT {
 	;
-
+	
 	final int
 			UAVIONIX_ADSB_OUT_RF_SELECT_STANDBY    = 0, //Transceiver RF control flags for ADS-B transponder dynamic reports
 			UAVIONIX_ADSB_OUT_RF_SELECT_RX_ENABLED = 1,
@@ -6080,7 +6080,7 @@ enum UAVIONIX_ADSB_OUT_RF_SELECT {
  */
 enum UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX {
 	;
-
+	
 	final int
 			UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_NONE_0 = 0, //Status for ADS-B transponder dynamic input
 			UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_NONE_1 = 1,
@@ -6095,7 +6095,7 @@ enum UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX {
  */
 enum UAVIONIX_ADSB_RF_HEALTH {
 	;
-
+	
 	final int
 			UAVIONIX_ADSB_RF_HEALTH_INITIALIZING = 0, //Status flags for ADS-B transponder dynamic output
 			UAVIONIX_ADSB_RF_HEALTH_OK           = 1,
@@ -6108,7 +6108,7 @@ enum UAVIONIX_ADSB_RF_HEALTH {
  */
 enum UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE {
 	;
-
+	
 	final int
 			UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_NO_DATA     = 0, //Definitions for aircraft size
 			UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_L15M_W23M   = 1,
@@ -6133,7 +6133,7 @@ enum UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE {
  */
 enum UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT {
 	;
-
+	
 	final int
 			UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_NO_DATA  = 0, //GPS lataral offset encoding
 			UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_LEFT_2M  = 1,
@@ -6150,7 +6150,7 @@ enum UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT {
  */
 enum UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON {
 	;
-
+	
 	final int
 			UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON_NO_DATA           = 0, //GPS longitudinal offset encoding
 			UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON_APPLIED_BY_SENSOR = 1;
@@ -6161,7 +6161,7 @@ enum UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON {
  */
 enum UAVIONIX_ADSB_EMERGENCY_STATUS {
 	;
-
+	
 	final int
 			UAVIONIX_ADSB_OUT_NO_EMERGENCY                    = 0, //Emergency status encoding
 			UAVIONIX_ADSB_OUT_GENERAL_EMERGENCY               = 1,
@@ -6175,7 +6175,7 @@ enum UAVIONIX_ADSB_EMERGENCY_STATUS {
 
 enum ACCELCAL_VEHICLE_POS {
 	;
-
+	
 	final int
 			ACCELCAL_VEHICLE_POS_LEVEL    = 1,
 			ACCELCAL_VEHICLE_POS_LEFT     = 2,
@@ -6190,7 +6190,7 @@ enum ACCELCAL_VEHICLE_POS {
  */
 enum LIMITS_STATE {
 	;
-
+	
 	final int
 			LIMITS_INIT       = 0, //pre-initialization
 			LIMITS_DISABLED   = 1, //disabled
@@ -6205,7 +6205,7 @@ enum LIMITS_STATE {
  */
 enum LIMIT_MODULE {
 	;
-
+	
 	final int
 			LIMIT_GPSLOCK  = 1, //pre-initialization
 			LIMIT_GEOFENCE = 2, //disabled
@@ -6217,7 +6217,7 @@ enum LIMIT_MODULE {
  */
 enum RALLY_FLAGS {
 	;
-
+	
 	final int
 			FAVORABLE_WIND = 1, //Flag set when requiring favorable winds for landing.
 	/**
@@ -6232,7 +6232,7 @@ enum RALLY_FLAGS {
  */
 enum PARACHUTE_ACTION {
 	;
-
+	
 	final int
 			PARACHUTE_DISABLE = 0, //Disable parachute release
 			PARACHUTE_ENABLE  = 1, //Enable parachute release
@@ -6244,7 +6244,7 @@ enum PARACHUTE_ACTION {
  */
 enum GRIPPER_ACTIONS {
 	;
-
+	
 	final int
 			GRIPPER_ACTION_RELEASE = 0, //gripper release of cargo
 			GRIPPER_ACTION_GRAB    = 1;  //gripper grabs onto cargo
@@ -6255,7 +6255,7 @@ enum GRIPPER_ACTIONS {
  */
 enum CAMERA_STATUS_TYPES {
 	;
-
+	
 	final int
 			CAMERA_STATUS_TYPE_HEARTBEAT  = 0, //Camera heartbeat, announce camera component ID at 1hz
 			CAMERA_STATUS_TYPE_TRIGGER    = 1, //Camera image triggered
@@ -6271,7 +6271,7 @@ enum CAMERA_STATUS_TYPES {
  */
 enum CAMERA_FEEDBACK_FLAGS {
 	;
-
+	
 	final int
 			CAMERA_FEEDBACK_PHOTO       = 0, //Shooting photos, not video
 			CAMERA_FEEDBACK_VIDEO       = 1, //Shooting video, not stills
@@ -6289,7 +6289,7 @@ enum CAMERA_FEEDBACK_FLAGS {
  */
 enum MAV_MODE_GIMBAL {
 	;
-
+	
 	final int
 			MAV_MODE_GIMBAL_UNINITIALIZED     = 0, //Gimbal is powered on but has not started initializing yet
 			MAV_MODE_GIMBAL_CALIBRATING_PITCH = 1, //Gimbal is currently running calibration on the pitch axis
@@ -6313,7 +6313,7 @@ enum MAV_MODE_GIMBAL {
  */
 enum GIMBAL_AXIS {
 	;
-
+	
 	final int
 			GIMBAL_AXIS_YAW   = 0, //Gimbal yaw axis
 			GIMBAL_AXIS_PITCH = 1, //Gimbal pitch axis
@@ -6325,7 +6325,7 @@ enum GIMBAL_AXIS {
  */
 enum GIMBAL_AXIS_CALIBRATION_STATUS {
 	;
-
+	
 	final int
 			GIMBAL_AXIS_CALIBRATION_STATUS_IN_PROGRESS = 0, //Axis calibration is in progress
 			GIMBAL_AXIS_CALIBRATION_STATUS_SUCCEEDED   = 1, //Axis calibration succeeded
@@ -6337,7 +6337,7 @@ enum GIMBAL_AXIS_CALIBRATION_STATUS {
  */
 enum GIMBAL_AXIS_CALIBRATION_REQUIRED {
 	;
-
+	
 	final int
 			GIMBAL_AXIS_CALIBRATION_REQUIRED_UNKNOWN = 0, //Whether or not this axis requires calibration is unknown at this time
 			GIMBAL_AXIS_CALIBRATION_REQUIRED_TRUE    = 1, //This axis requires calibration
@@ -6349,7 +6349,7 @@ enum GIMBAL_AXIS_CALIBRATION_REQUIRED {
  */
 enum GOPRO_HEARTBEAT_STATUS {
 	;
-
+	
 	final int
 			GOPRO_HEARTBEAT_STATUS_DISCONNECTED = 0, //No GoPro connected
 			GOPRO_HEARTBEAT_STATUS_INCOMPATIBLE = 1, //The detected GoPro is not HeroBus compatible
@@ -6362,7 +6362,7 @@ enum GOPRO_HEARTBEAT_STATUS {
  */
 enum GOPRO_HEARTBEAT_FLAGS {
 	;
-
+	
 	final int
 			GOPRO_FLAG_RECORDING = 1;  //GoPro is currently recording
 }
@@ -6372,7 +6372,7 @@ enum GOPRO_HEARTBEAT_FLAGS {
  */
 enum GOPRO_REQUEST_STATUS {
 	;
-
+	
 	final int
 			GOPRO_REQUEST_SUCCESS = 0, //The write message with ID indicated succeeded
 			GOPRO_REQUEST_FAILED  = 1;  //The write message with ID indicated failed
@@ -6383,7 +6383,7 @@ enum GOPRO_REQUEST_STATUS {
  */
 enum GOPRO_COMMAND {
 	;
-
+	
 	final int
 			GOPRO_COMMAND_POWER                 = 0, //(Get/Set)
 			GOPRO_COMMAND_CAPTURE_MODE          = 1, //(Get/Set)
@@ -6409,7 +6409,7 @@ enum GOPRO_COMMAND {
  */
 enum GOPRO_CAPTURE_MODE {
 	;
-
+	
 	final int
 			GOPRO_CAPTURE_MODE_VIDEO      = 0, //Video mode
 			GOPRO_CAPTURE_MODE_PHOTO      = 1, //Photo mode
@@ -6426,7 +6426,7 @@ enum GOPRO_CAPTURE_MODE {
  */
 enum GOPRO_RESOLUTION {
 	;
-
+	
 	final int
 			GOPRO_RESOLUTION_480p            = 0, //848 x 480 (480p)
 			GOPRO_RESOLUTION_720p            = 1, //1280 x 720 (720p)
@@ -6449,7 +6449,7 @@ enum GOPRO_RESOLUTION {
  */
 enum GOPRO_FRAME_RATE {
 	;
-
+	
 	final int
 			GOPRO_FRAME_RATE_12   = 0, //12 FPS
 			GOPRO_FRAME_RATE_15   = 1, //15 FPS
@@ -6472,7 +6472,7 @@ enum GOPRO_FRAME_RATE {
  */
 enum GOPRO_FIELD_OF_VIEW {
 	;
-
+	
 	final int
 			GOPRO_FIELD_OF_VIEW_WIDE   = 0, //0x00: Wide
 			GOPRO_FIELD_OF_VIEW_MEDIUM = 1, //0x01: Medium
@@ -6484,7 +6484,7 @@ enum GOPRO_FIELD_OF_VIEW {
  */
 enum GOPRO_VIDEO_SETTINGS_FLAGS {
 	;
-
+	
 	final int
 			GOPRO_VIDEO_SETTINGS_TV_MODE = 1;  //0=NTSC, 1=PAL
 }
@@ -6494,7 +6494,7 @@ enum GOPRO_VIDEO_SETTINGS_FLAGS {
  */
 enum GOPRO_PHOTO_RESOLUTION {
 	;
-
+	
 	final int
 			GOPRO_PHOTO_RESOLUTION_5MP_MEDIUM = 0, //5MP Medium
 			GOPRO_PHOTO_RESOLUTION_7MP_MEDIUM = 1, //7MP Medium
@@ -6508,7 +6508,7 @@ enum GOPRO_PHOTO_RESOLUTION {
  */
 enum GOPRO_PROTUNE_WHITE_BALANCE {
 	;
-
+	
 	final int
 			GOPRO_PROTUNE_WHITE_BALANCE_AUTO  = 0, //Auto
 			GOPRO_PROTUNE_WHITE_BALANCE_3000K = 1, //3000K
@@ -6522,7 +6522,7 @@ enum GOPRO_PROTUNE_WHITE_BALANCE {
  */
 enum GOPRO_PROTUNE_COLOUR {
 	;
-
+	
 	final int
 			GOPRO_PROTUNE_COLOUR_STANDARD = 0, //Auto
 			GOPRO_PROTUNE_COLOUR_NEUTRAL  = 1;  //Neutral
@@ -6533,7 +6533,7 @@ enum GOPRO_PROTUNE_COLOUR {
  */
 enum GOPRO_PROTUNE_GAIN {
 	;
-
+	
 	final int
 			GOPRO_PROTUNE_GAIN_400  = 0, //ISO 400
 			GOPRO_PROTUNE_GAIN_800  = 1, //ISO 800 (Only Hero 4)
@@ -6547,7 +6547,7 @@ enum GOPRO_PROTUNE_GAIN {
  */
 enum GOPRO_PROTUNE_SHARPNESS {
 	;
-
+	
 	final int
 			GOPRO_PROTUNE_SHARPNESS_LOW    = 0, //Low Sharpness
 			GOPRO_PROTUNE_SHARPNESS_MEDIUM = 1, //Medium Sharpness
@@ -6559,7 +6559,7 @@ enum GOPRO_PROTUNE_SHARPNESS {
  */
 enum GOPRO_PROTUNE_EXPOSURE {
 	;
-
+	
 	final int
 			GOPRO_PROTUNE_EXPOSURE_NEG_5_0 = 0, //-5.0 EV (Hero 3+ Only)
 			GOPRO_PROTUNE_EXPOSURE_NEG_4_5 = 1, //-4.5 EV (Hero 3+ Only)
@@ -6589,7 +6589,7 @@ enum GOPRO_PROTUNE_EXPOSURE {
  */
 enum GOPRO_CHARGING {
 	;
-
+	
 	final int
 			GOPRO_CHARGING_DISABLED = 0, //Charging disabled
 			GOPRO_CHARGING_ENABLED  = 1;  //Charging enabled
@@ -6600,7 +6600,7 @@ enum GOPRO_CHARGING {
  */
 enum GOPRO_MODEL {
 	;
-
+	
 	final int
 			GOPRO_MODEL_UNKNOWN            = 0, //Unknown gopro model
 			GOPRO_MODEL_HERO_3_PLUS_SILVER = 1, //Hero 3+ Silver (HeroBus not supported by GoPro)
@@ -6614,7 +6614,7 @@ enum GOPRO_MODEL {
  */
 enum GOPRO_BURST_RATE {
 	;
-
+	
 	final int
 			GOPRO_BURST_RATE_3_IN_1_SECOND  = 0, //3 Shots / 1 Second
 			GOPRO_BURST_RATE_5_IN_1_SECOND  = 1, //5 Shots / 1 Second
@@ -6632,7 +6632,7 @@ enum GOPRO_BURST_RATE {
  */
 enum LED_CONTROL_PATTERN {
 	;
-
+	
 	final int
 			LED_CONTROL_PATTERN_OFF            = 0, //LED patterns off (return control to regular vehicle control)
 			LED_CONTROL_PATTERN_FIRMWAREUPDATE = 1, //LEDs show pattern during firmware update
@@ -6644,7 +6644,7 @@ enum LED_CONTROL_PATTERN {
  */
 enum EKF_STATUS_FLAGS {
 	;
-
+	
 	final int
 			EKF_ATTITUDE           = 1, //set if EKF's attitude estimate is good
 			EKF_VELOCITY_HORIZ     = 2, //set if EKF's horizontal velocity estimate is good
@@ -6660,7 +6660,7 @@ enum EKF_STATUS_FLAGS {
 
 enum PID_TUNING_AXIS {
 	;
-
+	
 	final int
 			PID_TUNING_ROLL    = 1,
 			PID_TUNING_PITCH   = 2,
@@ -6672,7 +6672,7 @@ enum PID_TUNING_AXIS {
 
 enum MAG_CAL_STATUS {
 	;
-
+	
 	final int
 			MAG_CAL_NOT_STARTED      = 0,
 			MAG_CAL_WAITING_TO_START = 1,
@@ -6687,7 +6687,7 @@ enum MAG_CAL_STATUS {
  */
 enum MAV_REMOTE_LOG_DATA_BLOCK_COMMANDS {
 	;
-
+	
 	final int
 			MAV_REMOTE_LOG_DATA_BLOCK_STOP  = 2147483645, //UAV to stop sending DataFlash blocks
 			MAV_REMOTE_LOG_DATA_BLOCK_START = 2147483646;  //UAV to start sending DataFlash blocks
@@ -6698,7 +6698,7 @@ enum MAV_REMOTE_LOG_DATA_BLOCK_COMMANDS {
  */
 enum MAV_REMOTE_LOG_DATA_BLOCK_STATUSES {
 	;
-
+	
 	final int
 			MAV_REMOTE_LOG_DATA_BLOCK_NACK = 0, //This block has NOT been received
 			MAV_REMOTE_LOG_DATA_BLOCK_ACK  = 1;  //This block has been received
@@ -6709,7 +6709,7 @@ enum MAV_REMOTE_LOG_DATA_BLOCK_STATUSES {
  */
 enum DEVICE_OP_BUSTYPE {
 	;
-
+	
 	final int
 			DEVICE_OP_BUSTYPE_I2C = 0, //I2C Device operation
 			DEVICE_OP_BUSTYPE_SPI = 1;  //SPI Device operation
