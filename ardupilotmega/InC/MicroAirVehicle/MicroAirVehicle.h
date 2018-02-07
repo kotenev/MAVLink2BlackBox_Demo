@@ -296,7 +296,6 @@ Pack * c_CommunicationChannel_new_HIL_ACTUATOR_CONTROLS_93();
 Pack * c_CommunicationChannel_new_OPTICAL_FLOW_100();
 Pack * c_CommunicationChannel_new_GLOBAL_VISION_POSITION_ESTIMATE_101();
 Pack * c_CommunicationChannel_new_VISION_POSITION_ESTIMATE_102();
-extern void c_CommunicationChannel_on_VISION_POSITION_ESTIMATE_102(Bounds_Inside * bi, Pack * pack);
 Pack * c_CommunicationChannel_new_VISION_SPEED_ESTIMATE_103();
 extern void c_CommunicationChannel_on_VISION_SPEED_ESTIMATE_103(Bounds_Inside * bi, Pack * pack);
 Pack * c_CommunicationChannel_new_VICON_POSITION_ESTIMATE_104();
@@ -927,9 +926,10 @@ Pack * c_CommunicationChannel_new_CAMERA_IMAGE_CAPTURED_263();
 extern void c_CommunicationChannel_on_CAMERA_IMAGE_CAPTURED_263(Bounds_Inside * bi, Pack * pack);
 /**
 *WIP: Information about flight since last arming*/
-extern void c_CommunicationChannel_on_FLIGHT_INFORMATION_264(Bounds_Inside * bi, Pack * pack);
+Pack * c_CommunicationChannel_new_FLIGHT_INFORMATION_264();
 /**
-*WIP: Orientation of a mount*/
+*WIP: Information about flight since last arming*/
+extern void c_CommunicationChannel_on_FLIGHT_INFORMATION_264(Bounds_Inside * bi, Pack * pack);
 extern void c_CommunicationChannel_on_MOUNT_ORIENTATION_265(Bounds_Inside * bi, Pack * pack);
 /**
 *A message containing logged data (see also MAV_CMD_LOGGING_START)*/
@@ -1031,8 +1031,6 @@ INLINER void  c_CommunicationChannel_output_bytes(uint8_t* src, int32_t bytes) {
 INLINER void c_CommunicationChannel_process_received() { c_CommunicationChannel.process(NULL, PROCESS_RECEIVED_PACKS);}//dispatch received packs to its handlers
 
 
-/**
-*Generic micro air vehicle.*/
 typedef  enum
 {
     e_MAV_TYPE_MAV_TYPE_GENERIC = 0, //Generic micro air vehicle.
@@ -1065,6 +1063,7 @@ typedef  enum
     e_MAV_TYPE_MAV_TYPE_ADSB = 27, //Onboard ADSB peripheral
     e_MAV_TYPE_MAV_TYPE_PARAFOIL = 28 //Steerable, nonrigid airfoil
 } e_MAV_TYPE;
+
 /**
 *Micro air vehicle / autopilot classes. This identifies the individual model.*/
 typedef  enum
@@ -1089,6 +1088,7 @@ typedef  enum
     e_MAV_AUTOPILOT_MAV_AUTOPILOT_ASLUAV = 17, //ASLUAV autopilot -- http:www.asl.ethz.ch
     e_MAV_AUTOPILOT_MAV_AUTOPILOT_SMARTAP = 18 //SmartAP Autopilot - http:sky-drones.com
 } e_MAV_AUTOPILOT;
+
 /**
 *These flags encode the MAV mode.*/
 typedef  enum
@@ -1118,8 +1118,7 @@ typedef  enum
     *	shall be used instead. The flag can still be used to report the armed state*/
     e_MAV_MODE_FLAG_MAV_MODE_FLAG_SAFETY_ARMED = 128
 } e_MAV_MODE_FLAG;
-/**
-*Uninitialized system, state is unknown.*/
+
 typedef  enum
 {
     e_MAV_STATE_MAV_STATE_UNINIT = 0, //Uninitialized system, state is unknown.
@@ -1135,6 +1134,7 @@ typedef  enum
     e_MAV_STATE_MAV_STATE_POWEROFF = 7, //System just initialized its power-down sequence, will shut down now.
     e_MAV_STATE_MAV_STATE_FLIGHT_TERMINATION = 8 //System is terminating itself.
 } e_MAV_STATE;
+
 /**
 *These encode the sensors whose status is sent as part of the SYS_STATUS message.*/
 typedef  enum
@@ -1166,9 +1166,7 @@ typedef  enum
     e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_LOGGING = 16777216, //0x1000000 Logging
     e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_BATTERY = 33554432 //0x2000000 Battery
 } e_MAV_SYS_STATUS_SENSOR;
-/**
-*Global coordinate frame, WGS84 coordinate system. First value / x: latitude, second value / y: longitude,
-*	third value / z: positive altitude over mean sea level (MSL*/
+
 typedef  enum
 {
     /**
@@ -1217,6 +1215,7 @@ typedef  enum
     *	level in terrain model*/
     e_MAV_FRAME_MAV_FRAME_GLOBAL_TERRAIN_ALT_INT = 11
 } e_MAV_FRAME;
+
 /**
 *These defines are predefined OR-combined mode flags. There is no need to use values from this enum, but it
 *	 simplifies the use of the mode flags. Note that manual input is enabled in all modes as a safety override.*/
@@ -1240,6 +1239,67 @@ typedef  enum
     *	and not pre-programmed by waypoints*/
     e_MAV_MODE_MAV_MODE_AUTO_ARMED = 220
 } e_MAV_MODE;
+
+inline static e_MAV_MODE _en__f(UMAX id)
+{
+    switch(id)
+    {
+        case 0:
+            return e_MAV_MODE_MAV_MODE_PREFLIGHT;
+        case 1:
+            return e_MAV_MODE_MAV_MODE_MANUAL_DISARMED;
+        case 2:
+            return e_MAV_MODE_MAV_MODE_TEST_DISARMED;
+        case 3:
+            return e_MAV_MODE_MAV_MODE_STABILIZE_DISARMED;
+        case 4:
+            return e_MAV_MODE_MAV_MODE_GUIDED_DISARMED;
+        case 5:
+            return e_MAV_MODE_MAV_MODE_AUTO_DISARMED;
+        case 6:
+            return e_MAV_MODE_MAV_MODE_MANUAL_ARMED;
+        case 7:
+            return e_MAV_MODE_MAV_MODE_TEST_ARMED;
+        case 8:
+            return e_MAV_MODE_MAV_MODE_STABILIZE_ARMED;
+        case 9:
+            return e_MAV_MODE_MAV_MODE_GUIDED_ARMED;
+        case 10:
+            return e_MAV_MODE_MAV_MODE_AUTO_ARMED;
+        default: ;//assert(false);//("Unknown enum ID " + id);
+    }
+    return -1;
+}
+inline static UMAX _id__f(e_MAV_MODE en)
+{
+    switch(en)
+    {
+        case e_MAV_MODE_MAV_MODE_PREFLIGHT:
+            return 0;
+        case e_MAV_MODE_MAV_MODE_MANUAL_DISARMED:
+            return 1;
+        case e_MAV_MODE_MAV_MODE_TEST_DISARMED:
+            return 2;
+        case e_MAV_MODE_MAV_MODE_STABILIZE_DISARMED:
+            return 3;
+        case e_MAV_MODE_MAV_MODE_GUIDED_DISARMED:
+            return 4;
+        case e_MAV_MODE_MAV_MODE_AUTO_DISARMED:
+            return 5;
+        case e_MAV_MODE_MAV_MODE_MANUAL_ARMED:
+            return 6;
+        case e_MAV_MODE_MAV_MODE_TEST_ARMED:
+            return 7;
+        case e_MAV_MODE_MAV_MODE_STABILIZE_ARMED:
+            return 8;
+        case e_MAV_MODE_MAV_MODE_GUIDED_ARMED:
+            return 9;
+        case e_MAV_MODE_MAV_MODE_AUTO_ARMED:
+            return 10;
+        default: ;// assert(false);//("Unknown enum" + id);
+    }
+}
+
 /**
 *Specifies the datatype of a MAVLink parameter.*/
 typedef  enum
@@ -1255,6 +1315,7 @@ typedef  enum
     e_MAV_PARAM_TYPE_MAV_PARAM_TYPE_REAL32 = 9, //32-bit floating-point
     e_MAV_PARAM_TYPE_MAV_PARAM_TYPE_REAL64 = 10 //64-bit floating-point
 } e_MAV_PARAM_TYPE;
+
 /**
 *Type of GPS fix*/
 typedef  enum
@@ -1269,6 +1330,7 @@ typedef  enum
     e_GPS_FIX_TYPE_GPS_FIX_TYPE_STATIC = 7, //Static fixed, typically used for base stations
     e_GPS_FIX_TYPE_GPS_FIX_TYPE_PPP = 8 //PPP, 3D position.
 } e_GPS_FIX_TYPE;
+
 /**
 *Type of mission items being requested/sent in mission protocol.*/
 typedef  enum
@@ -1281,6 +1343,39 @@ typedef  enum
     e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY = 2,
     e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL = 255 //Only used in MISSION_CLEAR_ALL to clear all mission types.
 } e_MAV_MISSION_TYPE;
+
+inline static e_MAV_MISSION_TYPE _en__k(UMAX id)
+{
+    switch(id)
+    {
+        case 0:
+            return e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_MISSION;
+        case 1:
+            return e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_FENCE;
+        case 2:
+            return e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY;
+        case 3:
+            return e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL;
+        default: ;//assert(false);//("Unknown enum ID " + id);
+    }
+    return -1;
+}
+inline static UMAX _id__k(e_MAV_MISSION_TYPE en)
+{
+    switch(en)
+    {
+        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_MISSION:
+            return 0;
+        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_FENCE:
+            return 1;
+        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY:
+            return 2;
+        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL:
+            return 3;
+        default: ;// assert(false);//("Unknown enum" + id);
+    }
+}
+
 /**
 *Commands to be executed by the MAV. They can be executed on user request, or as part of a mission script.
 *	If the action is used in a mission, the parameter mapping to the waypoint/mission message is as follows:
@@ -2639,6 +2734,599 @@ typedef  enum
     *	7	Magic number*/
     e_MAV_CMD_MAV_CMD_GIMBAL_FULL_RESET = 42505
 } e_MAV_CMD;
+
+inline static e_MAV_CMD _en__x(UMAX id)
+{
+    switch(id)
+    {
+        case 0:
+            return e_MAV_CMD_MAV_CMD_NAV_WAYPOINT;
+        case 1:
+            return e_MAV_CMD_MAV_CMD_NAV_LOITER_UNLIM;
+        case 2:
+            return e_MAV_CMD_MAV_CMD_NAV_LOITER_TURNS;
+        case 3:
+            return e_MAV_CMD_MAV_CMD_NAV_LOITER_TIME;
+        case 4:
+            return e_MAV_CMD_MAV_CMD_NAV_RETURN_TO_LAUNCH;
+        case 5:
+            return e_MAV_CMD_MAV_CMD_NAV_LAND;
+        case 6:
+            return e_MAV_CMD_MAV_CMD_NAV_TAKEOFF;
+        case 7:
+            return e_MAV_CMD_MAV_CMD_NAV_LAND_LOCAL;
+        case 8:
+            return e_MAV_CMD_MAV_CMD_NAV_TAKEOFF_LOCAL;
+        case 9:
+            return e_MAV_CMD_MAV_CMD_NAV_FOLLOW;
+        case 10:
+            return e_MAV_CMD_MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
+        case 11:
+            return e_MAV_CMD_MAV_CMD_NAV_LOITER_TO_ALT;
+        case 12:
+            return e_MAV_CMD_MAV_CMD_DO_FOLLOW;
+        case 13:
+            return e_MAV_CMD_MAV_CMD_DO_FOLLOW_REPOSITION;
+        case 14:
+            return e_MAV_CMD_MAV_CMD_NAV_ROI;
+        case 15:
+            return e_MAV_CMD_MAV_CMD_NAV_PATHPLANNING;
+        case 16:
+            return e_MAV_CMD_MAV_CMD_NAV_SPLINE_WAYPOINT;
+        case 17:
+            return e_MAV_CMD_MAV_CMD_NAV_ALTITUDE_WAIT;
+        case 18:
+            return e_MAV_CMD_MAV_CMD_NAV_VTOL_TAKEOFF;
+        case 19:
+            return e_MAV_CMD_MAV_CMD_NAV_VTOL_LAND;
+        case 20:
+            return e_MAV_CMD_MAV_CMD_NAV_GUIDED_ENABLE;
+        case 21:
+            return e_MAV_CMD_MAV_CMD_NAV_DELAY;
+        case 22:
+            return e_MAV_CMD_MAV_CMD_NAV_PAYLOAD_PLACE;
+        case 23:
+            return e_MAV_CMD_MAV_CMD_NAV_LAST;
+        case 24:
+            return e_MAV_CMD_MAV_CMD_CONDITION_DELAY;
+        case 25:
+            return e_MAV_CMD_MAV_CMD_CONDITION_CHANGE_ALT;
+        case 26:
+            return e_MAV_CMD_MAV_CMD_CONDITION_DISTANCE;
+        case 27:
+            return e_MAV_CMD_MAV_CMD_CONDITION_YAW;
+        case 28:
+            return e_MAV_CMD_MAV_CMD_CONDITION_LAST;
+        case 29:
+            return e_MAV_CMD_MAV_CMD_DO_SET_MODE;
+        case 30:
+            return e_MAV_CMD_MAV_CMD_DO_JUMP;
+        case 31:
+            return e_MAV_CMD_MAV_CMD_DO_CHANGE_SPEED;
+        case 32:
+            return e_MAV_CMD_MAV_CMD_DO_SET_HOME;
+        case 33:
+            return e_MAV_CMD_MAV_CMD_DO_SET_PARAMETER;
+        case 34:
+            return e_MAV_CMD_MAV_CMD_DO_SET_RELAY;
+        case 35:
+            return e_MAV_CMD_MAV_CMD_DO_REPEAT_RELAY;
+        case 36:
+            return e_MAV_CMD_MAV_CMD_DO_SET_SERVO;
+        case 37:
+            return e_MAV_CMD_MAV_CMD_DO_REPEAT_SERVO;
+        case 38:
+            return e_MAV_CMD_MAV_CMD_DO_FLIGHTTERMINATION;
+        case 39:
+            return e_MAV_CMD_MAV_CMD_DO_CHANGE_ALTITUDE;
+        case 40:
+            return e_MAV_CMD_MAV_CMD_DO_LAND_START;
+        case 41:
+            return e_MAV_CMD_MAV_CMD_DO_RALLY_LAND;
+        case 42:
+            return e_MAV_CMD_MAV_CMD_DO_GO_AROUND;
+        case 43:
+            return e_MAV_CMD_MAV_CMD_DO_REPOSITION;
+        case 44:
+            return e_MAV_CMD_MAV_CMD_DO_PAUSE_CONTINUE;
+        case 45:
+            return e_MAV_CMD_MAV_CMD_DO_SET_REVERSE;
+        case 46:
+            return e_MAV_CMD_MAV_CMD_DO_CONTROL_VIDEO;
+        case 47:
+            return e_MAV_CMD_MAV_CMD_DO_SET_ROI;
+        case 48:
+            return e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONFIGURE;
+        case 49:
+            return e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONTROL;
+        case 50:
+            return e_MAV_CMD_MAV_CMD_DO_MOUNT_CONFIGURE;
+        case 51:
+            return e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL;
+        case 52:
+            return e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_DIST;
+        case 53:
+            return e_MAV_CMD_MAV_CMD_DO_FENCE_ENABLE;
+        case 54:
+            return e_MAV_CMD_MAV_CMD_DO_PARACHUTE;
+        case 55:
+            return e_MAV_CMD_MAV_CMD_DO_MOTOR_TEST;
+        case 56:
+            return e_MAV_CMD_MAV_CMD_DO_INVERTED_FLIGHT;
+        case 57:
+            return e_MAV_CMD_MAV_CMD_DO_GRIPPER;
+        case 58:
+            return e_MAV_CMD_MAV_CMD_DO_AUTOTUNE_ENABLE;
+        case 59:
+            return e_MAV_CMD_MAV_CMD_NAV_SET_YAW_SPEED;
+        case 60:
+            return e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL;
+        case 61:
+            return e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL_QUAT;
+        case 62:
+            return e_MAV_CMD_MAV_CMD_DO_GUIDED_MASTER;
+        case 63:
+            return e_MAV_CMD_MAV_CMD_DO_GUIDED_LIMITS;
+        case 64:
+            return e_MAV_CMD_MAV_CMD_DO_ENGINE_CONTROL;
+        case 65:
+            return e_MAV_CMD_MAV_CMD_DO_LAST;
+        case 66:
+            return e_MAV_CMD_MAV_CMD_PREFLIGHT_CALIBRATION;
+        case 67:
+            return e_MAV_CMD_MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS;
+        case 68:
+            return e_MAV_CMD_MAV_CMD_PREFLIGHT_UAVCAN;
+        case 69:
+            return e_MAV_CMD_MAV_CMD_PREFLIGHT_STORAGE;
+        case 70:
+            return e_MAV_CMD_MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN;
+        case 71:
+            return e_MAV_CMD_MAV_CMD_OVERRIDE_GOTO;
+        case 72:
+            return e_MAV_CMD_MAV_CMD_MISSION_START;
+        case 73:
+            return e_MAV_CMD_MAV_CMD_COMPONENT_ARM_DISARM;
+        case 74:
+            return e_MAV_CMD_MAV_CMD_GET_HOME_POSITION;
+        case 75:
+            return e_MAV_CMD_MAV_CMD_START_RX_PAIR;
+        case 76:
+            return e_MAV_CMD_MAV_CMD_GET_MESSAGE_INTERVAL;
+        case 77:
+            return e_MAV_CMD_MAV_CMD_SET_MESSAGE_INTERVAL;
+        case 78:
+            return e_MAV_CMD_MAV_CMD_REQUEST_PROTOCOL_VERSION;
+        case 79:
+            return e_MAV_CMD_MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES;
+        case 80:
+            return e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_INFORMATION;
+        case 81:
+            return e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_SETTINGS;
+        case 82:
+            return e_MAV_CMD_MAV_CMD_REQUEST_STORAGE_INFORMATION;
+        case 83:
+            return e_MAV_CMD_MAV_CMD_STORAGE_FORMAT;
+        case 84:
+            return e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS;
+        case 85:
+            return e_MAV_CMD_MAV_CMD_REQUEST_FLIGHT_INFORMATION;
+        case 86:
+            return e_MAV_CMD_MAV_CMD_RESET_CAMERA_SETTINGS;
+        case 87:
+            return e_MAV_CMD_MAV_CMD_SET_CAMERA_MODE;
+        case 88:
+            return e_MAV_CMD_MAV_CMD_IMAGE_START_CAPTURE;
+        case 89:
+            return e_MAV_CMD_MAV_CMD_IMAGE_STOP_CAPTURE;
+        case 90:
+            return e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE;
+        case 91:
+            return e_MAV_CMD_MAV_CMD_DO_TRIGGER_CONTROL;
+        case 92:
+            return e_MAV_CMD_MAV_CMD_VIDEO_START_CAPTURE;
+        case 93:
+            return e_MAV_CMD_MAV_CMD_VIDEO_STOP_CAPTURE;
+        case 94:
+            return e_MAV_CMD_MAV_CMD_VIDEO_START_STREAMING;
+        case 95:
+            return e_MAV_CMD_MAV_CMD_VIDEO_STOP_STREAMING;
+        case 96:
+            return e_MAV_CMD_MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION;
+        case 97:
+            return e_MAV_CMD_MAV_CMD_LOGGING_START;
+        case 98:
+            return e_MAV_CMD_MAV_CMD_LOGGING_STOP;
+        case 99:
+            return e_MAV_CMD_MAV_CMD_AIRFRAME_CONFIGURATION;
+        case 100:
+            return e_MAV_CMD_MAV_CMD_PANORAMA_CREATE;
+        case 101:
+            return e_MAV_CMD_MAV_CMD_DO_VTOL_TRANSITION;
+        case 102:
+            return e_MAV_CMD_MAV_CMD_ARM_AUTHORIZATION_REQUEST;
+        case 103:
+            return e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_STANDARD;
+        case 104:
+            return e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE;
+        case 105:
+            return e_MAV_CMD_MAV_CMD_CONDITION_GATE;
+        case 106:
+            return e_MAV_CMD_MAV_CMD_NAV_FENCE_RETURN_POINT;
+        case 107:
+            return e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION;
+        case 108:
+            return e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION;
+        case 109:
+            return e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION;
+        case 110:
+            return e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION;
+        case 111:
+            return e_MAV_CMD_MAV_CMD_NAV_RALLY_POINT;
+        case 112:
+            return e_MAV_CMD_MAV_CMD_UAVCAN_GET_NODE_INFO;
+        case 113:
+            return e_MAV_CMD_MAV_CMD_PAYLOAD_PREPARE_DEPLOY;
+        case 114:
+            return e_MAV_CMD_MAV_CMD_PAYLOAD_CONTROL_DEPLOY;
+        case 115:
+            return e_MAV_CMD_MAV_CMD_WAYPOINT_USER_1;
+        case 116:
+            return e_MAV_CMD_MAV_CMD_WAYPOINT_USER_2;
+        case 117:
+            return e_MAV_CMD_MAV_CMD_WAYPOINT_USER_3;
+        case 118:
+            return e_MAV_CMD_MAV_CMD_WAYPOINT_USER_4;
+        case 119:
+            return e_MAV_CMD_MAV_CMD_WAYPOINT_USER_5;
+        case 120:
+            return e_MAV_CMD_MAV_CMD_SPATIAL_USER_1;
+        case 121:
+            return e_MAV_CMD_MAV_CMD_SPATIAL_USER_2;
+        case 122:
+            return e_MAV_CMD_MAV_CMD_SPATIAL_USER_3;
+        case 123:
+            return e_MAV_CMD_MAV_CMD_SPATIAL_USER_4;
+        case 124:
+            return e_MAV_CMD_MAV_CMD_SPATIAL_USER_5;
+        case 125:
+            return e_MAV_CMD_MAV_CMD_USER_1;
+        case 126:
+            return e_MAV_CMD_MAV_CMD_USER_2;
+        case 127:
+            return e_MAV_CMD_MAV_CMD_USER_3;
+        case 128:
+            return e_MAV_CMD_MAV_CMD_USER_4;
+        case 129:
+            return e_MAV_CMD_MAV_CMD_USER_5;
+        case 130:
+            return e_MAV_CMD_MAV_CMD_POWER_OFF_INITIATED;
+        case 131:
+            return e_MAV_CMD_MAV_CMD_SOLO_BTN_FLY_CLICK;
+        case 132:
+            return e_MAV_CMD_MAV_CMD_SOLO_BTN_FLY_HOLD;
+        case 133:
+            return e_MAV_CMD_MAV_CMD_SOLO_BTN_PAUSE_CLICK;
+        case 134:
+            return e_MAV_CMD_MAV_CMD_DO_START_MAG_CAL;
+        case 135:
+            return e_MAV_CMD_MAV_CMD_DO_ACCEPT_MAG_CAL;
+        case 136:
+            return e_MAV_CMD_MAV_CMD_DO_CANCEL_MAG_CAL;
+        case 137:
+            return e_MAV_CMD_MAV_CMD_SET_FACTORY_TEST_MODE;
+        case 138:
+            return e_MAV_CMD_MAV_CMD_DO_SEND_BANNER;
+        case 139:
+            return e_MAV_CMD_MAV_CMD_ACCELCAL_VEHICLE_POS;
+        case 140:
+            return e_MAV_CMD_MAV_CMD_GIMBAL_RESET;
+        case 141:
+            return e_MAV_CMD_MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS;
+        case 142:
+            return e_MAV_CMD_MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION;
+        case 143:
+            return e_MAV_CMD_MAV_CMD_GIMBAL_FULL_RESET;
+        default: ;//assert(false);//("Unknown enum ID " + id);
+    }
+    return -1;
+}
+inline static UMAX _id__x(e_MAV_CMD en)
+{
+    switch(en)
+    {
+        case e_MAV_CMD_MAV_CMD_NAV_WAYPOINT:
+            return 0;
+        case e_MAV_CMD_MAV_CMD_NAV_LOITER_UNLIM:
+            return 1;
+        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TURNS:
+            return 2;
+        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TIME:
+            return 3;
+        case e_MAV_CMD_MAV_CMD_NAV_RETURN_TO_LAUNCH:
+            return 4;
+        case e_MAV_CMD_MAV_CMD_NAV_LAND:
+            return 5;
+        case e_MAV_CMD_MAV_CMD_NAV_TAKEOFF:
+            return 6;
+        case e_MAV_CMD_MAV_CMD_NAV_LAND_LOCAL:
+            return 7;
+        case e_MAV_CMD_MAV_CMD_NAV_TAKEOFF_LOCAL:
+            return 8;
+        case e_MAV_CMD_MAV_CMD_NAV_FOLLOW:
+            return 9;
+        case e_MAV_CMD_MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
+            return 10;
+        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TO_ALT:
+            return 11;
+        case e_MAV_CMD_MAV_CMD_DO_FOLLOW:
+            return 12;
+        case e_MAV_CMD_MAV_CMD_DO_FOLLOW_REPOSITION:
+            return 13;
+        case e_MAV_CMD_MAV_CMD_NAV_ROI:
+            return 14;
+        case e_MAV_CMD_MAV_CMD_NAV_PATHPLANNING:
+            return 15;
+        case e_MAV_CMD_MAV_CMD_NAV_SPLINE_WAYPOINT:
+            return 16;
+        case e_MAV_CMD_MAV_CMD_NAV_ALTITUDE_WAIT:
+            return 17;
+        case e_MAV_CMD_MAV_CMD_NAV_VTOL_TAKEOFF:
+            return 18;
+        case e_MAV_CMD_MAV_CMD_NAV_VTOL_LAND:
+            return 19;
+        case e_MAV_CMD_MAV_CMD_NAV_GUIDED_ENABLE:
+            return 20;
+        case e_MAV_CMD_MAV_CMD_NAV_DELAY:
+            return 21;
+        case e_MAV_CMD_MAV_CMD_NAV_PAYLOAD_PLACE:
+            return 22;
+        case e_MAV_CMD_MAV_CMD_NAV_LAST:
+            return 23;
+        case e_MAV_CMD_MAV_CMD_CONDITION_DELAY:
+            return 24;
+        case e_MAV_CMD_MAV_CMD_CONDITION_CHANGE_ALT:
+            return 25;
+        case e_MAV_CMD_MAV_CMD_CONDITION_DISTANCE:
+            return 26;
+        case e_MAV_CMD_MAV_CMD_CONDITION_YAW:
+            return 27;
+        case e_MAV_CMD_MAV_CMD_CONDITION_LAST:
+            return 28;
+        case e_MAV_CMD_MAV_CMD_DO_SET_MODE:
+            return 29;
+        case e_MAV_CMD_MAV_CMD_DO_JUMP:
+            return 30;
+        case e_MAV_CMD_MAV_CMD_DO_CHANGE_SPEED:
+            return 31;
+        case e_MAV_CMD_MAV_CMD_DO_SET_HOME:
+            return 32;
+        case e_MAV_CMD_MAV_CMD_DO_SET_PARAMETER:
+            return 33;
+        case e_MAV_CMD_MAV_CMD_DO_SET_RELAY:
+            return 34;
+        case e_MAV_CMD_MAV_CMD_DO_REPEAT_RELAY:
+            return 35;
+        case e_MAV_CMD_MAV_CMD_DO_SET_SERVO:
+            return 36;
+        case e_MAV_CMD_MAV_CMD_DO_REPEAT_SERVO:
+            return 37;
+        case e_MAV_CMD_MAV_CMD_DO_FLIGHTTERMINATION:
+            return 38;
+        case e_MAV_CMD_MAV_CMD_DO_CHANGE_ALTITUDE:
+            return 39;
+        case e_MAV_CMD_MAV_CMD_DO_LAND_START:
+            return 40;
+        case e_MAV_CMD_MAV_CMD_DO_RALLY_LAND:
+            return 41;
+        case e_MAV_CMD_MAV_CMD_DO_GO_AROUND:
+            return 42;
+        case e_MAV_CMD_MAV_CMD_DO_REPOSITION:
+            return 43;
+        case e_MAV_CMD_MAV_CMD_DO_PAUSE_CONTINUE:
+            return 44;
+        case e_MAV_CMD_MAV_CMD_DO_SET_REVERSE:
+            return 45;
+        case e_MAV_CMD_MAV_CMD_DO_CONTROL_VIDEO:
+            return 46;
+        case e_MAV_CMD_MAV_CMD_DO_SET_ROI:
+            return 47;
+        case e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONFIGURE:
+            return 48;
+        case e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONTROL:
+            return 49;
+        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONFIGURE:
+            return 50;
+        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL:
+            return 51;
+        case e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_DIST:
+            return 52;
+        case e_MAV_CMD_MAV_CMD_DO_FENCE_ENABLE:
+            return 53;
+        case e_MAV_CMD_MAV_CMD_DO_PARACHUTE:
+            return 54;
+        case e_MAV_CMD_MAV_CMD_DO_MOTOR_TEST:
+            return 55;
+        case e_MAV_CMD_MAV_CMD_DO_INVERTED_FLIGHT:
+            return 56;
+        case e_MAV_CMD_MAV_CMD_DO_GRIPPER:
+            return 57;
+        case e_MAV_CMD_MAV_CMD_DO_AUTOTUNE_ENABLE:
+            return 58;
+        case e_MAV_CMD_MAV_CMD_NAV_SET_YAW_SPEED:
+            return 59;
+        case e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL:
+            return 60;
+        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL_QUAT:
+            return 61;
+        case e_MAV_CMD_MAV_CMD_DO_GUIDED_MASTER:
+            return 62;
+        case e_MAV_CMD_MAV_CMD_DO_GUIDED_LIMITS:
+            return 63;
+        case e_MAV_CMD_MAV_CMD_DO_ENGINE_CONTROL:
+            return 64;
+        case e_MAV_CMD_MAV_CMD_DO_LAST:
+            return 65;
+        case e_MAV_CMD_MAV_CMD_PREFLIGHT_CALIBRATION:
+            return 66;
+        case e_MAV_CMD_MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS:
+            return 67;
+        case e_MAV_CMD_MAV_CMD_PREFLIGHT_UAVCAN:
+            return 68;
+        case e_MAV_CMD_MAV_CMD_PREFLIGHT_STORAGE:
+            return 69;
+        case e_MAV_CMD_MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN:
+            return 70;
+        case e_MAV_CMD_MAV_CMD_OVERRIDE_GOTO:
+            return 71;
+        case e_MAV_CMD_MAV_CMD_MISSION_START:
+            return 72;
+        case e_MAV_CMD_MAV_CMD_COMPONENT_ARM_DISARM:
+            return 73;
+        case e_MAV_CMD_MAV_CMD_GET_HOME_POSITION:
+            return 74;
+        case e_MAV_CMD_MAV_CMD_START_RX_PAIR:
+            return 75;
+        case e_MAV_CMD_MAV_CMD_GET_MESSAGE_INTERVAL:
+            return 76;
+        case e_MAV_CMD_MAV_CMD_SET_MESSAGE_INTERVAL:
+            return 77;
+        case e_MAV_CMD_MAV_CMD_REQUEST_PROTOCOL_VERSION:
+            return 78;
+        case e_MAV_CMD_MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES:
+            return 79;
+        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_INFORMATION:
+            return 80;
+        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_SETTINGS:
+            return 81;
+        case e_MAV_CMD_MAV_CMD_REQUEST_STORAGE_INFORMATION:
+            return 82;
+        case e_MAV_CMD_MAV_CMD_STORAGE_FORMAT:
+            return 83;
+        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS:
+            return 84;
+        case e_MAV_CMD_MAV_CMD_REQUEST_FLIGHT_INFORMATION:
+            return 85;
+        case e_MAV_CMD_MAV_CMD_RESET_CAMERA_SETTINGS:
+            return 86;
+        case e_MAV_CMD_MAV_CMD_SET_CAMERA_MODE:
+            return 87;
+        case e_MAV_CMD_MAV_CMD_IMAGE_START_CAPTURE:
+            return 88;
+        case e_MAV_CMD_MAV_CMD_IMAGE_STOP_CAPTURE:
+            return 89;
+        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE:
+            return 90;
+        case e_MAV_CMD_MAV_CMD_DO_TRIGGER_CONTROL:
+            return 91;
+        case e_MAV_CMD_MAV_CMD_VIDEO_START_CAPTURE:
+            return 92;
+        case e_MAV_CMD_MAV_CMD_VIDEO_STOP_CAPTURE:
+            return 93;
+        case e_MAV_CMD_MAV_CMD_VIDEO_START_STREAMING:
+            return 94;
+        case e_MAV_CMD_MAV_CMD_VIDEO_STOP_STREAMING:
+            return 95;
+        case e_MAV_CMD_MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION:
+            return 96;
+        case e_MAV_CMD_MAV_CMD_LOGGING_START:
+            return 97;
+        case e_MAV_CMD_MAV_CMD_LOGGING_STOP:
+            return 98;
+        case e_MAV_CMD_MAV_CMD_AIRFRAME_CONFIGURATION:
+            return 99;
+        case e_MAV_CMD_MAV_CMD_PANORAMA_CREATE:
+            return 100;
+        case e_MAV_CMD_MAV_CMD_DO_VTOL_TRANSITION:
+            return 101;
+        case e_MAV_CMD_MAV_CMD_ARM_AUTHORIZATION_REQUEST:
+            return 102;
+        case e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_STANDARD:
+            return 103;
+        case e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE:
+            return 104;
+        case e_MAV_CMD_MAV_CMD_CONDITION_GATE:
+            return 105;
+        case e_MAV_CMD_MAV_CMD_NAV_FENCE_RETURN_POINT:
+            return 106;
+        case e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION:
+            return 107;
+        case e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION:
+            return 108;
+        case e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION:
+            return 109;
+        case e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION:
+            return 110;
+        case e_MAV_CMD_MAV_CMD_NAV_RALLY_POINT:
+            return 111;
+        case e_MAV_CMD_MAV_CMD_UAVCAN_GET_NODE_INFO:
+            return 112;
+        case e_MAV_CMD_MAV_CMD_PAYLOAD_PREPARE_DEPLOY:
+            return 113;
+        case e_MAV_CMD_MAV_CMD_PAYLOAD_CONTROL_DEPLOY:
+            return 114;
+        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_1:
+            return 115;
+        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_2:
+            return 116;
+        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_3:
+            return 117;
+        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_4:
+            return 118;
+        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_5:
+            return 119;
+        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_1:
+            return 120;
+        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_2:
+            return 121;
+        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_3:
+            return 122;
+        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_4:
+            return 123;
+        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_5:
+            return 124;
+        case e_MAV_CMD_MAV_CMD_USER_1:
+            return 125;
+        case e_MAV_CMD_MAV_CMD_USER_2:
+            return 126;
+        case e_MAV_CMD_MAV_CMD_USER_3:
+            return 127;
+        case e_MAV_CMD_MAV_CMD_USER_4:
+            return 128;
+        case e_MAV_CMD_MAV_CMD_USER_5:
+            return 129;
+        case e_MAV_CMD_MAV_CMD_POWER_OFF_INITIATED:
+            return 130;
+        case e_MAV_CMD_MAV_CMD_SOLO_BTN_FLY_CLICK:
+            return 131;
+        case e_MAV_CMD_MAV_CMD_SOLO_BTN_FLY_HOLD:
+            return 132;
+        case e_MAV_CMD_MAV_CMD_SOLO_BTN_PAUSE_CLICK:
+            return 133;
+        case e_MAV_CMD_MAV_CMD_DO_START_MAG_CAL:
+            return 134;
+        case e_MAV_CMD_MAV_CMD_DO_ACCEPT_MAG_CAL:
+            return 135;
+        case e_MAV_CMD_MAV_CMD_DO_CANCEL_MAG_CAL:
+            return 136;
+        case e_MAV_CMD_MAV_CMD_SET_FACTORY_TEST_MODE:
+            return 137;
+        case e_MAV_CMD_MAV_CMD_DO_SEND_BANNER:
+            return 138;
+        case e_MAV_CMD_MAV_CMD_ACCELCAL_VEHICLE_POS:
+            return 139;
+        case e_MAV_CMD_MAV_CMD_GIMBAL_RESET:
+            return 140;
+        case e_MAV_CMD_MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS:
+            return 141;
+        case e_MAV_CMD_MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION:
+            return 142;
+        case e_MAV_CMD_MAV_CMD_GIMBAL_FULL_RESET:
+            return 143;
+        default: ;// assert(false);//("Unknown enum" + id);
+    }
+}
+
 /**
 *result in a mavlink mission ack*/
 typedef  enum
@@ -2659,6 +3347,7 @@ typedef  enum
     e_MAV_MISSION_RESULT_MAV_MISSION_INVALID_SEQUENCE = 13, //received waypoint out of sequence
     e_MAV_MISSION_RESULT_MAV_MISSION_DENIED = 14 //not accepting any mission commands from this communication partner
 } e_MAV_MISSION_RESULT;
+
 /**
 *Enumeration of estimator types*/
 typedef  enum
@@ -2669,6 +3358,7 @@ typedef  enum
     e_MAV_ESTIMATOR_TYPE_MAV_ESTIMATOR_TYPE_GPS = 4, //Plain GPS estimate.
     e_MAV_ESTIMATOR_TYPE_MAV_ESTIMATOR_TYPE_GPS_INS = 5 //Estimator integrating GPS and inertial sensing.
 } e_MAV_ESTIMATOR_TYPE;
+
 /**
 *result from a mavlink command*/
 typedef  enum
@@ -2680,6 +3370,7 @@ typedef  enum
     e_MAV_RESULT_MAV_RESULT_FAILED = 4, //Command executed, but failed
     e_MAV_RESULT_MAV_RESULT_IN_PROGRESS = 5 //WIP: Command being executed
 } e_MAV_RESULT;
+
 /**
 *Power supply status flags (bitmask)*/
 typedef  enum
@@ -2691,6 +3382,7 @@ typedef  enum
     e_MAV_POWER_STATUS_MAV_POWER_STATUS_PERIPH_HIPOWER_OVERCURRENT = 16, //hi-power peripheral supply is in over-current state
     e_MAV_POWER_STATUS_MAV_POWER_STATUS_CHANGED = 32 //Power status has changed since boot
 } e_MAV_POWER_STATUS;
+
 /**
 *SERIAL_CONTROL device types*/
 typedef  enum
@@ -2701,6 +3393,7 @@ typedef  enum
     e_SERIAL_CONTROL_DEV_SERIAL_CONTROL_DEV_GPS2 = 3, //Second GPS port
     e_SERIAL_CONTROL_DEV_SERIAL_CONTROL_DEV_SHELL = 10 //system shell
 } e_SERIAL_CONTROL_DEV;
+
 /**
 *SERIAL_CONTROL flags (bitmask)*/
 typedef  enum
@@ -2715,6 +3408,7 @@ typedef  enum
     e_SERIAL_CONTROL_FLAG_SERIAL_CONTROL_FLAG_BLOCKING = 8, //Block on writes to the serial port
     e_SERIAL_CONTROL_FLAG_SERIAL_CONTROL_FLAG_MULTI = 16 //Send multiple replies until port is drained
 } e_SERIAL_CONTROL_FLAG;
+
 /**
 *Enumeration of distance sensor types*/
 typedef  enum
@@ -2725,6 +3419,7 @@ typedef  enum
     e_MAV_DISTANCE_SENSOR_MAV_DISTANCE_SENSOR_RADAR = 3, //Radar type, e.g. uLanding units
     e_MAV_DISTANCE_SENSOR_MAV_DISTANCE_SENSOR_UNKNOWN = 4 //Broken or unknown type, e.g. analog units
 } e_MAV_DISTANCE_SENSOR;
+
 /**
 *Enumeration of sensor orientation, according to its rotations*/
 typedef  enum
@@ -2769,6 +3464,7 @@ typedef  enum
     e_MAV_SENSOR_ORIENTATION_MAV_SENSOR_ROTATION_ROLL_90_YAW_270 = 37, //Roll: 90, Pitch: 0, Yaw: 270
     e_MAV_SENSOR_ORIENTATION_MAV_SENSOR_ROTATION_ROLL_315_PITCH_315_YAW_315 = 38 //Roll: 315, Pitch: 315, Yaw: 315
 } e_MAV_SENSOR_ORIENTATION;
+
 /**
 *Enumeration of battery functions*/
 typedef  enum
@@ -2779,6 +3475,7 @@ typedef  enum
     e_MAV_BATTERY_FUNCTION_MAV_BATTERY_FUNCTION_AVIONICS = 3, //Avionics battery
     e_MAV_BATTERY_FUNCTION_MAV_BATTERY_TYPE_PAYLOAD = 4 //Payload battery
 } e_MAV_BATTERY_FUNCTION;
+
 /**
 *Enumeration of battery types*/
 typedef  enum
@@ -2789,6 +3486,7 @@ typedef  enum
     e_MAV_BATTERY_TYPE_MAV_BATTERY_TYPE_LION = 3, //Lithium-ION battery
     e_MAV_BATTERY_TYPE_MAV_BATTERY_TYPE_NIMH = 4 //Nickel metal hydride battery
 } e_MAV_BATTERY_TYPE;
+
 /**
 *Bitmask of (optional) autopilot capabilities (64 bit). If a bit is set, the autopilot supports this capability*/
 typedef  enum
@@ -2811,6 +3509,7 @@ typedef  enum
     e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_MISSION_RALLY = 32768, //Autopilot supports mission rally point protocol.
     e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_FLIGHT_INFORMATION = 65536 //Autopilot supports the flight information protocol.
 } e_MAV_PROTOCOL_CAPABILITY;
+
 /**
 *Type of landing target*/
 typedef  enum
@@ -2820,6 +3519,7 @@ typedef  enum
     e_LANDING_TARGET_TYPE_LANDING_TARGET_TYPE_VISION_FIDUCIAL = 2, //Landing target represented by a fiducial marker (ex: ARTag)
     e_LANDING_TARGET_TYPE_LANDING_TARGET_TYPE_VISION_OTHER = 3 //Landing target represented by a pre-defined visual shape/feature (ex: X-marker, H-marker, square)
 } e_LANDING_TARGET_TYPE;
+
 /**
 *Enumeration of possible mount operation modes*/
 typedef  enum
@@ -2830,8 +3530,7 @@ typedef  enum
     e_MAV_MOUNT_MODE_MAV_MOUNT_MODE_RC_TARGETING = 3, //Load neutral position and start RC Roll,Pitch,Yaw control with stabilization
     e_MAV_MOUNT_MODE_MAV_MOUNT_MODE_GPS_POINT = 4 //Load neutral position and start to point to Lat,Lon,Alt
 } e_MAV_MOUNT_MODE;
-/**
-*No last fence breach*/
+
 typedef  enum
 {
     e_FENCE_BREACH_FENCE_BREACH_NONE = 0, //No last fence breach
@@ -2839,8 +3538,7 @@ typedef  enum
     e_FENCE_BREACH_FENCE_BREACH_MAXALT = 2, //Breached maximum altitude
     e_FENCE_BREACH_FENCE_BREACH_BOUNDARY = 3 //Breached fence boundary
 } e_FENCE_BREACH;
-/**
-*pre-initialization*/
+
 typedef  enum
 {
     e_LIMITS_STATE_LIMITS_INIT = 0, //pre-initialization
@@ -2850,14 +3548,14 @@ typedef  enum
     e_LIMITS_STATE_LIMITS_RECOVERING = 4, //taking action eg. RTL
     e_LIMITS_STATE_LIMITS_RECOVERED = 5 //we're no longer in breach of a limit
 } e_LIMITS_STATE;
-/**
-*pre-initialization*/
+
 typedef  enum
 {
     e_LIMIT_MODULE_LIMIT_GPSLOCK = 1, //pre-initialization
     e_LIMIT_MODULE_LIMIT_GEOFENCE = 2, //disabled
     e_LIMIT_MODULE_LIMIT_ALTITUDE = 4 //checking limits
 } e_LIMIT_MODULE;
+
 /**
 *Flags in RALLY_POINT message*/
 typedef  enum
@@ -2868,8 +3566,7 @@ typedef  enum
     *	not set when plane is to loiter at Rally point until commanded to land*/
     e_RALLY_FLAGS_LAND_IMMEDIATELY = 2
 } e_RALLY_FLAGS;
-/**
-*Camera heartbeat, announce camera component ID at 1hz*/
+
 typedef  enum
 {
     e_CAMERA_STATUS_TYPES_CAMERA_STATUS_TYPE_HEARTBEAT = 0, //Camera heartbeat, announce camera component ID at 1hz
@@ -2880,8 +3577,7 @@ typedef  enum
     e_CAMERA_STATUS_TYPES_CAMERA_STATUS_TYPE_LOWSTORE = 5, //Camera storage low. Parameter p1 shows reported shots remaining
     e_CAMERA_STATUS_TYPES_CAMERA_STATUS_TYPE_LOWSTOREV = 6 //Camera storage low. Parameter p1 shows reported video minutes remaining
 } e_CAMERA_STATUS_TYPES;
-/**
-*Shooting photos, not video*/
+
 typedef  enum
 {
     e_CAMERA_FEEDBACK_FLAGS_CAMERA_FEEDBACK_PHOTO = 0, //Shooting photos, not video
@@ -2893,6 +3589,7 @@ typedef  enum
     *	a pictur*/
     e_CAMERA_FEEDBACK_FLAGS_CAMERA_FEEDBACK_OPENLOOP = 4
 } e_CAMERA_FEEDBACK_FLAGS;
+
 /**
 *Special ACK block numbers control activation of dataflash log streaming*/
 typedef  enum
@@ -2900,6 +3597,7 @@ typedef  enum
     e_MAV_REMOTE_LOG_DATA_BLOCK_COMMANDS_MAV_REMOTE_LOG_DATA_BLOCK_STOP = 2147483645, //UAV to stop sending DataFlash blocks
     e_MAV_REMOTE_LOG_DATA_BLOCK_COMMANDS_MAV_REMOTE_LOG_DATA_BLOCK_START = 2147483646 //UAV to start sending DataFlash blocks
 } e_MAV_REMOTE_LOG_DATA_BLOCK_COMMANDS;
+
 /**
 *Possible remote log data block statuses*/
 typedef  enum
@@ -2907,6 +3605,7 @@ typedef  enum
     e_MAV_REMOTE_LOG_DATA_BLOCK_STATUSES_MAV_REMOTE_LOG_DATA_BLOCK_NACK = 0, //This block has NOT been received
     e_MAV_REMOTE_LOG_DATA_BLOCK_STATUSES_MAV_REMOTE_LOG_DATA_BLOCK_ACK = 1 //This block has been received
 } e_MAV_REMOTE_LOG_DATA_BLOCK_STATUSES;
+
 typedef  enum
 {
     e_MAG_CAL_STATUS_MAG_CAL_NOT_STARTED = 0,
@@ -2916,6 +3615,7 @@ typedef  enum
     e_MAG_CAL_STATUS_MAG_CAL_SUCCESS = 4,
     e_MAG_CAL_STATUS_MAG_CAL_FAILED = 5
 } e_MAG_CAL_STATUS;
+
 /**
 *Flags in EKF_STATUS message*/
 typedef  enum
@@ -2931,6 +3631,7 @@ typedef  enum
     e_EKF_STATUS_FLAGS_EKF_PRED_POS_HORIZ_REL = 256, //set if EKF's predicted horizontal position (relative) estimate is good
     e_EKF_STATUS_FLAGS_EKF_PRED_POS_HORIZ_ABS = 512 //set if EKF's predicted horizontal position (absolute) estimate is good
 } e_EKF_STATUS_FLAGS;
+
 typedef  enum
 {
     e_PID_TUNING_AXIS_PID_TUNING_ROLL = 1,
@@ -2940,8 +3641,7 @@ typedef  enum
     e_PID_TUNING_AXIS_PID_TUNING_STEER = 5,
     e_PID_TUNING_AXIS_PID_TUNING_LANDING = 6
 } e_PID_TUNING_AXIS;
-/**
-*No GoPro connected*/
+
 typedef  enum
 {
     e_GOPRO_HEARTBEAT_STATUS_GOPRO_HEARTBEAT_STATUS_DISCONNECTED = 0, //No GoPro connected
@@ -2949,8 +3649,7 @@ typedef  enum
     e_GOPRO_HEARTBEAT_STATUS_GOPRO_HEARTBEAT_STATUS_CONNECTED = 2, //A HeroBus compatible GoPro is connected
     e_GOPRO_HEARTBEAT_STATUS_GOPRO_HEARTBEAT_STATUS_ERROR = 3 //An unrecoverable error was encountered with the connected GoPro, it may require a power cycle
 } e_GOPRO_HEARTBEAT_STATUS;
-/**
-*Video mode*/
+
 typedef  enum
 {
     e_GOPRO_CAPTURE_MODE_GOPRO_CAPTURE_MODE_VIDEO = 0, //Video mode
@@ -2962,14 +3661,12 @@ typedef  enum
     e_GOPRO_CAPTURE_MODE_GOPRO_CAPTURE_MODE_SETUP = 6, //Playback mode, hero 4 only
     e_GOPRO_CAPTURE_MODE_GOPRO_CAPTURE_MODE_UNKNOWN = 255 //Mode not yet known
 } e_GOPRO_CAPTURE_MODE;
-/**
-*GoPro is currently recording*/
+
 typedef  enum
 {
     e_GOPRO_HEARTBEAT_FLAGS_GOPRO_FLAG_RECORDING = 1 //GoPro is currently recording
 } e_GOPRO_HEARTBEAT_FLAGS;
-/**
-*(Get/Set)*/
+
 typedef  enum
 {
     e_GOPRO_COMMAND_GOPRO_COMMAND_POWER = 0, //(Get/Set)
@@ -2990,13 +3687,13 @@ typedef  enum
     e_GOPRO_COMMAND_GOPRO_COMMAND_TIME = 15, //(Get/Set)
     e_GOPRO_COMMAND_GOPRO_COMMAND_CHARGING = 16 //(Get/Set)
 } e_GOPRO_COMMAND;
-/**
-*The write message with ID indicated succeeded*/
+
 typedef  enum
 {
     e_GOPRO_REQUEST_STATUS_GOPRO_REQUEST_SUCCESS = 0, //The write message with ID indicated succeeded
     e_GOPRO_REQUEST_STATUS_GOPRO_REQUEST_FAILED = 1 //The write message with ID indicated failed
 } e_GOPRO_REQUEST_STATUS;
+
 /**
 *Flags in EKF_STATUS message*/
 typedef  enum
@@ -3016,8 +3713,7 @@ typedef  enum
     e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_PRED_POS_HORIZ_ABS = 512, //True if the EKF has sufficient data to enter a mode that will provide a (absolute) position estimat
     e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_GPS_GLITCH = 1024 //True if the EKF has detected a GPS glitch
 } e_ESTIMATOR_STATUS_FLAGS;
-/**
-*ignore altitude field*/
+
 typedef  enum
 {
     e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_ALT = 1, //ignore altitude field
@@ -3029,6 +3725,7 @@ typedef  enum
     e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_HORIZONTAL_ACCURACY = 64, //ignore horizontal accuracy field
     e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_VERTICAL_ACCURACY = 128 //ignore vertical accuracy field
 } e_GPS_INPUT_IGNORE_FLAGS;
+
 /**
 *Enumeration of landed detector states*/
 typedef  enum
@@ -3039,6 +3736,7 @@ typedef  enum
     e_MAV_LANDED_STATE_MAV_LANDED_STATE_TAKEOFF = 3, //MAV currently taking off
     e_MAV_LANDED_STATE_MAV_LANDED_STATE_LANDING = 4 //MAV currently landing
 } e_MAV_LANDED_STATE;
+
 /**
 *Enumeration of VTOL states*/
 typedef  enum
@@ -3049,6 +3747,7 @@ typedef  enum
     e_MAV_VTOL_STATE_MAV_VTOL_STATE_MC = 3, //VTOL is in multicopter state
     e_MAV_VTOL_STATE_MAV_VTOL_STATE_FW = 4 //VTOL is in fixed-wing state
 } e_MAV_VTOL_STATE;
+
 /**
 *Enumeration of the ADSB altimeter types*/
 typedef  enum
@@ -3056,11 +3755,12 @@ typedef  enum
     e_ADSB_ALTITUDE_TYPE_ADSB_ALTITUDE_TYPE_PRESSURE_QNH = 0, //Altitude reported from a Baro source using QNH reference
     e_ADSB_ALTITUDE_TYPE_ADSB_ALTITUDE_TYPE_GEOMETRIC = 1 //Altitude reported from a GNSS source
 } e_ADSB_ALTITUDE_TYPE;
+
 /**
 *ADSB classification for the type of vehicle emitting the transponder signal*/
 typedef  enum
 {
-    e_ADSB_EMITTER_TYPE_ADSB_EMITTER_TYPE_NO_INFO = 0, //ADSB classification for the type of vehicle emitting the transponder signal
+    e_ADSB_EMITTER_TYPE_ADSB_EMITTER_TYPE_NO_INFO = 0,
     e_ADSB_EMITTER_TYPE_ADSB_EMITTER_TYPE_LIGHT = 1,
     e_ADSB_EMITTER_TYPE_ADSB_EMITTER_TYPE_SMALL = 2,
     e_ADSB_EMITTER_TYPE_ADSB_EMITTER_TYPE_LARGE = 3,
@@ -3081,11 +3781,12 @@ typedef  enum
     e_ADSB_EMITTER_TYPE_ADSB_EMITTER_TYPE_SERVICE_SURFACE = 18,
     e_ADSB_EMITTER_TYPE_ADSB_EMITTER_TYPE_POINT_OBSTACLE = 19
 } e_ADSB_EMITTER_TYPE;
+
 /**
 *These flags indicate status such as data validity of each data source. Set = data valid*/
 typedef  enum
 {
-    e_ADSB_FLAGS_ADSB_FLAGS_VALID_COORDS = 1, //These flags indicate status such as data validity of each data source. Set = data valid
+    e_ADSB_FLAGS_ADSB_FLAGS_VALID_COORDS = 1,
     e_ADSB_FLAGS_ADSB_FLAGS_VALID_ALTITUDE = 2,
     e_ADSB_FLAGS_ADSB_FLAGS_VALID_HEADING = 4,
     e_ADSB_FLAGS_ADSB_FLAGS_VALID_VELOCITY = 8,
@@ -3093,6 +3794,7 @@ typedef  enum
     e_ADSB_FLAGS_ADSB_FLAGS_VALID_SQUAWK = 32,
     e_ADSB_FLAGS_ADSB_FLAGS_SIMULATED = 64
 } e_ADSB_FLAGS;
+
 /**
 *Source of information about this collision.*/
 typedef  enum
@@ -3100,6 +3802,7 @@ typedef  enum
     e_MAV_COLLISION_SRC_MAV_COLLISION_SRC_ADSB = 0, //ID field references ADSB_VEHICLE packets
     e_MAV_COLLISION_SRC_MAV_COLLISION_SRC_MAVLINK_GPS_GLOBAL_INT = 1 //ID field references MAVLink SRC ID
 } e_MAV_COLLISION_SRC;
+
 /**
 *Possible actions an aircraft can take to avoid a collision.*/
 typedef  enum
@@ -3112,6 +3815,7 @@ typedef  enum
     e_MAV_COLLISION_ACTION_MAV_COLLISION_ACTION_RTL = 5, //Aircraft to fly directly back to its launch point
     e_MAV_COLLISION_ACTION_MAV_COLLISION_ACTION_HOVER = 6 //Aircraft to stop in place
 } e_MAV_COLLISION_ACTION;
+
 /**
 *Aircraft-rated danger from this threat.*/
 typedef  enum
@@ -3120,6 +3824,7 @@ typedef  enum
     e_MAV_COLLISION_THREAT_LEVEL_MAV_COLLISION_THREAT_LEVEL_LOW = 1, //Craft is mildly concerned about this threat
     e_MAV_COLLISION_THREAT_LEVEL_MAV_COLLISION_THREAT_LEVEL_HIGH = 2 //Craft is panicing, and may take actions to avoid threat
 } e_MAV_COLLISION_THREAT_LEVEL;
+
 /**
 *Indicates the severity level, generally used for status messages to indicate their relative urgency. Based
 *	on RFC-5424 using expanded definitions at: http:www.kiwisyslog.com/kb/info:-syslog-message-levels/*/
@@ -3140,6 +3845,7 @@ typedef  enum
     e_MAV_SEVERITY_MAV_SEVERITY_INFO = 6, //Normal operational messages. Useful for logging. No action is required for these messages.
     e_MAV_SEVERITY_MAV_SEVERITY_DEBUG = 7 //Useful non-operational messages that can assist in debugging. These should not occur during normal operation
 } e_MAV_SEVERITY;
+
 /**
 *Camera capability flags (Bitmap).*/
 typedef  enum
@@ -3151,6 +3857,7 @@ typedef  enum
     e_CAMERA_CAP_FLAGS_CAMERA_CAP_FLAGS_CAN_CAPTURE_VIDEO_IN_IMAGE_MODE = 16, //Camera can capture videos while in Photo/Image mode
     e_CAMERA_CAP_FLAGS_CAMERA_CAP_FLAGS_HAS_IMAGE_SURVEY_MODE = 32 //Camera has image survey mode (MAV_CMD_SET_CAMERA_MODE)
 } e_CAMERA_CAP_FLAGS;
+
 /**
 *Camera Modes.*/
 typedef  enum
@@ -3159,6 +3866,7 @@ typedef  enum
     e_CAMERA_MODE_CAMERA_MODE_VIDEO = 1, //Camera is in video capture mode.
     e_CAMERA_MODE_CAMERA_MODE_IMAGE_SURVEY = 2 //Camera is in image survey capture mode. It allows for camera controller to do specific settings for surveys
 } e_CAMERA_MODE;
+
 /**
 *Generalized UAVCAN node health*/
 typedef  enum
@@ -3168,6 +3876,7 @@ typedef  enum
     e_UAVCAN_NODE_HEALTH_UAVCAN_NODE_HEALTH_ERROR = 2, //The node has encountered a major failure.
     e_UAVCAN_NODE_HEALTH_UAVCAN_NODE_HEALTH_CRITICAL = 3 //The node has suffered a fatal malfunction.
 } e_UAVCAN_NODE_HEALTH;
+
 /**
 *Generalized UAVCAN node mode*/
 typedef  enum
@@ -3178,6 +3887,7 @@ typedef  enum
     e_UAVCAN_NODE_MODE_UAVCAN_NODE_MODE_SOFTWARE_UPDATE = 3, //The node is in the process of updating its software.
     e_UAVCAN_NODE_MODE_UAVCAN_NODE_MODE_OFFLINE = 7 //The node is no longer available online.
 } e_UAVCAN_NODE_MODE;
+
 /**
 *Specifies the datatype of a MAVLink extended parameter.*/
 typedef  enum
@@ -3194,6 +3904,7 @@ typedef  enum
     e_MAV_PARAM_EXT_TYPE_MAV_PARAM_EXT_TYPE_REAL64 = 10, //64-bit floating-point
     e_MAV_PARAM_EXT_TYPE_MAV_PARAM_EXT_TYPE_CUSTOM = 11 //Custom Type
 } e_MAV_PARAM_EXT_TYPE;
+
 /**
 *Result from a PARAM_EXT_SET message.*/
 typedef  enum
@@ -3208,11 +3919,12 @@ typedef  enum
     *	know it was received*/
     e_PARAM_ACK_PARAM_ACK_IN_PROGRESS = 3
 } e_PARAM_ACK;
+
 /**
 *Definitions for aircraft size*/
 typedef  enum
 {
-    e_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_NO_DATA = 0, //Definitions for aircraft size
+    e_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_NO_DATA = 0,
     e_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_L15M_W23M = 1,
     e_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_L25M_W28P5M = 2,
     e_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_L25_34M = 3,
@@ -3229,11 +3941,12 @@ typedef  enum
     e_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_L85_W80M = 14,
     e_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_L85_W90M = 15
 } e_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE;
+
 /**
 *GPS lataral offset encoding*/
 typedef  enum
 {
-    e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_NO_DATA = 0, //GPS lataral offset encoding
+    e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_NO_DATA = 0,
     e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_LEFT_2M = 1,
     e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_LEFT_4M = 2,
     e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_LEFT_6M = 3,
@@ -3242,37 +3955,41 @@ typedef  enum
     e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_RIGHT_4M = 6,
     e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_RIGHT_6M = 7
 } e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT;
+
 /**
 *GPS longitudinal offset encoding*/
 typedef  enum
 {
-    e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON_NO_DATA = 0, //GPS longitudinal offset encoding
+    e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON_NO_DATA = 0,
     e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON_APPLIED_BY_SENSOR = 1
 } e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON;
+
 /**
 *Transceiver RF control flags for ADS-B transponder dynamic reports*/
 typedef  enum
 {
-    e_UAVIONIX_ADSB_OUT_RF_SELECT_UAVIONIX_ADSB_OUT_RF_SELECT_STANDBY = 0, //Transceiver RF control flags for ADS-B transponder dynamic reports
+    e_UAVIONIX_ADSB_OUT_RF_SELECT_UAVIONIX_ADSB_OUT_RF_SELECT_STANDBY = 0,
     e_UAVIONIX_ADSB_OUT_RF_SELECT_UAVIONIX_ADSB_OUT_RF_SELECT_RX_ENABLED = 1,
     e_UAVIONIX_ADSB_OUT_RF_SELECT_UAVIONIX_ADSB_OUT_RF_SELECT_TX_ENABLED = 2
 } e_UAVIONIX_ADSB_OUT_RF_SELECT;
+
 /**
 *Status for ADS-B transponder dynamic input*/
 typedef  enum
 {
-    e_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_NONE_0 = 0, //Status for ADS-B transponder dynamic input
+    e_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_NONE_0 = 0,
     e_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_NONE_1 = 1,
     e_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_2D = 2,
     e_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_3D = 3,
     e_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_DGPS = 4,
     e_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_RTK = 5
 } e_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX;
+
 /**
 *Emergency status encoding*/
 typedef  enum
 {
-    e_UAVIONIX_ADSB_EMERGENCY_STATUS_UAVIONIX_ADSB_OUT_NO_EMERGENCY = 0, //Emergency status encoding
+    e_UAVIONIX_ADSB_EMERGENCY_STATUS_UAVIONIX_ADSB_OUT_NO_EMERGENCY = 0,
     e_UAVIONIX_ADSB_EMERGENCY_STATUS_UAVIONIX_ADSB_OUT_GENERAL_EMERGENCY = 1,
     e_UAVIONIX_ADSB_EMERGENCY_STATUS_UAVIONIX_ADSB_OUT_LIFEGUARD_EMERGENCY = 2,
     e_UAVIONIX_ADSB_EMERGENCY_STATUS_UAVIONIX_ADSB_OUT_MINIMUM_FUEL_EMERGENCY = 3,
@@ -3281,25 +3998,28 @@ typedef  enum
     e_UAVIONIX_ADSB_EMERGENCY_STATUS_UAVIONIX_ADSB_OUT_DOWNED_AIRCRAFT_EMERGENCY = 6,
     e_UAVIONIX_ADSB_EMERGENCY_STATUS_UAVIONIX_ADSB_OUT_RESERVED = 7
 } e_UAVIONIX_ADSB_EMERGENCY_STATUS;
+
 /**
 *State flags for ADS-B transponder dynamic report*/
 typedef  enum
 {
-    e_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_INTENT_CHANGE = 1, //State flags for ADS-B transponder dynamic report
+    e_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_INTENT_CHANGE = 1,
     e_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_AUTOPILOT_ENABLED = 2,
     e_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_NICBARO_CROSSCHECKED = 4,
     e_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_ON_GROUND = 8,
     e_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_IDENT = 16
 } e_UAVIONIX_ADSB_OUT_DYNAMIC_STATE;
+
 /**
 *Status flags for ADS-B transponder dynamic output*/
 typedef  enum
 {
-    e_UAVIONIX_ADSB_RF_HEALTH_UAVIONIX_ADSB_RF_HEALTH_INITIALIZING = 0, //Status flags for ADS-B transponder dynamic output
+    e_UAVIONIX_ADSB_RF_HEALTH_UAVIONIX_ADSB_RF_HEALTH_INITIALIZING = 0,
     e_UAVIONIX_ADSB_RF_HEALTH_UAVIONIX_ADSB_RF_HEALTH_OK = 1,
     e_UAVIONIX_ADSB_RF_HEALTH_UAVIONIX_ADSB_RF_HEALTH_FAIL_TX = 2,
     e_UAVIONIX_ADSB_RF_HEALTH_UAVIONIX_ADSB_RF_HEALTH_FAIL_RX = 16
 } e_UAVIONIX_ADSB_RF_HEALTH;
+
 /**
 *Bus types for device operations*/
 typedef  enum
@@ -3307,6 +4027,7 @@ typedef  enum
     e_DEVICE_OP_BUSTYPE_DEVICE_OP_BUSTYPE_I2C = 0, //I2C Device operation
     e_DEVICE_OP_BUSTYPE_DEVICE_OP_BUSTYPE_SPI = 1 //SPI Device operation
 } e_DEVICE_OP_BUSTYPE;
+
 INLINER void p0_custom_mode_SET(uint32_t  src, Pack * dst)//A bitfield for use for autopilot-specific flags.
 {
     uint8_t * data = dst->data;
@@ -3330,41 +4051,12 @@ INLINER void p0_autopilot_SET(e_MAV_AUTOPILOT  src, Pack * dst)//Autopilot type 
 INLINER void p0_base_mode_SET(e_MAV_MODE_FLAG  src, Pack * dst)//System mode bitfield, see MAV_MODE_FLAG ENUM in mavlink/include/mavlink_types.h
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_CUSTOM_MODE_ENABLED:
-            id = 0;
-            break;
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_TEST_ENABLED:
-            id = 1;
-            break;
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_AUTO_ENABLED:
-            id = 2;
-            break;
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_GUIDED_ENABLED:
-            id = 3;
-            break;
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_STABILIZE_ENABLED:
-            id = 4;
-            break;
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_HIL_ENABLED:
-            id = 5;
-            break;
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_MANUAL_INPUT_ENABLED:
-            id = 6;
-            break;
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_SAFETY_ARMED:
-            id = 7;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
-    set_bits(id, 4, data, 50);
+    set_bits(- 1 +   src, 8, data, 50);
 }
 INLINER void p0_system_status_SET(e_MAV_STATE  src, Pack * dst)//System status flag, see MAV_STATE ENUM
 {
     uint8_t * data = dst->data;
-    set_bits(- 0 +   src, 4, data, 54);
+    set_bits(- 0 +   src, 4, data, 58);
 }
 INLINER void p1_load_SET(uint16_t  src, Pack * dst)//Maximum usage in percent of the mainloop time, (0%: 0, 100%: 1000) should be always below 1000
 {
@@ -3428,90 +4120,7 @@ INLINER void p1_battery_remaining_SET(int8_t  src, Pack * dst)//Remaining batter
 INLINER void p1_onboard_control_sensors_present_SET(e_MAV_SYS_STATUS_SENSOR  src, Pack * dst)
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_GYRO:
-            id = 0;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_ACCEL:
-            id = 1;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_MAG:
-            id = 2;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE:
-            id = 3;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE:
-            id = 4;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_GPS:
-            id = 5;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW:
-            id = 6;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_VISION_POSITION:
-            id = 7;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_LASER_POSITION:
-            id = 8;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_EXTERNAL_GROUND_TRUTH:
-            id = 9;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL:
-            id = 10;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION:
-            id = 11;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_YAW_POSITION:
-            id = 12;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL:
-            id = 13;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL:
-            id = 14;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS:
-            id = 15;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_RC_RECEIVER:
-            id = 16;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_GYRO2:
-            id = 17;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_ACCEL2:
-            id = 18;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_MAG2:
-            id = 19;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_GEOFENCE:
-            id = 20;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_AHRS:
-            id = 21;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_TERRAIN:
-            id = 22;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_REVERSE_MOTOR:
-            id = 23;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_LOGGING:
-            id = 24;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_BATTERY:
-            id = 25;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
-    set_bits(id, 5, data, 152);
+    set_bits(- 1 +   src, 26, data, 152);
 }
 /**
 *Bitmask showing which onboard controllers and sensors are enabled:  Value of 0: not enabled. Value of
@@ -3519,90 +4128,7 @@ INLINER void p1_onboard_control_sensors_present_SET(e_MAV_SYS_STATUS_SENSOR  src
 INLINER void p1_onboard_control_sensors_enabled_SET(e_MAV_SYS_STATUS_SENSOR  src, Pack * dst)
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_GYRO:
-            id = 0;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_ACCEL:
-            id = 1;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_MAG:
-            id = 2;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE:
-            id = 3;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE:
-            id = 4;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_GPS:
-            id = 5;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW:
-            id = 6;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_VISION_POSITION:
-            id = 7;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_LASER_POSITION:
-            id = 8;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_EXTERNAL_GROUND_TRUTH:
-            id = 9;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL:
-            id = 10;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION:
-            id = 11;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_YAW_POSITION:
-            id = 12;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL:
-            id = 13;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL:
-            id = 14;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS:
-            id = 15;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_RC_RECEIVER:
-            id = 16;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_GYRO2:
-            id = 17;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_ACCEL2:
-            id = 18;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_MAG2:
-            id = 19;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_GEOFENCE:
-            id = 20;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_AHRS:
-            id = 21;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_TERRAIN:
-            id = 22;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_REVERSE_MOTOR:
-            id = 23;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_LOGGING:
-            id = 24;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_BATTERY:
-            id = 25;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
-    set_bits(id, 5, data, 157);
+    set_bits(- 1 +   src, 26, data, 178);
 }
 /**
 *Bitmask showing which onboard controllers and sensors are operational or have an error:  Value of 0: not
@@ -3610,90 +4136,7 @@ INLINER void p1_onboard_control_sensors_enabled_SET(e_MAV_SYS_STATUS_SENSOR  src
 INLINER void p1_onboard_control_sensors_health_SET(e_MAV_SYS_STATUS_SENSOR  src, Pack * dst)
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_GYRO:
-            id = 0;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_ACCEL:
-            id = 1;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_MAG:
-            id = 2;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE:
-            id = 3;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE:
-            id = 4;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_GPS:
-            id = 5;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW:
-            id = 6;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_VISION_POSITION:
-            id = 7;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_LASER_POSITION:
-            id = 8;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_EXTERNAL_GROUND_TRUTH:
-            id = 9;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL:
-            id = 10;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION:
-            id = 11;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_YAW_POSITION:
-            id = 12;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL:
-            id = 13;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL:
-            id = 14;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS:
-            id = 15;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_RC_RECEIVER:
-            id = 16;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_GYRO2:
-            id = 17;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_ACCEL2:
-            id = 18;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_3D_MAG2:
-            id = 19;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_GEOFENCE:
-            id = 20;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_AHRS:
-            id = 21;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_TERRAIN:
-            id = 22;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_REVERSE_MOTOR:
-            id = 23;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_LOGGING:
-            id = 24;
-            break;
-        case e_MAV_SYS_STATUS_SENSOR_MAV_SYS_STATUS_SENSOR_BATTERY:
-            id = 25;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
-    set_bits(id, 5, data, 162);
+    set_bits(- 1 +   src, 26, data, 204);
 }
 INLINER void p2_time_boot_ms_SET(uint32_t  src, Pack * dst)//Timestamp of the component clock since boot time in milliseconds.
 {
@@ -3883,44 +4326,7 @@ INLINER void p11_target_system_SET(uint8_t  src, Pack * dst)//The system setting
 INLINER void p11_base_mode_SET(e_MAV_MODE  src, Pack * dst)//The new base mode
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MODE_MAV_MODE_PREFLIGHT:
-            id = 0;
-            break;
-        case e_MAV_MODE_MAV_MODE_MANUAL_DISARMED:
-            id = 1;
-            break;
-        case e_MAV_MODE_MAV_MODE_TEST_DISARMED:
-            id = 2;
-            break;
-        case e_MAV_MODE_MAV_MODE_STABILIZE_DISARMED:
-            id = 3;
-            break;
-        case e_MAV_MODE_MAV_MODE_GUIDED_DISARMED:
-            id = 4;
-            break;
-        case e_MAV_MODE_MAV_MODE_AUTO_DISARMED:
-            id = 5;
-            break;
-        case e_MAV_MODE_MAV_MODE_MANUAL_ARMED:
-            id = 6;
-            break;
-        case e_MAV_MODE_MAV_MODE_TEST_ARMED:
-            id = 7;
-            break;
-        case e_MAV_MODE_MAV_MODE_STABILIZE_ARMED:
-            id = 8;
-            break;
-        case e_MAV_MODE_MAV_MODE_GUIDED_ARMED:
-            id = 9;
-            break;
-        case e_MAV_MODE_MAV_MODE_AUTO_ARMED:
-            id = 10;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__f(src);
     set_bits(id, 4, data, 40);
 }
 INLINER void p20_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -4700,23 +5106,7 @@ INLINER void p37_end_index_SET(int16_t  src, Pack * dst)//End index, -1 by defau
 INLINER void p37_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_MISSION:
-            id = 0;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_FENCE:
-            id = 1;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY:
-            id = 2;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL:
-            id = 3;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__k(src);
     set_bits(id, 3, data, 48);
 }
 INLINER void p38_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -4742,23 +5132,7 @@ INLINER void p38_end_index_SET(int16_t  src, Pack * dst)//End index, equal or gr
 INLINER void p38_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_MISSION:
-            id = 0;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_FENCE:
-            id = 1;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY:
-            id = 2;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL:
-            id = 3;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__k(src);
     set_bits(id, 3, data, 48);
 }
 INLINER void p39_seq_SET(uint16_t  src, Pack * dst)//Sequence
@@ -4829,465 +5203,13 @@ INLINER void p39_frame_SET(e_MAV_FRAME  src, Pack * dst)//The coordinate system 
 INLINER void p39_command_SET(e_MAV_CMD  src, Pack * dst)//The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_CMD_MAV_CMD_NAV_WAYPOINT:
-            id = 0;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_UNLIM:
-            id = 1;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TURNS:
-            id = 2;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TIME:
-            id = 3;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_RETURN_TO_LAUNCH:
-            id = 4;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAND:
-            id = 5;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_TAKEOFF:
-            id = 6;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAND_LOCAL:
-            id = 7;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_TAKEOFF_LOCAL:
-            id = 8;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FOLLOW:
-            id = 9;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
-            id = 10;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TO_ALT:
-            id = 11;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FOLLOW:
-            id = 12;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FOLLOW_REPOSITION:
-            id = 13;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_ROI:
-            id = 14;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_PATHPLANNING:
-            id = 15;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_SPLINE_WAYPOINT:
-            id = 16;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_ALTITUDE_WAIT:
-            id = 17;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_VTOL_TAKEOFF:
-            id = 18;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_VTOL_LAND:
-            id = 19;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_GUIDED_ENABLE:
-            id = 20;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_DELAY:
-            id = 21;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_PAYLOAD_PLACE:
-            id = 22;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAST:
-            id = 23;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_DELAY:
-            id = 24;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_CHANGE_ALT:
-            id = 25;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_DISTANCE:
-            id = 26;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_YAW:
-            id = 27;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_LAST:
-            id = 28;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_MODE:
-            id = 29;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_JUMP:
-            id = 30;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CHANGE_SPEED:
-            id = 31;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_HOME:
-            id = 32;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_PARAMETER:
-            id = 33;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_RELAY:
-            id = 34;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPEAT_RELAY:
-            id = 35;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_SERVO:
-            id = 36;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPEAT_SERVO:
-            id = 37;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FLIGHTTERMINATION:
-            id = 38;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CHANGE_ALTITUDE:
-            id = 39;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_LAND_START:
-            id = 40;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_RALLY_LAND:
-            id = 41;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GO_AROUND:
-            id = 42;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPOSITION:
-            id = 43;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_PAUSE_CONTINUE:
-            id = 44;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_REVERSE:
-            id = 45;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CONTROL_VIDEO:
-            id = 46;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_ROI:
-            id = 47;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONFIGURE:
-            id = 48;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONTROL:
-            id = 49;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONFIGURE:
-            id = 50;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL:
-            id = 51;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_DIST:
-            id = 52;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FENCE_ENABLE:
-            id = 53;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_PARACHUTE:
-            id = 54;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOTOR_TEST:
-            id = 55;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_INVERTED_FLIGHT:
-            id = 56;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GRIPPER:
-            id = 57;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_AUTOTUNE_ENABLE:
-            id = 58;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_SET_YAW_SPEED:
-            id = 59;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL:
-            id = 60;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL_QUAT:
-            id = 61;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GUIDED_MASTER:
-            id = 62;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GUIDED_LIMITS:
-            id = 63;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_ENGINE_CONTROL:
-            id = 64;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_LAST:
-            id = 65;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_CALIBRATION:
-            id = 66;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS:
-            id = 67;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_UAVCAN:
-            id = 68;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_STORAGE:
-            id = 69;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN:
-            id = 70;
-            break;
-        case e_MAV_CMD_MAV_CMD_OVERRIDE_GOTO:
-            id = 71;
-            break;
-        case e_MAV_CMD_MAV_CMD_MISSION_START:
-            id = 72;
-            break;
-        case e_MAV_CMD_MAV_CMD_COMPONENT_ARM_DISARM:
-            id = 73;
-            break;
-        case e_MAV_CMD_MAV_CMD_GET_HOME_POSITION:
-            id = 74;
-            break;
-        case e_MAV_CMD_MAV_CMD_START_RX_PAIR:
-            id = 75;
-            break;
-        case e_MAV_CMD_MAV_CMD_GET_MESSAGE_INTERVAL:
-            id = 76;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_MESSAGE_INTERVAL:
-            id = 77;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_PROTOCOL_VERSION:
-            id = 78;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES:
-            id = 79;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_INFORMATION:
-            id = 80;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_SETTINGS:
-            id = 81;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_STORAGE_INFORMATION:
-            id = 82;
-            break;
-        case e_MAV_CMD_MAV_CMD_STORAGE_FORMAT:
-            id = 83;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS:
-            id = 84;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_FLIGHT_INFORMATION:
-            id = 85;
-            break;
-        case e_MAV_CMD_MAV_CMD_RESET_CAMERA_SETTINGS:
-            id = 86;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_CAMERA_MODE:
-            id = 87;
-            break;
-        case e_MAV_CMD_MAV_CMD_IMAGE_START_CAPTURE:
-            id = 88;
-            break;
-        case e_MAV_CMD_MAV_CMD_IMAGE_STOP_CAPTURE:
-            id = 89;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE:
-            id = 90;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_TRIGGER_CONTROL:
-            id = 91;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_START_CAPTURE:
-            id = 92;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_STOP_CAPTURE:
-            id = 93;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_START_STREAMING:
-            id = 94;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_STOP_STREAMING:
-            id = 95;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION:
-            id = 96;
-            break;
-        case e_MAV_CMD_MAV_CMD_LOGGING_START:
-            id = 97;
-            break;
-        case e_MAV_CMD_MAV_CMD_LOGGING_STOP:
-            id = 98;
-            break;
-        case e_MAV_CMD_MAV_CMD_AIRFRAME_CONFIGURATION:
-            id = 99;
-            break;
-        case e_MAV_CMD_MAV_CMD_PANORAMA_CREATE:
-            id = 100;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_VTOL_TRANSITION:
-            id = 101;
-            break;
-        case e_MAV_CMD_MAV_CMD_ARM_AUTHORIZATION_REQUEST:
-            id = 102;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_STANDARD:
-            id = 103;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE:
-            id = 104;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_GATE:
-            id = 105;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_RETURN_POINT:
-            id = 106;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION:
-            id = 107;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION:
-            id = 108;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION:
-            id = 109;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION:
-            id = 110;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_RALLY_POINT:
-            id = 111;
-            break;
-        case e_MAV_CMD_MAV_CMD_UAVCAN_GET_NODE_INFO:
-            id = 112;
-            break;
-        case e_MAV_CMD_MAV_CMD_PAYLOAD_PREPARE_DEPLOY:
-            id = 113;
-            break;
-        case e_MAV_CMD_MAV_CMD_PAYLOAD_CONTROL_DEPLOY:
-            id = 114;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_1:
-            id = 115;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_2:
-            id = 116;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_3:
-            id = 117;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_4:
-            id = 118;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_5:
-            id = 119;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_1:
-            id = 120;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_2:
-            id = 121;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_3:
-            id = 122;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_4:
-            id = 123;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_5:
-            id = 124;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_1:
-            id = 125;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_2:
-            id = 126;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_3:
-            id = 127;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_4:
-            id = 128;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_5:
-            id = 129;
-            break;
-        case e_MAV_CMD_MAV_CMD_POWER_OFF_INITIATED:
-            id = 130;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_FLY_CLICK:
-            id = 131;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_FLY_HOLD:
-            id = 132;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_PAUSE_CLICK:
-            id = 133;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_START_MAG_CAL:
-            id = 134;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_ACCEPT_MAG_CAL:
-            id = 135;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CANCEL_MAG_CAL:
-            id = 136;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_FACTORY_TEST_MODE:
-            id = 137;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SEND_BANNER:
-            id = 138;
-            break;
-        case e_MAV_CMD_MAV_CMD_ACCELCAL_VEHICLE_POS:
-            id = 139;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_RESET:
-            id = 140;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS:
-            id = 141;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION:
-            id = 142;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_FULL_RESET:
-            id = 143;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__x(src);
     set_bits(id, 8, data, 276);
 }
 INLINER void p39_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_MISSION:
-            id = 0;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_FENCE:
-            id = 1;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY:
-            id = 2;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL:
-            id = 3;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__k(src);
     set_bits(id, 3, data, 284);
 }
 INLINER void p40_seq_SET(uint16_t  src, Pack * dst)//Sequence
@@ -5308,23 +5230,7 @@ INLINER void p40_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p40_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_MISSION:
-            id = 0;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_FENCE:
-            id = 1;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY:
-            id = 2;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL:
-            id = 3;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__k(src);
     set_bits(id, 3, data, 32);
 }
 INLINER void p41_seq_SET(uint16_t  src, Pack * dst)//Sequence
@@ -5360,23 +5266,7 @@ INLINER void p43_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p43_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_MISSION:
-            id = 0;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_FENCE:
-            id = 1;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY:
-            id = 2;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL:
-            id = 3;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__k(src);
     set_bits(id, 3, data, 16);
 }
 INLINER void p44_count_SET(uint16_t  src, Pack * dst)//Number of mission items in the sequence
@@ -5397,23 +5287,7 @@ INLINER void p44_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p44_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_MISSION:
-            id = 0;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_FENCE:
-            id = 1;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY:
-            id = 2;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL:
-            id = 3;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__k(src);
     set_bits(id, 3, data, 32);
 }
 INLINER void p45_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -5429,23 +5303,7 @@ INLINER void p45_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p45_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_MISSION:
-            id = 0;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_FENCE:
-            id = 1;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY:
-            id = 2;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL:
-            id = 3;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__k(src);
     set_bits(id, 3, data, 16);
 }
 INLINER void p46_seq_SET(uint16_t  src, Pack * dst)//Sequence
@@ -5471,23 +5329,7 @@ INLINER void p47_type_SET(e_MAV_MISSION_RESULT  src, Pack * dst)//See MAV_MISSIO
 INLINER void p47_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_MISSION:
-            id = 0;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_FENCE:
-            id = 1;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY:
-            id = 2;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL:
-            id = 3;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__k(src);
     set_bits(id, 3, data, 20);
 }
 INLINER void p48_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -5623,23 +5465,7 @@ INLINER void p51_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p51_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_MISSION:
-            id = 0;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_FENCE:
-            id = 1;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY:
-            id = 2;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL:
-            id = 3;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__k(src);
     set_bits(id, 3, data, 32);
 }
 INLINER void p54_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -6232,465 +6058,13 @@ INLINER void p73_frame_SET(e_MAV_FRAME  src, Pack * dst)//The coordinate system 
 INLINER void p73_command_SET(e_MAV_CMD  src, Pack * dst)//The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_CMD_MAV_CMD_NAV_WAYPOINT:
-            id = 0;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_UNLIM:
-            id = 1;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TURNS:
-            id = 2;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TIME:
-            id = 3;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_RETURN_TO_LAUNCH:
-            id = 4;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAND:
-            id = 5;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_TAKEOFF:
-            id = 6;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAND_LOCAL:
-            id = 7;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_TAKEOFF_LOCAL:
-            id = 8;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FOLLOW:
-            id = 9;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
-            id = 10;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TO_ALT:
-            id = 11;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FOLLOW:
-            id = 12;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FOLLOW_REPOSITION:
-            id = 13;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_ROI:
-            id = 14;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_PATHPLANNING:
-            id = 15;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_SPLINE_WAYPOINT:
-            id = 16;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_ALTITUDE_WAIT:
-            id = 17;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_VTOL_TAKEOFF:
-            id = 18;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_VTOL_LAND:
-            id = 19;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_GUIDED_ENABLE:
-            id = 20;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_DELAY:
-            id = 21;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_PAYLOAD_PLACE:
-            id = 22;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAST:
-            id = 23;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_DELAY:
-            id = 24;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_CHANGE_ALT:
-            id = 25;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_DISTANCE:
-            id = 26;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_YAW:
-            id = 27;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_LAST:
-            id = 28;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_MODE:
-            id = 29;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_JUMP:
-            id = 30;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CHANGE_SPEED:
-            id = 31;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_HOME:
-            id = 32;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_PARAMETER:
-            id = 33;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_RELAY:
-            id = 34;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPEAT_RELAY:
-            id = 35;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_SERVO:
-            id = 36;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPEAT_SERVO:
-            id = 37;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FLIGHTTERMINATION:
-            id = 38;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CHANGE_ALTITUDE:
-            id = 39;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_LAND_START:
-            id = 40;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_RALLY_LAND:
-            id = 41;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GO_AROUND:
-            id = 42;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPOSITION:
-            id = 43;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_PAUSE_CONTINUE:
-            id = 44;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_REVERSE:
-            id = 45;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CONTROL_VIDEO:
-            id = 46;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_ROI:
-            id = 47;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONFIGURE:
-            id = 48;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONTROL:
-            id = 49;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONFIGURE:
-            id = 50;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL:
-            id = 51;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_DIST:
-            id = 52;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FENCE_ENABLE:
-            id = 53;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_PARACHUTE:
-            id = 54;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOTOR_TEST:
-            id = 55;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_INVERTED_FLIGHT:
-            id = 56;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GRIPPER:
-            id = 57;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_AUTOTUNE_ENABLE:
-            id = 58;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_SET_YAW_SPEED:
-            id = 59;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL:
-            id = 60;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL_QUAT:
-            id = 61;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GUIDED_MASTER:
-            id = 62;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GUIDED_LIMITS:
-            id = 63;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_ENGINE_CONTROL:
-            id = 64;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_LAST:
-            id = 65;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_CALIBRATION:
-            id = 66;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS:
-            id = 67;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_UAVCAN:
-            id = 68;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_STORAGE:
-            id = 69;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN:
-            id = 70;
-            break;
-        case e_MAV_CMD_MAV_CMD_OVERRIDE_GOTO:
-            id = 71;
-            break;
-        case e_MAV_CMD_MAV_CMD_MISSION_START:
-            id = 72;
-            break;
-        case e_MAV_CMD_MAV_CMD_COMPONENT_ARM_DISARM:
-            id = 73;
-            break;
-        case e_MAV_CMD_MAV_CMD_GET_HOME_POSITION:
-            id = 74;
-            break;
-        case e_MAV_CMD_MAV_CMD_START_RX_PAIR:
-            id = 75;
-            break;
-        case e_MAV_CMD_MAV_CMD_GET_MESSAGE_INTERVAL:
-            id = 76;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_MESSAGE_INTERVAL:
-            id = 77;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_PROTOCOL_VERSION:
-            id = 78;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES:
-            id = 79;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_INFORMATION:
-            id = 80;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_SETTINGS:
-            id = 81;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_STORAGE_INFORMATION:
-            id = 82;
-            break;
-        case e_MAV_CMD_MAV_CMD_STORAGE_FORMAT:
-            id = 83;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS:
-            id = 84;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_FLIGHT_INFORMATION:
-            id = 85;
-            break;
-        case e_MAV_CMD_MAV_CMD_RESET_CAMERA_SETTINGS:
-            id = 86;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_CAMERA_MODE:
-            id = 87;
-            break;
-        case e_MAV_CMD_MAV_CMD_IMAGE_START_CAPTURE:
-            id = 88;
-            break;
-        case e_MAV_CMD_MAV_CMD_IMAGE_STOP_CAPTURE:
-            id = 89;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE:
-            id = 90;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_TRIGGER_CONTROL:
-            id = 91;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_START_CAPTURE:
-            id = 92;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_STOP_CAPTURE:
-            id = 93;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_START_STREAMING:
-            id = 94;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_STOP_STREAMING:
-            id = 95;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION:
-            id = 96;
-            break;
-        case e_MAV_CMD_MAV_CMD_LOGGING_START:
-            id = 97;
-            break;
-        case e_MAV_CMD_MAV_CMD_LOGGING_STOP:
-            id = 98;
-            break;
-        case e_MAV_CMD_MAV_CMD_AIRFRAME_CONFIGURATION:
-            id = 99;
-            break;
-        case e_MAV_CMD_MAV_CMD_PANORAMA_CREATE:
-            id = 100;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_VTOL_TRANSITION:
-            id = 101;
-            break;
-        case e_MAV_CMD_MAV_CMD_ARM_AUTHORIZATION_REQUEST:
-            id = 102;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_STANDARD:
-            id = 103;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE:
-            id = 104;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_GATE:
-            id = 105;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_RETURN_POINT:
-            id = 106;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION:
-            id = 107;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION:
-            id = 108;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION:
-            id = 109;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION:
-            id = 110;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_RALLY_POINT:
-            id = 111;
-            break;
-        case e_MAV_CMD_MAV_CMD_UAVCAN_GET_NODE_INFO:
-            id = 112;
-            break;
-        case e_MAV_CMD_MAV_CMD_PAYLOAD_PREPARE_DEPLOY:
-            id = 113;
-            break;
-        case e_MAV_CMD_MAV_CMD_PAYLOAD_CONTROL_DEPLOY:
-            id = 114;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_1:
-            id = 115;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_2:
-            id = 116;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_3:
-            id = 117;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_4:
-            id = 118;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_5:
-            id = 119;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_1:
-            id = 120;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_2:
-            id = 121;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_3:
-            id = 122;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_4:
-            id = 123;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_5:
-            id = 124;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_1:
-            id = 125;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_2:
-            id = 126;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_3:
-            id = 127;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_4:
-            id = 128;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_5:
-            id = 129;
-            break;
-        case e_MAV_CMD_MAV_CMD_POWER_OFF_INITIATED:
-            id = 130;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_FLY_CLICK:
-            id = 131;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_FLY_HOLD:
-            id = 132;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_PAUSE_CLICK:
-            id = 133;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_START_MAG_CAL:
-            id = 134;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_ACCEPT_MAG_CAL:
-            id = 135;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CANCEL_MAG_CAL:
-            id = 136;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_FACTORY_TEST_MODE:
-            id = 137;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SEND_BANNER:
-            id = 138;
-            break;
-        case e_MAV_CMD_MAV_CMD_ACCELCAL_VEHICLE_POS:
-            id = 139;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_RESET:
-            id = 140;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS:
-            id = 141;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION:
-            id = 142;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_FULL_RESET:
-            id = 143;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__x(src);
     set_bits(id, 8, data, 276);
 }
 INLINER void p73_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_MISSION:
-            id = 0;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_FENCE:
-            id = 1;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY:
-            id = 2;
-            break;
-        case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL:
-            id = 3;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__k(src);
     set_bits(id, 3, data, 284);
 }
 INLINER void p74_throttle_SET(uint16_t  src, Pack * dst)//Current throttle setting in integer percent, 0 to 100
@@ -6786,443 +6160,7 @@ INLINER void p75_frame_SET(e_MAV_FRAME  src, Pack * dst)//The coordinate system 
 INLINER void p75_command_SET(e_MAV_CMD  src, Pack * dst)//The scheduled action for the mission item. see MAV_CMD in common.xml MAVLink specs
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_CMD_MAV_CMD_NAV_WAYPOINT:
-            id = 0;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_UNLIM:
-            id = 1;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TURNS:
-            id = 2;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TIME:
-            id = 3;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_RETURN_TO_LAUNCH:
-            id = 4;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAND:
-            id = 5;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_TAKEOFF:
-            id = 6;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAND_LOCAL:
-            id = 7;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_TAKEOFF_LOCAL:
-            id = 8;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FOLLOW:
-            id = 9;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
-            id = 10;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TO_ALT:
-            id = 11;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FOLLOW:
-            id = 12;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FOLLOW_REPOSITION:
-            id = 13;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_ROI:
-            id = 14;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_PATHPLANNING:
-            id = 15;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_SPLINE_WAYPOINT:
-            id = 16;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_ALTITUDE_WAIT:
-            id = 17;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_VTOL_TAKEOFF:
-            id = 18;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_VTOL_LAND:
-            id = 19;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_GUIDED_ENABLE:
-            id = 20;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_DELAY:
-            id = 21;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_PAYLOAD_PLACE:
-            id = 22;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAST:
-            id = 23;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_DELAY:
-            id = 24;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_CHANGE_ALT:
-            id = 25;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_DISTANCE:
-            id = 26;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_YAW:
-            id = 27;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_LAST:
-            id = 28;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_MODE:
-            id = 29;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_JUMP:
-            id = 30;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CHANGE_SPEED:
-            id = 31;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_HOME:
-            id = 32;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_PARAMETER:
-            id = 33;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_RELAY:
-            id = 34;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPEAT_RELAY:
-            id = 35;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_SERVO:
-            id = 36;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPEAT_SERVO:
-            id = 37;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FLIGHTTERMINATION:
-            id = 38;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CHANGE_ALTITUDE:
-            id = 39;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_LAND_START:
-            id = 40;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_RALLY_LAND:
-            id = 41;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GO_AROUND:
-            id = 42;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPOSITION:
-            id = 43;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_PAUSE_CONTINUE:
-            id = 44;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_REVERSE:
-            id = 45;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CONTROL_VIDEO:
-            id = 46;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_ROI:
-            id = 47;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONFIGURE:
-            id = 48;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONTROL:
-            id = 49;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONFIGURE:
-            id = 50;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL:
-            id = 51;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_DIST:
-            id = 52;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FENCE_ENABLE:
-            id = 53;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_PARACHUTE:
-            id = 54;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOTOR_TEST:
-            id = 55;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_INVERTED_FLIGHT:
-            id = 56;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GRIPPER:
-            id = 57;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_AUTOTUNE_ENABLE:
-            id = 58;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_SET_YAW_SPEED:
-            id = 59;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL:
-            id = 60;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL_QUAT:
-            id = 61;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GUIDED_MASTER:
-            id = 62;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GUIDED_LIMITS:
-            id = 63;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_ENGINE_CONTROL:
-            id = 64;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_LAST:
-            id = 65;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_CALIBRATION:
-            id = 66;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS:
-            id = 67;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_UAVCAN:
-            id = 68;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_STORAGE:
-            id = 69;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN:
-            id = 70;
-            break;
-        case e_MAV_CMD_MAV_CMD_OVERRIDE_GOTO:
-            id = 71;
-            break;
-        case e_MAV_CMD_MAV_CMD_MISSION_START:
-            id = 72;
-            break;
-        case e_MAV_CMD_MAV_CMD_COMPONENT_ARM_DISARM:
-            id = 73;
-            break;
-        case e_MAV_CMD_MAV_CMD_GET_HOME_POSITION:
-            id = 74;
-            break;
-        case e_MAV_CMD_MAV_CMD_START_RX_PAIR:
-            id = 75;
-            break;
-        case e_MAV_CMD_MAV_CMD_GET_MESSAGE_INTERVAL:
-            id = 76;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_MESSAGE_INTERVAL:
-            id = 77;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_PROTOCOL_VERSION:
-            id = 78;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES:
-            id = 79;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_INFORMATION:
-            id = 80;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_SETTINGS:
-            id = 81;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_STORAGE_INFORMATION:
-            id = 82;
-            break;
-        case e_MAV_CMD_MAV_CMD_STORAGE_FORMAT:
-            id = 83;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS:
-            id = 84;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_FLIGHT_INFORMATION:
-            id = 85;
-            break;
-        case e_MAV_CMD_MAV_CMD_RESET_CAMERA_SETTINGS:
-            id = 86;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_CAMERA_MODE:
-            id = 87;
-            break;
-        case e_MAV_CMD_MAV_CMD_IMAGE_START_CAPTURE:
-            id = 88;
-            break;
-        case e_MAV_CMD_MAV_CMD_IMAGE_STOP_CAPTURE:
-            id = 89;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE:
-            id = 90;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_TRIGGER_CONTROL:
-            id = 91;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_START_CAPTURE:
-            id = 92;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_STOP_CAPTURE:
-            id = 93;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_START_STREAMING:
-            id = 94;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_STOP_STREAMING:
-            id = 95;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION:
-            id = 96;
-            break;
-        case e_MAV_CMD_MAV_CMD_LOGGING_START:
-            id = 97;
-            break;
-        case e_MAV_CMD_MAV_CMD_LOGGING_STOP:
-            id = 98;
-            break;
-        case e_MAV_CMD_MAV_CMD_AIRFRAME_CONFIGURATION:
-            id = 99;
-            break;
-        case e_MAV_CMD_MAV_CMD_PANORAMA_CREATE:
-            id = 100;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_VTOL_TRANSITION:
-            id = 101;
-            break;
-        case e_MAV_CMD_MAV_CMD_ARM_AUTHORIZATION_REQUEST:
-            id = 102;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_STANDARD:
-            id = 103;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE:
-            id = 104;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_GATE:
-            id = 105;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_RETURN_POINT:
-            id = 106;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION:
-            id = 107;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION:
-            id = 108;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION:
-            id = 109;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION:
-            id = 110;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_RALLY_POINT:
-            id = 111;
-            break;
-        case e_MAV_CMD_MAV_CMD_UAVCAN_GET_NODE_INFO:
-            id = 112;
-            break;
-        case e_MAV_CMD_MAV_CMD_PAYLOAD_PREPARE_DEPLOY:
-            id = 113;
-            break;
-        case e_MAV_CMD_MAV_CMD_PAYLOAD_CONTROL_DEPLOY:
-            id = 114;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_1:
-            id = 115;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_2:
-            id = 116;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_3:
-            id = 117;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_4:
-            id = 118;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_5:
-            id = 119;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_1:
-            id = 120;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_2:
-            id = 121;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_3:
-            id = 122;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_4:
-            id = 123;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_5:
-            id = 124;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_1:
-            id = 125;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_2:
-            id = 126;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_3:
-            id = 127;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_4:
-            id = 128;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_5:
-            id = 129;
-            break;
-        case e_MAV_CMD_MAV_CMD_POWER_OFF_INITIATED:
-            id = 130;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_FLY_CLICK:
-            id = 131;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_FLY_HOLD:
-            id = 132;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_PAUSE_CLICK:
-            id = 133;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_START_MAG_CAL:
-            id = 134;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_ACCEPT_MAG_CAL:
-            id = 135;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CANCEL_MAG_CAL:
-            id = 136;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_FACTORY_TEST_MODE:
-            id = 137;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SEND_BANNER:
-            id = 138;
-            break;
-        case e_MAV_CMD_MAV_CMD_ACCELCAL_VEHICLE_POS:
-            id = 139;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_RESET:
-            id = 140;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS:
-            id = 141;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION:
-            id = 142;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_FULL_RESET:
-            id = 143;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__x(src);
     set_bits(id, 8, data, 260);
 }
 INLINER void p76_target_system_SET(uint8_t  src, Pack * dst)//System which should execute the command
@@ -7278,885 +6216,13 @@ INLINER void p76_param7_SET(float  src, Pack * dst)//Parameter 7, as defined by 
 INLINER void p76_command_SET(e_MAV_CMD  src, Pack * dst)//Command ID, as defined by MAV_CMD enum.
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_CMD_MAV_CMD_NAV_WAYPOINT:
-            id = 0;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_UNLIM:
-            id = 1;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TURNS:
-            id = 2;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TIME:
-            id = 3;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_RETURN_TO_LAUNCH:
-            id = 4;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAND:
-            id = 5;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_TAKEOFF:
-            id = 6;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAND_LOCAL:
-            id = 7;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_TAKEOFF_LOCAL:
-            id = 8;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FOLLOW:
-            id = 9;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
-            id = 10;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TO_ALT:
-            id = 11;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FOLLOW:
-            id = 12;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FOLLOW_REPOSITION:
-            id = 13;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_ROI:
-            id = 14;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_PATHPLANNING:
-            id = 15;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_SPLINE_WAYPOINT:
-            id = 16;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_ALTITUDE_WAIT:
-            id = 17;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_VTOL_TAKEOFF:
-            id = 18;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_VTOL_LAND:
-            id = 19;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_GUIDED_ENABLE:
-            id = 20;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_DELAY:
-            id = 21;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_PAYLOAD_PLACE:
-            id = 22;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAST:
-            id = 23;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_DELAY:
-            id = 24;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_CHANGE_ALT:
-            id = 25;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_DISTANCE:
-            id = 26;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_YAW:
-            id = 27;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_LAST:
-            id = 28;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_MODE:
-            id = 29;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_JUMP:
-            id = 30;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CHANGE_SPEED:
-            id = 31;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_HOME:
-            id = 32;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_PARAMETER:
-            id = 33;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_RELAY:
-            id = 34;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPEAT_RELAY:
-            id = 35;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_SERVO:
-            id = 36;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPEAT_SERVO:
-            id = 37;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FLIGHTTERMINATION:
-            id = 38;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CHANGE_ALTITUDE:
-            id = 39;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_LAND_START:
-            id = 40;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_RALLY_LAND:
-            id = 41;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GO_AROUND:
-            id = 42;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPOSITION:
-            id = 43;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_PAUSE_CONTINUE:
-            id = 44;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_REVERSE:
-            id = 45;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CONTROL_VIDEO:
-            id = 46;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_ROI:
-            id = 47;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONFIGURE:
-            id = 48;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONTROL:
-            id = 49;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONFIGURE:
-            id = 50;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL:
-            id = 51;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_DIST:
-            id = 52;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FENCE_ENABLE:
-            id = 53;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_PARACHUTE:
-            id = 54;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOTOR_TEST:
-            id = 55;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_INVERTED_FLIGHT:
-            id = 56;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GRIPPER:
-            id = 57;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_AUTOTUNE_ENABLE:
-            id = 58;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_SET_YAW_SPEED:
-            id = 59;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL:
-            id = 60;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL_QUAT:
-            id = 61;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GUIDED_MASTER:
-            id = 62;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GUIDED_LIMITS:
-            id = 63;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_ENGINE_CONTROL:
-            id = 64;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_LAST:
-            id = 65;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_CALIBRATION:
-            id = 66;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS:
-            id = 67;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_UAVCAN:
-            id = 68;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_STORAGE:
-            id = 69;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN:
-            id = 70;
-            break;
-        case e_MAV_CMD_MAV_CMD_OVERRIDE_GOTO:
-            id = 71;
-            break;
-        case e_MAV_CMD_MAV_CMD_MISSION_START:
-            id = 72;
-            break;
-        case e_MAV_CMD_MAV_CMD_COMPONENT_ARM_DISARM:
-            id = 73;
-            break;
-        case e_MAV_CMD_MAV_CMD_GET_HOME_POSITION:
-            id = 74;
-            break;
-        case e_MAV_CMD_MAV_CMD_START_RX_PAIR:
-            id = 75;
-            break;
-        case e_MAV_CMD_MAV_CMD_GET_MESSAGE_INTERVAL:
-            id = 76;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_MESSAGE_INTERVAL:
-            id = 77;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_PROTOCOL_VERSION:
-            id = 78;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES:
-            id = 79;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_INFORMATION:
-            id = 80;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_SETTINGS:
-            id = 81;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_STORAGE_INFORMATION:
-            id = 82;
-            break;
-        case e_MAV_CMD_MAV_CMD_STORAGE_FORMAT:
-            id = 83;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS:
-            id = 84;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_FLIGHT_INFORMATION:
-            id = 85;
-            break;
-        case e_MAV_CMD_MAV_CMD_RESET_CAMERA_SETTINGS:
-            id = 86;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_CAMERA_MODE:
-            id = 87;
-            break;
-        case e_MAV_CMD_MAV_CMD_IMAGE_START_CAPTURE:
-            id = 88;
-            break;
-        case e_MAV_CMD_MAV_CMD_IMAGE_STOP_CAPTURE:
-            id = 89;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE:
-            id = 90;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_TRIGGER_CONTROL:
-            id = 91;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_START_CAPTURE:
-            id = 92;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_STOP_CAPTURE:
-            id = 93;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_START_STREAMING:
-            id = 94;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_STOP_STREAMING:
-            id = 95;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION:
-            id = 96;
-            break;
-        case e_MAV_CMD_MAV_CMD_LOGGING_START:
-            id = 97;
-            break;
-        case e_MAV_CMD_MAV_CMD_LOGGING_STOP:
-            id = 98;
-            break;
-        case e_MAV_CMD_MAV_CMD_AIRFRAME_CONFIGURATION:
-            id = 99;
-            break;
-        case e_MAV_CMD_MAV_CMD_PANORAMA_CREATE:
-            id = 100;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_VTOL_TRANSITION:
-            id = 101;
-            break;
-        case e_MAV_CMD_MAV_CMD_ARM_AUTHORIZATION_REQUEST:
-            id = 102;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_STANDARD:
-            id = 103;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE:
-            id = 104;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_GATE:
-            id = 105;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_RETURN_POINT:
-            id = 106;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION:
-            id = 107;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION:
-            id = 108;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION:
-            id = 109;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION:
-            id = 110;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_RALLY_POINT:
-            id = 111;
-            break;
-        case e_MAV_CMD_MAV_CMD_UAVCAN_GET_NODE_INFO:
-            id = 112;
-            break;
-        case e_MAV_CMD_MAV_CMD_PAYLOAD_PREPARE_DEPLOY:
-            id = 113;
-            break;
-        case e_MAV_CMD_MAV_CMD_PAYLOAD_CONTROL_DEPLOY:
-            id = 114;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_1:
-            id = 115;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_2:
-            id = 116;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_3:
-            id = 117;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_4:
-            id = 118;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_5:
-            id = 119;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_1:
-            id = 120;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_2:
-            id = 121;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_3:
-            id = 122;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_4:
-            id = 123;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_5:
-            id = 124;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_1:
-            id = 125;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_2:
-            id = 126;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_3:
-            id = 127;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_4:
-            id = 128;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_5:
-            id = 129;
-            break;
-        case e_MAV_CMD_MAV_CMD_POWER_OFF_INITIATED:
-            id = 130;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_FLY_CLICK:
-            id = 131;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_FLY_HOLD:
-            id = 132;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_PAUSE_CLICK:
-            id = 133;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_START_MAG_CAL:
-            id = 134;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_ACCEPT_MAG_CAL:
-            id = 135;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CANCEL_MAG_CAL:
-            id = 136;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_FACTORY_TEST_MODE:
-            id = 137;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SEND_BANNER:
-            id = 138;
-            break;
-        case e_MAV_CMD_MAV_CMD_ACCELCAL_VEHICLE_POS:
-            id = 139;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_RESET:
-            id = 140;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS:
-            id = 141;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION:
-            id = 142;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_FULL_RESET:
-            id = 143;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__x(src);
     set_bits(id, 8, data, 248);
 }
 INLINER void p77_command_SET(e_MAV_CMD  src, Pack * dst)//Command ID, as defined by MAV_CMD enum.
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_CMD_MAV_CMD_NAV_WAYPOINT:
-            id = 0;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_UNLIM:
-            id = 1;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TURNS:
-            id = 2;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TIME:
-            id = 3;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_RETURN_TO_LAUNCH:
-            id = 4;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAND:
-            id = 5;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_TAKEOFF:
-            id = 6;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAND_LOCAL:
-            id = 7;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_TAKEOFF_LOCAL:
-            id = 8;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FOLLOW:
-            id = 9;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
-            id = 10;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LOITER_TO_ALT:
-            id = 11;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FOLLOW:
-            id = 12;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FOLLOW_REPOSITION:
-            id = 13;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_ROI:
-            id = 14;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_PATHPLANNING:
-            id = 15;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_SPLINE_WAYPOINT:
-            id = 16;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_ALTITUDE_WAIT:
-            id = 17;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_VTOL_TAKEOFF:
-            id = 18;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_VTOL_LAND:
-            id = 19;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_GUIDED_ENABLE:
-            id = 20;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_DELAY:
-            id = 21;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_PAYLOAD_PLACE:
-            id = 22;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_LAST:
-            id = 23;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_DELAY:
-            id = 24;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_CHANGE_ALT:
-            id = 25;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_DISTANCE:
-            id = 26;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_YAW:
-            id = 27;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_LAST:
-            id = 28;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_MODE:
-            id = 29;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_JUMP:
-            id = 30;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CHANGE_SPEED:
-            id = 31;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_HOME:
-            id = 32;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_PARAMETER:
-            id = 33;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_RELAY:
-            id = 34;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPEAT_RELAY:
-            id = 35;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_SERVO:
-            id = 36;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPEAT_SERVO:
-            id = 37;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FLIGHTTERMINATION:
-            id = 38;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CHANGE_ALTITUDE:
-            id = 39;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_LAND_START:
-            id = 40;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_RALLY_LAND:
-            id = 41;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GO_AROUND:
-            id = 42;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_REPOSITION:
-            id = 43;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_PAUSE_CONTINUE:
-            id = 44;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_REVERSE:
-            id = 45;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CONTROL_VIDEO:
-            id = 46;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_ROI:
-            id = 47;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONFIGURE:
-            id = 48;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONTROL:
-            id = 49;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONFIGURE:
-            id = 50;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL:
-            id = 51;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_DIST:
-            id = 52;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_FENCE_ENABLE:
-            id = 53;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_PARACHUTE:
-            id = 54;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOTOR_TEST:
-            id = 55;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_INVERTED_FLIGHT:
-            id = 56;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GRIPPER:
-            id = 57;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_AUTOTUNE_ENABLE:
-            id = 58;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_SET_YAW_SPEED:
-            id = 59;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL:
-            id = 60;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL_QUAT:
-            id = 61;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GUIDED_MASTER:
-            id = 62;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_GUIDED_LIMITS:
-            id = 63;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_ENGINE_CONTROL:
-            id = 64;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_LAST:
-            id = 65;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_CALIBRATION:
-            id = 66;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS:
-            id = 67;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_UAVCAN:
-            id = 68;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_STORAGE:
-            id = 69;
-            break;
-        case e_MAV_CMD_MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN:
-            id = 70;
-            break;
-        case e_MAV_CMD_MAV_CMD_OVERRIDE_GOTO:
-            id = 71;
-            break;
-        case e_MAV_CMD_MAV_CMD_MISSION_START:
-            id = 72;
-            break;
-        case e_MAV_CMD_MAV_CMD_COMPONENT_ARM_DISARM:
-            id = 73;
-            break;
-        case e_MAV_CMD_MAV_CMD_GET_HOME_POSITION:
-            id = 74;
-            break;
-        case e_MAV_CMD_MAV_CMD_START_RX_PAIR:
-            id = 75;
-            break;
-        case e_MAV_CMD_MAV_CMD_GET_MESSAGE_INTERVAL:
-            id = 76;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_MESSAGE_INTERVAL:
-            id = 77;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_PROTOCOL_VERSION:
-            id = 78;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES:
-            id = 79;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_INFORMATION:
-            id = 80;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_SETTINGS:
-            id = 81;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_STORAGE_INFORMATION:
-            id = 82;
-            break;
-        case e_MAV_CMD_MAV_CMD_STORAGE_FORMAT:
-            id = 83;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS:
-            id = 84;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_FLIGHT_INFORMATION:
-            id = 85;
-            break;
-        case e_MAV_CMD_MAV_CMD_RESET_CAMERA_SETTINGS:
-            id = 86;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_CAMERA_MODE:
-            id = 87;
-            break;
-        case e_MAV_CMD_MAV_CMD_IMAGE_START_CAPTURE:
-            id = 88;
-            break;
-        case e_MAV_CMD_MAV_CMD_IMAGE_STOP_CAPTURE:
-            id = 89;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE:
-            id = 90;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_TRIGGER_CONTROL:
-            id = 91;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_START_CAPTURE:
-            id = 92;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_STOP_CAPTURE:
-            id = 93;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_START_STREAMING:
-            id = 94;
-            break;
-        case e_MAV_CMD_MAV_CMD_VIDEO_STOP_STREAMING:
-            id = 95;
-            break;
-        case e_MAV_CMD_MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION:
-            id = 96;
-            break;
-        case e_MAV_CMD_MAV_CMD_LOGGING_START:
-            id = 97;
-            break;
-        case e_MAV_CMD_MAV_CMD_LOGGING_STOP:
-            id = 98;
-            break;
-        case e_MAV_CMD_MAV_CMD_AIRFRAME_CONFIGURATION:
-            id = 99;
-            break;
-        case e_MAV_CMD_MAV_CMD_PANORAMA_CREATE:
-            id = 100;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_VTOL_TRANSITION:
-            id = 101;
-            break;
-        case e_MAV_CMD_MAV_CMD_ARM_AUTHORIZATION_REQUEST:
-            id = 102;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_STANDARD:
-            id = 103;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE:
-            id = 104;
-            break;
-        case e_MAV_CMD_MAV_CMD_CONDITION_GATE:
-            id = 105;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_RETURN_POINT:
-            id = 106;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION:
-            id = 107;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION:
-            id = 108;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION:
-            id = 109;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION:
-            id = 110;
-            break;
-        case e_MAV_CMD_MAV_CMD_NAV_RALLY_POINT:
-            id = 111;
-            break;
-        case e_MAV_CMD_MAV_CMD_UAVCAN_GET_NODE_INFO:
-            id = 112;
-            break;
-        case e_MAV_CMD_MAV_CMD_PAYLOAD_PREPARE_DEPLOY:
-            id = 113;
-            break;
-        case e_MAV_CMD_MAV_CMD_PAYLOAD_CONTROL_DEPLOY:
-            id = 114;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_1:
-            id = 115;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_2:
-            id = 116;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_3:
-            id = 117;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_4:
-            id = 118;
-            break;
-        case e_MAV_CMD_MAV_CMD_WAYPOINT_USER_5:
-            id = 119;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_1:
-            id = 120;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_2:
-            id = 121;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_3:
-            id = 122;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_4:
-            id = 123;
-            break;
-        case e_MAV_CMD_MAV_CMD_SPATIAL_USER_5:
-            id = 124;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_1:
-            id = 125;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_2:
-            id = 126;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_3:
-            id = 127;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_4:
-            id = 128;
-            break;
-        case e_MAV_CMD_MAV_CMD_USER_5:
-            id = 129;
-            break;
-        case e_MAV_CMD_MAV_CMD_POWER_OFF_INITIATED:
-            id = 130;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_FLY_CLICK:
-            id = 131;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_FLY_HOLD:
-            id = 132;
-            break;
-        case e_MAV_CMD_MAV_CMD_SOLO_BTN_PAUSE_CLICK:
-            id = 133;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_START_MAG_CAL:
-            id = 134;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_ACCEPT_MAG_CAL:
-            id = 135;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_CANCEL_MAG_CAL:
-            id = 136;
-            break;
-        case e_MAV_CMD_MAV_CMD_SET_FACTORY_TEST_MODE:
-            id = 137;
-            break;
-        case e_MAV_CMD_MAV_CMD_DO_SEND_BANNER:
-            id = 138;
-            break;
-        case e_MAV_CMD_MAV_CMD_ACCELCAL_VEHICLE_POS:
-            id = 139;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_RESET:
-            id = 140;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS:
-            id = 141;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION:
-            id = 142;
-            break;
-        case e_MAV_CMD_MAV_CMD_GIMBAL_FULL_RESET:
-            id = 143;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__x(src);
     set_bits(id, 8, data, 0);
 }
 INLINER void p77_result_SET(e_MAV_RESULT  src, Pack * dst)//See MAV_RESULT enum
@@ -8749,44 +6815,7 @@ INLINER void p91_nav_mode_SET(uint8_t  src, Pack * dst)//Navigation mode (MAV_NA
 INLINER void p91_mode_SET(e_MAV_MODE  src, Pack * dst)//System mode (MAV_MODE)
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MODE_MAV_MODE_PREFLIGHT:
-            id = 0;
-            break;
-        case e_MAV_MODE_MAV_MODE_MANUAL_DISARMED:
-            id = 1;
-            break;
-        case e_MAV_MODE_MAV_MODE_TEST_DISARMED:
-            id = 2;
-            break;
-        case e_MAV_MODE_MAV_MODE_STABILIZE_DISARMED:
-            id = 3;
-            break;
-        case e_MAV_MODE_MAV_MODE_GUIDED_DISARMED:
-            id = 4;
-            break;
-        case e_MAV_MODE_MAV_MODE_AUTO_DISARMED:
-            id = 5;
-            break;
-        case e_MAV_MODE_MAV_MODE_MANUAL_ARMED:
-            id = 6;
-            break;
-        case e_MAV_MODE_MAV_MODE_TEST_ARMED:
-            id = 7;
-            break;
-        case e_MAV_MODE_MAV_MODE_STABILIZE_ARMED:
-            id = 8;
-            break;
-        case e_MAV_MODE_MAV_MODE_GUIDED_ARMED:
-            id = 9;
-            break;
-        case e_MAV_MODE_MAV_MODE_AUTO_ARMED:
-            id = 10;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__f(src);
     set_bits(id, 4, data, 328);
 }
 INLINER void p92_chan1_raw_SET(uint16_t  src, Pack * dst)//RC channel 1 value, in microseconds
@@ -8878,44 +6907,7 @@ INLINER void p93_controls_SET(float*  src, int32_t pos, Pack * dst) //Control ou
 INLINER void p93_mode_SET(e_MAV_MODE  src, Pack * dst)//System mode (MAV_MODE), includes arming state.
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MODE_MAV_MODE_PREFLIGHT:
-            id = 0;
-            break;
-        case e_MAV_MODE_MAV_MODE_MANUAL_DISARMED:
-            id = 1;
-            break;
-        case e_MAV_MODE_MAV_MODE_TEST_DISARMED:
-            id = 2;
-            break;
-        case e_MAV_MODE_MAV_MODE_STABILIZE_DISARMED:
-            id = 3;
-            break;
-        case e_MAV_MODE_MAV_MODE_GUIDED_DISARMED:
-            id = 4;
-            break;
-        case e_MAV_MODE_MAV_MODE_AUTO_DISARMED:
-            id = 5;
-            break;
-        case e_MAV_MODE_MAV_MODE_MANUAL_ARMED:
-            id = 6;
-            break;
-        case e_MAV_MODE_MAV_MODE_TEST_ARMED:
-            id = 7;
-            break;
-        case e_MAV_MODE_MAV_MODE_STABILIZE_ARMED:
-            id = 8;
-            break;
-        case e_MAV_MODE_MAV_MODE_GUIDED_ARMED:
-            id = 9;
-            break;
-        case e_MAV_MODE_MAV_MODE_AUTO_ARMED:
-            id = 10;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
+    UMAX id = _id__f(src);
     set_bits(id, 4, data, 640);
 }
 INLINER void p100_time_usec_SET(uint64_t  src, Pack * dst)//Timestamp (UNIX)
@@ -9005,70 +6997,35 @@ INLINER void p101_yaw_SET(float  src, Pack * dst)//Yaw angle in rad
     uint8_t * data = dst->data;
     set_bytes(floatToIntBits(src), 4, data,  28);
 }
-INLINER uint64_t p102_usec_GET(Pack * src)//Timestamp (microseconds, synced to UNIX time or since system boot)
-{
-    uint8_t * data = src->data;
-    return ((get_bytes(data,  0, 8)));
-}
 INLINER void p102_usec_SET(uint64_t  src, Pack * dst)//Timestamp (microseconds, synced to UNIX time or since system boot)
 {
     uint8_t * data = dst->data;
     set_bytes((src), 8, data,  0);
-}
-INLINER float p102_x_GET(Pack * src)//Global X position
-{
-    uint8_t * data = src->data;
-    return (intBitsToFloat(get_bytes(data,  8, 4)));
 }
 INLINER void p102_x_SET(float  src, Pack * dst)//Global X position
 {
     uint8_t * data = dst->data;
     set_bytes(floatToIntBits(src), 4, data,  8);
 }
-INLINER float p102_y_GET(Pack * src)//Global Y position
-{
-    uint8_t * data = src->data;
-    return (intBitsToFloat(get_bytes(data,  12, 4)));
-}
 INLINER void p102_y_SET(float  src, Pack * dst)//Global Y position
 {
     uint8_t * data = dst->data;
     set_bytes(floatToIntBits(src), 4, data,  12);
-}
-INLINER float p102_z_GET(Pack * src)//Global Z position
-{
-    uint8_t * data = src->data;
-    return (intBitsToFloat(get_bytes(data,  16, 4)));
 }
 INLINER void p102_z_SET(float  src, Pack * dst)//Global Z position
 {
     uint8_t * data = dst->data;
     set_bytes(floatToIntBits(src), 4, data,  16);
 }
-INLINER float p102_roll_GET(Pack * src)//Roll angle in rad
-{
-    uint8_t * data = src->data;
-    return (intBitsToFloat(get_bytes(data,  20, 4)));
-}
 INLINER void p102_roll_SET(float  src, Pack * dst)//Roll angle in rad
 {
     uint8_t * data = dst->data;
     set_bytes(floatToIntBits(src), 4, data,  20);
 }
-INLINER float p102_pitch_GET(Pack * src)//Pitch angle in rad
-{
-    uint8_t * data = src->data;
-    return (intBitsToFloat(get_bytes(data,  24, 4)));
-}
 INLINER void p102_pitch_SET(float  src, Pack * dst)//Pitch angle in rad
 {
     uint8_t * data = dst->data;
     set_bytes(floatToIntBits(src), 4, data,  24);
-}
-INLINER float p102_yaw_GET(Pack * src)//Yaw angle in rad
-{
-    uint8_t * data = src->data;
-    return (intBitsToFloat(get_bytes(data,  28, 4)));
 }
 INLINER void p102_yaw_SET(float  src, Pack * dst)//Yaw angle in rad
 {
@@ -10992,50 +8949,12 @@ INLINER void p125_Vservo_SET(uint16_t  src, Pack * dst)//servo rail voltage in m
 INLINER e_MAV_POWER_STATUS p125_flags_GET(Pack * src)//power supply status flags (see MAV_POWER_STATUS enum)
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 32, 3))
-    {
-        case 0:
-            return e_MAV_POWER_STATUS_MAV_POWER_STATUS_BRICK_VALID;
-        case 1:
-            return e_MAV_POWER_STATUS_MAV_POWER_STATUS_SERVO_VALID;
-        case 2:
-            return e_MAV_POWER_STATUS_MAV_POWER_STATUS_USB_CONNECTED;
-        case 3:
-            return e_MAV_POWER_STATUS_MAV_POWER_STATUS_PERIPH_OVERCURRENT;
-        case 4:
-            return e_MAV_POWER_STATUS_MAV_POWER_STATUS_PERIPH_HIPOWER_OVERCURRENT;
-        case 5:
-            return e_MAV_POWER_STATUS_MAV_POWER_STATUS_CHANGED;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
+    return  1 + (int)get_bits(data, 32, 6);
 }
 INLINER void p125_flags_SET(e_MAV_POWER_STATUS  src, Pack * dst)//power supply status flags (see MAV_POWER_STATUS enum)
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_POWER_STATUS_MAV_POWER_STATUS_BRICK_VALID:
-            id = 0;
-            break;
-        case e_MAV_POWER_STATUS_MAV_POWER_STATUS_SERVO_VALID:
-            id = 1;
-            break;
-        case e_MAV_POWER_STATUS_MAV_POWER_STATUS_USB_CONNECTED:
-            id = 2;
-            break;
-        case e_MAV_POWER_STATUS_MAV_POWER_STATUS_PERIPH_OVERCURRENT:
-            id = 3;
-            break;
-        case e_MAV_POWER_STATUS_MAV_POWER_STATUS_PERIPH_HIPOWER_OVERCURRENT:
-            id = 4;
-            break;
-        case e_MAV_POWER_STATUS_MAV_POWER_STATUS_CHANGED:
-            id = 5;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
-    set_bits(id, 3, data, 32);
+    set_bits(- 1 +   src, 6, data, 32);
 }
 INLINER uint16_t p126_timeout_GET(Pack * src)//Timeout for reply data in milliseconds
 {
@@ -11105,7 +9024,7 @@ INLINER e_SERIAL_CONTROL_DEV p126_device_GET(Pack * src)//See SERIAL_CONTROL_DEV
 INLINER void p126_device_SET(e_SERIAL_CONTROL_DEV  src, Pack * dst)//See SERIAL_CONTROL_DEV enum
 {
     uint8_t * data = dst->data;
-    int32_t id;
+    UMAX id;
     switch(src)
     {
         case e_SERIAL_CONTROL_DEV_SERIAL_CONTROL_DEV_TELEM1:
@@ -11130,45 +9049,12 @@ INLINER void p126_device_SET(e_SERIAL_CONTROL_DEV  src, Pack * dst)//See SERIAL_
 INLINER e_SERIAL_CONTROL_FLAG p126_flags_GET(Pack * src)//See SERIAL_CONTROL_FLAG enum
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 619, 3))
-    {
-        case 0:
-            return e_SERIAL_CONTROL_FLAG_SERIAL_CONTROL_FLAG_REPLY;
-        case 1:
-            return e_SERIAL_CONTROL_FLAG_SERIAL_CONTROL_FLAG_RESPOND;
-        case 2:
-            return e_SERIAL_CONTROL_FLAG_SERIAL_CONTROL_FLAG_EXCLUSIVE;
-        case 3:
-            return e_SERIAL_CONTROL_FLAG_SERIAL_CONTROL_FLAG_BLOCKING;
-        case 4:
-            return e_SERIAL_CONTROL_FLAG_SERIAL_CONTROL_FLAG_MULTI;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
+    return  1 + (int)get_bits(data, 619, 5);
 }
 INLINER void p126_flags_SET(e_SERIAL_CONTROL_FLAG  src, Pack * dst)//See SERIAL_CONTROL_FLAG enum
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_SERIAL_CONTROL_FLAG_SERIAL_CONTROL_FLAG_REPLY:
-            id = 0;
-            break;
-        case e_SERIAL_CONTROL_FLAG_SERIAL_CONTROL_FLAG_RESPOND:
-            id = 1;
-            break;
-        case e_SERIAL_CONTROL_FLAG_SERIAL_CONTROL_FLAG_EXCLUSIVE:
-            id = 2;
-            break;
-        case e_SERIAL_CONTROL_FLAG_SERIAL_CONTROL_FLAG_BLOCKING:
-            id = 3;
-            break;
-        case e_SERIAL_CONTROL_FLAG_SERIAL_CONTROL_FLAG_MULTI:
-            id = 4;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
-    set_bits(id, 3, data, 619);
+    set_bits(- 1 +   src, 5, data, 619);
 }
 INLINER uint16_t p127_wn_GET(Pack * src)//GPS Week Number of last baseline
 {
@@ -12964,105 +10850,12 @@ INLINER void p148_os_custom_version_SET(uint8_t*  src, int32_t pos, Pack * dst)
 INLINER e_MAV_PROTOCOL_CAPABILITY p148_capabilities_GET(Pack * src)//bitmask of capabilities (see MAV_PROTOCOL_CAPABILITY enum)
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 416, 5))
-    {
-        case 0:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_MISSION_FLOAT;
-        case 1:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_PARAM_FLOAT;
-        case 2:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_MISSION_INT;
-        case 3:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_COMMAND_INT;
-        case 4:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_PARAM_UNION;
-        case 5:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_FTP;
-        case 6:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_SET_ATTITUDE_TARGET;
-        case 7:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_LOCAL_NED;
-        case 8:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_GLOBAL_INT;
-        case 9:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_TERRAIN;
-        case 10:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_SET_ACTUATOR_TARGET;
-        case 11:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_FLIGHT_TERMINATION;
-        case 12:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_COMPASS_CALIBRATION;
-        case 13:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_MAVLINK2;
-        case 14:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_MISSION_FENCE;
-        case 15:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_MISSION_RALLY;
-        case 16:
-            return e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_FLIGHT_INFORMATION;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
+    return  1 + (int)get_bits(data, 416, 17);
 }
 INLINER void p148_capabilities_SET(e_MAV_PROTOCOL_CAPABILITY  src, Pack * dst)//bitmask of capabilities (see MAV_PROTOCOL_CAPABILITY enum)
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_MISSION_FLOAT:
-            id = 0;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_PARAM_FLOAT:
-            id = 1;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_MISSION_INT:
-            id = 2;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_COMMAND_INT:
-            id = 3;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_PARAM_UNION:
-            id = 4;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_FTP:
-            id = 5;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_SET_ATTITUDE_TARGET:
-            id = 6;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_LOCAL_NED:
-            id = 7;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_GLOBAL_INT:
-            id = 8;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_TERRAIN:
-            id = 9;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_SET_ACTUATOR_TARGET:
-            id = 10;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_FLIGHT_TERMINATION:
-            id = 11;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_COMPASS_CALIBRATION:
-            id = 12;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_MAVLINK2:
-            id = 13;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_MISSION_FENCE:
-            id = 14;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_MISSION_RALLY:
-            id = 15;
-            break;
-        case e_MAV_PROTOCOL_CAPABILITY_MAV_PROTOCOL_CAPABILITY_FLIGHT_INFORMATION:
-            id = 16;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
-    set_bits(id, 5, data, 416);
+    set_bits(- 1 +   src, 17, data, 416);
 }
 /**
 *UID if provided by hardware (supersedes the uid field. If this is non-zero, use this field, otherwise
@@ -13080,7 +10873,7 @@ INLINER int32_t p148_uid2_LEN()
 }
 INLINER uint8_t*  p148_uid2_TRY(Bounds_Inside * src)
 {
-    if(src->base.field_bit !=  421 && !try_visit_field(src, 421)) return NULL;
+    if(src->base.field_bit !=  433 && !try_visit_field(src, 433)) return NULL;
     uint8_t * data = src->base.pack->data;
     return p148_uid2_GET(src, malloc(18 * sizeof(uint8_t)), 0);
 }
@@ -13089,7 +10882,7 @@ INLINER uint8_t*  p148_uid2_TRY(Bounds_Inside * src)
 *	use uid*/
 INLINER void p148_uid2_SET(uint8_t*  src, int32_t pos, Bounds_Inside * dst)
 {
-    if(dst->base.field_bit != 421)insert_field(dst, 421, 0);
+    if(dst->base.field_bit != 433)insert_field(dst, 433, 0);
     uint8_t * data = dst->base.pack->data;
     for(int32_t BYTE =  dst->BYTE, src_max = pos + 18; pos < src_max; pos++, BYTE += 1)
         set_bytes((src[pos]), 1, data,  BYTE);
@@ -13177,46 +10970,46 @@ INLINER void p149_frame_SET(e_MAV_FRAME  src, Pack * dst)//MAV_FRAME enum specif
 INLINER e_LANDING_TARGET_TYPE p149_type_GET(Pack * src)//LANDING_TARGET_TYPE enum specifying the type of landing target
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 236, 3);
+    return  0 + (int)get_bits(data, 236, 2);
 }
 INLINER void p149_type_SET(e_LANDING_TARGET_TYPE  src, Pack * dst)//LANDING_TARGET_TYPE enum specifying the type of landing target
 {
     uint8_t * data = dst->data;
-    set_bits(- 0 +   src, 3, data, 236);
+    set_bits(- 0 +   src, 2, data, 236);
 }
 INLINER float  p149_x_TRY(Bounds_Inside * src)
 {
-    if(src->base.field_bit !=  239 && !try_visit_field(src, 239)) return 0;
+    if(src->base.field_bit !=  238 && !try_visit_field(src, 238)) return 0;
     uint8_t * data = src->base.pack->data;
     return (intBitsToFloat(get_bytes(data,  src->BYTE, 4)));
 }
 INLINER void p149_x_SET(float  src, Bounds_Inside * dst)//X Position of the landing target on MAV_FRAME
 {
-    if(dst->base.field_bit != 239)insert_field(dst, 239, 0);
+    if(dst->base.field_bit != 238)insert_field(dst, 238, 0);
     uint8_t * data = dst->base.pack->data;
     set_bytes(floatToIntBits(src), 4, data,  dst->BYTE);
 }
 INLINER float  p149_y_TRY(Bounds_Inside * src)
 {
-    if(src->base.field_bit !=  240 && !try_visit_field(src, 240)) return 0;
+    if(src->base.field_bit !=  239 && !try_visit_field(src, 239)) return 0;
     uint8_t * data = src->base.pack->data;
     return (intBitsToFloat(get_bytes(data,  src->BYTE, 4)));
 }
 INLINER void p149_y_SET(float  src, Bounds_Inside * dst)//Y Position of the landing target on MAV_FRAME
 {
-    if(dst->base.field_bit != 240)insert_field(dst, 240, 0);
+    if(dst->base.field_bit != 239)insert_field(dst, 239, 0);
     uint8_t * data = dst->base.pack->data;
     set_bytes(floatToIntBits(src), 4, data,  dst->BYTE);
 }
 INLINER float  p149_z_TRY(Bounds_Inside * src)
 {
-    if(src->base.field_bit !=  241 && !try_visit_field(src, 241)) return 0;
+    if(src->base.field_bit !=  240 && !try_visit_field(src, 240)) return 0;
     uint8_t * data = src->base.pack->data;
     return (intBitsToFloat(get_bytes(data,  src->BYTE, 4)));
 }
 INLINER void p149_z_SET(float  src, Bounds_Inside * dst)//Z Position of the landing target on MAV_FRAME
 {
-    if(dst->base.field_bit != 241)insert_field(dst, 241, 0);
+    if(dst->base.field_bit != 240)insert_field(dst, 240, 0);
     uint8_t * data = dst->base.pack->data;
     set_bytes(floatToIntBits(src), 4, data,  dst->BYTE);
 }
@@ -13233,20 +11026,20 @@ INLINER int32_t p149_q_LEN()
 }
 INLINER float*  p149_q_TRY(Bounds_Inside * src)
 {
-    if(src->base.field_bit !=  242 && !try_visit_field(src, 242)) return NULL;
+    if(src->base.field_bit !=  241 && !try_visit_field(src, 241)) return NULL;
     uint8_t * data = src->base.pack->data;
     return p149_q_GET(src, malloc(4 * sizeof(float)), 0);
 }
 INLINER void p149_q_SET(float*  src, int32_t pos, Bounds_Inside * dst) //Quaternion of landing target orientation (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
 {
-    if(dst->base.field_bit != 242)insert_field(dst, 242, 0);
+    if(dst->base.field_bit != 241)insert_field(dst, 241, 0);
     uint8_t * data = dst->base.pack->data;
     for(int32_t BYTE =  dst->BYTE, src_max = pos + 4; pos < src_max; pos++, BYTE += 4)
         set_bytes(floatToIntBits(src[pos]), 4, data,  BYTE);
 }
 INLINER uint8_t  p149_position_valid_TRY(Bounds_Inside * src)
 {
-    if(src->base.field_bit !=  243 && !try_visit_field(src, 243)) return 0;
+    if(src->base.field_bit !=  242 && !try_visit_field(src, 242)) return 0;
     uint8_t * data = src->base.pack->data;
     return ((get_bytes(data,  src->BYTE, 1)));
 }
@@ -13255,7 +11048,7 @@ INLINER uint8_t  p149_position_valid_TRY(Bounds_Inside * src)
 *	the landing targe*/
 INLINER void p149_position_valid_SET(uint8_t  src, Bounds_Inside * dst)
 {
-    if(dst->base.field_bit != 243)insert_field(dst, 243, 0);
+    if(dst->base.field_bit != 242)insert_field(dst, 242, 0);
     uint8_t * data = dst->base.pack->data;
     set_bytes((src), 1, data,  dst->BYTE);
 }
@@ -13649,7 +11442,7 @@ INLINER uint8_t p162_breach_status_GET(Pack * src)//0 if currently inside fence,
 INLINER e_FENCE_BREACH p162_breach_type_GET(Pack * src)//last breach type (see FENCE_BREACH_* enum)
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 56, 3);
+    return  0 + (int)get_bits(data, 56, 2);
 }
 INLINER float p163_omegaIx_GET(Pack * src)//X gyro drift estimate rad/s
 {
@@ -13819,44 +11612,17 @@ INLINER e_LIMITS_STATE p167_limits_state_GET(Pack * src)//state of AP_Limits, (s
 INLINER e_LIMIT_MODULE p167_mods_enabled_GET(Pack * src)//AP_Limit_Module bitfield of enabled modules, (see enum moduleid or LIMIT_MODULE)
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 147, 2))
-    {
-        case 0:
-            return e_LIMIT_MODULE_LIMIT_GPSLOCK;
-        case 1:
-            return e_LIMIT_MODULE_LIMIT_GEOFENCE;
-        case 2:
-            return e_LIMIT_MODULE_LIMIT_ALTITUDE;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
+    return  1 + (int)get_bits(data, 147, 3);
 }
 INLINER e_LIMIT_MODULE p167_mods_required_GET(Pack * src)//AP_Limit_Module bitfield of required modules, (see enum moduleid or LIMIT_MODULE)
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 149, 2))
-    {
-        case 0:
-            return e_LIMIT_MODULE_LIMIT_GPSLOCK;
-        case 1:
-            return e_LIMIT_MODULE_LIMIT_GEOFENCE;
-        case 2:
-            return e_LIMIT_MODULE_LIMIT_ALTITUDE;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
+    return  1 + (int)get_bits(data, 150, 3);
 }
 INLINER e_LIMIT_MODULE p167_mods_triggered_GET(Pack * src)//AP_Limit_Module bitfield of triggered modules, (see enum moduleid or LIMIT_MODULE)
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 151, 2))
-    {
-        case 0:
-            return e_LIMIT_MODULE_LIMIT_GPSLOCK;
-        case 1:
-            return e_LIMIT_MODULE_LIMIT_GEOFENCE;
-        case 2:
-            return e_LIMIT_MODULE_LIMIT_ALTITUDE;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
+    return  1 + (int)get_bits(data, 153, 3);
 }
 INLINER float p168_direction_GET(Pack * src)//wind direction that wind is coming from (degrees)
 {
@@ -14075,7 +11841,7 @@ INLINER int16_t p175_break_alt_GET(Pack * src)//Break altitude in meters relativ
 INLINER e_RALLY_FLAGS p175_flags_GET(Pack * src)//See RALLY_FLAGS enum for definition of the bitmask.
 {
     uint8_t * data = src->data;
-    return  1 + (int)get_bits(data, 144, 2);
+    return  1 + (int)get_bits(data, 144, 1);
 }
 INLINER uint8_t p176_target_system_GET(Pack * src)//System ID
 {
@@ -14359,7 +12125,7 @@ INLINER  uint8_t*  p184_data__GET_(Pack * src) {return p184_data__GET(src, mallo
 INLINER e_MAV_REMOTE_LOG_DATA_BLOCK_COMMANDS p184_seqno_GET(Pack * src)//log data block sequence number
 {
     uint8_t * data = src->data;
-    return  2147483645 + (int)get_bits(data, 1616, 2);
+    return  2147483645 + (int)get_bits(data, 1616, 1);
 }
 INLINER uint32_t p185_seqno_GET(Pack * src)//log data block sequence number
 {
@@ -14379,7 +12145,7 @@ INLINER uint8_t p185_target_component_GET(Pack * src)//Component ID
 INLINER e_MAV_REMOTE_LOG_DATA_BLOCK_STATUSES p185_status_GET(Pack * src)//log data block status
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 48, 2);
+    return  0 + (int)get_bits(data, 48, 1);
 }
 INLINER uint8_t p186_target_system_GET(Pack * src)//System ID
 {
@@ -14566,30 +12332,7 @@ INLINER float p193_terrain_alt_variance_GET(Pack * src)//Terrain Altitude varian
 INLINER e_EKF_STATUS_FLAGS p193_flags_GET(Pack * src)//Flags
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 160, 4))
-    {
-        case 0:
-            return e_EKF_STATUS_FLAGS_EKF_ATTITUDE;
-        case 1:
-            return e_EKF_STATUS_FLAGS_EKF_VELOCITY_HORIZ;
-        case 2:
-            return e_EKF_STATUS_FLAGS_EKF_VELOCITY_VERT;
-        case 3:
-            return e_EKF_STATUS_FLAGS_EKF_POS_HORIZ_REL;
-        case 4:
-            return e_EKF_STATUS_FLAGS_EKF_POS_HORIZ_ABS;
-        case 5:
-            return e_EKF_STATUS_FLAGS_EKF_POS_VERT_ABS;
-        case 6:
-            return e_EKF_STATUS_FLAGS_EKF_POS_VERT_AGL;
-        case 7:
-            return e_EKF_STATUS_FLAGS_EKF_CONST_POS_MODE;
-        case 8:
-            return e_EKF_STATUS_FLAGS_EKF_PRED_POS_HORIZ_REL;
-        case 9:
-            return e_EKF_STATUS_FLAGS_EKF_PRED_POS_HORIZ_ABS;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
+    return  1 + (int)get_bits(data, 160, 10);
 }
 INLINER float p194_desired_GET(Pack * src)//desired rate (degrees/s)
 {
@@ -14739,12 +12482,12 @@ INLINER int16_t p214_az_torque_cmd_GET(Pack * src)//Azimuth Torque Command
 INLINER e_GOPRO_HEARTBEAT_STATUS p215_status_GET(Pack * src)//Status
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 0, 3);
+    return  0 + (int)get_bits(data, 0, 2);
 }
 INLINER e_GOPRO_CAPTURE_MODE p215_capture_mode_GET(Pack * src)//Current capture mode
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 3, 4))
+    switch(get_bits(data, 2, 4))
     {
         case 0:
             return e_GOPRO_CAPTURE_MODE_GOPRO_CAPTURE_MODE_VIDEO;
@@ -14768,7 +12511,7 @@ INLINER e_GOPRO_CAPTURE_MODE p215_capture_mode_GET(Pack * src)//Current capture 
 INLINER e_GOPRO_HEARTBEAT_FLAGS p215_flags_GET(Pack * src)//additional status bits
 {
     uint8_t * data = src->data;
-    return  1 + (int)get_bits(data, 7, 1);
+    return  1 + (int)get_bits(data, 6, 1);
 }
 INLINER uint8_t p216_target_system_GET(Pack * src)//System ID
 {
@@ -14804,7 +12547,7 @@ INLINER e_GOPRO_COMMAND p217_cmd_id_GET(Pack * src)//Command ID
 INLINER e_GOPRO_REQUEST_STATUS p217_status_GET(Pack * src)//Status
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 37, 2);
+    return  0 + (int)get_bits(data, 37, 1);
 }
 INLINER uint8_t p218_target_system_GET(Pack * src)//System ID
 {
@@ -14840,7 +12583,7 @@ INLINER e_GOPRO_COMMAND p219_cmd_id_GET(Pack * src)//Command ID
 INLINER e_GOPRO_REQUEST_STATUS p219_status_GET(Pack * src)//Status
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 5, 2);
+    return  0 + (int)get_bits(data, 5, 1);
 }
 INLINER float p226_rpm1_GET(Pack * src)//RPM Sensor1
 {
@@ -14945,75 +12688,12 @@ INLINER void p230_pos_vert_accuracy_SET(float  src, Pack * dst)//Vertical positi
 INLINER e_ESTIMATOR_STATUS_FLAGS p230_flags_GET(Pack * src)//Integer bitmask indicating which EKF outputs are valid. See definition for ESTIMATOR_STATUS_FLAGS.
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 320, 4))
-    {
-        case 0:
-            return e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_ATTITUDE;
-        case 1:
-            return e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_VELOCITY_HORIZ;
-        case 2:
-            return e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_VELOCITY_VERT;
-        case 3:
-            return e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_POS_HORIZ_REL;
-        case 4:
-            return e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_POS_HORIZ_ABS;
-        case 5:
-            return e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_POS_VERT_ABS;
-        case 6:
-            return e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_POS_VERT_AGL;
-        case 7:
-            return e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_CONST_POS_MODE;
-        case 8:
-            return e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_PRED_POS_HORIZ_REL;
-        case 9:
-            return e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_PRED_POS_HORIZ_ABS;
-        case 10:
-            return e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_GPS_GLITCH;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
+    return  1 + (int)get_bits(data, 320, 11);
 }
 INLINER void p230_flags_SET(e_ESTIMATOR_STATUS_FLAGS  src, Pack * dst)//Integer bitmask indicating which EKF outputs are valid. See definition for ESTIMATOR_STATUS_FLAGS.
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_ATTITUDE:
-            id = 0;
-            break;
-        case e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_VELOCITY_HORIZ:
-            id = 1;
-            break;
-        case e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_VELOCITY_VERT:
-            id = 2;
-            break;
-        case e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_POS_HORIZ_REL:
-            id = 3;
-            break;
-        case e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_POS_HORIZ_ABS:
-            id = 4;
-            break;
-        case e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_POS_VERT_ABS:
-            id = 5;
-            break;
-        case e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_POS_VERT_AGL:
-            id = 6;
-            break;
-        case e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_CONST_POS_MODE:
-            id = 7;
-            break;
-        case e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_PRED_POS_HORIZ_REL:
-            id = 8;
-            break;
-        case e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_PRED_POS_HORIZ_ABS:
-            id = 9;
-            break;
-        case e_ESTIMATOR_STATUS_FLAGS_ESTIMATOR_GPS_GLITCH:
-            id = 10;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
-    set_bits(id, 4, data, 320);
+    set_bits(- 1 +   src, 11, data, 320);
 }
 INLINER uint64_t p231_time_usec_GET(Pack * src)//Timestamp (micros since boot or Unix epoch)
 {
@@ -15278,60 +12958,12 @@ INLINER void p232_satellites_visible_SET(uint8_t  src, Pack * dst)//Number of sa
 INLINER e_GPS_INPUT_IGNORE_FLAGS p232_ignore_flags_GET(Pack * src)//Flags indicating which fields to ignore (see GPS_INPUT_IGNORE_FLAGS enum).  All other fields must be provided
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 488, 4))
-    {
-        case 0:
-            return e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_ALT;
-        case 1:
-            return e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_HDOP;
-        case 2:
-            return e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_VDOP;
-        case 3:
-            return e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_VEL_HORIZ;
-        case 4:
-            return e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_VEL_VERT;
-        case 5:
-            return e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_SPEED_ACCURACY;
-        case 6:
-            return e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_HORIZONTAL_ACCURACY;
-        case 7:
-            return e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_VERTICAL_ACCURACY;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
+    return  1 + (int)get_bits(data, 488, 8);
 }
 INLINER void p232_ignore_flags_SET(e_GPS_INPUT_IGNORE_FLAGS  src, Pack * dst)//Flags indicating which fields to ignore (see GPS_INPUT_IGNORE_FLAGS enum).  All other fields must be provided
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_ALT:
-            id = 0;
-            break;
-        case e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_HDOP:
-            id = 1;
-            break;
-        case e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_VDOP:
-            id = 2;
-            break;
-        case e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_VEL_HORIZ:
-            id = 3;
-            break;
-        case e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_VEL_VERT:
-            id = 4;
-            break;
-        case e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_SPEED_ACCURACY:
-            id = 5;
-            break;
-        case e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_HORIZONTAL_ACCURACY:
-            id = 6;
-            break;
-        case e_GPS_INPUT_IGNORE_FLAGS_GPS_INPUT_IGNORE_FLAG_VERTICAL_ACCURACY:
-            id = 7;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
-    set_bits(id, 4, data, 488);
+    set_bits(- 1 +   src, 8, data, 488);
 }
 /**
 *LSB: 1 means message is fragmented, next 2 bits are the fragment ID, the remaining 5 bits are used for
@@ -15605,80 +13237,32 @@ INLINER void p234_wp_num_SET(uint8_t  src, Pack * dst)//current waypoint number
 INLINER e_MAV_MODE_FLAG p234_base_mode_GET(Pack * src)//System mode bitfield, see MAV_MODE_FLAG ENUM in mavlink/include/mavlink_types.h
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 296, 4))
-    {
-        case 0:
-            return e_MAV_MODE_FLAG_MAV_MODE_FLAG_CUSTOM_MODE_ENABLED;
-        case 1:
-            return e_MAV_MODE_FLAG_MAV_MODE_FLAG_TEST_ENABLED;
-        case 2:
-            return e_MAV_MODE_FLAG_MAV_MODE_FLAG_AUTO_ENABLED;
-        case 3:
-            return e_MAV_MODE_FLAG_MAV_MODE_FLAG_GUIDED_ENABLED;
-        case 4:
-            return e_MAV_MODE_FLAG_MAV_MODE_FLAG_STABILIZE_ENABLED;
-        case 5:
-            return e_MAV_MODE_FLAG_MAV_MODE_FLAG_HIL_ENABLED;
-        case 6:
-            return e_MAV_MODE_FLAG_MAV_MODE_FLAG_MANUAL_INPUT_ENABLED;
-        case 7:
-            return e_MAV_MODE_FLAG_MAV_MODE_FLAG_SAFETY_ARMED;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
+    return  1 + (int)get_bits(data, 296, 8);
 }
 INLINER void p234_base_mode_SET(e_MAV_MODE_FLAG  src, Pack * dst)//System mode bitfield, see MAV_MODE_FLAG ENUM in mavlink/include/mavlink_types.h
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_CUSTOM_MODE_ENABLED:
-            id = 0;
-            break;
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_TEST_ENABLED:
-            id = 1;
-            break;
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_AUTO_ENABLED:
-            id = 2;
-            break;
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_GUIDED_ENABLED:
-            id = 3;
-            break;
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_STABILIZE_ENABLED:
-            id = 4;
-            break;
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_HIL_ENABLED:
-            id = 5;
-            break;
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_MANUAL_INPUT_ENABLED:
-            id = 6;
-            break;
-        case e_MAV_MODE_FLAG_MAV_MODE_FLAG_SAFETY_ARMED:
-            id = 7;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
-    set_bits(id, 4, data, 296);
+    set_bits(- 1 +   src, 8, data, 296);
 }
 INLINER e_MAV_LANDED_STATE p234_landed_state_GET(Pack * src)//The landed state. Is set to MAV_LANDED_STATE_UNDEFINED if landed state is unknown.
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 300, 3);
+    return  0 + (int)get_bits(data, 304, 3);
 }
 INLINER void p234_landed_state_SET(e_MAV_LANDED_STATE  src, Pack * dst)//The landed state. Is set to MAV_LANDED_STATE_UNDEFINED if landed state is unknown.
 {
     uint8_t * data = dst->data;
-    set_bits(- 0 +   src, 3, data, 300);
+    set_bits(- 0 +   src, 3, data, 304);
 }
 INLINER e_GPS_FIX_TYPE p234_gps_fix_type_GET(Pack * src)//See the GPS_FIX_TYPE enum.
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 303, 4);
+    return  0 + (int)get_bits(data, 307, 4);
 }
 INLINER void p234_gps_fix_type_SET(e_GPS_FIX_TYPE  src, Pack * dst)//See the GPS_FIX_TYPE enum.
 {
     uint8_t * data = dst->data;
-    set_bits(- 0 +   src, 4, data, 303);
+    set_bits(- 0 +   src, 4, data, 307);
 }
 INLINER uint32_t p241_clipping_0_GET(Pack * src)//first accelerometer clipping count
 {
@@ -16207,75 +13791,32 @@ INLINER void p246_tslc_SET(uint8_t  src, Pack * dst)//Time since last communicat
 INLINER e_ADSB_ALTITUDE_TYPE p246_altitude_type_GET(Pack * src)//Type from ADSB_ALTITUDE_TYPE enum
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 200, 2);
+    return  0 + (int)get_bits(data, 200, 1);
 }
 INLINER void p246_altitude_type_SET(e_ADSB_ALTITUDE_TYPE  src, Pack * dst)//Type from ADSB_ALTITUDE_TYPE enum
 {
     uint8_t * data = dst->data;
-    set_bits(- 0 +   src, 2, data, 200);
+    set_bits(- 0 +   src, 1, data, 200);
 }
 INLINER e_ADSB_EMITTER_TYPE p246_emitter_type_GET(Pack * src)//Type from ADSB_EMITTER_TYPE enum
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 202, 5);
+    return  0 + (int)get_bits(data, 201, 5);
 }
 INLINER void p246_emitter_type_SET(e_ADSB_EMITTER_TYPE  src, Pack * dst)//Type from ADSB_EMITTER_TYPE enum
 {
     uint8_t * data = dst->data;
-    set_bits(- 0 +   src, 5, data, 202);
+    set_bits(- 0 +   src, 5, data, 201);
 }
 INLINER e_ADSB_FLAGS p246_flags_GET(Pack * src)//Flags to indicate various statuses including valid data fields
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 207, 3))
-    {
-        case 0:
-            return e_ADSB_FLAGS_ADSB_FLAGS_VALID_COORDS;
-        case 1:
-            return e_ADSB_FLAGS_ADSB_FLAGS_VALID_ALTITUDE;
-        case 2:
-            return e_ADSB_FLAGS_ADSB_FLAGS_VALID_HEADING;
-        case 3:
-            return e_ADSB_FLAGS_ADSB_FLAGS_VALID_VELOCITY;
-        case 4:
-            return e_ADSB_FLAGS_ADSB_FLAGS_VALID_CALLSIGN;
-        case 5:
-            return e_ADSB_FLAGS_ADSB_FLAGS_VALID_SQUAWK;
-        case 6:
-            return e_ADSB_FLAGS_ADSB_FLAGS_SIMULATED;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
+    return  1 + (int)get_bits(data, 206, 7);
 }
 INLINER void p246_flags_SET(e_ADSB_FLAGS  src, Pack * dst)//Flags to indicate various statuses including valid data fields
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_ADSB_FLAGS_ADSB_FLAGS_VALID_COORDS:
-            id = 0;
-            break;
-        case e_ADSB_FLAGS_ADSB_FLAGS_VALID_ALTITUDE:
-            id = 1;
-            break;
-        case e_ADSB_FLAGS_ADSB_FLAGS_VALID_HEADING:
-            id = 2;
-            break;
-        case e_ADSB_FLAGS_ADSB_FLAGS_VALID_VELOCITY:
-            id = 3;
-            break;
-        case e_ADSB_FLAGS_ADSB_FLAGS_VALID_CALLSIGN:
-            id = 4;
-            break;
-        case e_ADSB_FLAGS_ADSB_FLAGS_VALID_SQUAWK:
-            id = 5;
-            break;
-        case e_ADSB_FLAGS_ADSB_FLAGS_SIMULATED:
-            id = 6;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
-    set_bits(id, 3, data, 207);
+    set_bits(- 1 +   src, 7, data, 206);
 }
 INLINER char16_t * p246_callsign_GET(Bounds_Inside * src, char16_t *  dst, int32_t pos) //The callsign, 8+null
 {
@@ -16286,18 +13827,18 @@ INLINER char16_t * p246_callsign_GET(Bounds_Inside * src, char16_t *  dst, int32
 }
 INLINER int32_t p246_callsign_LEN(Bounds_Inside * src)
 {
-    return (src->base.field_bit !=  210 && !try_visit_field(src, 210)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
+    return (src->base.field_bit !=  213 && !try_visit_field(src, 213)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
 }
 INLINER  char16_t* p246_callsign_TRY_(Bounds_Inside * src)
 {
-    if(src->base.field_bit !=  210 && !try_visit_field(src, 210)  ||  !try_visit_item(src, 0)) return NULL;
+    if(src->base.field_bit !=  213 && !try_visit_field(src, 213)  ||  !try_visit_item(src, 0)) return NULL;
     char16_t * ret = p246_callsign_GET(src, malloc((src->items + 1) * 2), 0);
     ret[src->items] = 0;//the terminating null character.
     return ret;
 }
 INLINER void p246_callsign_SET(char16_t *  src, int32_t pos, int32_t items, Bounds_Inside * dst) //The callsign, 8+null
 {
-    if(dst->base.field_bit != 210 && insert_field(dst, 210, items) ||
+    if(dst->base.field_bit != 213 && insert_field(dst, 213, items) ||
             ! try_visit_item(dst, 0)) insert_item(dst, 0, items);
     uint8_t * data = dst->base.pack->data;
     for(int32_t BYTE =  dst->BYTE, src_max = pos + dst->items; pos < src_max; pos++, BYTE += 2)
@@ -16347,32 +13888,32 @@ INLINER void p247_horizontal_minimum_delta_SET(float  src, Pack * dst)//Closest 
 INLINER e_MAV_COLLISION_SRC p247_src__GET(Pack * src)//Collision data source
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 128, 2);
+    return  0 + (int)get_bits(data, 128, 1);
 }
 INLINER void p247_src__SET(e_MAV_COLLISION_SRC  src, Pack * dst)//Collision data source
 {
     uint8_t * data = dst->data;
-    set_bits(- 0 +   src, 2, data, 128);
+    set_bits(- 0 +   src, 1, data, 128);
 }
 INLINER e_MAV_COLLISION_ACTION p247_action_GET(Pack * src)//Action that is being taken to avoid this collision
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 130, 3);
+    return  0 + (int)get_bits(data, 129, 3);
 }
 INLINER void p247_action_SET(e_MAV_COLLISION_ACTION  src, Pack * dst)//Action that is being taken to avoid this collision
 {
     uint8_t * data = dst->data;
-    set_bits(- 0 +   src, 3, data, 130);
+    set_bits(- 0 +   src, 3, data, 129);
 }
 INLINER e_MAV_COLLISION_THREAT_LEVEL p247_threat_level_GET(Pack * src)//How concerned the aircraft is about this collision
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 133, 2);
+    return  0 + (int)get_bits(data, 132, 2);
 }
 INLINER void p247_threat_level_SET(e_MAV_COLLISION_THREAT_LEVEL  src, Pack * dst)//How concerned the aircraft is about this collision
 {
     uint8_t * data = dst->data;
-    set_bits(- 0 +   src, 2, data, 133);
+    set_bits(- 0 +   src, 2, data, 132);
 }
 /**
 *A code that identifies the software component that understands this message (analogous to usb device classes
@@ -16670,12 +14211,12 @@ INLINER void p252_name_SET_(char16_t*  src, Bounds_Inside * dst) {p252_name_SET(
 INLINER e_MAV_SEVERITY p253_severity_GET(Pack * src)//Severity of status. Relies on the definitions within RFC-5424. See enum MAV_SEVERITY.
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 0, 4);
+    return  0 + (int)get_bits(data, 0, 3);
 }
 INLINER void p253_severity_SET(e_MAV_SEVERITY  src, Pack * dst)//Severity of status. Relies on the definitions within RFC-5424. See enum MAV_SEVERITY.
 {
     uint8_t * data = dst->data;
-    set_bits(- 0 +   src, 4, data, 0);
+    set_bits(- 0 +   src, 3, data, 0);
 }
 INLINER char16_t * p253_text_GET(Bounds_Inside * src, char16_t *  dst, int32_t pos) //Status text message, without null termination character
 {
@@ -16686,18 +14227,18 @@ INLINER char16_t * p253_text_GET(Bounds_Inside * src, char16_t *  dst, int32_t p
 }
 INLINER int32_t p253_text_LEN(Bounds_Inside * src)
 {
-    return (src->base.field_bit !=  4 && !try_visit_field(src, 4)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
+    return (src->base.field_bit !=  3 && !try_visit_field(src, 3)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
 }
 INLINER  char16_t* p253_text_TRY_(Bounds_Inside * src)
 {
-    if(src->base.field_bit !=  4 && !try_visit_field(src, 4)  ||  !try_visit_item(src, 0)) return NULL;
+    if(src->base.field_bit !=  3 && !try_visit_field(src, 3)  ||  !try_visit_item(src, 0)) return NULL;
     char16_t * ret = p253_text_GET(src, malloc((src->items + 1) * 2), 0);
     ret[src->items] = 0;//the terminating null character.
     return ret;
 }
 INLINER void p253_text_SET(char16_t *  src, int32_t pos, int32_t items, Bounds_Inside * dst) //Status text message, without null termination character
 {
-    if(dst->base.field_bit != 4 && insert_field(dst, 4, items) ||
+    if(dst->base.field_bit != 3 && insert_field(dst, 3, items) ||
             ! try_visit_item(dst, 0)) insert_item(dst, 0, items);
     uint8_t * data = dst->base.pack->data;
     for(int32_t BYTE =  dst->BYTE, src_max = pos + dst->items; pos < src_max; pos++, BYTE += 2)
@@ -16985,50 +14526,12 @@ INLINER void p259_lens_id_SET(uint8_t  src, Pack * dst)//Reserved for a lens ID
 INLINER e_CAMERA_CAP_FLAGS p259_flags_GET(Pack * src)//CAMERA_CAP_FLAGS enum flags (bitmap) describing camera capabilities.
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 728, 3))
-    {
-        case 0:
-            return e_CAMERA_CAP_FLAGS_CAMERA_CAP_FLAGS_CAPTURE_VIDEO;
-        case 1:
-            return e_CAMERA_CAP_FLAGS_CAMERA_CAP_FLAGS_CAPTURE_IMAGE;
-        case 2:
-            return e_CAMERA_CAP_FLAGS_CAMERA_CAP_FLAGS_HAS_MODES;
-        case 3:
-            return e_CAMERA_CAP_FLAGS_CAMERA_CAP_FLAGS_CAN_CAPTURE_IMAGE_IN_VIDEO_MODE;
-        case 4:
-            return e_CAMERA_CAP_FLAGS_CAMERA_CAP_FLAGS_CAN_CAPTURE_VIDEO_IN_IMAGE_MODE;
-        case 5:
-            return e_CAMERA_CAP_FLAGS_CAMERA_CAP_FLAGS_HAS_IMAGE_SURVEY_MODE;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
+    return  1 + (int)get_bits(data, 728, 6);
 }
 INLINER void p259_flags_SET(e_CAMERA_CAP_FLAGS  src, Pack * dst)//CAMERA_CAP_FLAGS enum flags (bitmap) describing camera capabilities.
 {
     uint8_t * data = dst->data;
-    int32_t id;
-    switch(src)
-    {
-        case e_CAMERA_CAP_FLAGS_CAMERA_CAP_FLAGS_CAPTURE_VIDEO:
-            id = 0;
-            break;
-        case e_CAMERA_CAP_FLAGS_CAMERA_CAP_FLAGS_CAPTURE_IMAGE:
-            id = 1;
-            break;
-        case e_CAMERA_CAP_FLAGS_CAMERA_CAP_FLAGS_HAS_MODES:
-            id = 2;
-            break;
-        case e_CAMERA_CAP_FLAGS_CAMERA_CAP_FLAGS_CAN_CAPTURE_IMAGE_IN_VIDEO_MODE:
-            id = 3;
-            break;
-        case e_CAMERA_CAP_FLAGS_CAMERA_CAP_FLAGS_CAN_CAPTURE_VIDEO_IN_IMAGE_MODE:
-            id = 4;
-            break;
-        case e_CAMERA_CAP_FLAGS_CAMERA_CAP_FLAGS_HAS_IMAGE_SURVEY_MODE:
-            id = 5;
-            break;
-        default: ;// assert(false);//("Unknown enum" + id);
-    }
-    set_bits(id, 3, data, 728);
+    set_bits(- 1 +   src, 6, data, 728);
 }
 INLINER char16_t * p259_cam_definition_uri_GET(Bounds_Inside * src, char16_t *  dst, int32_t pos) //Camera definition URI (if any, otherwise only basic functions will be available).
 {
@@ -17039,18 +14542,18 @@ INLINER char16_t * p259_cam_definition_uri_GET(Bounds_Inside * src, char16_t *  
 }
 INLINER int32_t p259_cam_definition_uri_LEN(Bounds_Inside * src)
 {
-    return (src->base.field_bit !=  731 && !try_visit_field(src, 731)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
+    return (src->base.field_bit !=  734 && !try_visit_field(src, 734)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
 }
 INLINER  char16_t* p259_cam_definition_uri_TRY_(Bounds_Inside * src)
 {
-    if(src->base.field_bit !=  731 && !try_visit_field(src, 731)  ||  !try_visit_item(src, 0)) return NULL;
+    if(src->base.field_bit !=  734 && !try_visit_field(src, 734)  ||  !try_visit_item(src, 0)) return NULL;
     char16_t * ret = p259_cam_definition_uri_GET(src, malloc((src->items + 1) * 2), 0);
     ret[src->items] = 0;//the terminating null character.
     return ret;
 }
 INLINER void p259_cam_definition_uri_SET(char16_t *  src, int32_t pos, int32_t items, Bounds_Inside * dst) //Camera definition URI (if any, otherwise only basic functions will be available).
 {
-    if(dst->base.field_bit != 731 && insert_field(dst, 731, items) ||
+    if(dst->base.field_bit != 734 && insert_field(dst, 734, items) ||
             ! try_visit_item(dst, 0)) insert_item(dst, 0, items);
     uint8_t * data = dst->base.pack->data;
     for(int32_t BYTE =  dst->BYTE, src_max = pos + dst->items; pos < src_max; pos++, BYTE += 2)
@@ -17372,20 +14875,40 @@ INLINER uint32_t p264_time_boot_ms_GET(Pack * src)//Timestamp (milliseconds sinc
     uint8_t * data = src->data;
     return ((get_bytes(data,  0, 4)));
 }
+INLINER void p264_time_boot_ms_SET(uint32_t  src, Pack * dst)//Timestamp (milliseconds since system boot)
+{
+    uint8_t * data = dst->data;
+    set_bytes((src), 4, data,  0);
+}
 INLINER uint64_t p264_arming_time_utc_GET(Pack * src)//Timestamp at arming (microseconds since UNIX epoch) in UTC, 0 for unknown
 {
     uint8_t * data = src->data;
     return ((get_bytes(data,  4, 8)));
+}
+INLINER void p264_arming_time_utc_SET(uint64_t  src, Pack * dst)//Timestamp at arming (microseconds since UNIX epoch) in UTC, 0 for unknown
+{
+    uint8_t * data = dst->data;
+    set_bytes((src), 8, data,  4);
 }
 INLINER uint64_t p264_takeoff_time_utc_GET(Pack * src)//Timestamp at takeoff (microseconds since UNIX epoch) in UTC, 0 for unknown
 {
     uint8_t * data = src->data;
     return ((get_bytes(data,  12, 8)));
 }
+INLINER void p264_takeoff_time_utc_SET(uint64_t  src, Pack * dst)//Timestamp at takeoff (microseconds since UNIX epoch) in UTC, 0 for unknown
+{
+    uint8_t * data = dst->data;
+    set_bytes((src), 8, data,  12);
+}
 INLINER uint64_t p264_flight_uuid_GET(Pack * src)//Universally unique identifier (UUID) of flight, should correspond to name of logfiles
 {
     uint8_t * data = src->data;
     return ((get_bytes(data,  20, 8)));
+}
+INLINER void p264_flight_uuid_SET(uint64_t  src, Pack * dst)//Universally unique identifier (UUID) of flight, should correspond to name of logfiles
+{
+    uint8_t * data = dst->data;
+    set_bytes((src), 8, data,  20);
 }
 INLINER uint32_t p265_time_boot_ms_GET(Pack * src)//Timestamp (milliseconds since system boot)
 {
@@ -17707,12 +15230,12 @@ INLINER uint8_t p310_sub_mode_GET(Pack * src)//Not used currently.
 INLINER e_UAVCAN_NODE_HEALTH p310_health_GET(Pack * src)//Generalized node health status.
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 120, 3);
+    return  0 + (int)get_bits(data, 120, 2);
 }
 INLINER e_UAVCAN_NODE_MODE p310_mode_GET(Pack * src)//Generalized operating mode.
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 123, 3))
+    switch(get_bits(data, 122, 3))
     {
         case 0:
             return e_UAVCAN_NODE_MODE_UAVCAN_NODE_MODE_OPERATIONAL;
@@ -17956,7 +15479,7 @@ INLINER e_MAV_PARAM_EXT_TYPE p324_param_type_GET(Pack * src)//Parameter type: se
 INLINER e_PARAM_ACK p324_param_result_GET(Pack * src)//Result code: see the PARAM_ACK enum for possible codes.
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 4, 3);
+    return  0 + (int)get_bits(data, 4, 2);
 }
 /**
 *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
@@ -17971,11 +15494,11 @@ INLINER char16_t * p324_param_id_GET(Bounds_Inside * src, char16_t *  dst, int32
 }
 INLINER int32_t p324_param_id_LEN(Bounds_Inside * src)
 {
-    return (src->base.field_bit !=  9 && !try_visit_field(src, 9)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
+    return (src->base.field_bit !=  8 && !try_visit_field(src, 8)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
 }
 INLINER  char16_t* p324_param_id_TRY_(Bounds_Inside * src)
 {
-    if(src->base.field_bit !=  9 && !try_visit_field(src, 9)  ||  !try_visit_item(src, 0)) return NULL;
+    if(src->base.field_bit !=  8 && !try_visit_field(src, 8)  ||  !try_visit_item(src, 0)) return NULL;
     char16_t * ret = p324_param_id_GET(src, malloc((src->items + 1) * 2), 0);
     ret[src->items] = 0;//the terminating null character.
     return ret;
@@ -17989,11 +15512,11 @@ INLINER char16_t * p324_param_value_GET(Bounds_Inside * src, char16_t *  dst, in
 }
 INLINER int32_t p324_param_value_LEN(Bounds_Inside * src)
 {
-    return (src->base.field_bit !=  10 && !try_visit_field(src, 10)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
+    return (src->base.field_bit !=  9 && !try_visit_field(src, 9)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
 }
 INLINER  char16_t* p324_param_value_TRY_(Bounds_Inside * src)
 {
-    if(src->base.field_bit !=  10 && !try_visit_field(src, 10)  ||  !try_visit_item(src, 0)) return NULL;
+    if(src->base.field_bit !=  9 && !try_visit_field(src, 9)  ||  !try_visit_item(src, 0)) return NULL;
     char16_t * ret = p324_param_value_GET(src, malloc((src->items + 1) * 2), 0);
     ret[src->items] = 0;//the terminating null character.
     return ret;
@@ -18060,12 +15583,12 @@ INLINER e_ADSB_EMITTER_TYPE p10001_emitterType_GET(Pack * src)//Transmitting veh
 INLINER e_UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE p10001_aircraftSize_GET(Pack * src)//Aircraft length and width encoding (table 2-35 of DO-282B)
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 53, 5);
+    return  0 + (int)get_bits(data, 53, 4);
 }
 INLINER e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT p10001_gpsOffsetLat_GET(Pack * src)//GPS antenna lateral offset (table 2-36 of DO-282B)
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 58, 4);
+    return  0 + (int)get_bits(data, 57, 3);
 }
 /**
 *GPS antenna longitudinal offset from nose [if non-zero, take position (in meters) divide by 2 and add
@@ -18073,12 +15596,12 @@ INLINER e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT p10001_gpsOffsetLat_GET(Pack * sr
 INLINER e_UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON p10001_gpsOffsetLon_GET(Pack * src)
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 62, 2);
+    return  0 + (int)get_bits(data, 60, 1);
 }
 INLINER e_UAVIONIX_ADSB_OUT_RF_SELECT p10001_rfSelect_GET(Pack * src)//ADS-B transponder reciever and transmit enable flags
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 64, 2);
+    return  0 + (int)get_bits(data, 61, 2);
 }
 INLINER char16_t * p10001_callsign_GET(Bounds_Inside * src, char16_t *  dst, int32_t pos) //Vehicle identifier (8 characters, null terminated, valid characters are A-Z, 0-9, " " only)
 {
@@ -18089,11 +15612,11 @@ INLINER char16_t * p10001_callsign_GET(Bounds_Inside * src, char16_t *  dst, int
 }
 INLINER int32_t p10001_callsign_LEN(Bounds_Inside * src)
 {
-    return (src->base.field_bit !=  66 && !try_visit_field(src, 66)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
+    return (src->base.field_bit !=  63 && !try_visit_field(src, 63)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
 }
 INLINER  char16_t* p10001_callsign_TRY_(Bounds_Inside * src)
 {
-    if(src->base.field_bit !=  66 && !try_visit_field(src, 66)  ||  !try_visit_item(src, 0)) return NULL;
+    if(src->base.field_bit !=  63 && !try_visit_field(src, 63)  ||  !try_visit_item(src, 0)) return NULL;
     char16_t * ret = p10001_callsign_GET(src, malloc((src->items + 1) * 2), 0);
     ret[src->items] = 0;//the terminating null character.
     return ret;
@@ -18174,25 +15697,12 @@ INLINER e_UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX p10002_gpsFix_GET(Pack * src)//0-1: 
 INLINER e_UAVIONIX_ADSB_EMERGENCY_STATUS p10002_emergencyStatus_GET(Pack * src)//Emergency status
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 299, 4);
+    return  0 + (int)get_bits(data, 299, 3);
 }
 INLINER e_UAVIONIX_ADSB_OUT_DYNAMIC_STATE p10002_state_GET(Pack * src)//ADS-B transponder dynamic input state flags
 {
     uint8_t * data = src->data;
-    switch(get_bits(data, 303, 3))
-    {
-        case 0:
-            return e_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_INTENT_CHANGE;
-        case 1:
-            return e_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_AUTOPILOT_ENABLED;
-        case 2:
-            return e_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_NICBARO_CROSSCHECKED;
-        case 3:
-            return e_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_ON_GROUND;
-        case 4:
-            return e_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_UAVIONIX_ADSB_OUT_DYNAMIC_STATE_IDENT;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
+    return  1 + (int)get_bits(data, 302, 5);
 }
 INLINER e_UAVIONIX_ADSB_RF_HEALTH p10003_rfHealth_GET(Pack * src)//ADS-B transponder messages
 {
@@ -18248,7 +15758,7 @@ INLINER uint8_t p11000_count_GET(Pack * src)//count of registers to read
 INLINER e_DEVICE_OP_BUSTYPE p11000_bustype_GET(Pack * src)//The bus type
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 80, 2);
+    return  0 + (int)get_bits(data, 80, 1);
 }
 INLINER char16_t * p11000_busname_GET(Bounds_Inside * src, char16_t *  dst, int32_t pos) //Name of device on bus (for SPI)
 {
@@ -18259,11 +15769,11 @@ INLINER char16_t * p11000_busname_GET(Bounds_Inside * src, char16_t *  dst, int3
 }
 INLINER int32_t p11000_busname_LEN(Bounds_Inside * src)
 {
-    return (src->base.field_bit !=  82 && !try_visit_field(src, 82)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
+    return (src->base.field_bit !=  81 && !try_visit_field(src, 81)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
 }
 INLINER  char16_t* p11000_busname_TRY_(Bounds_Inside * src)
 {
-    if(src->base.field_bit !=  82 && !try_visit_field(src, 82)  ||  !try_visit_item(src, 0)) return NULL;
+    if(src->base.field_bit !=  81 && !try_visit_field(src, 81)  ||  !try_visit_item(src, 0)) return NULL;
     char16_t * ret = p11000_busname_GET(src, malloc((src->items + 1) * 2), 0);
     ret[src->items] = 0;//the terminating null character.
     return ret;
@@ -18348,7 +15858,7 @@ INLINER  uint8_t*  p11002_data__GET_(Pack * src) {return p11002_data__GET(src, m
 INLINER e_DEVICE_OP_BUSTYPE p11002_bustype_GET(Pack * src)//The bus type
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 1104, 2);
+    return  0 + (int)get_bits(data, 1104, 1);
 }
 INLINER char16_t * p11002_busname_GET(Bounds_Inside * src, char16_t *  dst, int32_t pos) //Name of device on bus (for SPI)
 {
@@ -18359,11 +15869,11 @@ INLINER char16_t * p11002_busname_GET(Bounds_Inside * src, char16_t *  dst, int3
 }
 INLINER int32_t p11002_busname_LEN(Bounds_Inside * src)
 {
-    return (src->base.field_bit !=  1106 && !try_visit_field(src, 1106)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
+    return (src->base.field_bit !=  1105 && !try_visit_field(src, 1105)  ||  !try_visit_item(src, 0)) ? 0 : src->items;
 }
 INLINER  char16_t* p11002_busname_TRY_(Bounds_Inside * src)
 {
-    if(src->base.field_bit !=  1106 && !try_visit_field(src, 1106)  ||  !try_visit_item(src, 0)) return NULL;
+    if(src->base.field_bit !=  1105 && !try_visit_field(src, 1105)  ||  !try_visit_item(src, 0)) return NULL;
     char16_t * ret = p11002_busname_GET(src, malloc((src->items + 1) * 2), 0);
     ret[src->items] = 0;//the terminating null character.
     return ret;

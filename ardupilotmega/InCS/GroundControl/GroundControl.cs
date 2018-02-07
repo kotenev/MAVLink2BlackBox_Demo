@@ -40,36 +40,14 @@ namespace org.noname
 
             public MAV_MODE_FLAG base_mode //System mode bitfield, see MAV_MODE_FLAG ENUM in mavlink/include/mavlink_types.h
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 50, 4))
-                    {
-                        case 0:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED;
-                        case 1:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_TEST_ENABLED;
-                        case 2:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_AUTO_ENABLED;
-                        case 3:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_GUIDED_ENABLED;
-                        case 4:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_STABILIZE_ENABLED;
-                        case 5:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_HIL_ENABLED;
-                        case 6:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_MANUAL_INPUT_ENABLED;
-                        case 7:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_SAFETY_ARMED;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return (MAV_MODE_FLAG)(1 +  BitUtils.get_bits(data, 50, 8));}
             }
 
             public MAV_STATE system_status //System status flag, see MAV_STATE ENUM
             {
-                get {  return (MAV_STATE)(0 +  BitUtils.get_bits(data, 54, 4));}
+                get {  return (MAV_STATE)(0 +  BitUtils.get_bits(data, 58, 4));}
             }
-            static readonly Meta meta0 = new Meta(0, 0, 1, 0, 8, 58);
+            static readonly Meta meta0 = new Meta(0, 0, 1, 0, 8, 62);
         }/**
 *The general system state. If the system is following the MAVLink standard, the system state is mainly
 *	defined by three orthogonal states/modes: The system mode, which is either LOCKED (motors shut down and
@@ -146,65 +124,7 @@ namespace org.noname
             *	present. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
             public MAV_SYS_STATUS_SENSOR onboard_control_sensors_present
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 152, 5))
-                    {
-                        case 0:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO;
-                        case 1:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL;
-                        case 2:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG;
-                        case 3:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE;
-                        case 4:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE;
-                        case 5:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_GPS;
-                        case 6:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW;
-                        case 7:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_VISION_POSITION;
-                        case 8:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_LASER_POSITION;
-                        case 9:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_EXTERNAL_GROUND_TRUTH;
-                        case 10:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL;
-                        case 11:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION;
-                        case 12:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_YAW_POSITION;
-                        case 13:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL;
-                        case 14:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL;
-                        case 15:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS;
-                        case 16:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_RC_RECEIVER;
-                        case 17:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO2;
-                        case 18:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL2;
-                        case 19:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG2;
-                        case 20:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_GEOFENCE;
-                        case 21:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_AHRS;
-                        case 22:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_TERRAIN;
-                        case 23:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_REVERSE_MOTOR;
-                        case 24:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_LOGGING;
-                        case 25:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_BATTERY;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return (MAV_SYS_STATUS_SENSOR)(1 +  BitUtils.get_bits(data, 152, 26));}
             }
 
             /**
@@ -212,65 +132,7 @@ namespace org.noname
             *	1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
             public MAV_SYS_STATUS_SENSOR onboard_control_sensors_enabled
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 157, 5))
-                    {
-                        case 0:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO;
-                        case 1:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL;
-                        case 2:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG;
-                        case 3:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE;
-                        case 4:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE;
-                        case 5:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_GPS;
-                        case 6:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW;
-                        case 7:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_VISION_POSITION;
-                        case 8:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_LASER_POSITION;
-                        case 9:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_EXTERNAL_GROUND_TRUTH;
-                        case 10:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL;
-                        case 11:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION;
-                        case 12:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_YAW_POSITION;
-                        case 13:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL;
-                        case 14:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL;
-                        case 15:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS;
-                        case 16:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_RC_RECEIVER;
-                        case 17:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO2;
-                        case 18:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL2;
-                        case 19:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG2;
-                        case 20:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_GEOFENCE;
-                        case 21:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_AHRS;
-                        case 22:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_TERRAIN;
-                        case 23:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_REVERSE_MOTOR;
-                        case 24:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_LOGGING;
-                        case 25:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_BATTERY;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return (MAV_SYS_STATUS_SENSOR)(1 +  BitUtils.get_bits(data, 178, 26));}
             }
 
             /**
@@ -278,67 +140,9 @@ namespace org.noname
             *	enabled. Value of 1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
             public MAV_SYS_STATUS_SENSOR onboard_control_sensors_health
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 162, 5))
-                    {
-                        case 0:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO;
-                        case 1:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL;
-                        case 2:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG;
-                        case 3:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE;
-                        case 4:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE;
-                        case 5:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_GPS;
-                        case 6:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW;
-                        case 7:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_VISION_POSITION;
-                        case 8:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_LASER_POSITION;
-                        case 9:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_EXTERNAL_GROUND_TRUTH;
-                        case 10:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL;
-                        case 11:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION;
-                        case 12:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_YAW_POSITION;
-                        case 13:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL;
-                        case 14:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL;
-                        case 15:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS;
-                        case 16:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_RC_RECEIVER;
-                        case 17:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO2;
-                        case 18:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL2;
-                        case 19:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG2;
-                        case 20:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_GEOFENCE;
-                        case 21:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_AHRS;
-                        case 22:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_TERRAIN;
-                        case 23:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_REVERSE_MOTOR;
-                        case 24:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_LOGGING;
-                        case 25:
-                            return MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_BATTERY;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return (MAV_SYS_STATUS_SENSOR)(1 +  BitUtils.get_bits(data, 204, 26));}
             }
-            static readonly Meta meta1 = new Meta(1, 8, 0, 0, 21, 167);
+            static readonly Meta meta1 = new Meta(1, 8, 0, 0, 29, 230);
         }/**
 *The system time is the time of the master clock, typically the computer clock of the main onboard computer*/
         public class SYSTEM_TIME : Pack
@@ -519,7 +323,7 @@ namespace org.noname
             public int passkey_LEN(Inside ph)
             {
                 return (ph.field_bit !=  24 && !try_visit_field(ph, 24)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-            } static readonly Meta meta5 = new Meta(5, 0, 0, 0, 4, 24, 0, _o);
+            } static readonly Meta meta5 = new Meta(5, 0, 0, 0, 4, 24, 0, _L);
         }/**
 *Accept / deny control of this MAV*/
         public class CHANGE_OPERATOR_CONTROL_ACK : Pack
@@ -564,7 +368,7 @@ namespace org.noname
             public int key_LEN(Inside ph)
             {
                 return (ph.field_bit !=  0 && !try_visit_field(ph, 0)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-            } static readonly Meta meta7 = new Meta(7, 0, 0, 0, 1, 0, 0, _a);
+            } static readonly Meta meta7 = new Meta(7, 0, 0, 0, 1, 0, 0, _R);
         }/**
 *THIS INTERFACE IS DEPRECATED. USE COMMAND_LONG with MAV_CMD_DO_SET_MODE INSTEAD. Set the system mode,
 *	as defined by enum MAV_MODE. There is no target component id as the mode is by definition for the overall
@@ -585,35 +389,7 @@ namespace org.noname
 
             public MAV_MODE base_mode //The new base mode
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 40, 4))
-                    {
-                        case 0:
-                            return MAV_MODE.MAV_MODE_PREFLIGHT;
-                        case 1:
-                            return MAV_MODE.MAV_MODE_MANUAL_DISARMED;
-                        case 2:
-                            return MAV_MODE.MAV_MODE_TEST_DISARMED;
-                        case 3:
-                            return MAV_MODE.MAV_MODE_STABILIZE_DISARMED;
-                        case 4:
-                            return MAV_MODE.MAV_MODE_GUIDED_DISARMED;
-                        case 5:
-                            return MAV_MODE.MAV_MODE_AUTO_DISARMED;
-                        case 6:
-                            return MAV_MODE.MAV_MODE_MANUAL_ARMED;
-                        case 7:
-                            return MAV_MODE.MAV_MODE_TEST_ARMED;
-                        case 8:
-                            return MAV_MODE.MAV_MODE_STABILIZE_ARMED;
-                        case 9:
-                            return MAV_MODE.MAV_MODE_GUIDED_ARMED;
-                        case 10:
-                            return MAV_MODE.MAV_MODE_AUTO_ARMED;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__v(BitUtils.get_bits(data, 40, 4));}
             }
             static readonly Meta meta11 = new Meta(11, 0, 1, 0, 6, 44);
         }/**
@@ -661,7 +437,7 @@ namespace org.noname
             public int param_id_LEN(Inside ph)
             {
                 return (ph.field_bit !=  32 && !try_visit_field(ph, 32)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-            } static readonly Meta meta20 = new Meta(20, 0, 0, 0, 5, 32, 0, _z);
+            } static readonly Meta meta20 = new Meta(20, 0, 0, 0, 5, 32, 0, _f);
         }/**
 *Request all parameters of this component. After this request, all parameters are emitted.*/
         public class PARAM_REQUEST_LIST : Pack
@@ -727,7 +503,7 @@ namespace org.noname
             public int param_id_LEN(Inside ph)
             {
                 return (ph.field_bit !=  68 && !try_visit_field(ph, 68)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-            } static readonly Meta meta22 = new Meta(22, 2, 0, 0, 10, 68, 0, _e);
+            } static readonly Meta meta22 = new Meta(22, 2, 0, 0, 10, 68, 0, _k);
         }/**
 *Set a parameter value TEMPORARILY to RAM. It will be reset to default on system reboot. Send the ACTION
 *	MAV_ACTION_STORAGE_WRITE to PERMANENTLY write the RAM contents to EEPROM. IMPORTANT: The receiving component
@@ -779,7 +555,7 @@ namespace org.noname
             public int param_id_LEN(Inside ph)
             {
                 return (ph.field_bit !=  52 && !try_visit_field(ph, 52)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-            } static readonly Meta meta23 = new Meta(23, 0, 0, 0, 8, 52, 0, _f);
+            } static readonly Meta meta23 = new Meta(23, 0, 0, 0, 8, 52, 0, _g);
         }/**
 *The global position, as returned by the Global Positioning System (GPS). This is
 *	NOT the global position estimate of the system, but rather a RAW sensor value. See message GLOBAL_POSITION for the global position estimate. Coordinate frame is right-handed, Z-axis up (GPS frame).*/
@@ -867,7 +643,7 @@ namespace org.noname
                 if(ph.field_bit !=  240 && !try_visit_field(ph, 240)) return 0;
                 return (uint)((uint) BitUtils.get_bytes(data,  ph.BYTE, 4));
             }
-            static readonly Meta meta24 = new Meta(24, 4, 0, 1, 31, 236, 0, _iA, _CA, _LA, _bA, _XA);
+            static readonly Meta meta24 = new Meta(24, 4, 0, 1, 31, 236, 0, _Wq, _Nq, _iq, _Kq, _Oq);
         }/**
 *The positioning status, as reported by GPS. This message is intended to display status information about
 *	each satellite visible to the receiver. See message GLOBAL_POSITION for the global position estimate.
@@ -1522,7 +1298,7 @@ namespace org.noname
                 if(ph.field_bit !=  175 && !try_visit_field(ph, 175)) return 0;
                 return (ushort)((ushort) BitUtils.get_bytes(data,  ph.BYTE, 2));
             }
-            static readonly Meta meta36 = new Meta(36, 8, 1, 0, 22, 168, 0, _tE, _iE, _CE, _LE, _bE, _XE, _NE, _kE);
+            static readonly Meta meta36 = new Meta(36, 8, 1, 0, 22, 168, 0, _oe, _We, _Ne, _ie, _Ke, _Oe, _ce, _Ae);
         }/**
 *Request a partial list of mission items from the system/component. http:qgroundcontrol.org/mavlink/waypoint_protocol.
 *	If start and end index are the same, just send one waypoint*/
@@ -1552,21 +1328,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 48, 3))
-                    {
-                        case 0:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
-                        case 1:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
-                        case 2:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
-                        case 3:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__R(BitUtils.get_bits(data, 48, 3));}
             }
             static readonly Meta meta37 = new Meta(37, 0, 0, 0, 7, 51);
         }/**
@@ -1599,21 +1361,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 48, 3))
-                    {
-                        case 0:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
-                        case 1:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
-                        case 2:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
-                        case 3:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__R(BitUtils.get_bits(data, 48, 3));}
             }
             static readonly Meta meta38 = new Meta(38, 0, 0, 0, 7, 51);
         }/**
@@ -1690,320 +1438,12 @@ namespace org.noname
 
             public MAV_CMD command //The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 276, 8))
-                    {
-                        case 0:
-                            return MAV_CMD.MAV_CMD_NAV_WAYPOINT;
-                        case 1:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_UNLIM;
-                        case 2:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TURNS;
-                        case 3:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TIME;
-                        case 4:
-                            return MAV_CMD.MAV_CMD_NAV_RETURN_TO_LAUNCH;
-                        case 5:
-                            return MAV_CMD.MAV_CMD_NAV_LAND;
-                        case 6:
-                            return MAV_CMD.MAV_CMD_NAV_TAKEOFF;
-                        case 7:
-                            return MAV_CMD.MAV_CMD_NAV_LAND_LOCAL;
-                        case 8:
-                            return MAV_CMD.MAV_CMD_NAV_TAKEOFF_LOCAL;
-                        case 9:
-                            return MAV_CMD.MAV_CMD_NAV_FOLLOW;
-                        case 10:
-                            return MAV_CMD.MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
-                        case 11:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TO_ALT;
-                        case 12:
-                            return MAV_CMD.MAV_CMD_DO_FOLLOW;
-                        case 13:
-                            return MAV_CMD.MAV_CMD_DO_FOLLOW_REPOSITION;
-                        case 14:
-                            return MAV_CMD.MAV_CMD_NAV_ROI;
-                        case 15:
-                            return MAV_CMD.MAV_CMD_NAV_PATHPLANNING;
-                        case 16:
-                            return MAV_CMD.MAV_CMD_NAV_SPLINE_WAYPOINT;
-                        case 17:
-                            return MAV_CMD.MAV_CMD_NAV_ALTITUDE_WAIT;
-                        case 18:
-                            return MAV_CMD.MAV_CMD_NAV_VTOL_TAKEOFF;
-                        case 19:
-                            return MAV_CMD.MAV_CMD_NAV_VTOL_LAND;
-                        case 20:
-                            return MAV_CMD.MAV_CMD_NAV_GUIDED_ENABLE;
-                        case 21:
-                            return MAV_CMD.MAV_CMD_NAV_DELAY;
-                        case 22:
-                            return MAV_CMD.MAV_CMD_NAV_PAYLOAD_PLACE;
-                        case 23:
-                            return MAV_CMD.MAV_CMD_NAV_LAST;
-                        case 24:
-                            return MAV_CMD.MAV_CMD_CONDITION_DELAY;
-                        case 25:
-                            return MAV_CMD.MAV_CMD_CONDITION_CHANGE_ALT;
-                        case 26:
-                            return MAV_CMD.MAV_CMD_CONDITION_DISTANCE;
-                        case 27:
-                            return MAV_CMD.MAV_CMD_CONDITION_YAW;
-                        case 28:
-                            return MAV_CMD.MAV_CMD_CONDITION_LAST;
-                        case 29:
-                            return MAV_CMD.MAV_CMD_DO_SET_MODE;
-                        case 30:
-                            return MAV_CMD.MAV_CMD_DO_JUMP;
-                        case 31:
-                            return MAV_CMD.MAV_CMD_DO_CHANGE_SPEED;
-                        case 32:
-                            return MAV_CMD.MAV_CMD_DO_SET_HOME;
-                        case 33:
-                            return MAV_CMD.MAV_CMD_DO_SET_PARAMETER;
-                        case 34:
-                            return MAV_CMD.MAV_CMD_DO_SET_RELAY;
-                        case 35:
-                            return MAV_CMD.MAV_CMD_DO_REPEAT_RELAY;
-                        case 36:
-                            return MAV_CMD.MAV_CMD_DO_SET_SERVO;
-                        case 37:
-                            return MAV_CMD.MAV_CMD_DO_REPEAT_SERVO;
-                        case 38:
-                            return MAV_CMD.MAV_CMD_DO_FLIGHTTERMINATION;
-                        case 39:
-                            return MAV_CMD.MAV_CMD_DO_CHANGE_ALTITUDE;
-                        case 40:
-                            return MAV_CMD.MAV_CMD_DO_LAND_START;
-                        case 41:
-                            return MAV_CMD.MAV_CMD_DO_RALLY_LAND;
-                        case 42:
-                            return MAV_CMD.MAV_CMD_DO_GO_AROUND;
-                        case 43:
-                            return MAV_CMD.MAV_CMD_DO_REPOSITION;
-                        case 44:
-                            return MAV_CMD.MAV_CMD_DO_PAUSE_CONTINUE;
-                        case 45:
-                            return MAV_CMD.MAV_CMD_DO_SET_REVERSE;
-                        case 46:
-                            return MAV_CMD.MAV_CMD_DO_CONTROL_VIDEO;
-                        case 47:
-                            return MAV_CMD.MAV_CMD_DO_SET_ROI;
-                        case 48:
-                            return MAV_CMD.MAV_CMD_DO_DIGICAM_CONFIGURE;
-                        case 49:
-                            return MAV_CMD.MAV_CMD_DO_DIGICAM_CONTROL;
-                        case 50:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONFIGURE;
-                        case 51:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL;
-                        case 52:
-                            return MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_DIST;
-                        case 53:
-                            return MAV_CMD.MAV_CMD_DO_FENCE_ENABLE;
-                        case 54:
-                            return MAV_CMD.MAV_CMD_DO_PARACHUTE;
-                        case 55:
-                            return MAV_CMD.MAV_CMD_DO_MOTOR_TEST;
-                        case 56:
-                            return MAV_CMD.MAV_CMD_DO_INVERTED_FLIGHT;
-                        case 57:
-                            return MAV_CMD.MAV_CMD_DO_GRIPPER;
-                        case 58:
-                            return MAV_CMD.MAV_CMD_DO_AUTOTUNE_ENABLE;
-                        case 59:
-                            return MAV_CMD.MAV_CMD_NAV_SET_YAW_SPEED;
-                        case 60:
-                            return MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL;
-                        case 61:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL_QUAT;
-                        case 62:
-                            return MAV_CMD.MAV_CMD_DO_GUIDED_MASTER;
-                        case 63:
-                            return MAV_CMD.MAV_CMD_DO_GUIDED_LIMITS;
-                        case 64:
-                            return MAV_CMD.MAV_CMD_DO_ENGINE_CONTROL;
-                        case 65:
-                            return MAV_CMD.MAV_CMD_DO_LAST;
-                        case 66:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_CALIBRATION;
-                        case 67:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS;
-                        case 68:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_UAVCAN;
-                        case 69:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_STORAGE;
-                        case 70:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN;
-                        case 71:
-                            return MAV_CMD.MAV_CMD_OVERRIDE_GOTO;
-                        case 72:
-                            return MAV_CMD.MAV_CMD_MISSION_START;
-                        case 73:
-                            return MAV_CMD.MAV_CMD_COMPONENT_ARM_DISARM;
-                        case 74:
-                            return MAV_CMD.MAV_CMD_GET_HOME_POSITION;
-                        case 75:
-                            return MAV_CMD.MAV_CMD_START_RX_PAIR;
-                        case 76:
-                            return MAV_CMD.MAV_CMD_GET_MESSAGE_INTERVAL;
-                        case 77:
-                            return MAV_CMD.MAV_CMD_SET_MESSAGE_INTERVAL;
-                        case 78:
-                            return MAV_CMD.MAV_CMD_REQUEST_PROTOCOL_VERSION;
-                        case 79:
-                            return MAV_CMD.MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES;
-                        case 80:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_INFORMATION;
-                        case 81:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_SETTINGS;
-                        case 82:
-                            return MAV_CMD.MAV_CMD_REQUEST_STORAGE_INFORMATION;
-                        case 83:
-                            return MAV_CMD.MAV_CMD_STORAGE_FORMAT;
-                        case 84:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS;
-                        case 85:
-                            return MAV_CMD.MAV_CMD_REQUEST_FLIGHT_INFORMATION;
-                        case 86:
-                            return MAV_CMD.MAV_CMD_RESET_CAMERA_SETTINGS;
-                        case 87:
-                            return MAV_CMD.MAV_CMD_SET_CAMERA_MODE;
-                        case 88:
-                            return MAV_CMD.MAV_CMD_IMAGE_START_CAPTURE;
-                        case 89:
-                            return MAV_CMD.MAV_CMD_IMAGE_STOP_CAPTURE;
-                        case 90:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE;
-                        case 91:
-                            return MAV_CMD.MAV_CMD_DO_TRIGGER_CONTROL;
-                        case 92:
-                            return MAV_CMD.MAV_CMD_VIDEO_START_CAPTURE;
-                        case 93:
-                            return MAV_CMD.MAV_CMD_VIDEO_STOP_CAPTURE;
-                        case 94:
-                            return MAV_CMD.MAV_CMD_VIDEO_START_STREAMING;
-                        case 95:
-                            return MAV_CMD.MAV_CMD_VIDEO_STOP_STREAMING;
-                        case 96:
-                            return MAV_CMD.MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION;
-                        case 97:
-                            return MAV_CMD.MAV_CMD_LOGGING_START;
-                        case 98:
-                            return MAV_CMD.MAV_CMD_LOGGING_STOP;
-                        case 99:
-                            return MAV_CMD.MAV_CMD_AIRFRAME_CONFIGURATION;
-                        case 100:
-                            return MAV_CMD.MAV_CMD_PANORAMA_CREATE;
-                        case 101:
-                            return MAV_CMD.MAV_CMD_DO_VTOL_TRANSITION;
-                        case 102:
-                            return MAV_CMD.MAV_CMD_ARM_AUTHORIZATION_REQUEST;
-                        case 103:
-                            return MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_STANDARD;
-                        case 104:
-                            return MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE;
-                        case 105:
-                            return MAV_CMD.MAV_CMD_CONDITION_GATE;
-                        case 106:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_RETURN_POINT;
-                        case 107:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION;
-                        case 108:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION;
-                        case 109:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION;
-                        case 110:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION;
-                        case 111:
-                            return MAV_CMD.MAV_CMD_NAV_RALLY_POINT;
-                        case 112:
-                            return MAV_CMD.MAV_CMD_UAVCAN_GET_NODE_INFO;
-                        case 113:
-                            return MAV_CMD.MAV_CMD_PAYLOAD_PREPARE_DEPLOY;
-                        case 114:
-                            return MAV_CMD.MAV_CMD_PAYLOAD_CONTROL_DEPLOY;
-                        case 115:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_1;
-                        case 116:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_2;
-                        case 117:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_3;
-                        case 118:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_4;
-                        case 119:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_5;
-                        case 120:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_1;
-                        case 121:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_2;
-                        case 122:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_3;
-                        case 123:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_4;
-                        case 124:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_5;
-                        case 125:
-                            return MAV_CMD.MAV_CMD_USER_1;
-                        case 126:
-                            return MAV_CMD.MAV_CMD_USER_2;
-                        case 127:
-                            return MAV_CMD.MAV_CMD_USER_3;
-                        case 128:
-                            return MAV_CMD.MAV_CMD_USER_4;
-                        case 129:
-                            return MAV_CMD.MAV_CMD_USER_5;
-                        case 130:
-                            return MAV_CMD.MAV_CMD_POWER_OFF_INITIATED;
-                        case 131:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_FLY_CLICK;
-                        case 132:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_FLY_HOLD;
-                        case 133:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_PAUSE_CLICK;
-                        case 134:
-                            return MAV_CMD.MAV_CMD_DO_START_MAG_CAL;
-                        case 135:
-                            return MAV_CMD.MAV_CMD_DO_ACCEPT_MAG_CAL;
-                        case 136:
-                            return MAV_CMD.MAV_CMD_DO_CANCEL_MAG_CAL;
-                        case 137:
-                            return MAV_CMD.MAV_CMD_SET_FACTORY_TEST_MODE;
-                        case 138:
-                            return MAV_CMD.MAV_CMD_DO_SEND_BANNER;
-                        case 139:
-                            return MAV_CMD.MAV_CMD_ACCELCAL_VEHICLE_POS;
-                        case 140:
-                            return MAV_CMD.MAV_CMD_GIMBAL_RESET;
-                        case 141:
-                            return MAV_CMD.MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS;
-                        case 142:
-                            return MAV_CMD.MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION;
-                        case 143:
-                            return MAV_CMD.MAV_CMD_GIMBAL_FULL_RESET;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__I(BitUtils.get_bits(data, 276, 8));}
             }
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 284, 3))
-                    {
-                        case 0:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
-                        case 1:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
-                        case 2:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
-                        case 3:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__R(BitUtils.get_bits(data, 284, 3));}
             }
             static readonly Meta meta39 = new Meta(39, 1, 0, 0, 36, 287);
         }/**
@@ -2030,21 +1470,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 32, 3))
-                    {
-                        case 0:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
-                        case 1:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
-                        case 2:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
-                        case 3:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__R(BitUtils.get_bits(data, 32, 3));}
             }
             static readonly Meta meta40 = new Meta(40, 1, 0, 0, 5, 35);
         }/**
@@ -2099,21 +1525,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 16, 3))
-                    {
-                        case 0:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
-                        case 1:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
-                        case 2:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
-                        case 3:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__R(BitUtils.get_bits(data, 16, 3));}
             }
             static readonly Meta meta43 = new Meta(43, 0, 0, 0, 3, 19);
         }/**
@@ -2140,21 +1552,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 32, 3))
-                    {
-                        case 0:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
-                        case 1:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
-                        case 2:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
-                        case 3:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__R(BitUtils.get_bits(data, 32, 3));}
             }
             static readonly Meta meta44 = new Meta(44, 1, 0, 0, 5, 35);
         }/**
@@ -2175,21 +1573,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 16, 3))
-                    {
-                        case 0:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
-                        case 1:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
-                        case 2:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
-                        case 3:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__R(BitUtils.get_bits(data, 16, 3));}
             }
             static readonly Meta meta45 = new Meta(45, 0, 0, 0, 3, 19);
         }/**
@@ -2228,21 +1612,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 20, 3))
-                    {
-                        case 0:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
-                        case 1:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
-                        case 2:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
-                        case 3:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__R(BitUtils.get_bits(data, 20, 3));}
             }
             static readonly Meta meta47 = new Meta(47, 0, 0, 0, 3, 23);
         }/**
@@ -2277,7 +1647,7 @@ namespace org.noname
                 if(ph.field_bit !=  104 && !try_visit_field(ph, 104)) return 0;
                 return (BitUtils.get_bytes(data,  ph.BYTE, 8));
             }
-            static readonly Meta meta48 = new Meta(48, 0, 0, 0, 14, 104, 0, _vI);
+            static readonly Meta meta48 = new Meta(48, 0, 0, 0, 14, 104, 0, _BZ);
         }/**
 *Once the MAV sets a new GPS-Local correspondence, this message announces the origin (0,0,0) positio*/
         public class GPS_GLOBAL_ORIGIN : Pack
@@ -2303,7 +1673,7 @@ namespace org.noname
                 if(ph.field_bit !=  96 && !try_visit_field(ph, 96)) return 0;
                 return (BitUtils.get_bytes(data,  ph.BYTE, 8));
             }
-            static readonly Meta meta49 = new Meta(49, 0, 0, 0, 13, 96, 0, _WI);
+            static readonly Meta meta49 = new Meta(49, 0, 0, 0, 13, 96, 0, _HZ);
         }/**
 *Bind a RC channel to a parameter. The parameter should change accoding to the RC channel value.*/
         public class PARAM_MAP_RC : Pack
@@ -2383,7 +1753,7 @@ namespace org.noname
             public int param_id_LEN(Inside ph)
             {
                 return (ph.field_bit !=  168 && !try_visit_field(ph, 168)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-            } static readonly Meta meta50 = new Meta(50, 0, 0, 0, 22, 168, 0, _PI);
+            } static readonly Meta meta50 = new Meta(50, 0, 0, 0, 22, 168, 0, _XZ);
         }/**
 *Request the information of the mission item with the sequence number seq. The response of the system to
 *	this message should be a MISSION_ITEM_INT message. http:qgroundcontrol.org/mavlink/waypoint_protoco*/
@@ -2408,21 +1778,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 32, 3))
-                    {
-                        case 0:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
-                        case 1:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
-                        case 2:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
-                        case 3:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__R(BitUtils.get_bits(data, 32, 3));}
             }
             static readonly Meta meta51 = new Meta(51, 1, 0, 0, 5, 35);
         }/**
@@ -3123,320 +2479,12 @@ namespace org.noname
 
             public MAV_CMD command //The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 276, 8))
-                    {
-                        case 0:
-                            return MAV_CMD.MAV_CMD_NAV_WAYPOINT;
-                        case 1:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_UNLIM;
-                        case 2:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TURNS;
-                        case 3:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TIME;
-                        case 4:
-                            return MAV_CMD.MAV_CMD_NAV_RETURN_TO_LAUNCH;
-                        case 5:
-                            return MAV_CMD.MAV_CMD_NAV_LAND;
-                        case 6:
-                            return MAV_CMD.MAV_CMD_NAV_TAKEOFF;
-                        case 7:
-                            return MAV_CMD.MAV_CMD_NAV_LAND_LOCAL;
-                        case 8:
-                            return MAV_CMD.MAV_CMD_NAV_TAKEOFF_LOCAL;
-                        case 9:
-                            return MAV_CMD.MAV_CMD_NAV_FOLLOW;
-                        case 10:
-                            return MAV_CMD.MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
-                        case 11:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TO_ALT;
-                        case 12:
-                            return MAV_CMD.MAV_CMD_DO_FOLLOW;
-                        case 13:
-                            return MAV_CMD.MAV_CMD_DO_FOLLOW_REPOSITION;
-                        case 14:
-                            return MAV_CMD.MAV_CMD_NAV_ROI;
-                        case 15:
-                            return MAV_CMD.MAV_CMD_NAV_PATHPLANNING;
-                        case 16:
-                            return MAV_CMD.MAV_CMD_NAV_SPLINE_WAYPOINT;
-                        case 17:
-                            return MAV_CMD.MAV_CMD_NAV_ALTITUDE_WAIT;
-                        case 18:
-                            return MAV_CMD.MAV_CMD_NAV_VTOL_TAKEOFF;
-                        case 19:
-                            return MAV_CMD.MAV_CMD_NAV_VTOL_LAND;
-                        case 20:
-                            return MAV_CMD.MAV_CMD_NAV_GUIDED_ENABLE;
-                        case 21:
-                            return MAV_CMD.MAV_CMD_NAV_DELAY;
-                        case 22:
-                            return MAV_CMD.MAV_CMD_NAV_PAYLOAD_PLACE;
-                        case 23:
-                            return MAV_CMD.MAV_CMD_NAV_LAST;
-                        case 24:
-                            return MAV_CMD.MAV_CMD_CONDITION_DELAY;
-                        case 25:
-                            return MAV_CMD.MAV_CMD_CONDITION_CHANGE_ALT;
-                        case 26:
-                            return MAV_CMD.MAV_CMD_CONDITION_DISTANCE;
-                        case 27:
-                            return MAV_CMD.MAV_CMD_CONDITION_YAW;
-                        case 28:
-                            return MAV_CMD.MAV_CMD_CONDITION_LAST;
-                        case 29:
-                            return MAV_CMD.MAV_CMD_DO_SET_MODE;
-                        case 30:
-                            return MAV_CMD.MAV_CMD_DO_JUMP;
-                        case 31:
-                            return MAV_CMD.MAV_CMD_DO_CHANGE_SPEED;
-                        case 32:
-                            return MAV_CMD.MAV_CMD_DO_SET_HOME;
-                        case 33:
-                            return MAV_CMD.MAV_CMD_DO_SET_PARAMETER;
-                        case 34:
-                            return MAV_CMD.MAV_CMD_DO_SET_RELAY;
-                        case 35:
-                            return MAV_CMD.MAV_CMD_DO_REPEAT_RELAY;
-                        case 36:
-                            return MAV_CMD.MAV_CMD_DO_SET_SERVO;
-                        case 37:
-                            return MAV_CMD.MAV_CMD_DO_REPEAT_SERVO;
-                        case 38:
-                            return MAV_CMD.MAV_CMD_DO_FLIGHTTERMINATION;
-                        case 39:
-                            return MAV_CMD.MAV_CMD_DO_CHANGE_ALTITUDE;
-                        case 40:
-                            return MAV_CMD.MAV_CMD_DO_LAND_START;
-                        case 41:
-                            return MAV_CMD.MAV_CMD_DO_RALLY_LAND;
-                        case 42:
-                            return MAV_CMD.MAV_CMD_DO_GO_AROUND;
-                        case 43:
-                            return MAV_CMD.MAV_CMD_DO_REPOSITION;
-                        case 44:
-                            return MAV_CMD.MAV_CMD_DO_PAUSE_CONTINUE;
-                        case 45:
-                            return MAV_CMD.MAV_CMD_DO_SET_REVERSE;
-                        case 46:
-                            return MAV_CMD.MAV_CMD_DO_CONTROL_VIDEO;
-                        case 47:
-                            return MAV_CMD.MAV_CMD_DO_SET_ROI;
-                        case 48:
-                            return MAV_CMD.MAV_CMD_DO_DIGICAM_CONFIGURE;
-                        case 49:
-                            return MAV_CMD.MAV_CMD_DO_DIGICAM_CONTROL;
-                        case 50:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONFIGURE;
-                        case 51:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL;
-                        case 52:
-                            return MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_DIST;
-                        case 53:
-                            return MAV_CMD.MAV_CMD_DO_FENCE_ENABLE;
-                        case 54:
-                            return MAV_CMD.MAV_CMD_DO_PARACHUTE;
-                        case 55:
-                            return MAV_CMD.MAV_CMD_DO_MOTOR_TEST;
-                        case 56:
-                            return MAV_CMD.MAV_CMD_DO_INVERTED_FLIGHT;
-                        case 57:
-                            return MAV_CMD.MAV_CMD_DO_GRIPPER;
-                        case 58:
-                            return MAV_CMD.MAV_CMD_DO_AUTOTUNE_ENABLE;
-                        case 59:
-                            return MAV_CMD.MAV_CMD_NAV_SET_YAW_SPEED;
-                        case 60:
-                            return MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL;
-                        case 61:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL_QUAT;
-                        case 62:
-                            return MAV_CMD.MAV_CMD_DO_GUIDED_MASTER;
-                        case 63:
-                            return MAV_CMD.MAV_CMD_DO_GUIDED_LIMITS;
-                        case 64:
-                            return MAV_CMD.MAV_CMD_DO_ENGINE_CONTROL;
-                        case 65:
-                            return MAV_CMD.MAV_CMD_DO_LAST;
-                        case 66:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_CALIBRATION;
-                        case 67:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS;
-                        case 68:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_UAVCAN;
-                        case 69:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_STORAGE;
-                        case 70:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN;
-                        case 71:
-                            return MAV_CMD.MAV_CMD_OVERRIDE_GOTO;
-                        case 72:
-                            return MAV_CMD.MAV_CMD_MISSION_START;
-                        case 73:
-                            return MAV_CMD.MAV_CMD_COMPONENT_ARM_DISARM;
-                        case 74:
-                            return MAV_CMD.MAV_CMD_GET_HOME_POSITION;
-                        case 75:
-                            return MAV_CMD.MAV_CMD_START_RX_PAIR;
-                        case 76:
-                            return MAV_CMD.MAV_CMD_GET_MESSAGE_INTERVAL;
-                        case 77:
-                            return MAV_CMD.MAV_CMD_SET_MESSAGE_INTERVAL;
-                        case 78:
-                            return MAV_CMD.MAV_CMD_REQUEST_PROTOCOL_VERSION;
-                        case 79:
-                            return MAV_CMD.MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES;
-                        case 80:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_INFORMATION;
-                        case 81:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_SETTINGS;
-                        case 82:
-                            return MAV_CMD.MAV_CMD_REQUEST_STORAGE_INFORMATION;
-                        case 83:
-                            return MAV_CMD.MAV_CMD_STORAGE_FORMAT;
-                        case 84:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS;
-                        case 85:
-                            return MAV_CMD.MAV_CMD_REQUEST_FLIGHT_INFORMATION;
-                        case 86:
-                            return MAV_CMD.MAV_CMD_RESET_CAMERA_SETTINGS;
-                        case 87:
-                            return MAV_CMD.MAV_CMD_SET_CAMERA_MODE;
-                        case 88:
-                            return MAV_CMD.MAV_CMD_IMAGE_START_CAPTURE;
-                        case 89:
-                            return MAV_CMD.MAV_CMD_IMAGE_STOP_CAPTURE;
-                        case 90:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE;
-                        case 91:
-                            return MAV_CMD.MAV_CMD_DO_TRIGGER_CONTROL;
-                        case 92:
-                            return MAV_CMD.MAV_CMD_VIDEO_START_CAPTURE;
-                        case 93:
-                            return MAV_CMD.MAV_CMD_VIDEO_STOP_CAPTURE;
-                        case 94:
-                            return MAV_CMD.MAV_CMD_VIDEO_START_STREAMING;
-                        case 95:
-                            return MAV_CMD.MAV_CMD_VIDEO_STOP_STREAMING;
-                        case 96:
-                            return MAV_CMD.MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION;
-                        case 97:
-                            return MAV_CMD.MAV_CMD_LOGGING_START;
-                        case 98:
-                            return MAV_CMD.MAV_CMD_LOGGING_STOP;
-                        case 99:
-                            return MAV_CMD.MAV_CMD_AIRFRAME_CONFIGURATION;
-                        case 100:
-                            return MAV_CMD.MAV_CMD_PANORAMA_CREATE;
-                        case 101:
-                            return MAV_CMD.MAV_CMD_DO_VTOL_TRANSITION;
-                        case 102:
-                            return MAV_CMD.MAV_CMD_ARM_AUTHORIZATION_REQUEST;
-                        case 103:
-                            return MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_STANDARD;
-                        case 104:
-                            return MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE;
-                        case 105:
-                            return MAV_CMD.MAV_CMD_CONDITION_GATE;
-                        case 106:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_RETURN_POINT;
-                        case 107:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION;
-                        case 108:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION;
-                        case 109:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION;
-                        case 110:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION;
-                        case 111:
-                            return MAV_CMD.MAV_CMD_NAV_RALLY_POINT;
-                        case 112:
-                            return MAV_CMD.MAV_CMD_UAVCAN_GET_NODE_INFO;
-                        case 113:
-                            return MAV_CMD.MAV_CMD_PAYLOAD_PREPARE_DEPLOY;
-                        case 114:
-                            return MAV_CMD.MAV_CMD_PAYLOAD_CONTROL_DEPLOY;
-                        case 115:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_1;
-                        case 116:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_2;
-                        case 117:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_3;
-                        case 118:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_4;
-                        case 119:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_5;
-                        case 120:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_1;
-                        case 121:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_2;
-                        case 122:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_3;
-                        case 123:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_4;
-                        case 124:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_5;
-                        case 125:
-                            return MAV_CMD.MAV_CMD_USER_1;
-                        case 126:
-                            return MAV_CMD.MAV_CMD_USER_2;
-                        case 127:
-                            return MAV_CMD.MAV_CMD_USER_3;
-                        case 128:
-                            return MAV_CMD.MAV_CMD_USER_4;
-                        case 129:
-                            return MAV_CMD.MAV_CMD_USER_5;
-                        case 130:
-                            return MAV_CMD.MAV_CMD_POWER_OFF_INITIATED;
-                        case 131:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_FLY_CLICK;
-                        case 132:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_FLY_HOLD;
-                        case 133:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_PAUSE_CLICK;
-                        case 134:
-                            return MAV_CMD.MAV_CMD_DO_START_MAG_CAL;
-                        case 135:
-                            return MAV_CMD.MAV_CMD_DO_ACCEPT_MAG_CAL;
-                        case 136:
-                            return MAV_CMD.MAV_CMD_DO_CANCEL_MAG_CAL;
-                        case 137:
-                            return MAV_CMD.MAV_CMD_SET_FACTORY_TEST_MODE;
-                        case 138:
-                            return MAV_CMD.MAV_CMD_DO_SEND_BANNER;
-                        case 139:
-                            return MAV_CMD.MAV_CMD_ACCELCAL_VEHICLE_POS;
-                        case 140:
-                            return MAV_CMD.MAV_CMD_GIMBAL_RESET;
-                        case 141:
-                            return MAV_CMD.MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS;
-                        case 142:
-                            return MAV_CMD.MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION;
-                        case 143:
-                            return MAV_CMD.MAV_CMD_GIMBAL_FULL_RESET;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__I(BitUtils.get_bits(data, 276, 8));}
             }
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 284, 3))
-                    {
-                        case 0:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
-                        case 1:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
-                        case 2:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
-                        case 3:
-                            return MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__R(BitUtils.get_bits(data, 284, 3));}
             }
             static readonly Meta meta73 = new Meta(73, 1, 0, 0, 36, 287);
         }/**
@@ -3543,301 +2591,7 @@ namespace org.noname
 
             public MAV_CMD command //The scheduled action for the mission item. see MAV_CMD in common.xml MAVLink specs
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 260, 8))
-                    {
-                        case 0:
-                            return MAV_CMD.MAV_CMD_NAV_WAYPOINT;
-                        case 1:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_UNLIM;
-                        case 2:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TURNS;
-                        case 3:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TIME;
-                        case 4:
-                            return MAV_CMD.MAV_CMD_NAV_RETURN_TO_LAUNCH;
-                        case 5:
-                            return MAV_CMD.MAV_CMD_NAV_LAND;
-                        case 6:
-                            return MAV_CMD.MAV_CMD_NAV_TAKEOFF;
-                        case 7:
-                            return MAV_CMD.MAV_CMD_NAV_LAND_LOCAL;
-                        case 8:
-                            return MAV_CMD.MAV_CMD_NAV_TAKEOFF_LOCAL;
-                        case 9:
-                            return MAV_CMD.MAV_CMD_NAV_FOLLOW;
-                        case 10:
-                            return MAV_CMD.MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
-                        case 11:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TO_ALT;
-                        case 12:
-                            return MAV_CMD.MAV_CMD_DO_FOLLOW;
-                        case 13:
-                            return MAV_CMD.MAV_CMD_DO_FOLLOW_REPOSITION;
-                        case 14:
-                            return MAV_CMD.MAV_CMD_NAV_ROI;
-                        case 15:
-                            return MAV_CMD.MAV_CMD_NAV_PATHPLANNING;
-                        case 16:
-                            return MAV_CMD.MAV_CMD_NAV_SPLINE_WAYPOINT;
-                        case 17:
-                            return MAV_CMD.MAV_CMD_NAV_ALTITUDE_WAIT;
-                        case 18:
-                            return MAV_CMD.MAV_CMD_NAV_VTOL_TAKEOFF;
-                        case 19:
-                            return MAV_CMD.MAV_CMD_NAV_VTOL_LAND;
-                        case 20:
-                            return MAV_CMD.MAV_CMD_NAV_GUIDED_ENABLE;
-                        case 21:
-                            return MAV_CMD.MAV_CMD_NAV_DELAY;
-                        case 22:
-                            return MAV_CMD.MAV_CMD_NAV_PAYLOAD_PLACE;
-                        case 23:
-                            return MAV_CMD.MAV_CMD_NAV_LAST;
-                        case 24:
-                            return MAV_CMD.MAV_CMD_CONDITION_DELAY;
-                        case 25:
-                            return MAV_CMD.MAV_CMD_CONDITION_CHANGE_ALT;
-                        case 26:
-                            return MAV_CMD.MAV_CMD_CONDITION_DISTANCE;
-                        case 27:
-                            return MAV_CMD.MAV_CMD_CONDITION_YAW;
-                        case 28:
-                            return MAV_CMD.MAV_CMD_CONDITION_LAST;
-                        case 29:
-                            return MAV_CMD.MAV_CMD_DO_SET_MODE;
-                        case 30:
-                            return MAV_CMD.MAV_CMD_DO_JUMP;
-                        case 31:
-                            return MAV_CMD.MAV_CMD_DO_CHANGE_SPEED;
-                        case 32:
-                            return MAV_CMD.MAV_CMD_DO_SET_HOME;
-                        case 33:
-                            return MAV_CMD.MAV_CMD_DO_SET_PARAMETER;
-                        case 34:
-                            return MAV_CMD.MAV_CMD_DO_SET_RELAY;
-                        case 35:
-                            return MAV_CMD.MAV_CMD_DO_REPEAT_RELAY;
-                        case 36:
-                            return MAV_CMD.MAV_CMD_DO_SET_SERVO;
-                        case 37:
-                            return MAV_CMD.MAV_CMD_DO_REPEAT_SERVO;
-                        case 38:
-                            return MAV_CMD.MAV_CMD_DO_FLIGHTTERMINATION;
-                        case 39:
-                            return MAV_CMD.MAV_CMD_DO_CHANGE_ALTITUDE;
-                        case 40:
-                            return MAV_CMD.MAV_CMD_DO_LAND_START;
-                        case 41:
-                            return MAV_CMD.MAV_CMD_DO_RALLY_LAND;
-                        case 42:
-                            return MAV_CMD.MAV_CMD_DO_GO_AROUND;
-                        case 43:
-                            return MAV_CMD.MAV_CMD_DO_REPOSITION;
-                        case 44:
-                            return MAV_CMD.MAV_CMD_DO_PAUSE_CONTINUE;
-                        case 45:
-                            return MAV_CMD.MAV_CMD_DO_SET_REVERSE;
-                        case 46:
-                            return MAV_CMD.MAV_CMD_DO_CONTROL_VIDEO;
-                        case 47:
-                            return MAV_CMD.MAV_CMD_DO_SET_ROI;
-                        case 48:
-                            return MAV_CMD.MAV_CMD_DO_DIGICAM_CONFIGURE;
-                        case 49:
-                            return MAV_CMD.MAV_CMD_DO_DIGICAM_CONTROL;
-                        case 50:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONFIGURE;
-                        case 51:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL;
-                        case 52:
-                            return MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_DIST;
-                        case 53:
-                            return MAV_CMD.MAV_CMD_DO_FENCE_ENABLE;
-                        case 54:
-                            return MAV_CMD.MAV_CMD_DO_PARACHUTE;
-                        case 55:
-                            return MAV_CMD.MAV_CMD_DO_MOTOR_TEST;
-                        case 56:
-                            return MAV_CMD.MAV_CMD_DO_INVERTED_FLIGHT;
-                        case 57:
-                            return MAV_CMD.MAV_CMD_DO_GRIPPER;
-                        case 58:
-                            return MAV_CMD.MAV_CMD_DO_AUTOTUNE_ENABLE;
-                        case 59:
-                            return MAV_CMD.MAV_CMD_NAV_SET_YAW_SPEED;
-                        case 60:
-                            return MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL;
-                        case 61:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL_QUAT;
-                        case 62:
-                            return MAV_CMD.MAV_CMD_DO_GUIDED_MASTER;
-                        case 63:
-                            return MAV_CMD.MAV_CMD_DO_GUIDED_LIMITS;
-                        case 64:
-                            return MAV_CMD.MAV_CMD_DO_ENGINE_CONTROL;
-                        case 65:
-                            return MAV_CMD.MAV_CMD_DO_LAST;
-                        case 66:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_CALIBRATION;
-                        case 67:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS;
-                        case 68:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_UAVCAN;
-                        case 69:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_STORAGE;
-                        case 70:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN;
-                        case 71:
-                            return MAV_CMD.MAV_CMD_OVERRIDE_GOTO;
-                        case 72:
-                            return MAV_CMD.MAV_CMD_MISSION_START;
-                        case 73:
-                            return MAV_CMD.MAV_CMD_COMPONENT_ARM_DISARM;
-                        case 74:
-                            return MAV_CMD.MAV_CMD_GET_HOME_POSITION;
-                        case 75:
-                            return MAV_CMD.MAV_CMD_START_RX_PAIR;
-                        case 76:
-                            return MAV_CMD.MAV_CMD_GET_MESSAGE_INTERVAL;
-                        case 77:
-                            return MAV_CMD.MAV_CMD_SET_MESSAGE_INTERVAL;
-                        case 78:
-                            return MAV_CMD.MAV_CMD_REQUEST_PROTOCOL_VERSION;
-                        case 79:
-                            return MAV_CMD.MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES;
-                        case 80:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_INFORMATION;
-                        case 81:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_SETTINGS;
-                        case 82:
-                            return MAV_CMD.MAV_CMD_REQUEST_STORAGE_INFORMATION;
-                        case 83:
-                            return MAV_CMD.MAV_CMD_STORAGE_FORMAT;
-                        case 84:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS;
-                        case 85:
-                            return MAV_CMD.MAV_CMD_REQUEST_FLIGHT_INFORMATION;
-                        case 86:
-                            return MAV_CMD.MAV_CMD_RESET_CAMERA_SETTINGS;
-                        case 87:
-                            return MAV_CMD.MAV_CMD_SET_CAMERA_MODE;
-                        case 88:
-                            return MAV_CMD.MAV_CMD_IMAGE_START_CAPTURE;
-                        case 89:
-                            return MAV_CMD.MAV_CMD_IMAGE_STOP_CAPTURE;
-                        case 90:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE;
-                        case 91:
-                            return MAV_CMD.MAV_CMD_DO_TRIGGER_CONTROL;
-                        case 92:
-                            return MAV_CMD.MAV_CMD_VIDEO_START_CAPTURE;
-                        case 93:
-                            return MAV_CMD.MAV_CMD_VIDEO_STOP_CAPTURE;
-                        case 94:
-                            return MAV_CMD.MAV_CMD_VIDEO_START_STREAMING;
-                        case 95:
-                            return MAV_CMD.MAV_CMD_VIDEO_STOP_STREAMING;
-                        case 96:
-                            return MAV_CMD.MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION;
-                        case 97:
-                            return MAV_CMD.MAV_CMD_LOGGING_START;
-                        case 98:
-                            return MAV_CMD.MAV_CMD_LOGGING_STOP;
-                        case 99:
-                            return MAV_CMD.MAV_CMD_AIRFRAME_CONFIGURATION;
-                        case 100:
-                            return MAV_CMD.MAV_CMD_PANORAMA_CREATE;
-                        case 101:
-                            return MAV_CMD.MAV_CMD_DO_VTOL_TRANSITION;
-                        case 102:
-                            return MAV_CMD.MAV_CMD_ARM_AUTHORIZATION_REQUEST;
-                        case 103:
-                            return MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_STANDARD;
-                        case 104:
-                            return MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE;
-                        case 105:
-                            return MAV_CMD.MAV_CMD_CONDITION_GATE;
-                        case 106:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_RETURN_POINT;
-                        case 107:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION;
-                        case 108:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION;
-                        case 109:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION;
-                        case 110:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION;
-                        case 111:
-                            return MAV_CMD.MAV_CMD_NAV_RALLY_POINT;
-                        case 112:
-                            return MAV_CMD.MAV_CMD_UAVCAN_GET_NODE_INFO;
-                        case 113:
-                            return MAV_CMD.MAV_CMD_PAYLOAD_PREPARE_DEPLOY;
-                        case 114:
-                            return MAV_CMD.MAV_CMD_PAYLOAD_CONTROL_DEPLOY;
-                        case 115:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_1;
-                        case 116:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_2;
-                        case 117:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_3;
-                        case 118:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_4;
-                        case 119:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_5;
-                        case 120:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_1;
-                        case 121:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_2;
-                        case 122:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_3;
-                        case 123:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_4;
-                        case 124:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_5;
-                        case 125:
-                            return MAV_CMD.MAV_CMD_USER_1;
-                        case 126:
-                            return MAV_CMD.MAV_CMD_USER_2;
-                        case 127:
-                            return MAV_CMD.MAV_CMD_USER_3;
-                        case 128:
-                            return MAV_CMD.MAV_CMD_USER_4;
-                        case 129:
-                            return MAV_CMD.MAV_CMD_USER_5;
-                        case 130:
-                            return MAV_CMD.MAV_CMD_POWER_OFF_INITIATED;
-                        case 131:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_FLY_CLICK;
-                        case 132:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_FLY_HOLD;
-                        case 133:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_PAUSE_CLICK;
-                        case 134:
-                            return MAV_CMD.MAV_CMD_DO_START_MAG_CAL;
-                        case 135:
-                            return MAV_CMD.MAV_CMD_DO_ACCEPT_MAG_CAL;
-                        case 136:
-                            return MAV_CMD.MAV_CMD_DO_CANCEL_MAG_CAL;
-                        case 137:
-                            return MAV_CMD.MAV_CMD_SET_FACTORY_TEST_MODE;
-                        case 138:
-                            return MAV_CMD.MAV_CMD_DO_SEND_BANNER;
-                        case 139:
-                            return MAV_CMD.MAV_CMD_ACCELCAL_VEHICLE_POS;
-                        case 140:
-                            return MAV_CMD.MAV_CMD_GIMBAL_RESET;
-                        case 141:
-                            return MAV_CMD.MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS;
-                        case 142:
-                            return MAV_CMD.MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION;
-                        case 143:
-                            return MAV_CMD.MAV_CMD_GIMBAL_FULL_RESET;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__I(BitUtils.get_bits(data, 260, 8));}
             }
             static readonly Meta meta75 = new Meta(75, 0, 0, 0, 34, 268);
         }/**
@@ -3898,301 +2652,7 @@ namespace org.noname
 
             public MAV_CMD command //Command ID, as defined by MAV_CMD enum.
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 248, 8))
-                    {
-                        case 0:
-                            return MAV_CMD.MAV_CMD_NAV_WAYPOINT;
-                        case 1:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_UNLIM;
-                        case 2:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TURNS;
-                        case 3:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TIME;
-                        case 4:
-                            return MAV_CMD.MAV_CMD_NAV_RETURN_TO_LAUNCH;
-                        case 5:
-                            return MAV_CMD.MAV_CMD_NAV_LAND;
-                        case 6:
-                            return MAV_CMD.MAV_CMD_NAV_TAKEOFF;
-                        case 7:
-                            return MAV_CMD.MAV_CMD_NAV_LAND_LOCAL;
-                        case 8:
-                            return MAV_CMD.MAV_CMD_NAV_TAKEOFF_LOCAL;
-                        case 9:
-                            return MAV_CMD.MAV_CMD_NAV_FOLLOW;
-                        case 10:
-                            return MAV_CMD.MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
-                        case 11:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TO_ALT;
-                        case 12:
-                            return MAV_CMD.MAV_CMD_DO_FOLLOW;
-                        case 13:
-                            return MAV_CMD.MAV_CMD_DO_FOLLOW_REPOSITION;
-                        case 14:
-                            return MAV_CMD.MAV_CMD_NAV_ROI;
-                        case 15:
-                            return MAV_CMD.MAV_CMD_NAV_PATHPLANNING;
-                        case 16:
-                            return MAV_CMD.MAV_CMD_NAV_SPLINE_WAYPOINT;
-                        case 17:
-                            return MAV_CMD.MAV_CMD_NAV_ALTITUDE_WAIT;
-                        case 18:
-                            return MAV_CMD.MAV_CMD_NAV_VTOL_TAKEOFF;
-                        case 19:
-                            return MAV_CMD.MAV_CMD_NAV_VTOL_LAND;
-                        case 20:
-                            return MAV_CMD.MAV_CMD_NAV_GUIDED_ENABLE;
-                        case 21:
-                            return MAV_CMD.MAV_CMD_NAV_DELAY;
-                        case 22:
-                            return MAV_CMD.MAV_CMD_NAV_PAYLOAD_PLACE;
-                        case 23:
-                            return MAV_CMD.MAV_CMD_NAV_LAST;
-                        case 24:
-                            return MAV_CMD.MAV_CMD_CONDITION_DELAY;
-                        case 25:
-                            return MAV_CMD.MAV_CMD_CONDITION_CHANGE_ALT;
-                        case 26:
-                            return MAV_CMD.MAV_CMD_CONDITION_DISTANCE;
-                        case 27:
-                            return MAV_CMD.MAV_CMD_CONDITION_YAW;
-                        case 28:
-                            return MAV_CMD.MAV_CMD_CONDITION_LAST;
-                        case 29:
-                            return MAV_CMD.MAV_CMD_DO_SET_MODE;
-                        case 30:
-                            return MAV_CMD.MAV_CMD_DO_JUMP;
-                        case 31:
-                            return MAV_CMD.MAV_CMD_DO_CHANGE_SPEED;
-                        case 32:
-                            return MAV_CMD.MAV_CMD_DO_SET_HOME;
-                        case 33:
-                            return MAV_CMD.MAV_CMD_DO_SET_PARAMETER;
-                        case 34:
-                            return MAV_CMD.MAV_CMD_DO_SET_RELAY;
-                        case 35:
-                            return MAV_CMD.MAV_CMD_DO_REPEAT_RELAY;
-                        case 36:
-                            return MAV_CMD.MAV_CMD_DO_SET_SERVO;
-                        case 37:
-                            return MAV_CMD.MAV_CMD_DO_REPEAT_SERVO;
-                        case 38:
-                            return MAV_CMD.MAV_CMD_DO_FLIGHTTERMINATION;
-                        case 39:
-                            return MAV_CMD.MAV_CMD_DO_CHANGE_ALTITUDE;
-                        case 40:
-                            return MAV_CMD.MAV_CMD_DO_LAND_START;
-                        case 41:
-                            return MAV_CMD.MAV_CMD_DO_RALLY_LAND;
-                        case 42:
-                            return MAV_CMD.MAV_CMD_DO_GO_AROUND;
-                        case 43:
-                            return MAV_CMD.MAV_CMD_DO_REPOSITION;
-                        case 44:
-                            return MAV_CMD.MAV_CMD_DO_PAUSE_CONTINUE;
-                        case 45:
-                            return MAV_CMD.MAV_CMD_DO_SET_REVERSE;
-                        case 46:
-                            return MAV_CMD.MAV_CMD_DO_CONTROL_VIDEO;
-                        case 47:
-                            return MAV_CMD.MAV_CMD_DO_SET_ROI;
-                        case 48:
-                            return MAV_CMD.MAV_CMD_DO_DIGICAM_CONFIGURE;
-                        case 49:
-                            return MAV_CMD.MAV_CMD_DO_DIGICAM_CONTROL;
-                        case 50:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONFIGURE;
-                        case 51:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL;
-                        case 52:
-                            return MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_DIST;
-                        case 53:
-                            return MAV_CMD.MAV_CMD_DO_FENCE_ENABLE;
-                        case 54:
-                            return MAV_CMD.MAV_CMD_DO_PARACHUTE;
-                        case 55:
-                            return MAV_CMD.MAV_CMD_DO_MOTOR_TEST;
-                        case 56:
-                            return MAV_CMD.MAV_CMD_DO_INVERTED_FLIGHT;
-                        case 57:
-                            return MAV_CMD.MAV_CMD_DO_GRIPPER;
-                        case 58:
-                            return MAV_CMD.MAV_CMD_DO_AUTOTUNE_ENABLE;
-                        case 59:
-                            return MAV_CMD.MAV_CMD_NAV_SET_YAW_SPEED;
-                        case 60:
-                            return MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL;
-                        case 61:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL_QUAT;
-                        case 62:
-                            return MAV_CMD.MAV_CMD_DO_GUIDED_MASTER;
-                        case 63:
-                            return MAV_CMD.MAV_CMD_DO_GUIDED_LIMITS;
-                        case 64:
-                            return MAV_CMD.MAV_CMD_DO_ENGINE_CONTROL;
-                        case 65:
-                            return MAV_CMD.MAV_CMD_DO_LAST;
-                        case 66:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_CALIBRATION;
-                        case 67:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS;
-                        case 68:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_UAVCAN;
-                        case 69:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_STORAGE;
-                        case 70:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN;
-                        case 71:
-                            return MAV_CMD.MAV_CMD_OVERRIDE_GOTO;
-                        case 72:
-                            return MAV_CMD.MAV_CMD_MISSION_START;
-                        case 73:
-                            return MAV_CMD.MAV_CMD_COMPONENT_ARM_DISARM;
-                        case 74:
-                            return MAV_CMD.MAV_CMD_GET_HOME_POSITION;
-                        case 75:
-                            return MAV_CMD.MAV_CMD_START_RX_PAIR;
-                        case 76:
-                            return MAV_CMD.MAV_CMD_GET_MESSAGE_INTERVAL;
-                        case 77:
-                            return MAV_CMD.MAV_CMD_SET_MESSAGE_INTERVAL;
-                        case 78:
-                            return MAV_CMD.MAV_CMD_REQUEST_PROTOCOL_VERSION;
-                        case 79:
-                            return MAV_CMD.MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES;
-                        case 80:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_INFORMATION;
-                        case 81:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_SETTINGS;
-                        case 82:
-                            return MAV_CMD.MAV_CMD_REQUEST_STORAGE_INFORMATION;
-                        case 83:
-                            return MAV_CMD.MAV_CMD_STORAGE_FORMAT;
-                        case 84:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS;
-                        case 85:
-                            return MAV_CMD.MAV_CMD_REQUEST_FLIGHT_INFORMATION;
-                        case 86:
-                            return MAV_CMD.MAV_CMD_RESET_CAMERA_SETTINGS;
-                        case 87:
-                            return MAV_CMD.MAV_CMD_SET_CAMERA_MODE;
-                        case 88:
-                            return MAV_CMD.MAV_CMD_IMAGE_START_CAPTURE;
-                        case 89:
-                            return MAV_CMD.MAV_CMD_IMAGE_STOP_CAPTURE;
-                        case 90:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE;
-                        case 91:
-                            return MAV_CMD.MAV_CMD_DO_TRIGGER_CONTROL;
-                        case 92:
-                            return MAV_CMD.MAV_CMD_VIDEO_START_CAPTURE;
-                        case 93:
-                            return MAV_CMD.MAV_CMD_VIDEO_STOP_CAPTURE;
-                        case 94:
-                            return MAV_CMD.MAV_CMD_VIDEO_START_STREAMING;
-                        case 95:
-                            return MAV_CMD.MAV_CMD_VIDEO_STOP_STREAMING;
-                        case 96:
-                            return MAV_CMD.MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION;
-                        case 97:
-                            return MAV_CMD.MAV_CMD_LOGGING_START;
-                        case 98:
-                            return MAV_CMD.MAV_CMD_LOGGING_STOP;
-                        case 99:
-                            return MAV_CMD.MAV_CMD_AIRFRAME_CONFIGURATION;
-                        case 100:
-                            return MAV_CMD.MAV_CMD_PANORAMA_CREATE;
-                        case 101:
-                            return MAV_CMD.MAV_CMD_DO_VTOL_TRANSITION;
-                        case 102:
-                            return MAV_CMD.MAV_CMD_ARM_AUTHORIZATION_REQUEST;
-                        case 103:
-                            return MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_STANDARD;
-                        case 104:
-                            return MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE;
-                        case 105:
-                            return MAV_CMD.MAV_CMD_CONDITION_GATE;
-                        case 106:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_RETURN_POINT;
-                        case 107:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION;
-                        case 108:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION;
-                        case 109:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION;
-                        case 110:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION;
-                        case 111:
-                            return MAV_CMD.MAV_CMD_NAV_RALLY_POINT;
-                        case 112:
-                            return MAV_CMD.MAV_CMD_UAVCAN_GET_NODE_INFO;
-                        case 113:
-                            return MAV_CMD.MAV_CMD_PAYLOAD_PREPARE_DEPLOY;
-                        case 114:
-                            return MAV_CMD.MAV_CMD_PAYLOAD_CONTROL_DEPLOY;
-                        case 115:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_1;
-                        case 116:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_2;
-                        case 117:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_3;
-                        case 118:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_4;
-                        case 119:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_5;
-                        case 120:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_1;
-                        case 121:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_2;
-                        case 122:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_3;
-                        case 123:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_4;
-                        case 124:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_5;
-                        case 125:
-                            return MAV_CMD.MAV_CMD_USER_1;
-                        case 126:
-                            return MAV_CMD.MAV_CMD_USER_2;
-                        case 127:
-                            return MAV_CMD.MAV_CMD_USER_3;
-                        case 128:
-                            return MAV_CMD.MAV_CMD_USER_4;
-                        case 129:
-                            return MAV_CMD.MAV_CMD_USER_5;
-                        case 130:
-                            return MAV_CMD.MAV_CMD_POWER_OFF_INITIATED;
-                        case 131:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_FLY_CLICK;
-                        case 132:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_FLY_HOLD;
-                        case 133:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_PAUSE_CLICK;
-                        case 134:
-                            return MAV_CMD.MAV_CMD_DO_START_MAG_CAL;
-                        case 135:
-                            return MAV_CMD.MAV_CMD_DO_ACCEPT_MAG_CAL;
-                        case 136:
-                            return MAV_CMD.MAV_CMD_DO_CANCEL_MAG_CAL;
-                        case 137:
-                            return MAV_CMD.MAV_CMD_SET_FACTORY_TEST_MODE;
-                        case 138:
-                            return MAV_CMD.MAV_CMD_DO_SEND_BANNER;
-                        case 139:
-                            return MAV_CMD.MAV_CMD_ACCELCAL_VEHICLE_POS;
-                        case 140:
-                            return MAV_CMD.MAV_CMD_GIMBAL_RESET;
-                        case 141:
-                            return MAV_CMD.MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS;
-                        case 142:
-                            return MAV_CMD.MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION;
-                        case 143:
-                            return MAV_CMD.MAV_CMD_GIMBAL_FULL_RESET;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__I(BitUtils.get_bits(data, 248, 8));}
             }
             static readonly Meta meta76 = new Meta(76, 0, 0, 0, 32, 256);
         }/**
@@ -4203,301 +2663,7 @@ namespace org.noname
             internal COMMAND_ACK(int bytes) : base(meta77, bytes) { }
             public MAV_CMD command //Command ID, as defined by MAV_CMD enum.
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 0, 8))
-                    {
-                        case 0:
-                            return MAV_CMD.MAV_CMD_NAV_WAYPOINT;
-                        case 1:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_UNLIM;
-                        case 2:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TURNS;
-                        case 3:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TIME;
-                        case 4:
-                            return MAV_CMD.MAV_CMD_NAV_RETURN_TO_LAUNCH;
-                        case 5:
-                            return MAV_CMD.MAV_CMD_NAV_LAND;
-                        case 6:
-                            return MAV_CMD.MAV_CMD_NAV_TAKEOFF;
-                        case 7:
-                            return MAV_CMD.MAV_CMD_NAV_LAND_LOCAL;
-                        case 8:
-                            return MAV_CMD.MAV_CMD_NAV_TAKEOFF_LOCAL;
-                        case 9:
-                            return MAV_CMD.MAV_CMD_NAV_FOLLOW;
-                        case 10:
-                            return MAV_CMD.MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
-                        case 11:
-                            return MAV_CMD.MAV_CMD_NAV_LOITER_TO_ALT;
-                        case 12:
-                            return MAV_CMD.MAV_CMD_DO_FOLLOW;
-                        case 13:
-                            return MAV_CMD.MAV_CMD_DO_FOLLOW_REPOSITION;
-                        case 14:
-                            return MAV_CMD.MAV_CMD_NAV_ROI;
-                        case 15:
-                            return MAV_CMD.MAV_CMD_NAV_PATHPLANNING;
-                        case 16:
-                            return MAV_CMD.MAV_CMD_NAV_SPLINE_WAYPOINT;
-                        case 17:
-                            return MAV_CMD.MAV_CMD_NAV_ALTITUDE_WAIT;
-                        case 18:
-                            return MAV_CMD.MAV_CMD_NAV_VTOL_TAKEOFF;
-                        case 19:
-                            return MAV_CMD.MAV_CMD_NAV_VTOL_LAND;
-                        case 20:
-                            return MAV_CMD.MAV_CMD_NAV_GUIDED_ENABLE;
-                        case 21:
-                            return MAV_CMD.MAV_CMD_NAV_DELAY;
-                        case 22:
-                            return MAV_CMD.MAV_CMD_NAV_PAYLOAD_PLACE;
-                        case 23:
-                            return MAV_CMD.MAV_CMD_NAV_LAST;
-                        case 24:
-                            return MAV_CMD.MAV_CMD_CONDITION_DELAY;
-                        case 25:
-                            return MAV_CMD.MAV_CMD_CONDITION_CHANGE_ALT;
-                        case 26:
-                            return MAV_CMD.MAV_CMD_CONDITION_DISTANCE;
-                        case 27:
-                            return MAV_CMD.MAV_CMD_CONDITION_YAW;
-                        case 28:
-                            return MAV_CMD.MAV_CMD_CONDITION_LAST;
-                        case 29:
-                            return MAV_CMD.MAV_CMD_DO_SET_MODE;
-                        case 30:
-                            return MAV_CMD.MAV_CMD_DO_JUMP;
-                        case 31:
-                            return MAV_CMD.MAV_CMD_DO_CHANGE_SPEED;
-                        case 32:
-                            return MAV_CMD.MAV_CMD_DO_SET_HOME;
-                        case 33:
-                            return MAV_CMD.MAV_CMD_DO_SET_PARAMETER;
-                        case 34:
-                            return MAV_CMD.MAV_CMD_DO_SET_RELAY;
-                        case 35:
-                            return MAV_CMD.MAV_CMD_DO_REPEAT_RELAY;
-                        case 36:
-                            return MAV_CMD.MAV_CMD_DO_SET_SERVO;
-                        case 37:
-                            return MAV_CMD.MAV_CMD_DO_REPEAT_SERVO;
-                        case 38:
-                            return MAV_CMD.MAV_CMD_DO_FLIGHTTERMINATION;
-                        case 39:
-                            return MAV_CMD.MAV_CMD_DO_CHANGE_ALTITUDE;
-                        case 40:
-                            return MAV_CMD.MAV_CMD_DO_LAND_START;
-                        case 41:
-                            return MAV_CMD.MAV_CMD_DO_RALLY_LAND;
-                        case 42:
-                            return MAV_CMD.MAV_CMD_DO_GO_AROUND;
-                        case 43:
-                            return MAV_CMD.MAV_CMD_DO_REPOSITION;
-                        case 44:
-                            return MAV_CMD.MAV_CMD_DO_PAUSE_CONTINUE;
-                        case 45:
-                            return MAV_CMD.MAV_CMD_DO_SET_REVERSE;
-                        case 46:
-                            return MAV_CMD.MAV_CMD_DO_CONTROL_VIDEO;
-                        case 47:
-                            return MAV_CMD.MAV_CMD_DO_SET_ROI;
-                        case 48:
-                            return MAV_CMD.MAV_CMD_DO_DIGICAM_CONFIGURE;
-                        case 49:
-                            return MAV_CMD.MAV_CMD_DO_DIGICAM_CONTROL;
-                        case 50:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONFIGURE;
-                        case 51:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL;
-                        case 52:
-                            return MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_DIST;
-                        case 53:
-                            return MAV_CMD.MAV_CMD_DO_FENCE_ENABLE;
-                        case 54:
-                            return MAV_CMD.MAV_CMD_DO_PARACHUTE;
-                        case 55:
-                            return MAV_CMD.MAV_CMD_DO_MOTOR_TEST;
-                        case 56:
-                            return MAV_CMD.MAV_CMD_DO_INVERTED_FLIGHT;
-                        case 57:
-                            return MAV_CMD.MAV_CMD_DO_GRIPPER;
-                        case 58:
-                            return MAV_CMD.MAV_CMD_DO_AUTOTUNE_ENABLE;
-                        case 59:
-                            return MAV_CMD.MAV_CMD_NAV_SET_YAW_SPEED;
-                        case 60:
-                            return MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL;
-                        case 61:
-                            return MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL_QUAT;
-                        case 62:
-                            return MAV_CMD.MAV_CMD_DO_GUIDED_MASTER;
-                        case 63:
-                            return MAV_CMD.MAV_CMD_DO_GUIDED_LIMITS;
-                        case 64:
-                            return MAV_CMD.MAV_CMD_DO_ENGINE_CONTROL;
-                        case 65:
-                            return MAV_CMD.MAV_CMD_DO_LAST;
-                        case 66:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_CALIBRATION;
-                        case 67:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS;
-                        case 68:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_UAVCAN;
-                        case 69:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_STORAGE;
-                        case 70:
-                            return MAV_CMD.MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN;
-                        case 71:
-                            return MAV_CMD.MAV_CMD_OVERRIDE_GOTO;
-                        case 72:
-                            return MAV_CMD.MAV_CMD_MISSION_START;
-                        case 73:
-                            return MAV_CMD.MAV_CMD_COMPONENT_ARM_DISARM;
-                        case 74:
-                            return MAV_CMD.MAV_CMD_GET_HOME_POSITION;
-                        case 75:
-                            return MAV_CMD.MAV_CMD_START_RX_PAIR;
-                        case 76:
-                            return MAV_CMD.MAV_CMD_GET_MESSAGE_INTERVAL;
-                        case 77:
-                            return MAV_CMD.MAV_CMD_SET_MESSAGE_INTERVAL;
-                        case 78:
-                            return MAV_CMD.MAV_CMD_REQUEST_PROTOCOL_VERSION;
-                        case 79:
-                            return MAV_CMD.MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES;
-                        case 80:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_INFORMATION;
-                        case 81:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_SETTINGS;
-                        case 82:
-                            return MAV_CMD.MAV_CMD_REQUEST_STORAGE_INFORMATION;
-                        case 83:
-                            return MAV_CMD.MAV_CMD_STORAGE_FORMAT;
-                        case 84:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS;
-                        case 85:
-                            return MAV_CMD.MAV_CMD_REQUEST_FLIGHT_INFORMATION;
-                        case 86:
-                            return MAV_CMD.MAV_CMD_RESET_CAMERA_SETTINGS;
-                        case 87:
-                            return MAV_CMD.MAV_CMD_SET_CAMERA_MODE;
-                        case 88:
-                            return MAV_CMD.MAV_CMD_IMAGE_START_CAPTURE;
-                        case 89:
-                            return MAV_CMD.MAV_CMD_IMAGE_STOP_CAPTURE;
-                        case 90:
-                            return MAV_CMD.MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE;
-                        case 91:
-                            return MAV_CMD.MAV_CMD_DO_TRIGGER_CONTROL;
-                        case 92:
-                            return MAV_CMD.MAV_CMD_VIDEO_START_CAPTURE;
-                        case 93:
-                            return MAV_CMD.MAV_CMD_VIDEO_STOP_CAPTURE;
-                        case 94:
-                            return MAV_CMD.MAV_CMD_VIDEO_START_STREAMING;
-                        case 95:
-                            return MAV_CMD.MAV_CMD_VIDEO_STOP_STREAMING;
-                        case 96:
-                            return MAV_CMD.MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION;
-                        case 97:
-                            return MAV_CMD.MAV_CMD_LOGGING_START;
-                        case 98:
-                            return MAV_CMD.MAV_CMD_LOGGING_STOP;
-                        case 99:
-                            return MAV_CMD.MAV_CMD_AIRFRAME_CONFIGURATION;
-                        case 100:
-                            return MAV_CMD.MAV_CMD_PANORAMA_CREATE;
-                        case 101:
-                            return MAV_CMD.MAV_CMD_DO_VTOL_TRANSITION;
-                        case 102:
-                            return MAV_CMD.MAV_CMD_ARM_AUTHORIZATION_REQUEST;
-                        case 103:
-                            return MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_STANDARD;
-                        case 104:
-                            return MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE;
-                        case 105:
-                            return MAV_CMD.MAV_CMD_CONDITION_GATE;
-                        case 106:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_RETURN_POINT;
-                        case 107:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION;
-                        case 108:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION;
-                        case 109:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION;
-                        case 110:
-                            return MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION;
-                        case 111:
-                            return MAV_CMD.MAV_CMD_NAV_RALLY_POINT;
-                        case 112:
-                            return MAV_CMD.MAV_CMD_UAVCAN_GET_NODE_INFO;
-                        case 113:
-                            return MAV_CMD.MAV_CMD_PAYLOAD_PREPARE_DEPLOY;
-                        case 114:
-                            return MAV_CMD.MAV_CMD_PAYLOAD_CONTROL_DEPLOY;
-                        case 115:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_1;
-                        case 116:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_2;
-                        case 117:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_3;
-                        case 118:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_4;
-                        case 119:
-                            return MAV_CMD.MAV_CMD_WAYPOINT_USER_5;
-                        case 120:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_1;
-                        case 121:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_2;
-                        case 122:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_3;
-                        case 123:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_4;
-                        case 124:
-                            return MAV_CMD.MAV_CMD_SPATIAL_USER_5;
-                        case 125:
-                            return MAV_CMD.MAV_CMD_USER_1;
-                        case 126:
-                            return MAV_CMD.MAV_CMD_USER_2;
-                        case 127:
-                            return MAV_CMD.MAV_CMD_USER_3;
-                        case 128:
-                            return MAV_CMD.MAV_CMD_USER_4;
-                        case 129:
-                            return MAV_CMD.MAV_CMD_USER_5;
-                        case 130:
-                            return MAV_CMD.MAV_CMD_POWER_OFF_INITIATED;
-                        case 131:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_FLY_CLICK;
-                        case 132:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_FLY_HOLD;
-                        case 133:
-                            return MAV_CMD.MAV_CMD_SOLO_BTN_PAUSE_CLICK;
-                        case 134:
-                            return MAV_CMD.MAV_CMD_DO_START_MAG_CAL;
-                        case 135:
-                            return MAV_CMD.MAV_CMD_DO_ACCEPT_MAG_CAL;
-                        case 136:
-                            return MAV_CMD.MAV_CMD_DO_CANCEL_MAG_CAL;
-                        case 137:
-                            return MAV_CMD.MAV_CMD_SET_FACTORY_TEST_MODE;
-                        case 138:
-                            return MAV_CMD.MAV_CMD_DO_SEND_BANNER;
-                        case 139:
-                            return MAV_CMD.MAV_CMD_ACCELCAL_VEHICLE_POS;
-                        case 140:
-                            return MAV_CMD.MAV_CMD_GIMBAL_RESET;
-                        case 141:
-                            return MAV_CMD.MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS;
-                        case 142:
-                            return MAV_CMD.MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION;
-                        case 143:
-                            return MAV_CMD.MAV_CMD_GIMBAL_FULL_RESET;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__I(BitUtils.get_bits(data, 0, 8));}
             }
 
             public MAV_RESULT result //See MAV_RESULT enum
@@ -4530,7 +2696,7 @@ namespace org.noname
                 if(ph.field_bit !=  14 && !try_visit_field(ph, 14)) return 0;
                 return (byte)((byte) BitUtils.get_bytes(data,  ph.BYTE, 1));
             }
-            static readonly Meta meta77 = new Meta(77, 0, 0, 0, 3, 11, 0, _qK, _PK, _wK, _gK);
+            static readonly Meta meta77 = new Meta(77, 0, 0, 0, 3, 11, 0, _Tv, _Xv, _xv, _Ev);
         }/**
 *Setpoint in roll, pitch, yaw and thrust from the operator*/
         public class MANUAL_SETPOINT : Pack
@@ -5160,35 +3326,7 @@ namespace org.noname
 
             public MAV_MODE mode //System mode (MAV_MODE)
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 328, 4))
-                    {
-                        case 0:
-                            return MAV_MODE.MAV_MODE_PREFLIGHT;
-                        case 1:
-                            return MAV_MODE.MAV_MODE_MANUAL_DISARMED;
-                        case 2:
-                            return MAV_MODE.MAV_MODE_TEST_DISARMED;
-                        case 3:
-                            return MAV_MODE.MAV_MODE_STABILIZE_DISARMED;
-                        case 4:
-                            return MAV_MODE.MAV_MODE_GUIDED_DISARMED;
-                        case 5:
-                            return MAV_MODE.MAV_MODE_AUTO_DISARMED;
-                        case 6:
-                            return MAV_MODE.MAV_MODE_MANUAL_ARMED;
-                        case 7:
-                            return MAV_MODE.MAV_MODE_TEST_ARMED;
-                        case 8:
-                            return MAV_MODE.MAV_MODE_STABILIZE_ARMED;
-                        case 9:
-                            return MAV_MODE.MAV_MODE_GUIDED_ARMED;
-                        case 10:
-                            return MAV_MODE.MAV_MODE_AUTO_ARMED;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__v(BitUtils.get_bits(data, 328, 4));}
             }
             static readonly Meta meta91 = new Meta(91, 0, 0, 1, 42, 332);
         }/**
@@ -5298,35 +3436,7 @@ namespace org.noname
 
             public MAV_MODE mode //System mode (MAV_MODE), includes arming state.
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 640, 4))
-                    {
-                        case 0:
-                            return MAV_MODE.MAV_MODE_PREFLIGHT;
-                        case 1:
-                            return MAV_MODE.MAV_MODE_MANUAL_DISARMED;
-                        case 2:
-                            return MAV_MODE.MAV_MODE_TEST_DISARMED;
-                        case 3:
-                            return MAV_MODE.MAV_MODE_STABILIZE_DISARMED;
-                        case 4:
-                            return MAV_MODE.MAV_MODE_GUIDED_DISARMED;
-                        case 5:
-                            return MAV_MODE.MAV_MODE_AUTO_DISARMED;
-                        case 6:
-                            return MAV_MODE.MAV_MODE_MANUAL_ARMED;
-                        case 7:
-                            return MAV_MODE.MAV_MODE_TEST_ARMED;
-                        case 8:
-                            return MAV_MODE.MAV_MODE_STABILIZE_ARMED;
-                        case 9:
-                            return MAV_MODE.MAV_MODE_GUIDED_ARMED;
-                        case 10:
-                            return MAV_MODE.MAV_MODE_AUTO_ARMED;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return  en__v(BitUtils.get_bits(data, 640, 4));}
             }
             static readonly Meta meta93 = new Meta(93, 0, 0, 2, 81, 644);
         }/**
@@ -5384,7 +3494,7 @@ namespace org.noname
                 if(ph.field_bit !=  209 && !try_visit_field(ph, 209)) return 0;
                 return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  ph.BYTE, 4)));
             }
-            static readonly Meta meta100 = new Meta(100, 0, 0, 1, 27, 208, 0, _Xi, _Ni);
+            static readonly Meta meta100 = new Meta(100, 0, 0, 1, 27, 208, 0, _OW, _cW);
         } public class GLOBAL_VISION_POSITION_ESTIMATE : Pack
         {
             internal GLOBAL_VISION_POSITION_ESTIMATE() : base(meta101, 0) { }
@@ -5424,50 +3534,43 @@ namespace org.noname
                 get {  return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  28, 4)));}
             }
             static readonly Meta meta101 = new Meta(101, 0, 0, 1, 32, 256);
-        } public class VISION_POSITION_ESTIMATE : Pack, CommunicationChannel.Sendable
+        } public class VISION_POSITION_ESTIMATE : Pack
         {
             internal VISION_POSITION_ESTIMATE() : base(meta102, 0) { }
             internal VISION_POSITION_ESTIMATE(int bytes) : base(meta102, bytes) { }
             public ulong usec //Timestamp (microseconds, synced to UNIX time or since system boot)
             {
                 get {  return (BitUtils.get_bytes(data,  0, 8));}
-                set {  BitUtils.set_bytes((ulong)(value), 8, data,  0);}
             }
 
             public float x //Global X position
             {
                 get {  return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  8, 4)));}
-                set {  BitUtils.set_bytes(BitUtils.FloatToInt32Bits(value), 4, data, 8);}
             }
 
             public float y //Global Y position
             {
                 get {  return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  12, 4)));}
-                set {  BitUtils.set_bytes(BitUtils.FloatToInt32Bits(value), 4, data, 12);}
             }
 
             public float z //Global Z position
             {
                 get {  return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  16, 4)));}
-                set {  BitUtils.set_bytes(BitUtils.FloatToInt32Bits(value), 4, data, 16);}
             }
 
             public float roll //Roll angle in rad
             {
                 get {  return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  20, 4)));}
-                set {  BitUtils.set_bytes(BitUtils.FloatToInt32Bits(value), 4, data, 20);}
             }
 
             public float pitch //Pitch angle in rad
             {
                 get {  return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  24, 4)));}
-                set {  BitUtils.set_bytes(BitUtils.FloatToInt32Bits(value), 4, data, 24);}
             }
 
             public float yaw //Yaw angle in rad
             {
                 get {  return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  28, 4)));}
-                set {  BitUtils.set_bytes(BitUtils.FloatToInt32Bits(value), 4, data, 28);}
             }
             static readonly Meta meta102 = new Meta(102, 0, 0, 1, 32, 256);
         } public class VISION_SPEED_ESTIMATE : Pack, CommunicationChannel.Sendable
@@ -6785,55 +4888,10 @@ namespace org.noname
 
             public MAV_POWER_STATUS flags //power supply status flags (see MAV_POWER_STATUS enum)
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 32, 3))
-                    {
-                        case 0:
-                            return MAV_POWER_STATUS.MAV_POWER_STATUS_BRICK_VALID;
-                        case 1:
-                            return MAV_POWER_STATUS.MAV_POWER_STATUS_SERVO_VALID;
-                        case 2:
-                            return MAV_POWER_STATUS.MAV_POWER_STATUS_USB_CONNECTED;
-                        case 3:
-                            return MAV_POWER_STATUS.MAV_POWER_STATUS_PERIPH_OVERCURRENT;
-                        case 4:
-                            return MAV_POWER_STATUS.MAV_POWER_STATUS_PERIPH_HIPOWER_OVERCURRENT;
-                        case 5:
-                            return MAV_POWER_STATUS.MAV_POWER_STATUS_CHANGED;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_POWER_STATUS.MAV_POWER_STATUS_BRICK_VALID:
-                            id = 0;
-                            break;
-                        case MAV_POWER_STATUS.MAV_POWER_STATUS_SERVO_VALID:
-                            id = 1;
-                            break;
-                        case MAV_POWER_STATUS.MAV_POWER_STATUS_USB_CONNECTED:
-                            id = 2;
-                            break;
-                        case MAV_POWER_STATUS.MAV_POWER_STATUS_PERIPH_OVERCURRENT:
-                            id = 3;
-                            break;
-                        case MAV_POWER_STATUS.MAV_POWER_STATUS_PERIPH_HIPOWER_OVERCURRENT:
-                            id = 4;
-                            break;
-                        case MAV_POWER_STATUS.MAV_POWER_STATUS_CHANGED:
-                            id = 5;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 3, data, 32);
-                }
+                get {  return (MAV_POWER_STATUS)(1 +  BitUtils.get_bits(data, 32, 6));}
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 6, data, 32);}
             }
-            static readonly Meta meta125 = new Meta(125, 2, 0, 0, 5, 35);
+            static readonly Meta meta125 = new Meta(125, 2, 0, 0, 5, 38);
         }/**
 *Control a serial port. This can be used for raw access to an onboard serial peripheral such as a GPS or
 *	telemetry radio. It is designed to make it possible to update the devices firmware via MAVLink messages
@@ -6925,50 +4983,10 @@ namespace org.noname
 
             public SERIAL_CONTROL_FLAG flags //See SERIAL_CONTROL_FLAG enum
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 619, 3))
-                    {
-                        case 0:
-                            return SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_REPLY;
-                        case 1:
-                            return SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_RESPOND;
-                        case 2:
-                            return SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_EXCLUSIVE;
-                        case 3:
-                            return SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_BLOCKING;
-                        case 4:
-                            return SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_MULTI;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_REPLY:
-                            id = 0;
-                            break;
-                        case SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_RESPOND:
-                            id = 1;
-                            break;
-                        case SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_EXCLUSIVE:
-                            id = 2;
-                            break;
-                        case SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_BLOCKING:
-                            id = 3;
-                            break;
-                        case SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_MULTI:
-                            id = 4;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 3, data, 619);
-                }
+                get {  return (SERIAL_CONTROL_FLAG)(1 +  BitUtils.get_bits(data, 619, 5));}
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 5, data, 619);}
             }
-            static readonly Meta meta126 = new Meta(126, 1, 1, 0, 78, 622);
+            static readonly Meta meta126 = new Meta(126, 1, 1, 0, 78, 624);
         }/**
 *RTK GPS data. Gives information on the relative baseline calculation the GPS is reporting*/
         public class GPS_RTK : Pack, CommunicationChannel.Sendable
@@ -8328,115 +6346,15 @@ namespace org.noname
 
             public MAV_PROTOCOL_CAPABILITY capabilities //bitmask of capabilities (see MAV_PROTOCOL_CAPABILITY enum)
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 416, 5))
-                    {
-                        case 0:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FLOAT;
-                        case 1:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_PARAM_FLOAT;
-                        case 2:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_INT;
-                        case 3:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_COMMAND_INT;
-                        case 4:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_PARAM_UNION;
-                        case 5:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FTP;
-                        case 6:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_ATTITUDE_TARGET;
-                        case 7:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_LOCAL_NED;
-                        case 8:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_GLOBAL_INT;
-                        case 9:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_TERRAIN;
-                        case 10:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_ACTUATOR_TARGET;
-                        case 11:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FLIGHT_TERMINATION;
-                        case 12:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_COMPASS_CALIBRATION;
-                        case 13:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MAVLINK2;
-                        case 14:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FENCE;
-                        case 15:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_RALLY;
-                        case 16:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FLIGHT_INFORMATION;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FLOAT:
-                            id = 0;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_PARAM_FLOAT:
-                            id = 1;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_INT:
-                            id = 2;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_COMMAND_INT:
-                            id = 3;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_PARAM_UNION:
-                            id = 4;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FTP:
-                            id = 5;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_ATTITUDE_TARGET:
-                            id = 6;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_LOCAL_NED:
-                            id = 7;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_GLOBAL_INT:
-                            id = 8;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_TERRAIN:
-                            id = 9;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_ACTUATOR_TARGET:
-                            id = 10;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FLIGHT_TERMINATION:
-                            id = 11;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_COMPASS_CALIBRATION:
-                            id = 12;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MAVLINK2:
-                            id = 13;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FENCE:
-                            id = 14;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_RALLY:
-                            id = 15;
-                            break;
-                        case MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FLIGHT_INFORMATION:
-                            id = 16;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 5, data, 416);
-                }
+                get {  return (MAV_PROTOCOL_CAPABILITY)(1 +  BitUtils.get_bits(data, 416, 17));}
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 17, data, 416);}
             }
             /**
             *UID if provided by hardware (supersedes the uid field. If this is non-zero, use this field, otherwise
             *	use uid*/
             public byte[] uid2_TRY(Inside ph)
             {
-                if(ph.field_bit !=  421 && !try_visit_field(ph, 421)) return null;
+                if(ph.field_bit !=  433 && !try_visit_field(ph, 433)) return null;
                 return uid2_GET(ph, new byte[ph.items], 0);
             }
             /**
@@ -8456,10 +6374,10 @@ namespace org.noname
 *	use uid*/
             public void uid2_SET(byte[] src, int pos, Inside ph)
             {
-                if(ph.field_bit != 421)insert_field(ph, 421, 0);
+                if(ph.field_bit != 433)insert_field(ph, 433, 0);
                 for(int BYTE =  ph.BYTE, src_max = pos + 18; pos < src_max; pos++, BYTE += 1)
                     BitUtils.set_bytes((ulong)(src[pos]), 1, data,  BYTE);
-            } static readonly Meta meta148 = new Meta(148, 2, 4, 1, 54, 421, 0, _Yv);
+            } static readonly Meta meta148 = new Meta(148, 2, 4, 1, 56, 433, 0, _wB);
         }/**
 *The location of a landing area captured from a downward facing camera*/
         public class LANDING_TARGET : Pack, CommunicationChannel.Sendable
@@ -8516,39 +6434,39 @@ namespace org.noname
 
             public LANDING_TARGET_TYPE type //LANDING_TARGET_TYPE enum specifying the type of landing target
             {
-                get {  return (LANDING_TARGET_TYPE)(0 +  BitUtils.get_bits(data, 236, 3));}
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 3, data, 236);}
+                get {  return (LANDING_TARGET_TYPE)(0 +  BitUtils.get_bits(data, 236, 2));}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 236);}
             }
             public float x_TRY(Inside ph)//X Position of the landing target on MAV_FRAME
             {
-                if(ph.field_bit !=  239 && !try_visit_field(ph, 239)) return 0;
+                if(ph.field_bit !=  238 && !try_visit_field(ph, 238)) return 0;
                 return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  ph.BYTE, 4)));
             }
             public void x_SET(float src, Inside ph)//X Position of the landing target on MAV_FRAME
             {
-                if(ph.field_bit != 239)insert_field(ph, 239, 0);
+                if(ph.field_bit != 238)insert_field(ph, 238, 0);
                 BitUtils.set_bytes(BitUtils.FloatToInt32Bits(src), 4, data, ph.BYTE);
             } public float y_TRY(Inside ph) //Y Position of the landing target on MAV_FRAME
             {
-                if(ph.field_bit !=  240 && !try_visit_field(ph, 240)) return 0;
+                if(ph.field_bit !=  239 && !try_visit_field(ph, 239)) return 0;
                 return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  ph.BYTE, 4)));
             }
             public void y_SET(float src, Inside ph)//Y Position of the landing target on MAV_FRAME
             {
-                if(ph.field_bit != 240)insert_field(ph, 240, 0);
+                if(ph.field_bit != 239)insert_field(ph, 239, 0);
                 BitUtils.set_bytes(BitUtils.FloatToInt32Bits(src), 4, data, ph.BYTE);
             } public float z_TRY(Inside ph) //Z Position of the landing target on MAV_FRAME
             {
-                if(ph.field_bit !=  241 && !try_visit_field(ph, 241)) return 0;
+                if(ph.field_bit !=  240 && !try_visit_field(ph, 240)) return 0;
                 return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  ph.BYTE, 4)));
             }
             public void z_SET(float src, Inside ph)//Z Position of the landing target on MAV_FRAME
             {
-                if(ph.field_bit != 241)insert_field(ph, 241, 0);
+                if(ph.field_bit != 240)insert_field(ph, 240, 0);
                 BitUtils.set_bytes(BitUtils.FloatToInt32Bits(src), 4, data, ph.BYTE);
             } public float[] q_TRY(Inside ph) //Quaternion of landing target orientation (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
             {
-                if(ph.field_bit !=  242 && !try_visit_field(ph, 242)) return null;
+                if(ph.field_bit !=  241 && !try_visit_field(ph, 241)) return null;
                 return q_GET(ph, new float[ph.items], 0);
             }
             public float[]q_GET(Inside ph, float[] dst_ch, int pos) //Quaternion of landing target orientation (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
@@ -8562,7 +6480,7 @@ namespace org.noname
                 return 4;
             } public void q_SET(float[] src, int pos, Inside ph)//Quaternion of landing target orientation (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
             {
-                if(ph.field_bit != 242)insert_field(ph, 242, 0);
+                if(ph.field_bit != 241)insert_field(ph, 241, 0);
                 for(int BYTE =  ph.BYTE, src_max = pos + 4; pos < src_max; pos++, BYTE += 4)
                     BitUtils.set_bytes(BitUtils.FloatToInt32Bits(src[pos]), 4, data, BYTE);
             }/**
@@ -8570,7 +6488,7 @@ namespace org.noname
 *	the landing targe*/
             public byte position_valid_TRY(Inside ph)
             {
-                if(ph.field_bit !=  243 && !try_visit_field(ph, 243)) return 0;
+                if(ph.field_bit !=  242 && !try_visit_field(ph, 242)) return 0;
                 return (byte)((byte) BitUtils.get_bytes(data,  ph.BYTE, 1));
             }
             /**
@@ -8578,9 +6496,9 @@ namespace org.noname
             *	the landing targe*/
             public void position_valid_SET(byte src, Inside ph)
             {
-                if(ph.field_bit != 243)insert_field(ph, 243, 0);
+                if(ph.field_bit != 242)insert_field(ph, 242, 0);
                 BitUtils.set_bytes((ulong)(src), 1, data,  ph.BYTE);
-            } static readonly Meta meta149 = new Meta(149, 0, 0, 1, 31, 239, 0, _Xv, _Nv, _kv, _vv, _Jv);
+            } static readonly Meta meta149 = new Meta(149, 0, 0, 1, 31, 238, 0, _OB, _cB, _AB, _BB, _UB);
         }/**
 *Offsets and calibrations values for hardware sensors. This makes it easier to debug the calibration process*/
         public class SENSOR_OFFSETS : Pack, CommunicationChannel.Sendable
@@ -8697,7 +6615,7 @@ namespace org.noname
             {
                 if(ph.field_bit != 32)insert_field(ph, 32, 0);
                 BitUtils.set_bytes((ulong)(src), 4, data,  ph.BYTE);
-            } static readonly Meta meta152 = new Meta(152, 2, 0, 0, 5, 32, 0, _Zq);
+            } static readonly Meta meta152 = new Meta(152, 2, 0, 0, 5, 32, 0, _pT);
         }/**
 *raw ADC output*/
         public class AP_ADC : Pack, CommunicationChannel.Sendable
@@ -9040,9 +6958,9 @@ namespace org.noname
 
             public FENCE_BREACH breach_type //last breach type (see FENCE_BREACH_* enum)
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 3, data, 56);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 56);}
             }
-            static readonly Meta meta162 = new Meta(162, 1, 1, 0, 8, 59);
+            static readonly Meta meta162 = new Meta(162, 1, 1, 0, 8, 58);
         }/**
 *Status of DCM attitude estimator*/
         public class AHRS : Pack, CommunicationChannel.Sendable
@@ -9240,73 +7158,19 @@ namespace org.noname
 
             public LIMIT_MODULE mods_enabled //AP_Limit_Module bitfield of enabled modules, (see enum moduleid or LIMIT_MODULE)
             {
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case LIMIT_MODULE.LIMIT_GPSLOCK:
-                            id = 0;
-                            break;
-                        case LIMIT_MODULE.LIMIT_GEOFENCE:
-                            id = 1;
-                            break;
-                        case LIMIT_MODULE.LIMIT_ALTITUDE:
-                            id = 2;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 2, data, 147);
-                }
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 3, data, 147);}
             }
 
             public LIMIT_MODULE mods_required //AP_Limit_Module bitfield of required modules, (see enum moduleid or LIMIT_MODULE)
             {
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case LIMIT_MODULE.LIMIT_GPSLOCK:
-                            id = 0;
-                            break;
-                        case LIMIT_MODULE.LIMIT_GEOFENCE:
-                            id = 1;
-                            break;
-                        case LIMIT_MODULE.LIMIT_ALTITUDE:
-                            id = 2;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 2, data, 149);
-                }
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 3, data, 150);}
             }
 
             public LIMIT_MODULE mods_triggered //AP_Limit_Module bitfield of triggered modules, (see enum moduleid or LIMIT_MODULE)
             {
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case LIMIT_MODULE.LIMIT_GPSLOCK:
-                            id = 0;
-                            break;
-                        case LIMIT_MODULE.LIMIT_GEOFENCE:
-                            id = 1;
-                            break;
-                        case LIMIT_MODULE.LIMIT_ALTITUDE:
-                            id = 2;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 2, data, 151);
-                }
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 3, data, 153);}
             }
-            static readonly Meta meta167 = new Meta(167, 1, 4, 0, 20, 153);
+            static readonly Meta meta167 = new Meta(167, 1, 4, 0, 20, 156);
         }/**
 *Wind estimation*/
         public class WIND : Pack, CommunicationChannel.Sendable
@@ -9567,9 +7431,9 @@ namespace org.noname
 
             public RALLY_FLAGS flags //See RALLY_FLAGS enum for definition of the bitmask.
             {
-                set {  BitUtils.set_bits((ulong)(- 1 +   value), 2, data, 144);}
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 1, data, 144);}
             }
-            static readonly Meta meta175 = new Meta(175, 1, 0, 0, 19, 146);
+            static readonly Meta meta175 = new Meta(175, 1, 0, 0, 19, 145);
         }/**
 *Request a current rally point from MAV. MAV should respond with a RALLY_POINT message. MAV should not
 *	respond if the request is invalid*/
@@ -9905,9 +7769,9 @@ namespace org.noname
 
             public MAV_REMOTE_LOG_DATA_BLOCK_COMMANDS seqno //log data block sequence number
             {
-                set {  BitUtils.set_bits((ulong)(- 2147483645 +   value), 2, data, 1616);}
+                set {  BitUtils.set_bits((ulong)(- 2147483645 +   value), 1, data, 1616);}
             }
-            static readonly Meta meta184 = new Meta(184, 0, 0, 0, 203, 1618);
+            static readonly Meta meta184 = new Meta(184, 0, 0, 0, 203, 1617);
         }/**
 *Send Status of each log block that autopilot board might have sent*/
         public class REMOTE_LOG_BLOCK_STATUS : Pack, CommunicationChannel.Sendable
@@ -9931,9 +7795,9 @@ namespace org.noname
 
             public MAV_REMOTE_LOG_DATA_BLOCK_STATUSES status //log data block status
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 48);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 1, data, 48);}
             }
-            static readonly Meta meta185 = new Meta(185, 0, 1, 0, 7, 50);
+            static readonly Meta meta185 = new Meta(185, 0, 1, 0, 7, 49);
         }/**
 *Control vehicle LEDs*/
         public class LED_CONTROL : Pack, CommunicationChannel.Sendable
@@ -10140,48 +8004,9 @@ namespace org.noname
 
             public EKF_STATUS_FLAGS flags //Flags
             {
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case EKF_STATUS_FLAGS.EKF_ATTITUDE:
-                            id = 0;
-                            break;
-                        case EKF_STATUS_FLAGS.EKF_VELOCITY_HORIZ:
-                            id = 1;
-                            break;
-                        case EKF_STATUS_FLAGS.EKF_VELOCITY_VERT:
-                            id = 2;
-                            break;
-                        case EKF_STATUS_FLAGS.EKF_POS_HORIZ_REL:
-                            id = 3;
-                            break;
-                        case EKF_STATUS_FLAGS.EKF_POS_HORIZ_ABS:
-                            id = 4;
-                            break;
-                        case EKF_STATUS_FLAGS.EKF_POS_VERT_ABS:
-                            id = 5;
-                            break;
-                        case EKF_STATUS_FLAGS.EKF_POS_VERT_AGL:
-                            id = 6;
-                            break;
-                        case EKF_STATUS_FLAGS.EKF_CONST_POS_MODE:
-                            id = 7;
-                            break;
-                        case EKF_STATUS_FLAGS.EKF_PRED_POS_HORIZ_REL:
-                            id = 8;
-                            break;
-                        case EKF_STATUS_FLAGS.EKF_PRED_POS_HORIZ_ABS:
-                            id = 9;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 4, data, 160);
-                }
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 10, data, 160);}
             }
-            static readonly Meta meta193 = new Meta(193, 0, 0, 0, 21, 164);
+            static readonly Meta meta193 = new Meta(193, 0, 0, 0, 22, 170);
         }/**
 *PID tuning information*/
         public class PID_TUNING : Pack, CommunicationChannel.Sendable
@@ -10359,7 +8184,7 @@ namespace org.noname
 
             public GOPRO_HEARTBEAT_STATUS status //Status
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 3, data, 0);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 0);}
             }
 
             public GOPRO_CAPTURE_MODE capture_mode //Current capture mode
@@ -10396,15 +8221,15 @@ namespace org.noname
                         default:
                             throw  new ArgumentException("Unknown enum " + value);
                     }
-                    BitUtils.set_bits(id, 4, data, 3);
+                    BitUtils.set_bits(id, 4, data, 2);
                 }
             }
 
             public GOPRO_HEARTBEAT_FLAGS flags //additional status bits
             {
-                set {  BitUtils.set_bits((ulong)(- 1 +   value), 1, data, 7);}
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 1, data, 6);}
             }
-            static readonly Meta meta215 = new Meta(215, 0, 0, 0, 1, 8);
+            static readonly Meta meta215 = new Meta(215, 0, 0, 0, 1, 7);
         }/**
 *Request a GOPRO_COMMAND response from the GoPro*/
         public class GOPRO_GET_REQUEST : Pack, CommunicationChannel.Sendable
@@ -10449,9 +8274,9 @@ namespace org.noname
 
             public GOPRO_REQUEST_STATUS status //Status
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 37);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 1, data, 37);}
             }
-            static readonly Meta meta217 = new Meta(217, 0, 0, 0, 5, 39);
+            static readonly Meta meta217 = new Meta(217, 0, 0, 0, 5, 38);
         }/**
 *Request to set a GOPRO_COMMAND with a desired*/
         public class GOPRO_SET_REQUEST : Pack, CommunicationChannel.Sendable
@@ -10496,9 +8321,9 @@ namespace org.noname
 
             public GOPRO_REQUEST_STATUS status //Status
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 5);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 1, data, 5);}
             }
-            static readonly Meta meta219 = new Meta(219, 0, 0, 0, 1, 7);
+            static readonly Meta meta219 = new Meta(219, 0, 0, 0, 1, 6);
         }/**
 *RPM sensor output*/
         public class RPM : Pack, CommunicationChannel.Sendable
@@ -10584,80 +8409,10 @@ namespace org.noname
 
             public ESTIMATOR_STATUS_FLAGS flags //Integer bitmask indicating which EKF outputs are valid. See definition for ESTIMATOR_STATUS_FLAGS.
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 320, 4))
-                    {
-                        case 0:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_ATTITUDE;
-                        case 1:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_VELOCITY_HORIZ;
-                        case 2:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_VELOCITY_VERT;
-                        case 3:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_HORIZ_REL;
-                        case 4:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_HORIZ_ABS;
-                        case 5:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_VERT_ABS;
-                        case 6:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_VERT_AGL;
-                        case 7:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_CONST_POS_MODE;
-                        case 8:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_PRED_POS_HORIZ_REL;
-                        case 9:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_PRED_POS_HORIZ_ABS;
-                        case 10:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_GPS_GLITCH;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case ESTIMATOR_STATUS_FLAGS.ESTIMATOR_ATTITUDE:
-                            id = 0;
-                            break;
-                        case ESTIMATOR_STATUS_FLAGS.ESTIMATOR_VELOCITY_HORIZ:
-                            id = 1;
-                            break;
-                        case ESTIMATOR_STATUS_FLAGS.ESTIMATOR_VELOCITY_VERT:
-                            id = 2;
-                            break;
-                        case ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_HORIZ_REL:
-                            id = 3;
-                            break;
-                        case ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_HORIZ_ABS:
-                            id = 4;
-                            break;
-                        case ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_VERT_ABS:
-                            id = 5;
-                            break;
-                        case ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_VERT_AGL:
-                            id = 6;
-                            break;
-                        case ESTIMATOR_STATUS_FLAGS.ESTIMATOR_CONST_POS_MODE:
-                            id = 7;
-                            break;
-                        case ESTIMATOR_STATUS_FLAGS.ESTIMATOR_PRED_POS_HORIZ_REL:
-                            id = 8;
-                            break;
-                        case ESTIMATOR_STATUS_FLAGS.ESTIMATOR_PRED_POS_HORIZ_ABS:
-                            id = 9;
-                            break;
-                        case ESTIMATOR_STATUS_FLAGS.ESTIMATOR_GPS_GLITCH:
-                            id = 10;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 4, data, 320);
-                }
+                get {  return (ESTIMATOR_STATUS_FLAGS)(1 +  BitUtils.get_bits(data, 320, 11));}
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 11, data, 320);}
             }
-            static readonly Meta meta230 = new Meta(230, 0, 0, 1, 41, 324);
+            static readonly Meta meta230 = new Meta(230, 0, 0, 1, 42, 331);
         } public class WIND_COV : Pack, CommunicationChannel.Sendable
         {
             internal WIND_COV() : base(meta231, 0) { }
@@ -10827,65 +8582,10 @@ namespace org.noname
 
             public GPS_INPUT_IGNORE_FLAGS ignore_flags //Flags indicating which fields to ignore (see GPS_INPUT_IGNORE_FLAGS enum).  All other fields must be provided
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 488, 4))
-                    {
-                        case 0:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_ALT;
-                        case 1:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_HDOP;
-                        case 2:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VDOP;
-                        case 3:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VEL_HORIZ;
-                        case 4:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VEL_VERT;
-                        case 5:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_SPEED_ACCURACY;
-                        case 6:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_HORIZONTAL_ACCURACY;
-                        case 7:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VERTICAL_ACCURACY;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_ALT:
-                            id = 0;
-                            break;
-                        case GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_HDOP:
-                            id = 1;
-                            break;
-                        case GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VDOP:
-                            id = 2;
-                            break;
-                        case GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VEL_HORIZ:
-                            id = 3;
-                            break;
-                        case GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VEL_VERT:
-                            id = 4;
-                            break;
-                        case GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_SPEED_ACCURACY:
-                            id = 5;
-                            break;
-                        case GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_HORIZONTAL_ACCURACY:
-                            id = 6;
-                            break;
-                        case GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VERTICAL_ACCURACY:
-                            id = 7;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 4, data, 488);
-                }
+                get {  return (GPS_INPUT_IGNORE_FLAGS)(1 +  BitUtils.get_bits(data, 488, 8));}
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 8, data, 488);}
             }
-            static readonly Meta meta232 = new Meta(232, 1, 1, 1, 62, 492);
+            static readonly Meta meta232 = new Meta(232, 1, 1, 1, 62, 496);
         }/**
 *RTCM message for injecting into the onboard GPS (used for DGPS)*/
         public class GPS_RTCM_DATA : Pack, CommunicationChannel.Sendable
@@ -11066,77 +8766,22 @@ namespace org.noname
 
             public MAV_MODE_FLAG base_mode //System mode bitfield, see MAV_MODE_FLAG ENUM in mavlink/include/mavlink_types.h
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 296, 4))
-                    {
-                        case 0:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED;
-                        case 1:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_TEST_ENABLED;
-                        case 2:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_AUTO_ENABLED;
-                        case 3:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_GUIDED_ENABLED;
-                        case 4:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_STABILIZE_ENABLED;
-                        case 5:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_HIL_ENABLED;
-                        case 6:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_MANUAL_INPUT_ENABLED;
-                        case 7:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_SAFETY_ARMED;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED:
-                            id = 0;
-                            break;
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_TEST_ENABLED:
-                            id = 1;
-                            break;
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_AUTO_ENABLED:
-                            id = 2;
-                            break;
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_GUIDED_ENABLED:
-                            id = 3;
-                            break;
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_STABILIZE_ENABLED:
-                            id = 4;
-                            break;
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_HIL_ENABLED:
-                            id = 5;
-                            break;
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_MANUAL_INPUT_ENABLED:
-                            id = 6;
-                            break;
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_SAFETY_ARMED:
-                            id = 7;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 4, data, 296);
-                }
+                get {  return (MAV_MODE_FLAG)(1 +  BitUtils.get_bits(data, 296, 8));}
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 8, data, 296);}
             }
 
             public MAV_LANDED_STATE landed_state //The landed state. Is set to MAV_LANDED_STATE_UNDEFINED if landed state is unknown.
             {
-                get {  return (MAV_LANDED_STATE)(0 +  BitUtils.get_bits(data, 300, 3));}
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 3, data, 300);}
+                get {  return (MAV_LANDED_STATE)(0 +  BitUtils.get_bits(data, 304, 3));}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 3, data, 304);}
             }
 
             public GPS_FIX_TYPE gps_fix_type //See the GPS_FIX_TYPE enum.
             {
-                get {  return (GPS_FIX_TYPE)(0 +  BitUtils.get_bits(data, 303, 4));}
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 4, data, 303);}
+                get {  return (GPS_FIX_TYPE)(0 +  BitUtils.get_bits(data, 307, 4));}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 4, data, 307);}
             }
-            static readonly Meta meta234 = new Meta(234, 2, 1, 0, 39, 307);
+            static readonly Meta meta234 = new Meta(234, 2, 1, 0, 39, 311);
         }/**
 *Vibration levels and accelerometer clipping*/
         public class VIBRATION : Pack, CommunicationChannel.Sendable
@@ -11301,7 +8946,7 @@ namespace org.noname
             {
                 if(ph.field_bit != 416)insert_field(ph, 416, 0);
                 BitUtils.set_bytes((ulong)(src), 8, data,  ph.BYTE);
-            } static readonly Meta meta242 = new Meta(242, 0, 0, 0, 53, 416, 0, _fG);
+            } static readonly Meta meta242 = new Meta(242, 0, 0, 0, 53, 416, 0, _gz);
         }/**
 *The position the system will return to and land on. The position is set automatically by the system during
 *	the takeoff in case it was not explicitely set by the operator before or after. The global and local
@@ -11422,7 +9067,7 @@ namespace org.noname
             {
                 if(ph.field_bit != 424)insert_field(ph, 424, 0);
                 BitUtils.set_bytes((ulong)(src), 8, data,  ph.BYTE);
-            } static readonly Meta meta243 = new Meta(243, 0, 0, 0, 54, 424, 0, _tJ);
+            } static readonly Meta meta243 = new Meta(243, 0, 0, 0, 54, 424, 0, _oU);
         }/**
 *This interface replaces DATA_STREAM*/
         public class MESSAGE_INTERVAL : Pack, CommunicationChannel.Sendable
@@ -11521,74 +9166,24 @@ namespace org.noname
 
             public ADSB_ALTITUDE_TYPE altitude_type //Type from ADSB_ALTITUDE_TYPE enum
             {
-                get {  return (ADSB_ALTITUDE_TYPE)(0 +  BitUtils.get_bits(data, 200, 2));}
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 200);}
+                get {  return (ADSB_ALTITUDE_TYPE)(0 +  BitUtils.get_bits(data, 200, 1));}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 1, data, 200);}
             }
 
             public ADSB_EMITTER_TYPE emitter_type //Type from ADSB_EMITTER_TYPE enum
             {
-                get {  return (ADSB_EMITTER_TYPE)(0 +  BitUtils.get_bits(data, 202, 5));}
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 5, data, 202);}
+                get {  return (ADSB_EMITTER_TYPE)(0 +  BitUtils.get_bits(data, 201, 5));}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 5, data, 201);}
             }
 
             public ADSB_FLAGS flags //Flags to indicate various statuses including valid data fields
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 207, 3))
-                    {
-                        case 0:
-                            return ADSB_FLAGS.ADSB_FLAGS_VALID_COORDS;
-                        case 1:
-                            return ADSB_FLAGS.ADSB_FLAGS_VALID_ALTITUDE;
-                        case 2:
-                            return ADSB_FLAGS.ADSB_FLAGS_VALID_HEADING;
-                        case 3:
-                            return ADSB_FLAGS.ADSB_FLAGS_VALID_VELOCITY;
-                        case 4:
-                            return ADSB_FLAGS.ADSB_FLAGS_VALID_CALLSIGN;
-                        case 5:
-                            return ADSB_FLAGS.ADSB_FLAGS_VALID_SQUAWK;
-                        case 6:
-                            return ADSB_FLAGS.ADSB_FLAGS_SIMULATED;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case ADSB_FLAGS.ADSB_FLAGS_VALID_COORDS:
-                            id = 0;
-                            break;
-                        case ADSB_FLAGS.ADSB_FLAGS_VALID_ALTITUDE:
-                            id = 1;
-                            break;
-                        case ADSB_FLAGS.ADSB_FLAGS_VALID_HEADING:
-                            id = 2;
-                            break;
-                        case ADSB_FLAGS.ADSB_FLAGS_VALID_VELOCITY:
-                            id = 3;
-                            break;
-                        case ADSB_FLAGS.ADSB_FLAGS_VALID_CALLSIGN:
-                            id = 4;
-                            break;
-                        case ADSB_FLAGS.ADSB_FLAGS_VALID_SQUAWK:
-                            id = 5;
-                            break;
-                        case ADSB_FLAGS.ADSB_FLAGS_SIMULATED:
-                            id = 6;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 3, data, 207);
-                }
+                get {  return (ADSB_FLAGS)(1 +  BitUtils.get_bits(data, 206, 7));}
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 7, data, 206);}
             }
             public string callsign_TRY(Inside ph)//The callsign, 8+null
             {
-                if(ph.field_bit !=  210 && !try_visit_field(ph, 210)  ||  !try_visit_item(ph, 0)) return null;
+                if(ph.field_bit !=  213 && !try_visit_field(ph, 213)  ||  !try_visit_item(ph, 0)) return null;
                 return new string(callsign_GET(ph, new char[ph.items], 0));
             }
             public char[]callsign_GET(Inside ph, char[] dst_ch, int pos) //The callsign, 8+null
@@ -11599,15 +9194,15 @@ namespace org.noname
             }
             public int callsign_LEN(Inside ph)
             {
-                return (ph.field_bit !=  210 && !try_visit_field(ph, 210)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
+                return (ph.field_bit !=  213 && !try_visit_field(ph, 213)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
             } public void callsign_SET(string src, Inside ph) //The callsign, 8+null
             {callsign_SET(src.ToCharArray(), 0, src.Length, ph);} public void callsign_SET(char[] src, int pos, int items, Inside ph) //The callsign, 8+null
             {
-                if(ph.field_bit != 210 && insert_field(ph, 210, items) ||
+                if(ph.field_bit != 213 && insert_field(ph, 213, items) ||
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta246 = new Meta(246, 3, 1, 0, 28, 210, 0, _pJ);
+            } static readonly Meta meta246 = new Meta(246, 3, 1, 0, 28, 213, 0, _dU);
         }/**
 *Information about a potential collision*/
         public class COLLISION : Pack, CommunicationChannel.Sendable
@@ -11640,22 +9235,22 @@ namespace org.noname
 
             public MAV_COLLISION_SRC src_ //Collision data source
             {
-                get {  return (MAV_COLLISION_SRC)(0 +  BitUtils.get_bits(data, 128, 2));}
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 128);}
+                get {  return (MAV_COLLISION_SRC)(0 +  BitUtils.get_bits(data, 128, 1));}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 1, data, 128);}
             }
 
             public MAV_COLLISION_ACTION action //Action that is being taken to avoid this collision
             {
-                get {  return (MAV_COLLISION_ACTION)(0 +  BitUtils.get_bits(data, 130, 3));}
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 3, data, 130);}
+                get {  return (MAV_COLLISION_ACTION)(0 +  BitUtils.get_bits(data, 129, 3));}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 3, data, 129);}
             }
 
             public MAV_COLLISION_THREAT_LEVEL threat_level //How concerned the aircraft is about this collision
             {
-                get {  return (MAV_COLLISION_THREAT_LEVEL)(0 +  BitUtils.get_bits(data, 133, 2));}
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 133);}
+                get {  return (MAV_COLLISION_THREAT_LEVEL)(0 +  BitUtils.get_bits(data, 132, 2));}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 132);}
             }
-            static readonly Meta meta247 = new Meta(247, 0, 1, 0, 17, 135);
+            static readonly Meta meta247 = new Meta(247, 0, 1, 0, 17, 134);
         }/**
 *Message implementing parts of the V2 payload specs in V1 frames for transitional support.*/
         public class V2_EXTENSION : Pack, CommunicationChannel.Sendable
@@ -11815,7 +9410,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta250 = new Meta(250, 0, 0, 1, 21, 160, 0, _hJ);
+            } static readonly Meta meta250 = new Meta(250, 0, 0, 1, 21, 160, 0, _bU);
         }/**
 *Send a key-value pair as float. The use of this message is discouraged for normal packets, but a quite
 *	efficient way for testing new messages and getting experimental debug output*/
@@ -11855,7 +9450,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta251 = new Meta(251, 0, 1, 0, 9, 64, 0, _fJ);
+            } static readonly Meta meta251 = new Meta(251, 0, 1, 0, 9, 64, 0, _gU);
         }/**
 *Send a key-value pair as integer. The use of this message is discouraged for normal packets, but a quite
 *	efficient way for testing new messages and getting experimental debug output*/
@@ -11895,7 +9490,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta252 = new Meta(252, 0, 1, 0, 9, 64, 0, _sm);
+            } static readonly Meta meta252 = new Meta(252, 0, 1, 0, 9, 64, 0, _IM);
         }/**
 *Status text message. These messages are printed in yellow in the COMM console of QGroundControl. WARNING:
 *	They consume quite some bandwidth, so use only for important status and error messages. If implemented
@@ -11906,12 +9501,12 @@ namespace org.noname
             internal STATUSTEXT(int bytes) : base(meta253, bytes) { }
             public MAV_SEVERITY severity //Severity of status. Relies on the definitions within RFC-5424. See enum MAV_SEVERITY.
             {
-                get {  return (MAV_SEVERITY)(0 +  BitUtils.get_bits(data, 0, 4));}
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 4, data, 0);}
+                get {  return (MAV_SEVERITY)(0 +  BitUtils.get_bits(data, 0, 3));}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 3, data, 0);}
             }
             public string text_TRY(Inside ph)//Status text message, without null termination character
             {
-                if(ph.field_bit !=  4 && !try_visit_field(ph, 4)  ||  !try_visit_item(ph, 0)) return null;
+                if(ph.field_bit !=  3 && !try_visit_field(ph, 3)  ||  !try_visit_item(ph, 0)) return null;
                 return new string(text_GET(ph, new char[ph.items], 0));
             }
             public char[]text_GET(Inside ph, char[] dst_ch, int pos) //Status text message, without null termination character
@@ -11922,15 +9517,15 @@ namespace org.noname
             }
             public int text_LEN(Inside ph)
             {
-                return (ph.field_bit !=  4 && !try_visit_field(ph, 4)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
+                return (ph.field_bit !=  3 && !try_visit_field(ph, 3)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
             } public void text_SET(string src, Inside ph) //Status text message, without null termination character
             {text_SET(src.ToCharArray(), 0, src.Length, ph);} public void text_SET(char[] src, int pos, int items, Inside ph) //Status text message, without null termination character
             {
-                if(ph.field_bit != 4 && insert_field(ph, 4, items) ||
+                if(ph.field_bit != 3 && insert_field(ph, 3, items) ||
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta253 = new Meta(253, 0, 0, 0, 2, 4, 0, _Em);
+            } static readonly Meta meta253 = new Meta(253, 0, 0, 0, 2, 3, 0, _eM);
         }/**
 *Send a debug value. The index is used to discriminate between values. These values show up in the plot
 *	of QGroundControl as DEBUG N*/
@@ -12060,7 +9655,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta258 = new Meta(258, 0, 0, 0, 3, 16, 0, _km);
+            } static readonly Meta meta258 = new Meta(258, 0, 0, 0, 3, 16, 0, _AM);
         }/**
 *WIP: Information about a camera*/
         public class CAMERA_INFORMATION : Pack, CommunicationChannel.Sendable
@@ -12157,57 +9752,12 @@ namespace org.noname
 
             public CAMERA_CAP_FLAGS flags //CAMERA_CAP_FLAGS enum flags (bitmap) describing camera capabilities.
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 728, 3))
-                    {
-                        case 0:
-                            return CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAPTURE_VIDEO;
-                        case 1:
-                            return CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAPTURE_IMAGE;
-                        case 2:
-                            return CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_HAS_MODES;
-                        case 3:
-                            return CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAN_CAPTURE_IMAGE_IN_VIDEO_MODE;
-                        case 4:
-                            return CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAN_CAPTURE_VIDEO_IN_IMAGE_MODE;
-                        case 5:
-                            return CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_HAS_IMAGE_SURVEY_MODE;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAPTURE_VIDEO:
-                            id = 0;
-                            break;
-                        case CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAPTURE_IMAGE:
-                            id = 1;
-                            break;
-                        case CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_HAS_MODES:
-                            id = 2;
-                            break;
-                        case CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAN_CAPTURE_IMAGE_IN_VIDEO_MODE:
-                            id = 3;
-                            break;
-                        case CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAN_CAPTURE_VIDEO_IN_IMAGE_MODE:
-                            id = 4;
-                            break;
-                        case CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_HAS_IMAGE_SURVEY_MODE:
-                            id = 5;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 3, data, 728);
-                }
+                get {  return (CAMERA_CAP_FLAGS)(1 +  BitUtils.get_bits(data, 728, 6));}
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 6, data, 728);}
             }
             public string cam_definition_uri_TRY(Inside ph)//Camera definition URI (if any, otherwise only basic functions will be available).
             {
-                if(ph.field_bit !=  731 && !try_visit_field(ph, 731)  ||  !try_visit_item(ph, 0)) return null;
+                if(ph.field_bit !=  734 && !try_visit_field(ph, 734)  ||  !try_visit_item(ph, 0)) return null;
                 return new string(cam_definition_uri_GET(ph, new char[ph.items], 0));
             }
             public char[]cam_definition_uri_GET(Inside ph, char[] dst_ch, int pos) //Camera definition URI (if any, otherwise only basic functions will be available).
@@ -12218,15 +9768,15 @@ namespace org.noname
             }
             public int cam_definition_uri_LEN(Inside ph)
             {
-                return (ph.field_bit !=  731 && !try_visit_field(ph, 731)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
+                return (ph.field_bit !=  734 && !try_visit_field(ph, 734)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
             } public void cam_definition_uri_SET(string src, Inside ph) //Camera definition URI (if any, otherwise only basic functions will be available).
             {cam_definition_uri_SET(src.ToCharArray(), 0, src.Length, ph);} public void cam_definition_uri_SET(char[] src, int pos, int items, Inside ph) //Camera definition URI (if any, otherwise only basic functions will be available).
             {
-                if(ph.field_bit != 731 && insert_field(ph, 731, items) ||
+                if(ph.field_bit != 734 && insert_field(ph, 734, items) ||
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta259 = new Meta(259, 3, 2, 0, 93, 731, 0, _xm);
+            } static readonly Meta meta259 = new Meta(259, 3, 2, 0, 93, 734, 0, _mM);
         }/**
 *WIP: Settings of a camera, can be requested using MAV_CMD_REQUEST_CAMERA_SETTINGS.*/
         public class CAMERA_SETTINGS : Pack, CommunicationChannel.Sendable
@@ -12447,36 +9997,38 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta263 = new Meta(263, 0, 1, 1, 51, 402, 2, _YW);
+            } static readonly Meta meta263 = new Meta(263, 0, 1, 1, 51, 402, 2, _wH);
         }/**
 *WIP: Information about flight since last arming*/
         public class FLIGHT_INFORMATION : Pack, CommunicationChannel.Sendable
         {
             internal FLIGHT_INFORMATION() : base(meta264, 0) { }
-
+            internal FLIGHT_INFORMATION(int bytes) : base(meta264, bytes) { }
             public uint time_boot_ms //Timestamp (milliseconds since system boot)
             {
+                get {  return (uint)((uint) BitUtils.get_bytes(data,  0, 4));}
                 set {  BitUtils.set_bytes((ulong)(value), 4, data,  0);}
             }
 
             public ulong arming_time_utc //Timestamp at arming (microseconds since UNIX epoch) in UTC, 0 for unknown
             {
+                get {  return (BitUtils.get_bytes(data,  4, 8));}
                 set {  BitUtils.set_bytes((ulong)(value), 8, data,  4);}
             }
 
             public ulong takeoff_time_utc //Timestamp at takeoff (microseconds since UNIX epoch) in UTC, 0 for unknown
             {
+                get {  return (BitUtils.get_bytes(data,  12, 8));}
                 set {  BitUtils.set_bytes((ulong)(value), 8, data,  12);}
             }
 
             public ulong flight_uuid //Universally unique identifier (UUID) of flight, should correspond to name of logfiles
             {
+                get {  return (BitUtils.get_bytes(data,  20, 8));}
                 set {  BitUtils.set_bytes((ulong)(value), 8, data,  20);}
             }
             static readonly Meta meta264 = new Meta(264, 0, 1, 3, 28, 224);
-        }/**
-*WIP: Orientation of a mount*/
-        public class MOUNT_ORIENTATION : Pack, CommunicationChannel.Sendable
+        } public class MOUNT_ORIENTATION : Pack, CommunicationChannel.Sendable
         {
             internal MOUNT_ORIENTATION() : base(meta265, 0) { }
 
@@ -12656,7 +10208,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta269 = new Meta(269, 3, 1, 0, 17, 130, 2, _lW);
+            } static readonly Meta meta269 = new Meta(269, 3, 1, 0, 17, 130, 2, _lH);
         }/**
 *WIP: Message that sets video stream settings*/
         public class SET_VIDEO_STREAM_SETTINGS : Pack, CommunicationChannel.Sendable
@@ -12709,7 +10261,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta270 = new Meta(270, 3, 1, 0, 18, 138, 2, _UW);
+            } static readonly Meta meta270 = new Meta(270, 3, 1, 0, 18, 138, 2, _yH);
         }/**
 *Configure AP SSID and Password.*/
         public class WIFI_CONFIG_AP : Pack, CommunicationChannel.Sendable
@@ -12729,7 +10281,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta299 = new Meta(299, 0, 0, 0, 1, 2, 2, _QW, _cW);
+            } static readonly Meta meta299 = new Meta(299, 0, 0, 0, 1, 2, 2, _DH, _sH);
         }/**
 *WIP: Version and capability of protocol version. This message is the response to REQUEST_PROTOCOL_VERSION
 *	and is used as part of the handshaking to establish which MAVLink version should be used on the network.
@@ -12804,7 +10356,7 @@ namespace org.noname
 
             public UAVCAN_NODE_HEALTH health //Generalized node health status.
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 3, data, 120);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 120);}
             }
 
             public UAVCAN_NODE_MODE mode //Generalized operating mode.
@@ -12832,10 +10384,10 @@ namespace org.noname
                         default:
                             throw  new ArgumentException("Unknown enum " + value);
                     }
-                    BitUtils.set_bits(id, 3, data, 123);
+                    BitUtils.set_bits(id, 3, data, 122);
                 }
             }
-            static readonly Meta meta310 = new Meta(310, 1, 1, 1, 16, 126);
+            static readonly Meta meta310 = new Meta(310, 1, 1, 1, 16, 125);
         }/**
 *General information describing a particular UAVCAN node. Please refer to the definition of the UAVCAN
 *	service "uavcan.protocol.GetNodeInfo" for the background information. This message should be emitted
@@ -12898,7 +10450,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta311 = new Meta(311, 0, 2, 1, 37, 288, 0, _tp);
+            } static readonly Meta meta311 = new Meta(311, 0, 2, 1, 37, 288, 0, _od);
         }/**
 *Request to read the value of a parameter with the either the param_id string id or param_index.*/
         public class PARAM_EXT_REQUEST_READ : Pack, CommunicationChannel.Sendable
@@ -12934,7 +10486,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta320 = new Meta(320, 0, 0, 0, 5, 32, 0, _Gp);
+            } static readonly Meta meta320 = new Meta(320, 0, 0, 0, 5, 32, 0, _zd);
         }/**
 *Request all parameters of this component. After this request, all parameters are emitted.*/
         public class PARAM_EXT_REQUEST_LIST : Pack, CommunicationChannel.Sendable
@@ -12995,7 +10547,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta322 = new Meta(322, 2, 0, 0, 5, 38, 2, _pp, _qp);
+            } static readonly Meta meta322 = new Meta(322, 2, 0, 0, 5, 38, 2, _dd, _Td);
         }/**
 *Set a parameter value. In order to deal with message loss (and retransmission of PARAM_EXT_SET), when
 *	setting a parameter value and the new value is the same as the current value, you will immediately get
@@ -13041,7 +10593,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta323 = new Meta(323, 0, 0, 0, 3, 22, 2, _xp, _np);
+            } static readonly Meta meta323 = new Meta(323, 0, 0, 0, 3, 22, 2, _md, _hd);
         }/**
 *Response from a PARAM_EXT_SET message.*/
         public class PARAM_EXT_ACK : Pack, CommunicationChannel.Sendable
@@ -13055,7 +10607,7 @@ namespace org.noname
 
             public PARAM_ACK param_result //Result code: see the PARAM_ACK enum for possible codes.
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 3, data, 4);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 4);}
             }
             /**
             *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
@@ -13068,18 +10620,18 @@ namespace org.noname
 *	ID is stored as strin*/
             public void param_id_SET(char[] src, int pos, int items, Inside ph)
             {
-                if(ph.field_bit != 9 && insert_field(ph, 9, items) ||
+                if(ph.field_bit != 8 && insert_field(ph, 8, items) ||
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
             } public void param_value_SET(string src, Inside ph) //Parameter value (new value if PARAM_ACK_ACCEPTED, current value otherwise)
             {param_value_SET(src.ToCharArray(), 0, src.Length, ph);} public void param_value_SET(char[] src, int pos, int items, Inside ph) //Parameter value (new value if PARAM_ACK_ACCEPTED, current value otherwise)
             {
-                if(ph.field_bit != 10 && insert_field(ph, 10, items) ||
+                if(ph.field_bit != 9 && insert_field(ph, 9, items) ||
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta324 = new Meta(324, 0, 0, 0, 2, 9, 2, _ap, _Bp);
+            } static readonly Meta meta324 = new Meta(324, 0, 0, 0, 1, 8, 2, _Rd, _Qd);
         }/**
 *Obstacle distances in front of the sensor, starting from the left in increment degrees to the right*/
         public class OBSTACLE_DISTANCE : Pack, CommunicationChannel.Sendable
@@ -13152,12 +10704,12 @@ namespace org.noname
 
             public UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE aircraftSize //Aircraft length and width encoding (table 2-35 of DO-282B)
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 5, data, 53);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 4, data, 53);}
             }
 
             public UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT gpsOffsetLat //GPS antenna lateral offset (table 2-36 of DO-282B)
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 4, data, 58);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 3, data, 57);}
             }
 
             /**
@@ -13165,21 +10717,21 @@ namespace org.noname
             *	one] (table 2-37 DO-282B*/
             public UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON gpsOffsetLon
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 62);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 1, data, 60);}
             }
 
             public UAVIONIX_ADSB_OUT_RF_SELECT rfSelect //ADS-B transponder reciever and transmit enable flags
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 64);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 61);}
             }
             public void callsign_SET(string src, Inside ph)//Vehicle identifier (8 characters, null terminated, valid characters are A-Z, 0-9, " " only)
             {callsign_SET(src.ToCharArray(), 0, src.Length, ph);} public void callsign_SET(char[] src, int pos, int items, Inside ph) //Vehicle identifier (8 characters, null terminated, valid characters are A-Z, 0-9, " " only)
             {
-                if(ph.field_bit != 66 && insert_field(ph, 66, items) ||
+                if(ph.field_bit != 63 && insert_field(ph, 63, items) ||
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta10001 = new Meta(10001, 1, 1, 0, 10, 66, 0, _hp);
+            } static readonly Meta meta10001 = new Meta(10001, 1, 1, 0, 9, 63, 0, _bd);
         }/**
 *Dynamic data used to generate ADS-B out transponder data (send at 5Hz)*/
         public class UAVIONIX_ADSB_OUT_DYNAMIC : Pack, CommunicationChannel.Sendable
@@ -13261,38 +10813,14 @@ namespace org.noname
 
             public UAVIONIX_ADSB_EMERGENCY_STATUS emergencyStatus //Emergency status
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 4, data, 299);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 3, data, 299);}
             }
 
             public UAVIONIX_ADSB_OUT_DYNAMIC_STATE state //ADS-B transponder dynamic input state flags
             {
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case UAVIONIX_ADSB_OUT_DYNAMIC_STATE.UAVIONIX_ADSB_OUT_DYNAMIC_STATE_INTENT_CHANGE:
-                            id = 0;
-                            break;
-                        case UAVIONIX_ADSB_OUT_DYNAMIC_STATE.UAVIONIX_ADSB_OUT_DYNAMIC_STATE_AUTOPILOT_ENABLED:
-                            id = 1;
-                            break;
-                        case UAVIONIX_ADSB_OUT_DYNAMIC_STATE.UAVIONIX_ADSB_OUT_DYNAMIC_STATE_NICBARO_CROSSCHECKED:
-                            id = 2;
-                            break;
-                        case UAVIONIX_ADSB_OUT_DYNAMIC_STATE.UAVIONIX_ADSB_OUT_DYNAMIC_STATE_ON_GROUND:
-                            id = 3;
-                            break;
-                        case UAVIONIX_ADSB_OUT_DYNAMIC_STATE.UAVIONIX_ADSB_OUT_DYNAMIC_STATE_IDENT:
-                            id = 4;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 3, data, 303);
-                }
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 5, data, 302);}
             }
-            static readonly Meta meta10002 = new Meta(10002, 3, 2, 0, 39, 306);
+            static readonly Meta meta10002 = new Meta(10002, 3, 2, 0, 39, 307);
         }/**
 *Transceiver heartbeat with health report (updated every 10s)*/
         public class UAVIONIX_ADSB_TRANSCEIVER_HEALTH_REPORT : Pack, CommunicationChannel.Sendable
@@ -13368,16 +10896,16 @@ namespace org.noname
 
             public DEVICE_OP_BUSTYPE bustype //The bus type
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 80);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 1, data, 80);}
             }
             public void busname_SET(string src, Inside ph)//Name of device on bus (for SPI)
             {busname_SET(src.ToCharArray(), 0, src.Length, ph);} public void busname_SET(char[] src, int pos, int items, Inside ph) //Name of device on bus (for SPI)
             {
-                if(ph.field_bit != 82 && insert_field(ph, 82, items) ||
+                if(ph.field_bit != 81 && insert_field(ph, 81, items) ||
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta11000 = new Meta(11000, 0, 1, 0, 12, 82, 0, _Ax);
+            } static readonly Meta meta11000 = new Meta(11000, 0, 1, 0, 12, 81, 0, _qm);
         }/**
 *Read registers reply*/
         public class DEVICE_OP_READ_REPLY : Pack, CommunicationChannel.Sendable
@@ -13467,16 +10995,16 @@ namespace org.noname
 
             public DEVICE_OP_BUSTYPE bustype //The bus type
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 2, data, 1104);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 1, data, 1104);}
             }
             public void busname_SET(string src, Inside ph)//Name of device on bus (for SPI)
             {busname_SET(src.ToCharArray(), 0, src.Length, ph);} public void busname_SET(char[] src, int pos, int items, Inside ph) //Name of device on bus (for SPI)
             {
-                if(ph.field_bit != 1106 && insert_field(ph, 1106, items) ||
+                if(ph.field_bit != 1105 && insert_field(ph, 1105, items) ||
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta11002 = new Meta(11002, 0, 1, 0, 140, 1106, 0, _Nx);
+            } static readonly Meta meta11002 = new Meta(11002, 0, 1, 0, 140, 1105, 0, _cm);
         }/**
 *Write registers reply*/
         public class DEVICE_OP_WRITE_REPLY : Pack, CommunicationChannel.Sendable
@@ -13623,7 +11151,6 @@ namespace org.noname
 
             //interface-to-mark of sendable through this channel packs_Schs_Rchs
             public interface Sendable {}
-            public static VISION_POSITION_ESTIMATE new_VISION_POSITION_ESTIMATE() {return new  VISION_POSITION_ESTIMATE();}
             public static VISION_SPEED_ESTIMATE new_VISION_SPEED_ESTIMATE() {return new  VISION_SPEED_ESTIMATE();}
             public static VICON_POSITION_ESTIMATE new_VICON_POSITION_ESTIMATE() {return new  VICON_POSITION_ESTIMATE();}
             /**
@@ -14015,8 +11542,6 @@ namespace org.noname
             /**
             *WIP: Information about flight since last arming*/
             public static FLIGHT_INFORMATION new_FLIGHT_INFORMATION() {return new  FLIGHT_INFORMATION();}
-            /**
-            *WIP: Orientation of a mount*/
             public static MOUNT_ORIENTATION new_MOUNT_ORIENTATION() {return new  MOUNT_ORIENTATION();}
             /**
             *A message containing logged data (see also MAV_CMD_LOGGING_START)*/
@@ -15127,6 +12652,13 @@ namespace org.noname
                             OnCAMERA_IMAGE_CAPTUREDReceive(this, ph, (CAMERA_IMAGE_CAPTURED) pack);
                             if(LOOP) break;
                             return null;
+                        case 264:
+                            if(pack == null) return new FLIGHT_INFORMATION();
+                            if(OnFLIGHT_INFORMATIONReceive == null) return null;
+                            ph.setPack(pack);
+                            OnFLIGHT_INFORMATIONReceive(this, ph, (FLIGHT_INFORMATION) pack);
+                            if(LOOP) break;
+                            return null;
                         case Channel.PROCESS_CHANNEL_REQEST:
                             if(pack == null) return sendout_packs.Count == 0 ? null : sendout_packs.Dequeue();
                             lock(received_packs) {received_packs.Enqueue(pack); Monitor.PulseAll(received_packs); }
@@ -15957,11 +13489,14 @@ namespace org.noname
             *Information about a captured image*/
             public event CAMERA_IMAGE_CAPTUREDReceiveHandler OnCAMERA_IMAGE_CAPTUREDReceive;
             public delegate void CAMERA_IMAGE_CAPTUREDReceiveHandler(Channel src, Inside ph, CAMERA_IMAGE_CAPTURED pack);
+
+            /**
+            *WIP: Information about flight since last arming*/
+            public event FLIGHT_INFORMATIONReceiveHandler OnFLIGHT_INFORMATIONReceive;
+            public delegate void FLIGHT_INFORMATIONReceiveHandler(Channel src, Inside ph, FLIGHT_INFORMATION pack);
         }
 
 
-        /**
-        *Generic micro air vehicle.*/
         public enum MAV_TYPE
         {
             MAV_TYPE_GENERIC = 0, //Generic micro air vehicle.
@@ -15995,9 +13530,9 @@ namespace org.noname
             MAV_TYPE_PARAFOIL = 28 //Steerable, nonrigid airfoil
         }
 
-
         /**
         *Micro air vehicle / autopilot classes. This identifies the individual model.*/
+
         public enum MAV_AUTOPILOT
         {
             MAV_AUTOPILOT_GENERIC = 0, //Generic autopilot, full support for everything
@@ -16021,9 +13556,9 @@ namespace org.noname
             MAV_AUTOPILOT_SMARTAP = 18 //SmartAP Autopilot - http:sky-drones.com
         }
 
-
         /**
         *These flags encode the MAV mode.*/
+        [FlagsAttribute]
         public enum MAV_MODE_FLAG
         {
             MAV_MODE_FLAG_CUSTOM_MODE_ENABLED = 1, //0b00000001 Reserved for future use.
@@ -16053,8 +13588,6 @@ namespace org.noname
         }
 
 
-        /**
-        *Uninitialized system, state is unknown.*/
         public enum MAV_STATE
         {
             MAV_STATE_UNINIT = 0, //Uninitialized system, state is unknown.
@@ -16071,9 +13604,9 @@ namespace org.noname
             MAV_STATE_FLIGHT_TERMINATION = 8 //System is terminating itself.
         }
 
-
         /**
         *These encode the sensors whose status is sent as part of the SYS_STATUS message.*/
+        [FlagsAttribute]
         public enum MAV_SYS_STATUS_SENSOR
         {
             MAV_SYS_STATUS_SENSOR_3D_GYRO = 1, //0x01 3D gyro
@@ -16105,9 +13638,6 @@ namespace org.noname
         }
 
 
-        /**
-        *Global coordinate frame, WGS84 coordinate system. First value / x: latitude, second value / y: longitude,
-        *	third value / z: positive altitude over mean sea level (MSL*/
         public enum MAV_FRAME
         {
             /**
@@ -16157,10 +13687,10 @@ namespace org.noname
             MAV_FRAME_GLOBAL_TERRAIN_ALT_INT = 11
         }
 
-
         /**
         *These defines are predefined OR-combined mode flags. There is no need to use values from this enum, but it
         *	 simplifies the use of the mode flags. Note that manual input is enabled in all modes as a safety override.*/
+
         public enum MAV_MODE
         {
             MAV_MODE_PREFLIGHT = 0, //System is not ready to fly, booting, calibrating, etc. No flag is set.
@@ -16182,9 +13712,69 @@ namespace org.noname
             MAV_MODE_AUTO_ARMED = 220
         }
 
+        internal static MAV_MODE en__v(ulong id)
+        {
+            switch(id)
+            {
+                case 0:
+                    return MAV_MODE.MAV_MODE_PREFLIGHT;
+                case 1:
+                    return MAV_MODE.MAV_MODE_MANUAL_DISARMED;
+                case 2:
+                    return MAV_MODE.MAV_MODE_TEST_DISARMED;
+                case 3:
+                    return MAV_MODE.MAV_MODE_STABILIZE_DISARMED;
+                case 4:
+                    return MAV_MODE.MAV_MODE_GUIDED_DISARMED;
+                case 5:
+                    return MAV_MODE.MAV_MODE_AUTO_DISARMED;
+                case 6:
+                    return MAV_MODE.MAV_MODE_MANUAL_ARMED;
+                case 7:
+                    return MAV_MODE.MAV_MODE_TEST_ARMED;
+                case 8:
+                    return MAV_MODE.MAV_MODE_STABILIZE_ARMED;
+                case 9:
+                    return MAV_MODE.MAV_MODE_GUIDED_ARMED;
+                case 10:
+                    return MAV_MODE.MAV_MODE_AUTO_ARMED;
+            }
+            throw  new ArgumentException("Unknown enum ID ");
+        }
+        internal static uint id__v(MAV_MODE en)
+        {
+            switch(en)
+            {
+                case MAV_MODE.MAV_MODE_PREFLIGHT:
+                    return 0;
+                case MAV_MODE.MAV_MODE_MANUAL_DISARMED:
+                    return 1;
+                case MAV_MODE.MAV_MODE_TEST_DISARMED:
+                    return 2;
+                case MAV_MODE.MAV_MODE_STABILIZE_DISARMED:
+                    return 3;
+                case MAV_MODE.MAV_MODE_GUIDED_DISARMED:
+                    return 4;
+                case MAV_MODE.MAV_MODE_AUTO_DISARMED:
+                    return 5;
+                case MAV_MODE.MAV_MODE_MANUAL_ARMED:
+                    return 6;
+                case MAV_MODE.MAV_MODE_TEST_ARMED:
+                    return 7;
+                case MAV_MODE.MAV_MODE_STABILIZE_ARMED:
+                    return 8;
+                case MAV_MODE.MAV_MODE_GUIDED_ARMED:
+                    return 9;
+                case MAV_MODE.MAV_MODE_AUTO_ARMED:
+                    return 10;
+                default:
+                    throw  new ArgumentException("Unknown enum " + en);
+            }
+        }
 
         /**
         *Specifies the datatype of a MAVLink parameter.*/
+
         public enum MAV_PARAM_TYPE
         {
             MAV_PARAM_TYPE_UINT8 = 1, //8-bit unsigned integer
@@ -16199,9 +13789,9 @@ namespace org.noname
             MAV_PARAM_TYPE_REAL64 = 10 //64-bit floating-point
         }
 
-
         /**
         *Type of GPS fix*/
+
         public enum GPS_FIX_TYPE
         {
             GPS_FIX_TYPE_NO_GPS = 0, //No GPS connected
@@ -16215,9 +13805,9 @@ namespace org.noname
             GPS_FIX_TYPE_PPP = 8 //PPP, 3D position.
         }
 
-
         /**
         *Type of mission items being requested/sent in mission protocol.*/
+
         public enum MAV_MISSION_TYPE
         {
             MAV_MISSION_TYPE_MISSION = 0, //Items are mission commands for main mission.
@@ -16229,12 +13819,44 @@ namespace org.noname
             MAV_MISSION_TYPE_ALL = 255 //Only used in MISSION_CLEAR_ALL to clear all mission types.
         }
 
+        internal static MAV_MISSION_TYPE en__R(ulong id)
+        {
+            switch(id)
+            {
+                case 0:
+                    return MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
+                case 1:
+                    return MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
+                case 2:
+                    return MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
+                case 3:
+                    return MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
+            }
+            throw  new ArgumentException("Unknown enum ID ");
+        }
+        internal static uint id__R(MAV_MISSION_TYPE en)
+        {
+            switch(en)
+            {
+                case MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION:
+                    return 0;
+                case MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE:
+                    return 1;
+                case MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY:
+                    return 2;
+                case MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL:
+                    return 3;
+                default:
+                    throw  new ArgumentException("Unknown enum " + en);
+            }
+        }
 
         /**
         *Commands to be executed by the MAV. They can be executed on user request, or as part of a mission script.
         *	If the action is used in a mission, the parameter mapping to the waypoint/mission message is as follows:
         *	Param 1, Param 2, Param 3, Param 4, X: Param 5, Y:Param 6, Z:Param 7. This command list is similar what
         *	ARINC 424 is for commercial aircraft: A data format how to interpret waypoint/mission data*/
+
         public enum MAV_CMD
         {
             /**
@@ -17589,9 +15211,601 @@ namespace org.noname
             MAV_CMD_GIMBAL_FULL_RESET = 42505
         }
 
+        internal static MAV_CMD en__I(ulong id)
+        {
+            switch(id)
+            {
+                case 0:
+                    return MAV_CMD.MAV_CMD_NAV_WAYPOINT;
+                case 1:
+                    return MAV_CMD.MAV_CMD_NAV_LOITER_UNLIM;
+                case 2:
+                    return MAV_CMD.MAV_CMD_NAV_LOITER_TURNS;
+                case 3:
+                    return MAV_CMD.MAV_CMD_NAV_LOITER_TIME;
+                case 4:
+                    return MAV_CMD.MAV_CMD_NAV_RETURN_TO_LAUNCH;
+                case 5:
+                    return MAV_CMD.MAV_CMD_NAV_LAND;
+                case 6:
+                    return MAV_CMD.MAV_CMD_NAV_TAKEOFF;
+                case 7:
+                    return MAV_CMD.MAV_CMD_NAV_LAND_LOCAL;
+                case 8:
+                    return MAV_CMD.MAV_CMD_NAV_TAKEOFF_LOCAL;
+                case 9:
+                    return MAV_CMD.MAV_CMD_NAV_FOLLOW;
+                case 10:
+                    return MAV_CMD.MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
+                case 11:
+                    return MAV_CMD.MAV_CMD_NAV_LOITER_TO_ALT;
+                case 12:
+                    return MAV_CMD.MAV_CMD_DO_FOLLOW;
+                case 13:
+                    return MAV_CMD.MAV_CMD_DO_FOLLOW_REPOSITION;
+                case 14:
+                    return MAV_CMD.MAV_CMD_NAV_ROI;
+                case 15:
+                    return MAV_CMD.MAV_CMD_NAV_PATHPLANNING;
+                case 16:
+                    return MAV_CMD.MAV_CMD_NAV_SPLINE_WAYPOINT;
+                case 17:
+                    return MAV_CMD.MAV_CMD_NAV_ALTITUDE_WAIT;
+                case 18:
+                    return MAV_CMD.MAV_CMD_NAV_VTOL_TAKEOFF;
+                case 19:
+                    return MAV_CMD.MAV_CMD_NAV_VTOL_LAND;
+                case 20:
+                    return MAV_CMD.MAV_CMD_NAV_GUIDED_ENABLE;
+                case 21:
+                    return MAV_CMD.MAV_CMD_NAV_DELAY;
+                case 22:
+                    return MAV_CMD.MAV_CMD_NAV_PAYLOAD_PLACE;
+                case 23:
+                    return MAV_CMD.MAV_CMD_NAV_LAST;
+                case 24:
+                    return MAV_CMD.MAV_CMD_CONDITION_DELAY;
+                case 25:
+                    return MAV_CMD.MAV_CMD_CONDITION_CHANGE_ALT;
+                case 26:
+                    return MAV_CMD.MAV_CMD_CONDITION_DISTANCE;
+                case 27:
+                    return MAV_CMD.MAV_CMD_CONDITION_YAW;
+                case 28:
+                    return MAV_CMD.MAV_CMD_CONDITION_LAST;
+                case 29:
+                    return MAV_CMD.MAV_CMD_DO_SET_MODE;
+                case 30:
+                    return MAV_CMD.MAV_CMD_DO_JUMP;
+                case 31:
+                    return MAV_CMD.MAV_CMD_DO_CHANGE_SPEED;
+                case 32:
+                    return MAV_CMD.MAV_CMD_DO_SET_HOME;
+                case 33:
+                    return MAV_CMD.MAV_CMD_DO_SET_PARAMETER;
+                case 34:
+                    return MAV_CMD.MAV_CMD_DO_SET_RELAY;
+                case 35:
+                    return MAV_CMD.MAV_CMD_DO_REPEAT_RELAY;
+                case 36:
+                    return MAV_CMD.MAV_CMD_DO_SET_SERVO;
+                case 37:
+                    return MAV_CMD.MAV_CMD_DO_REPEAT_SERVO;
+                case 38:
+                    return MAV_CMD.MAV_CMD_DO_FLIGHTTERMINATION;
+                case 39:
+                    return MAV_CMD.MAV_CMD_DO_CHANGE_ALTITUDE;
+                case 40:
+                    return MAV_CMD.MAV_CMD_DO_LAND_START;
+                case 41:
+                    return MAV_CMD.MAV_CMD_DO_RALLY_LAND;
+                case 42:
+                    return MAV_CMD.MAV_CMD_DO_GO_AROUND;
+                case 43:
+                    return MAV_CMD.MAV_CMD_DO_REPOSITION;
+                case 44:
+                    return MAV_CMD.MAV_CMD_DO_PAUSE_CONTINUE;
+                case 45:
+                    return MAV_CMD.MAV_CMD_DO_SET_REVERSE;
+                case 46:
+                    return MAV_CMD.MAV_CMD_DO_CONTROL_VIDEO;
+                case 47:
+                    return MAV_CMD.MAV_CMD_DO_SET_ROI;
+                case 48:
+                    return MAV_CMD.MAV_CMD_DO_DIGICAM_CONFIGURE;
+                case 49:
+                    return MAV_CMD.MAV_CMD_DO_DIGICAM_CONTROL;
+                case 50:
+                    return MAV_CMD.MAV_CMD_DO_MOUNT_CONFIGURE;
+                case 51:
+                    return MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL;
+                case 52:
+                    return MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_DIST;
+                case 53:
+                    return MAV_CMD.MAV_CMD_DO_FENCE_ENABLE;
+                case 54:
+                    return MAV_CMD.MAV_CMD_DO_PARACHUTE;
+                case 55:
+                    return MAV_CMD.MAV_CMD_DO_MOTOR_TEST;
+                case 56:
+                    return MAV_CMD.MAV_CMD_DO_INVERTED_FLIGHT;
+                case 57:
+                    return MAV_CMD.MAV_CMD_DO_GRIPPER;
+                case 58:
+                    return MAV_CMD.MAV_CMD_DO_AUTOTUNE_ENABLE;
+                case 59:
+                    return MAV_CMD.MAV_CMD_NAV_SET_YAW_SPEED;
+                case 60:
+                    return MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL;
+                case 61:
+                    return MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL_QUAT;
+                case 62:
+                    return MAV_CMD.MAV_CMD_DO_GUIDED_MASTER;
+                case 63:
+                    return MAV_CMD.MAV_CMD_DO_GUIDED_LIMITS;
+                case 64:
+                    return MAV_CMD.MAV_CMD_DO_ENGINE_CONTROL;
+                case 65:
+                    return MAV_CMD.MAV_CMD_DO_LAST;
+                case 66:
+                    return MAV_CMD.MAV_CMD_PREFLIGHT_CALIBRATION;
+                case 67:
+                    return MAV_CMD.MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS;
+                case 68:
+                    return MAV_CMD.MAV_CMD_PREFLIGHT_UAVCAN;
+                case 69:
+                    return MAV_CMD.MAV_CMD_PREFLIGHT_STORAGE;
+                case 70:
+                    return MAV_CMD.MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN;
+                case 71:
+                    return MAV_CMD.MAV_CMD_OVERRIDE_GOTO;
+                case 72:
+                    return MAV_CMD.MAV_CMD_MISSION_START;
+                case 73:
+                    return MAV_CMD.MAV_CMD_COMPONENT_ARM_DISARM;
+                case 74:
+                    return MAV_CMD.MAV_CMD_GET_HOME_POSITION;
+                case 75:
+                    return MAV_CMD.MAV_CMD_START_RX_PAIR;
+                case 76:
+                    return MAV_CMD.MAV_CMD_GET_MESSAGE_INTERVAL;
+                case 77:
+                    return MAV_CMD.MAV_CMD_SET_MESSAGE_INTERVAL;
+                case 78:
+                    return MAV_CMD.MAV_CMD_REQUEST_PROTOCOL_VERSION;
+                case 79:
+                    return MAV_CMD.MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES;
+                case 80:
+                    return MAV_CMD.MAV_CMD_REQUEST_CAMERA_INFORMATION;
+                case 81:
+                    return MAV_CMD.MAV_CMD_REQUEST_CAMERA_SETTINGS;
+                case 82:
+                    return MAV_CMD.MAV_CMD_REQUEST_STORAGE_INFORMATION;
+                case 83:
+                    return MAV_CMD.MAV_CMD_STORAGE_FORMAT;
+                case 84:
+                    return MAV_CMD.MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS;
+                case 85:
+                    return MAV_CMD.MAV_CMD_REQUEST_FLIGHT_INFORMATION;
+                case 86:
+                    return MAV_CMD.MAV_CMD_RESET_CAMERA_SETTINGS;
+                case 87:
+                    return MAV_CMD.MAV_CMD_SET_CAMERA_MODE;
+                case 88:
+                    return MAV_CMD.MAV_CMD_IMAGE_START_CAPTURE;
+                case 89:
+                    return MAV_CMD.MAV_CMD_IMAGE_STOP_CAPTURE;
+                case 90:
+                    return MAV_CMD.MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE;
+                case 91:
+                    return MAV_CMD.MAV_CMD_DO_TRIGGER_CONTROL;
+                case 92:
+                    return MAV_CMD.MAV_CMD_VIDEO_START_CAPTURE;
+                case 93:
+                    return MAV_CMD.MAV_CMD_VIDEO_STOP_CAPTURE;
+                case 94:
+                    return MAV_CMD.MAV_CMD_VIDEO_START_STREAMING;
+                case 95:
+                    return MAV_CMD.MAV_CMD_VIDEO_STOP_STREAMING;
+                case 96:
+                    return MAV_CMD.MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION;
+                case 97:
+                    return MAV_CMD.MAV_CMD_LOGGING_START;
+                case 98:
+                    return MAV_CMD.MAV_CMD_LOGGING_STOP;
+                case 99:
+                    return MAV_CMD.MAV_CMD_AIRFRAME_CONFIGURATION;
+                case 100:
+                    return MAV_CMD.MAV_CMD_PANORAMA_CREATE;
+                case 101:
+                    return MAV_CMD.MAV_CMD_DO_VTOL_TRANSITION;
+                case 102:
+                    return MAV_CMD.MAV_CMD_ARM_AUTHORIZATION_REQUEST;
+                case 103:
+                    return MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_STANDARD;
+                case 104:
+                    return MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE;
+                case 105:
+                    return MAV_CMD.MAV_CMD_CONDITION_GATE;
+                case 106:
+                    return MAV_CMD.MAV_CMD_NAV_FENCE_RETURN_POINT;
+                case 107:
+                    return MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION;
+                case 108:
+                    return MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION;
+                case 109:
+                    return MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION;
+                case 110:
+                    return MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION;
+                case 111:
+                    return MAV_CMD.MAV_CMD_NAV_RALLY_POINT;
+                case 112:
+                    return MAV_CMD.MAV_CMD_UAVCAN_GET_NODE_INFO;
+                case 113:
+                    return MAV_CMD.MAV_CMD_PAYLOAD_PREPARE_DEPLOY;
+                case 114:
+                    return MAV_CMD.MAV_CMD_PAYLOAD_CONTROL_DEPLOY;
+                case 115:
+                    return MAV_CMD.MAV_CMD_WAYPOINT_USER_1;
+                case 116:
+                    return MAV_CMD.MAV_CMD_WAYPOINT_USER_2;
+                case 117:
+                    return MAV_CMD.MAV_CMD_WAYPOINT_USER_3;
+                case 118:
+                    return MAV_CMD.MAV_CMD_WAYPOINT_USER_4;
+                case 119:
+                    return MAV_CMD.MAV_CMD_WAYPOINT_USER_5;
+                case 120:
+                    return MAV_CMD.MAV_CMD_SPATIAL_USER_1;
+                case 121:
+                    return MAV_CMD.MAV_CMD_SPATIAL_USER_2;
+                case 122:
+                    return MAV_CMD.MAV_CMD_SPATIAL_USER_3;
+                case 123:
+                    return MAV_CMD.MAV_CMD_SPATIAL_USER_4;
+                case 124:
+                    return MAV_CMD.MAV_CMD_SPATIAL_USER_5;
+                case 125:
+                    return MAV_CMD.MAV_CMD_USER_1;
+                case 126:
+                    return MAV_CMD.MAV_CMD_USER_2;
+                case 127:
+                    return MAV_CMD.MAV_CMD_USER_3;
+                case 128:
+                    return MAV_CMD.MAV_CMD_USER_4;
+                case 129:
+                    return MAV_CMD.MAV_CMD_USER_5;
+                case 130:
+                    return MAV_CMD.MAV_CMD_POWER_OFF_INITIATED;
+                case 131:
+                    return MAV_CMD.MAV_CMD_SOLO_BTN_FLY_CLICK;
+                case 132:
+                    return MAV_CMD.MAV_CMD_SOLO_BTN_FLY_HOLD;
+                case 133:
+                    return MAV_CMD.MAV_CMD_SOLO_BTN_PAUSE_CLICK;
+                case 134:
+                    return MAV_CMD.MAV_CMD_DO_START_MAG_CAL;
+                case 135:
+                    return MAV_CMD.MAV_CMD_DO_ACCEPT_MAG_CAL;
+                case 136:
+                    return MAV_CMD.MAV_CMD_DO_CANCEL_MAG_CAL;
+                case 137:
+                    return MAV_CMD.MAV_CMD_SET_FACTORY_TEST_MODE;
+                case 138:
+                    return MAV_CMD.MAV_CMD_DO_SEND_BANNER;
+                case 139:
+                    return MAV_CMD.MAV_CMD_ACCELCAL_VEHICLE_POS;
+                case 140:
+                    return MAV_CMD.MAV_CMD_GIMBAL_RESET;
+                case 141:
+                    return MAV_CMD.MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS;
+                case 142:
+                    return MAV_CMD.MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION;
+                case 143:
+                    return MAV_CMD.MAV_CMD_GIMBAL_FULL_RESET;
+            }
+            throw  new ArgumentException("Unknown enum ID ");
+        }
+        internal static uint id__I(MAV_CMD en)
+        {
+            switch(en)
+            {
+                case MAV_CMD.MAV_CMD_NAV_WAYPOINT:
+                    return 0;
+                case MAV_CMD.MAV_CMD_NAV_LOITER_UNLIM:
+                    return 1;
+                case MAV_CMD.MAV_CMD_NAV_LOITER_TURNS:
+                    return 2;
+                case MAV_CMD.MAV_CMD_NAV_LOITER_TIME:
+                    return 3;
+                case MAV_CMD.MAV_CMD_NAV_RETURN_TO_LAUNCH:
+                    return 4;
+                case MAV_CMD.MAV_CMD_NAV_LAND:
+                    return 5;
+                case MAV_CMD.MAV_CMD_NAV_TAKEOFF:
+                    return 6;
+                case MAV_CMD.MAV_CMD_NAV_LAND_LOCAL:
+                    return 7;
+                case MAV_CMD.MAV_CMD_NAV_TAKEOFF_LOCAL:
+                    return 8;
+                case MAV_CMD.MAV_CMD_NAV_FOLLOW:
+                    return 9;
+                case MAV_CMD.MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
+                    return 10;
+                case MAV_CMD.MAV_CMD_NAV_LOITER_TO_ALT:
+                    return 11;
+                case MAV_CMD.MAV_CMD_DO_FOLLOW:
+                    return 12;
+                case MAV_CMD.MAV_CMD_DO_FOLLOW_REPOSITION:
+                    return 13;
+                case MAV_CMD.MAV_CMD_NAV_ROI:
+                    return 14;
+                case MAV_CMD.MAV_CMD_NAV_PATHPLANNING:
+                    return 15;
+                case MAV_CMD.MAV_CMD_NAV_SPLINE_WAYPOINT:
+                    return 16;
+                case MAV_CMD.MAV_CMD_NAV_ALTITUDE_WAIT:
+                    return 17;
+                case MAV_CMD.MAV_CMD_NAV_VTOL_TAKEOFF:
+                    return 18;
+                case MAV_CMD.MAV_CMD_NAV_VTOL_LAND:
+                    return 19;
+                case MAV_CMD.MAV_CMD_NAV_GUIDED_ENABLE:
+                    return 20;
+                case MAV_CMD.MAV_CMD_NAV_DELAY:
+                    return 21;
+                case MAV_CMD.MAV_CMD_NAV_PAYLOAD_PLACE:
+                    return 22;
+                case MAV_CMD.MAV_CMD_NAV_LAST:
+                    return 23;
+                case MAV_CMD.MAV_CMD_CONDITION_DELAY:
+                    return 24;
+                case MAV_CMD.MAV_CMD_CONDITION_CHANGE_ALT:
+                    return 25;
+                case MAV_CMD.MAV_CMD_CONDITION_DISTANCE:
+                    return 26;
+                case MAV_CMD.MAV_CMD_CONDITION_YAW:
+                    return 27;
+                case MAV_CMD.MAV_CMD_CONDITION_LAST:
+                    return 28;
+                case MAV_CMD.MAV_CMD_DO_SET_MODE:
+                    return 29;
+                case MAV_CMD.MAV_CMD_DO_JUMP:
+                    return 30;
+                case MAV_CMD.MAV_CMD_DO_CHANGE_SPEED:
+                    return 31;
+                case MAV_CMD.MAV_CMD_DO_SET_HOME:
+                    return 32;
+                case MAV_CMD.MAV_CMD_DO_SET_PARAMETER:
+                    return 33;
+                case MAV_CMD.MAV_CMD_DO_SET_RELAY:
+                    return 34;
+                case MAV_CMD.MAV_CMD_DO_REPEAT_RELAY:
+                    return 35;
+                case MAV_CMD.MAV_CMD_DO_SET_SERVO:
+                    return 36;
+                case MAV_CMD.MAV_CMD_DO_REPEAT_SERVO:
+                    return 37;
+                case MAV_CMD.MAV_CMD_DO_FLIGHTTERMINATION:
+                    return 38;
+                case MAV_CMD.MAV_CMD_DO_CHANGE_ALTITUDE:
+                    return 39;
+                case MAV_CMD.MAV_CMD_DO_LAND_START:
+                    return 40;
+                case MAV_CMD.MAV_CMD_DO_RALLY_LAND:
+                    return 41;
+                case MAV_CMD.MAV_CMD_DO_GO_AROUND:
+                    return 42;
+                case MAV_CMD.MAV_CMD_DO_REPOSITION:
+                    return 43;
+                case MAV_CMD.MAV_CMD_DO_PAUSE_CONTINUE:
+                    return 44;
+                case MAV_CMD.MAV_CMD_DO_SET_REVERSE:
+                    return 45;
+                case MAV_CMD.MAV_CMD_DO_CONTROL_VIDEO:
+                    return 46;
+                case MAV_CMD.MAV_CMD_DO_SET_ROI:
+                    return 47;
+                case MAV_CMD.MAV_CMD_DO_DIGICAM_CONFIGURE:
+                    return 48;
+                case MAV_CMD.MAV_CMD_DO_DIGICAM_CONTROL:
+                    return 49;
+                case MAV_CMD.MAV_CMD_DO_MOUNT_CONFIGURE:
+                    return 50;
+                case MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL:
+                    return 51;
+                case MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_DIST:
+                    return 52;
+                case MAV_CMD.MAV_CMD_DO_FENCE_ENABLE:
+                    return 53;
+                case MAV_CMD.MAV_CMD_DO_PARACHUTE:
+                    return 54;
+                case MAV_CMD.MAV_CMD_DO_MOTOR_TEST:
+                    return 55;
+                case MAV_CMD.MAV_CMD_DO_INVERTED_FLIGHT:
+                    return 56;
+                case MAV_CMD.MAV_CMD_DO_GRIPPER:
+                    return 57;
+                case MAV_CMD.MAV_CMD_DO_AUTOTUNE_ENABLE:
+                    return 58;
+                case MAV_CMD.MAV_CMD_NAV_SET_YAW_SPEED:
+                    return 59;
+                case MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL:
+                    return 60;
+                case MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL_QUAT:
+                    return 61;
+                case MAV_CMD.MAV_CMD_DO_GUIDED_MASTER:
+                    return 62;
+                case MAV_CMD.MAV_CMD_DO_GUIDED_LIMITS:
+                    return 63;
+                case MAV_CMD.MAV_CMD_DO_ENGINE_CONTROL:
+                    return 64;
+                case MAV_CMD.MAV_CMD_DO_LAST:
+                    return 65;
+                case MAV_CMD.MAV_CMD_PREFLIGHT_CALIBRATION:
+                    return 66;
+                case MAV_CMD.MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS:
+                    return 67;
+                case MAV_CMD.MAV_CMD_PREFLIGHT_UAVCAN:
+                    return 68;
+                case MAV_CMD.MAV_CMD_PREFLIGHT_STORAGE:
+                    return 69;
+                case MAV_CMD.MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN:
+                    return 70;
+                case MAV_CMD.MAV_CMD_OVERRIDE_GOTO:
+                    return 71;
+                case MAV_CMD.MAV_CMD_MISSION_START:
+                    return 72;
+                case MAV_CMD.MAV_CMD_COMPONENT_ARM_DISARM:
+                    return 73;
+                case MAV_CMD.MAV_CMD_GET_HOME_POSITION:
+                    return 74;
+                case MAV_CMD.MAV_CMD_START_RX_PAIR:
+                    return 75;
+                case MAV_CMD.MAV_CMD_GET_MESSAGE_INTERVAL:
+                    return 76;
+                case MAV_CMD.MAV_CMD_SET_MESSAGE_INTERVAL:
+                    return 77;
+                case MAV_CMD.MAV_CMD_REQUEST_PROTOCOL_VERSION:
+                    return 78;
+                case MAV_CMD.MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES:
+                    return 79;
+                case MAV_CMD.MAV_CMD_REQUEST_CAMERA_INFORMATION:
+                    return 80;
+                case MAV_CMD.MAV_CMD_REQUEST_CAMERA_SETTINGS:
+                    return 81;
+                case MAV_CMD.MAV_CMD_REQUEST_STORAGE_INFORMATION:
+                    return 82;
+                case MAV_CMD.MAV_CMD_STORAGE_FORMAT:
+                    return 83;
+                case MAV_CMD.MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS:
+                    return 84;
+                case MAV_CMD.MAV_CMD_REQUEST_FLIGHT_INFORMATION:
+                    return 85;
+                case MAV_CMD.MAV_CMD_RESET_CAMERA_SETTINGS:
+                    return 86;
+                case MAV_CMD.MAV_CMD_SET_CAMERA_MODE:
+                    return 87;
+                case MAV_CMD.MAV_CMD_IMAGE_START_CAPTURE:
+                    return 88;
+                case MAV_CMD.MAV_CMD_IMAGE_STOP_CAPTURE:
+                    return 89;
+                case MAV_CMD.MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE:
+                    return 90;
+                case MAV_CMD.MAV_CMD_DO_TRIGGER_CONTROL:
+                    return 91;
+                case MAV_CMD.MAV_CMD_VIDEO_START_CAPTURE:
+                    return 92;
+                case MAV_CMD.MAV_CMD_VIDEO_STOP_CAPTURE:
+                    return 93;
+                case MAV_CMD.MAV_CMD_VIDEO_START_STREAMING:
+                    return 94;
+                case MAV_CMD.MAV_CMD_VIDEO_STOP_STREAMING:
+                    return 95;
+                case MAV_CMD.MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION:
+                    return 96;
+                case MAV_CMD.MAV_CMD_LOGGING_START:
+                    return 97;
+                case MAV_CMD.MAV_CMD_LOGGING_STOP:
+                    return 98;
+                case MAV_CMD.MAV_CMD_AIRFRAME_CONFIGURATION:
+                    return 99;
+                case MAV_CMD.MAV_CMD_PANORAMA_CREATE:
+                    return 100;
+                case MAV_CMD.MAV_CMD_DO_VTOL_TRANSITION:
+                    return 101;
+                case MAV_CMD.MAV_CMD_ARM_AUTHORIZATION_REQUEST:
+                    return 102;
+                case MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_STANDARD:
+                    return 103;
+                case MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE:
+                    return 104;
+                case MAV_CMD.MAV_CMD_CONDITION_GATE:
+                    return 105;
+                case MAV_CMD.MAV_CMD_NAV_FENCE_RETURN_POINT:
+                    return 106;
+                case MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION:
+                    return 107;
+                case MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION:
+                    return 108;
+                case MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION:
+                    return 109;
+                case MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION:
+                    return 110;
+                case MAV_CMD.MAV_CMD_NAV_RALLY_POINT:
+                    return 111;
+                case MAV_CMD.MAV_CMD_UAVCAN_GET_NODE_INFO:
+                    return 112;
+                case MAV_CMD.MAV_CMD_PAYLOAD_PREPARE_DEPLOY:
+                    return 113;
+                case MAV_CMD.MAV_CMD_PAYLOAD_CONTROL_DEPLOY:
+                    return 114;
+                case MAV_CMD.MAV_CMD_WAYPOINT_USER_1:
+                    return 115;
+                case MAV_CMD.MAV_CMD_WAYPOINT_USER_2:
+                    return 116;
+                case MAV_CMD.MAV_CMD_WAYPOINT_USER_3:
+                    return 117;
+                case MAV_CMD.MAV_CMD_WAYPOINT_USER_4:
+                    return 118;
+                case MAV_CMD.MAV_CMD_WAYPOINT_USER_5:
+                    return 119;
+                case MAV_CMD.MAV_CMD_SPATIAL_USER_1:
+                    return 120;
+                case MAV_CMD.MAV_CMD_SPATIAL_USER_2:
+                    return 121;
+                case MAV_CMD.MAV_CMD_SPATIAL_USER_3:
+                    return 122;
+                case MAV_CMD.MAV_CMD_SPATIAL_USER_4:
+                    return 123;
+                case MAV_CMD.MAV_CMD_SPATIAL_USER_5:
+                    return 124;
+                case MAV_CMD.MAV_CMD_USER_1:
+                    return 125;
+                case MAV_CMD.MAV_CMD_USER_2:
+                    return 126;
+                case MAV_CMD.MAV_CMD_USER_3:
+                    return 127;
+                case MAV_CMD.MAV_CMD_USER_4:
+                    return 128;
+                case MAV_CMD.MAV_CMD_USER_5:
+                    return 129;
+                case MAV_CMD.MAV_CMD_POWER_OFF_INITIATED:
+                    return 130;
+                case MAV_CMD.MAV_CMD_SOLO_BTN_FLY_CLICK:
+                    return 131;
+                case MAV_CMD.MAV_CMD_SOLO_BTN_FLY_HOLD:
+                    return 132;
+                case MAV_CMD.MAV_CMD_SOLO_BTN_PAUSE_CLICK:
+                    return 133;
+                case MAV_CMD.MAV_CMD_DO_START_MAG_CAL:
+                    return 134;
+                case MAV_CMD.MAV_CMD_DO_ACCEPT_MAG_CAL:
+                    return 135;
+                case MAV_CMD.MAV_CMD_DO_CANCEL_MAG_CAL:
+                    return 136;
+                case MAV_CMD.MAV_CMD_SET_FACTORY_TEST_MODE:
+                    return 137;
+                case MAV_CMD.MAV_CMD_DO_SEND_BANNER:
+                    return 138;
+                case MAV_CMD.MAV_CMD_ACCELCAL_VEHICLE_POS:
+                    return 139;
+                case MAV_CMD.MAV_CMD_GIMBAL_RESET:
+                    return 140;
+                case MAV_CMD.MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS:
+                    return 141;
+                case MAV_CMD.MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION:
+                    return 142;
+                case MAV_CMD.MAV_CMD_GIMBAL_FULL_RESET:
+                    return 143;
+                default:
+                    throw  new ArgumentException("Unknown enum " + en);
+            }
+        }
 
         /**
         *result in a mavlink mission ack*/
+
         public enum MAV_MISSION_RESULT
         {
             MAV_MISSION_ACCEPTED = 0, //mission accepted OK
@@ -17611,9 +15825,9 @@ namespace org.noname
             MAV_MISSION_DENIED = 14 //not accepting any mission commands from this communication partner
         }
 
-
         /**
         *Enumeration of estimator types*/
+
         public enum MAV_ESTIMATOR_TYPE
         {
             MAV_ESTIMATOR_TYPE_NAIVE = 1, //This is a naive estimator without any real covariance feedback.
@@ -17623,9 +15837,9 @@ namespace org.noname
             MAV_ESTIMATOR_TYPE_GPS_INS = 5 //Estimator integrating GPS and inertial sensing.
         }
 
-
         /**
         *result from a mavlink command*/
+
         public enum MAV_RESULT
         {
             MAV_RESULT_ACCEPTED = 0, //Command ACCEPTED and EXECUTED
@@ -17636,9 +15850,9 @@ namespace org.noname
             MAV_RESULT_IN_PROGRESS = 5 //WIP: Command being executed
         }
 
-
         /**
         *Power supply status flags (bitmask)*/
+        [FlagsAttribute]
         public enum MAV_POWER_STATUS
         {
             MAV_POWER_STATUS_BRICK_VALID = 1, //main brick power supply valid
@@ -17649,9 +15863,9 @@ namespace org.noname
             MAV_POWER_STATUS_CHANGED = 32 //Power status has changed since boot
         }
 
-
         /**
         *SERIAL_CONTROL device types*/
+
         public enum SERIAL_CONTROL_DEV
         {
             SERIAL_CONTROL_DEV_TELEM1 = 0, //First telemetry port
@@ -17661,9 +15875,9 @@ namespace org.noname
             SERIAL_CONTROL_DEV_SHELL = 10 //system shell
         }
 
-
         /**
         *SERIAL_CONTROL flags (bitmask)*/
+        [FlagsAttribute]
         public enum SERIAL_CONTROL_FLAG
         {
             SERIAL_CONTROL_FLAG_REPLY = 1, //Set if this is a reply
@@ -17677,9 +15891,9 @@ namespace org.noname
             SERIAL_CONTROL_FLAG_MULTI = 16 //Send multiple replies until port is drained
         }
 
-
         /**
         *Enumeration of distance sensor types*/
+
         public enum MAV_DISTANCE_SENSOR
         {
             MAV_DISTANCE_SENSOR_LASER = 0, //Laser rangefinder, e.g. LightWare SF02/F or PulsedLight units
@@ -17689,9 +15903,9 @@ namespace org.noname
             MAV_DISTANCE_SENSOR_UNKNOWN = 4 //Broken or unknown type, e.g. analog units
         }
 
-
         /**
         *Enumeration of sensor orientation, according to its rotations*/
+
         public enum MAV_SENSOR_ORIENTATION
         {
             MAV_SENSOR_ROTATION_NONE = 0, //Roll: 0, Pitch: 0, Yaw: 0
@@ -17735,9 +15949,9 @@ namespace org.noname
             MAV_SENSOR_ROTATION_ROLL_315_PITCH_315_YAW_315 = 38 //Roll: 315, Pitch: 315, Yaw: 315
         }
 
-
         /**
         *Enumeration of battery functions*/
+
         public enum MAV_BATTERY_FUNCTION
         {
             MAV_BATTERY_FUNCTION_UNKNOWN = 0, //Battery function is unknown
@@ -17747,9 +15961,9 @@ namespace org.noname
             MAV_BATTERY_TYPE_PAYLOAD = 4 //Payload battery
         }
 
-
         /**
         *Enumeration of battery types*/
+
         public enum MAV_BATTERY_TYPE
         {
             MAV_BATTERY_TYPE_UNKNOWN = 0, //Not specified.
@@ -17759,9 +15973,9 @@ namespace org.noname
             MAV_BATTERY_TYPE_NIMH = 4 //Nickel metal hydride battery
         }
 
-
         /**
         *Bitmask of (optional) autopilot capabilities (64 bit). If a bit is set, the autopilot supports this capability*/
+        [FlagsAttribute]
         public enum MAV_PROTOCOL_CAPABILITY
         {
             MAV_PROTOCOL_CAPABILITY_MISSION_FLOAT = 1, //Autopilot supports MISSION float message type.
@@ -17783,9 +15997,9 @@ namespace org.noname
             MAV_PROTOCOL_CAPABILITY_FLIGHT_INFORMATION = 65536 //Autopilot supports the flight information protocol.
         }
 
-
         /**
         *Type of landing target*/
+
         public enum LANDING_TARGET_TYPE
         {
             LANDING_TARGET_TYPE_LIGHT_BEACON = 0, //Landing target signaled by light beacon (ex: IR-LOCK)
@@ -17794,9 +16008,9 @@ namespace org.noname
             LANDING_TARGET_TYPE_VISION_OTHER = 3 //Landing target represented by a pre-defined visual shape/feature (ex: X-marker, H-marker, square)
         }
 
-
         /**
         *Enumeration of possible mount operation modes*/
+
         public enum MAV_MOUNT_MODE
         {
             MAV_MOUNT_MODE_RETRACT = 0, //Load and keep safe position (Roll,Pitch,Yaw) from permant memory and stop stabilization
@@ -17807,8 +16021,6 @@ namespace org.noname
         }
 
 
-        /**
-        *No last fence breach*/
         public enum FENCE_BREACH
         {
             FENCE_BREACH_NONE = 0, //No last fence breach
@@ -17818,8 +16030,6 @@ namespace org.noname
         }
 
 
-        /**
-        *pre-initialization*/
         public enum LIMITS_STATE
         {
             LIMITS_INIT = 0, //pre-initialization
@@ -17830,9 +16040,7 @@ namespace org.noname
             LIMITS_RECOVERED = 5 //we're no longer in breach of a limit
         }
 
-
-        /**
-        *pre-initialization*/
+        [FlagsAttribute]
         public enum LIMIT_MODULE
         {
             LIMIT_GPSLOCK = 1, //pre-initialization
@@ -17840,9 +16048,9 @@ namespace org.noname
             LIMIT_ALTITUDE = 4 //checking limits
         }
 
-
         /**
         *Flags in RALLY_POINT message*/
+
         public enum RALLY_FLAGS
         {
             FAVORABLE_WIND = 1, //Flag set when requiring favorable winds for landing.
@@ -17853,8 +16061,6 @@ namespace org.noname
         }
 
 
-        /**
-        *Camera heartbeat, announce camera component ID at 1hz*/
         public enum CAMERA_STATUS_TYPES
         {
             CAMERA_STATUS_TYPE_HEARTBEAT = 0, //Camera heartbeat, announce camera component ID at 1hz
@@ -17867,8 +16073,6 @@ namespace org.noname
         }
 
 
-        /**
-        *Shooting photos, not video*/
         public enum CAMERA_FEEDBACK_FLAGS
         {
             CAMERA_FEEDBACK_PHOTO = 0, //Shooting photos, not video
@@ -17881,18 +16085,18 @@ namespace org.noname
             CAMERA_FEEDBACK_OPENLOOP = 4
         }
 
-
         /**
         *Special ACK block numbers control activation of dataflash log streaming*/
+
         public enum MAV_REMOTE_LOG_DATA_BLOCK_COMMANDS
         {
             MAV_REMOTE_LOG_DATA_BLOCK_STOP = 2147483645, //UAV to stop sending DataFlash blocks
             MAV_REMOTE_LOG_DATA_BLOCK_START = 2147483646 //UAV to start sending DataFlash blocks
         }
 
-
         /**
         *Possible remote log data block statuses*/
+
         public enum MAV_REMOTE_LOG_DATA_BLOCK_STATUSES
         {
             MAV_REMOTE_LOG_DATA_BLOCK_NACK = 0, //This block has NOT been received
@@ -17910,9 +16114,9 @@ namespace org.noname
             MAG_CAL_FAILED = 5
         }
 
-
         /**
         *Flags in EKF_STATUS message*/
+        [FlagsAttribute]
         public enum EKF_STATUS_FLAGS
         {
             EKF_ATTITUDE = 1, //set if EKF's attitude estimate is good
@@ -17939,8 +16143,6 @@ namespace org.noname
         }
 
 
-        /**
-        *No GoPro connected*/
         public enum GOPRO_HEARTBEAT_STATUS
         {
             GOPRO_HEARTBEAT_STATUS_DISCONNECTED = 0, //No GoPro connected
@@ -17950,8 +16152,6 @@ namespace org.noname
         }
 
 
-        /**
-        *Video mode*/
         public enum GOPRO_CAPTURE_MODE
         {
             GOPRO_CAPTURE_MODE_VIDEO = 0, //Video mode
@@ -17965,16 +16165,12 @@ namespace org.noname
         }
 
 
-        /**
-        *GoPro is currently recording*/
         public enum GOPRO_HEARTBEAT_FLAGS
         {
             GOPRO_FLAG_RECORDING = 1 //GoPro is currently recording
         }
 
 
-        /**
-        *(Get/Set)*/
         public enum GOPRO_COMMAND
         {
             GOPRO_COMMAND_POWER = 0, //(Get/Set)
@@ -17997,17 +16193,15 @@ namespace org.noname
         }
 
 
-        /**
-        *The write message with ID indicated succeeded*/
         public enum GOPRO_REQUEST_STATUS
         {
             GOPRO_REQUEST_SUCCESS = 0, //The write message with ID indicated succeeded
             GOPRO_REQUEST_FAILED = 1 //The write message with ID indicated failed
         }
 
-
         /**
         *Flags in EKF_STATUS message*/
+        [FlagsAttribute]
         public enum ESTIMATOR_STATUS_FLAGS
         {
             ESTIMATOR_ATTITUDE = 1, //True if the attitude estimate is good
@@ -18026,9 +16220,7 @@ namespace org.noname
             ESTIMATOR_GPS_GLITCH = 1024 //True if the EKF has detected a GPS glitch
         }
 
-
-        /**
-        *ignore altitude field*/
+        [FlagsAttribute]
         public enum GPS_INPUT_IGNORE_FLAGS
         {
             GPS_INPUT_IGNORE_FLAG_ALT = 1, //ignore altitude field
@@ -18041,9 +16233,9 @@ namespace org.noname
             GPS_INPUT_IGNORE_FLAG_VERTICAL_ACCURACY = 128 //ignore vertical accuracy field
         }
 
-
         /**
         *Enumeration of landed detector states*/
+
         public enum MAV_LANDED_STATE
         {
             MAV_LANDED_STATE_UNDEFINED = 0, //MAV landed state is unknown
@@ -18053,9 +16245,9 @@ namespace org.noname
             MAV_LANDED_STATE_LANDING = 4 //MAV currently landing
         }
 
-
         /**
         *Enumeration of VTOL states*/
+
         public enum MAV_VTOL_STATE
         {
             MAV_VTOL_STATE_UNDEFINED = 0, //MAV is not configured as VTOL
@@ -18065,21 +16257,21 @@ namespace org.noname
             MAV_VTOL_STATE_FW = 4 //VTOL is in fixed-wing state
         }
 
-
         /**
         *Enumeration of the ADSB altimeter types*/
+
         public enum ADSB_ALTITUDE_TYPE
         {
             ADSB_ALTITUDE_TYPE_PRESSURE_QNH = 0, //Altitude reported from a Baro source using QNH reference
             ADSB_ALTITUDE_TYPE_GEOMETRIC = 1 //Altitude reported from a GNSS source
         }
 
-
         /**
         *ADSB classification for the type of vehicle emitting the transponder signal*/
+
         public enum ADSB_EMITTER_TYPE
         {
-            ADSB_EMITTER_TYPE_NO_INFO = 0, //ADSB classification for the type of vehicle emitting the transponder signal
+            ADSB_EMITTER_TYPE_NO_INFO = 0,
             ADSB_EMITTER_TYPE_LIGHT = 1,
             ADSB_EMITTER_TYPE_SMALL = 2,
             ADSB_EMITTER_TYPE_LARGE = 3,
@@ -18101,12 +16293,12 @@ namespace org.noname
             ADSB_EMITTER_TYPE_POINT_OBSTACLE = 19
         }
 
-
         /**
         *These flags indicate status such as data validity of each data source. Set = data valid*/
+        [FlagsAttribute]
         public enum ADSB_FLAGS
         {
-            ADSB_FLAGS_VALID_COORDS = 1, //These flags indicate status such as data validity of each data source. Set = data valid
+            ADSB_FLAGS_VALID_COORDS = 1,
             ADSB_FLAGS_VALID_ALTITUDE = 2,
             ADSB_FLAGS_VALID_HEADING = 4,
             ADSB_FLAGS_VALID_VELOCITY = 8,
@@ -18115,18 +16307,18 @@ namespace org.noname
             ADSB_FLAGS_SIMULATED = 64
         }
 
-
         /**
         *Source of information about this collision.*/
+
         public enum MAV_COLLISION_SRC
         {
             MAV_COLLISION_SRC_ADSB = 0, //ID field references ADSB_VEHICLE packets
             MAV_COLLISION_SRC_MAVLINK_GPS_GLOBAL_INT = 1 //ID field references MAVLink SRC ID
         }
 
-
         /**
         *Possible actions an aircraft can take to avoid a collision.*/
+
         public enum MAV_COLLISION_ACTION
         {
             MAV_COLLISION_ACTION_NONE = 0, //Ignore any potential collisions
@@ -18138,9 +16330,9 @@ namespace org.noname
             MAV_COLLISION_ACTION_HOVER = 6 //Aircraft to stop in place
         }
 
-
         /**
         *Aircraft-rated danger from this threat.*/
+
         public enum MAV_COLLISION_THREAT_LEVEL
         {
             MAV_COLLISION_THREAT_LEVEL_NONE = 0, //Not a threat
@@ -18148,10 +16340,10 @@ namespace org.noname
             MAV_COLLISION_THREAT_LEVEL_HIGH = 2 //Craft is panicing, and may take actions to avoid threat
         }
 
-
         /**
         *Indicates the severity level, generally used for status messages to indicate their relative urgency. Based
         *	on RFC-5424 using expanded definitions at: http:www.kiwisyslog.com/kb/info:-syslog-message-levels/*/
+
         public enum MAV_SEVERITY
         {
             MAV_SEVERITY_EMERGENCY = 0, //System is unusable. This is a "panic" condition.
@@ -18170,9 +16362,9 @@ namespace org.noname
             MAV_SEVERITY_DEBUG = 7 //Useful non-operational messages that can assist in debugging. These should not occur during normal operation
         }
 
-
         /**
         *Camera capability flags (Bitmap).*/
+        [FlagsAttribute]
         public enum CAMERA_CAP_FLAGS
         {
             CAMERA_CAP_FLAGS_CAPTURE_VIDEO = 1, //Camera is able to record video.
@@ -18183,9 +16375,9 @@ namespace org.noname
             CAMERA_CAP_FLAGS_HAS_IMAGE_SURVEY_MODE = 32 //Camera has image survey mode (MAV_CMD_SET_CAMERA_MODE)
         }
 
-
         /**
         *Camera Modes.*/
+
         public enum CAMERA_MODE
         {
             CAMERA_MODE_IMAGE = 0, //Camera is in image/photo capture mode.
@@ -18193,9 +16385,9 @@ namespace org.noname
             CAMERA_MODE_IMAGE_SURVEY = 2 //Camera is in image survey capture mode. It allows for camera controller to do specific settings for surveys
         }
 
-
         /**
         *Generalized UAVCAN node health*/
+
         public enum UAVCAN_NODE_HEALTH
         {
             UAVCAN_NODE_HEALTH_OK = 0, //The node is functioning properly.
@@ -18204,9 +16396,9 @@ namespace org.noname
             UAVCAN_NODE_HEALTH_CRITICAL = 3 //The node has suffered a fatal malfunction.
         }
 
-
         /**
         *Generalized UAVCAN node mode*/
+
         public enum UAVCAN_NODE_MODE
         {
             UAVCAN_NODE_MODE_OPERATIONAL = 0, //The node is performing its primary functions.
@@ -18216,9 +16408,9 @@ namespace org.noname
             UAVCAN_NODE_MODE_OFFLINE = 7 //The node is no longer available online.
         }
 
-
         /**
         *Specifies the datatype of a MAVLink extended parameter.*/
+
         public enum MAV_PARAM_EXT_TYPE
         {
             MAV_PARAM_EXT_TYPE_UINT8 = 1, //8-bit unsigned integer
@@ -18234,9 +16426,9 @@ namespace org.noname
             MAV_PARAM_EXT_TYPE_CUSTOM = 11 //Custom Type
         }
 
-
         /**
         *Result from a PARAM_EXT_SET message.*/
+
         public enum PARAM_ACK
         {
             PARAM_ACK_ACCEPTED = 0, //Parameter value ACCEPTED and SET
@@ -18250,12 +16442,12 @@ namespace org.noname
             PARAM_ACK_IN_PROGRESS = 3
         }
 
-
         /**
         *Definitions for aircraft size*/
+
         public enum UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE
         {
-            UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_NO_DATA = 0, //Definitions for aircraft size
+            UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_NO_DATA = 0,
             UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_L15M_W23M = 1,
             UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_L25M_W28P5M = 2,
             UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_L25_34M = 3,
@@ -18273,12 +16465,12 @@ namespace org.noname
             UAVIONIX_ADSB_OUT_CFG_AIRCRAFT_SIZE_L85_W90M = 15
         }
 
-
         /**
         *GPS lataral offset encoding*/
+
         public enum UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT
         {
-            UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_NO_DATA = 0, //GPS lataral offset encoding
+            UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_NO_DATA = 0,
             UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_LEFT_2M = 1,
             UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_LEFT_4M = 2,
             UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_LEFT_6M = 3,
@@ -18288,31 +16480,31 @@ namespace org.noname
             UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LAT_RIGHT_6M = 7
         }
 
-
         /**
         *GPS longitudinal offset encoding*/
+
         public enum UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON
         {
-            UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON_NO_DATA = 0, //GPS longitudinal offset encoding
+            UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON_NO_DATA = 0,
             UAVIONIX_ADSB_OUT_CFG_GPS_OFFSET_LON_APPLIED_BY_SENSOR = 1
         }
 
-
         /**
         *Transceiver RF control flags for ADS-B transponder dynamic reports*/
+
         public enum UAVIONIX_ADSB_OUT_RF_SELECT
         {
-            UAVIONIX_ADSB_OUT_RF_SELECT_STANDBY = 0, //Transceiver RF control flags for ADS-B transponder dynamic reports
+            UAVIONIX_ADSB_OUT_RF_SELECT_STANDBY = 0,
             UAVIONIX_ADSB_OUT_RF_SELECT_RX_ENABLED = 1,
             UAVIONIX_ADSB_OUT_RF_SELECT_TX_ENABLED = 2
         }
 
-
         /**
         *Status for ADS-B transponder dynamic input*/
+
         public enum UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX
         {
-            UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_NONE_0 = 0, //Status for ADS-B transponder dynamic input
+            UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_NONE_0 = 0,
             UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_NONE_1 = 1,
             UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_2D = 2,
             UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_3D = 3,
@@ -18320,12 +16512,12 @@ namespace org.noname
             UAVIONIX_ADSB_OUT_DYNAMIC_GPS_FIX_RTK = 5
         }
 
-
         /**
         *Emergency status encoding*/
+
         public enum UAVIONIX_ADSB_EMERGENCY_STATUS
         {
-            UAVIONIX_ADSB_OUT_NO_EMERGENCY = 0, //Emergency status encoding
+            UAVIONIX_ADSB_OUT_NO_EMERGENCY = 0,
             UAVIONIX_ADSB_OUT_GENERAL_EMERGENCY = 1,
             UAVIONIX_ADSB_OUT_LIFEGUARD_EMERGENCY = 2,
             UAVIONIX_ADSB_OUT_MINIMUM_FUEL_EMERGENCY = 3,
@@ -18335,97 +16527,97 @@ namespace org.noname
             UAVIONIX_ADSB_OUT_RESERVED = 7
         }
 
-
         /**
         *State flags for ADS-B transponder dynamic report*/
+        [FlagsAttribute]
         public enum UAVIONIX_ADSB_OUT_DYNAMIC_STATE
         {
-            UAVIONIX_ADSB_OUT_DYNAMIC_STATE_INTENT_CHANGE = 1, //State flags for ADS-B transponder dynamic report
+            UAVIONIX_ADSB_OUT_DYNAMIC_STATE_INTENT_CHANGE = 1,
             UAVIONIX_ADSB_OUT_DYNAMIC_STATE_AUTOPILOT_ENABLED = 2,
             UAVIONIX_ADSB_OUT_DYNAMIC_STATE_NICBARO_CROSSCHECKED = 4,
             UAVIONIX_ADSB_OUT_DYNAMIC_STATE_ON_GROUND = 8,
             UAVIONIX_ADSB_OUT_DYNAMIC_STATE_IDENT = 16
         }
 
-
         /**
         *Status flags for ADS-B transponder dynamic output*/
+
         public enum UAVIONIX_ADSB_RF_HEALTH
         {
-            UAVIONIX_ADSB_RF_HEALTH_INITIALIZING = 0, //Status flags for ADS-B transponder dynamic output
+            UAVIONIX_ADSB_RF_HEALTH_INITIALIZING = 0,
             UAVIONIX_ADSB_RF_HEALTH_OK = 1,
             UAVIONIX_ADSB_RF_HEALTH_FAIL_TX = 2,
             UAVIONIX_ADSB_RF_HEALTH_FAIL_RX = 16
         }
 
-
         /**
         *Bus types for device operations*/
+
         public enum DEVICE_OP_BUSTYPE
         {
             DEVICE_OP_BUSTYPE_I2C = 0, //I2C Device operation
             DEVICE_OP_BUSTYPE_SPI = 1 //SPI Device operation
         }
 
-        static readonly Field _o = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _a = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
-        static readonly Field _z = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _e = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _L = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _R = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
         static readonly Field _f = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _iA = new Field(0, false, 1, 4, 1, 0, 0, 0);
-        static readonly Field _CA = new Field(0, true, 1, 4, 1, 0, 0, 0);
-        static readonly Field _LA = new Field(0, true, 1, 4, 1, 0, 0, 0);
-        static readonly Field _bA = new Field(0, true, 1, 4, 1, 0, 0, 0);
-        static readonly Field _XA = new Field(0, true, 1, 4, 1, 0, 0, 0);
-        static readonly Field _tE = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _iE = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _CE = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _LE = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _bE = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _XE = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _NE = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _kE = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _vI = new Field(0, true, 1, 8, 1, 0, 0, 0);
-        static readonly Field _WI = new Field(0, true, 1, 8, 1, 0, 0, 0);
-        static readonly Field _PI = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _qK = new Field(0, false, 1, 1, 1, 0, 0, 0);
-        static readonly Field _PK = new Field(0, false, 1, 4, 1, 0, 0, 0);
-        static readonly Field _wK = new Field(0, false, 1, 1, 1, 0, 0, 0);
-        static readonly Field _gK = new Field(0, false, 1, 1, 1, 0, 0, 0);
-        static readonly Field _Xi = new Field(0, false, 1, 4, 1, 0, 0, 0);
-        static readonly Field _Ni = new Field(0, false, 1, 4, 1, 0, 0, 0);
-        static readonly Field _Yv = new Field(0, false, 18, 1, 1, 0, 0, 0);
+        static readonly Field _k = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _g = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _Wq = new Field(0, false, 1, 4, 1, 0, 0, 0);
+        static readonly Field _Nq = new Field(0, true, 1, 4, 1, 0, 0, 0);
+        static readonly Field _iq = new Field(0, true, 1, 4, 1, 0, 0, 0);
+        static readonly Field _Kq = new Field(0, true, 1, 4, 1, 0, 0, 0);
+        static readonly Field _Oq = new Field(0, true, 1, 4, 1, 0, 0, 0);
+        static readonly Field _oe = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _We = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _Ne = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _ie = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _Ke = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _Oe = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _ce = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _Ae = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _BZ = new Field(0, true, 1, 8, 1, 0, 0, 0);
+        static readonly Field _HZ = new Field(0, true, 1, 8, 1, 0, 0, 0);
+        static readonly Field _XZ = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _Tv = new Field(0, false, 1, 1, 1, 0, 0, 0);
         static readonly Field _Xv = new Field(0, false, 1, 4, 1, 0, 0, 0);
-        static readonly Field _Nv = new Field(0, false, 1, 4, 1, 0, 0, 0);
-        static readonly Field _kv = new Field(0, false, 1, 4, 1, 0, 0, 0);
-        static readonly Field _vv = new Field(0, false, 4, 4, 1, 0, 0, 0);
-        static readonly Field _Jv = new Field(0, false, 1, 1, 1, 0, 0, 0);
-        static readonly Field _fG = new Field(0, true, 1, 8, 1, 0, 0, 0);
-        static readonly Field _tJ = new Field(0, true, 1, 8, 1, 0, 0, 0);
-        static readonly Field _pJ = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-        static readonly Field _hJ = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-        static readonly Field _fJ = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-        static readonly Field _sm = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Em = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
-        static readonly Field _km = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _xm = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-        static readonly Field _YW = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-        static readonly Field _lW = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-        static readonly Field _UW = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-        static readonly Field _QW = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
-        static readonly Field _cW = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
-        static readonly Field _tp = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Gp = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _pp = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _qp = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-        static readonly Field _xp = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _np = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-        static readonly Field _ap = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Bp = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-        static readonly Field _hp = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Zq = new Field(0, true, 1, 4, 1, 0, 0, 0);
-        static readonly Field _Ax = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Nx = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
+        static readonly Field _xv = new Field(0, false, 1, 1, 1, 0, 0, 0);
+        static readonly Field _Ev = new Field(0, false, 1, 1, 1, 0, 0, 0);
+        static readonly Field _OW = new Field(0, false, 1, 4, 1, 0, 0, 0);
+        static readonly Field _cW = new Field(0, false, 1, 4, 1, 0, 0, 0);
+        static readonly Field _wB = new Field(0, false, 18, 1, 1, 0, 0, 0);
+        static readonly Field _OB = new Field(0, false, 1, 4, 1, 0, 0, 0);
+        static readonly Field _cB = new Field(0, false, 1, 4, 1, 0, 0, 0);
+        static readonly Field _AB = new Field(0, false, 1, 4, 1, 0, 0, 0);
+        static readonly Field _BB = new Field(0, false, 4, 4, 1, 0, 0, 0);
+        static readonly Field _UB = new Field(0, false, 1, 1, 1, 0, 0, 0);
+        static readonly Field _gz = new Field(0, true, 1, 8, 1, 0, 0, 0);
+        static readonly Field _oU = new Field(0, true, 1, 8, 1, 0, 0, 0);
+        static readonly Field _dU = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+        static readonly Field _bU = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+        static readonly Field _gU = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+        static readonly Field _IM = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+        static readonly Field _eM = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
+        static readonly Field _AM = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _mM = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+        static readonly Field _wH = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+        static readonly Field _lH = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+        static readonly Field _yH = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+        static readonly Field _DH = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
+        static readonly Field _sH = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
+        static readonly Field _od = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
+        static readonly Field _zd = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _dd = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _Td = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+        static readonly Field _md = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _hd = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+        static readonly Field _Rd = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _Qd = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+        static readonly Field _bd = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+        static readonly Field _pT = new Field(0, true, 1, 4, 1, 0, 0, 0);
+        static readonly Field _qm = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
+        static readonly Field _cm = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
 
     }
 }

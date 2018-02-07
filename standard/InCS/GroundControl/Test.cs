@@ -34,45 +34,12 @@ namespace org.noname
 
             public MAV_MODE_FLAG base_mode //System mode bitfield, see MAV_MODE_FLAG ENUM in mavlink/include/mavlink_types.h
             {
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED:
-                            id = 0;
-                            break;
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_TEST_ENABLED:
-                            id = 1;
-                            break;
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_AUTO_ENABLED:
-                            id = 2;
-                            break;
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_GUIDED_ENABLED:
-                            id = 3;
-                            break;
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_STABILIZE_ENABLED:
-                            id = 4;
-                            break;
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_HIL_ENABLED:
-                            id = 5;
-                            break;
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_MANUAL_INPUT_ENABLED:
-                            id = 6;
-                            break;
-                        case MAV_MODE_FLAG.MAV_MODE_FLAG_SAFETY_ARMED:
-                            id = 7;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 4, data, 50);
-                }
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 8, data, 50);}
             }
 
             public MAV_STATE system_status //System status flag, see MAV_STATE ENUM
             {
-                set {  BitUtils.set_bits((ulong)(- 0 +   value), 4, data, 54);}
+                set {  BitUtils.set_bits((ulong)(- 0 +   value), 4, data, 58);}
             }
         }
         public class SYS_STATUS : GroundControl.SYS_STATUS
@@ -138,94 +105,7 @@ namespace org.noname
             *	present. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
             public MAV_SYS_STATUS_SENSOR onboard_control_sensors_present
             {
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO:
-                            id = 0;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL:
-                            id = 1;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG:
-                            id = 2;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE:
-                            id = 3;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE:
-                            id = 4;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_GPS:
-                            id = 5;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW:
-                            id = 6;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_VISION_POSITION:
-                            id = 7;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_LASER_POSITION:
-                            id = 8;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_EXTERNAL_GROUND_TRUTH:
-                            id = 9;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL:
-                            id = 10;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION:
-                            id = 11;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_YAW_POSITION:
-                            id = 12;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL:
-                            id = 13;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL:
-                            id = 14;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS:
-                            id = 15;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_RC_RECEIVER:
-                            id = 16;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO2:
-                            id = 17;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL2:
-                            id = 18;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG2:
-                            id = 19;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_GEOFENCE:
-                            id = 20;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_AHRS:
-                            id = 21;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_TERRAIN:
-                            id = 22;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_REVERSE_MOTOR:
-                            id = 23;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_LOGGING:
-                            id = 24;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_BATTERY:
-                            id = 25;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 5, data, 152);
-                }
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 26, data, 152);}
             }
 
             /**
@@ -233,94 +113,7 @@ namespace org.noname
             *	1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
             public MAV_SYS_STATUS_SENSOR onboard_control_sensors_enabled
             {
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO:
-                            id = 0;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL:
-                            id = 1;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG:
-                            id = 2;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE:
-                            id = 3;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE:
-                            id = 4;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_GPS:
-                            id = 5;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW:
-                            id = 6;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_VISION_POSITION:
-                            id = 7;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_LASER_POSITION:
-                            id = 8;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_EXTERNAL_GROUND_TRUTH:
-                            id = 9;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL:
-                            id = 10;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION:
-                            id = 11;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_YAW_POSITION:
-                            id = 12;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL:
-                            id = 13;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL:
-                            id = 14;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS:
-                            id = 15;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_RC_RECEIVER:
-                            id = 16;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO2:
-                            id = 17;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL2:
-                            id = 18;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG2:
-                            id = 19;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_GEOFENCE:
-                            id = 20;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_AHRS:
-                            id = 21;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_TERRAIN:
-                            id = 22;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_REVERSE_MOTOR:
-                            id = 23;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_LOGGING:
-                            id = 24;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_BATTERY:
-                            id = 25;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 5, data, 157);
-                }
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 26, data, 178);}
             }
 
             /**
@@ -328,94 +121,7 @@ namespace org.noname
             *	enabled. Value of 1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
             public MAV_SYS_STATUS_SENSOR onboard_control_sensors_health
             {
-                set
-                {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO:
-                            id = 0;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL:
-                            id = 1;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG:
-                            id = 2;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE:
-                            id = 3;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE:
-                            id = 4;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_GPS:
-                            id = 5;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW:
-                            id = 6;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_VISION_POSITION:
-                            id = 7;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_LASER_POSITION:
-                            id = 8;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_EXTERNAL_GROUND_TRUTH:
-                            id = 9;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL:
-                            id = 10;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION:
-                            id = 11;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_YAW_POSITION:
-                            id = 12;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL:
-                            id = 13;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL:
-                            id = 14;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS:
-                            id = 15;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_RC_RECEIVER:
-                            id = 16;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO2:
-                            id = 17;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL2:
-                            id = 18;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG2:
-                            id = 19;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_GEOFENCE:
-                            id = 20;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_AHRS:
-                            id = 21;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_TERRAIN:
-                            id = 22;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_REVERSE_MOTOR:
-                            id = 23;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_LOGGING:
-                            id = 24;
-                            break;
-                        case MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_BATTERY:
-                            id = 25;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
-                    BitUtils.set_bits(id, 5, data, 162);
-                }
+                set {  BitUtils.set_bits((ulong)(- 1 +   value), 26, data, 204);}
             }
         }
         public class SYSTEM_TIME : GroundControl.SYSTEM_TIME
@@ -540,45 +246,7 @@ namespace org.noname
             {
                 set
                 {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_MODE.MAV_MODE_PREFLIGHT:
-                            id = 0;
-                            break;
-                        case MAV_MODE.MAV_MODE_MANUAL_DISARMED:
-                            id = 1;
-                            break;
-                        case MAV_MODE.MAV_MODE_TEST_DISARMED:
-                            id = 2;
-                            break;
-                        case MAV_MODE.MAV_MODE_STABILIZE_DISARMED:
-                            id = 3;
-                            break;
-                        case MAV_MODE.MAV_MODE_GUIDED_DISARMED:
-                            id = 4;
-                            break;
-                        case MAV_MODE.MAV_MODE_AUTO_DISARMED:
-                            id = 5;
-                            break;
-                        case MAV_MODE.MAV_MODE_MANUAL_ARMED:
-                            id = 6;
-                            break;
-                        case MAV_MODE.MAV_MODE_TEST_ARMED:
-                            id = 7;
-                            break;
-                        case MAV_MODE.MAV_MODE_STABILIZE_ARMED:
-                            id = 8;
-                            break;
-                        case MAV_MODE.MAV_MODE_GUIDED_ARMED:
-                            id = 9;
-                            break;
-                        case MAV_MODE.MAV_MODE_AUTO_ARMED:
-                            id = 10;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
+                    ulong id = id__o(value);
                     BitUtils.set_bits(id, 4, data, 40);
                 }
             }
@@ -1389,24 +1057,7 @@ namespace org.noname
             {
                 set
                 {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION:
-                            id = 0;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE:
-                            id = 1;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY:
-                            id = 2;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL:
-                            id = 3;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
+                    ulong id = id__U(value);
                     BitUtils.set_bits(id, 3, data, 48);
                 }
             }
@@ -1437,24 +1088,7 @@ namespace org.noname
             {
                 set
                 {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION:
-                            id = 0;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE:
-                            id = 1;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY:
-                            id = 2;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL:
-                            id = 3;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
+                    ulong id = id__U(value);
                     BitUtils.set_bits(id, 3, data, 48);
                 }
             }
@@ -1530,393 +1164,7 @@ namespace org.noname
             {
                 set
                 {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_CMD.MAV_CMD_NAV_WAYPOINT:
-                            id = 0;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_LOITER_UNLIM:
-                            id = 1;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_LOITER_TURNS:
-                            id = 2;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_LOITER_TIME:
-                            id = 3;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_RETURN_TO_LAUNCH:
-                            id = 4;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_LAND:
-                            id = 5;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_TAKEOFF:
-                            id = 6;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_LAND_LOCAL:
-                            id = 7;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_TAKEOFF_LOCAL:
-                            id = 8;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_FOLLOW:
-                            id = 9;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
-                            id = 10;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_LOITER_TO_ALT:
-                            id = 11;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_FOLLOW:
-                            id = 12;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_FOLLOW_REPOSITION:
-                            id = 13;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_ROI:
-                            id = 14;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_PATHPLANNING:
-                            id = 15;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_SPLINE_WAYPOINT:
-                            id = 16;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_VTOL_TAKEOFF:
-                            id = 17;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_VTOL_LAND:
-                            id = 18;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_GUIDED_ENABLE:
-                            id = 19;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_DELAY:
-                            id = 20;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_PAYLOAD_PLACE:
-                            id = 21;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_LAST:
-                            id = 22;
-                            break;
-                        case MAV_CMD.MAV_CMD_CONDITION_DELAY:
-                            id = 23;
-                            break;
-                        case MAV_CMD.MAV_CMD_CONDITION_CHANGE_ALT:
-                            id = 24;
-                            break;
-                        case MAV_CMD.MAV_CMD_CONDITION_DISTANCE:
-                            id = 25;
-                            break;
-                        case MAV_CMD.MAV_CMD_CONDITION_YAW:
-                            id = 26;
-                            break;
-                        case MAV_CMD.MAV_CMD_CONDITION_LAST:
-                            id = 27;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_MODE:
-                            id = 28;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_JUMP:
-                            id = 29;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_CHANGE_SPEED:
-                            id = 30;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_HOME:
-                            id = 31;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_PARAMETER:
-                            id = 32;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_RELAY:
-                            id = 33;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_REPEAT_RELAY:
-                            id = 34;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_SERVO:
-                            id = 35;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_REPEAT_SERVO:
-                            id = 36;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_FLIGHTTERMINATION:
-                            id = 37;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_CHANGE_ALTITUDE:
-                            id = 38;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_LAND_START:
-                            id = 39;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_RALLY_LAND:
-                            id = 40;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_GO_AROUND:
-                            id = 41;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_REPOSITION:
-                            id = 42;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_PAUSE_CONTINUE:
-                            id = 43;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_REVERSE:
-                            id = 44;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_CONTROL_VIDEO:
-                            id = 45;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_ROI:
-                            id = 46;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_DIGICAM_CONFIGURE:
-                            id = 47;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_DIGICAM_CONTROL:
-                            id = 48;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_MOUNT_CONFIGURE:
-                            id = 49;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL:
-                            id = 50;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_DIST:
-                            id = 51;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_FENCE_ENABLE:
-                            id = 52;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_PARACHUTE:
-                            id = 53;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_MOTOR_TEST:
-                            id = 54;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_INVERTED_FLIGHT:
-                            id = 55;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_SET_YAW_SPEED:
-                            id = 56;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL:
-                            id = 57;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL_QUAT:
-                            id = 58;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_GUIDED_MASTER:
-                            id = 59;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_GUIDED_LIMITS:
-                            id = 60;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_ENGINE_CONTROL:
-                            id = 61;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_LAST:
-                            id = 62;
-                            break;
-                        case MAV_CMD.MAV_CMD_PREFLIGHT_CALIBRATION:
-                            id = 63;
-                            break;
-                        case MAV_CMD.MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS:
-                            id = 64;
-                            break;
-                        case MAV_CMD.MAV_CMD_PREFLIGHT_UAVCAN:
-                            id = 65;
-                            break;
-                        case MAV_CMD.MAV_CMD_PREFLIGHT_STORAGE:
-                            id = 66;
-                            break;
-                        case MAV_CMD.MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN:
-                            id = 67;
-                            break;
-                        case MAV_CMD.MAV_CMD_OVERRIDE_GOTO:
-                            id = 68;
-                            break;
-                        case MAV_CMD.MAV_CMD_MISSION_START:
-                            id = 69;
-                            break;
-                        case MAV_CMD.MAV_CMD_COMPONENT_ARM_DISARM:
-                            id = 70;
-                            break;
-                        case MAV_CMD.MAV_CMD_GET_HOME_POSITION:
-                            id = 71;
-                            break;
-                        case MAV_CMD.MAV_CMD_START_RX_PAIR:
-                            id = 72;
-                            break;
-                        case MAV_CMD.MAV_CMD_GET_MESSAGE_INTERVAL:
-                            id = 73;
-                            break;
-                        case MAV_CMD.MAV_CMD_SET_MESSAGE_INTERVAL:
-                            id = 74;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_PROTOCOL_VERSION:
-                            id = 75;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES:
-                            id = 76;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_CAMERA_INFORMATION:
-                            id = 77;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_CAMERA_SETTINGS:
-                            id = 78;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_STORAGE_INFORMATION:
-                            id = 79;
-                            break;
-                        case MAV_CMD.MAV_CMD_STORAGE_FORMAT:
-                            id = 80;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS:
-                            id = 81;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_FLIGHT_INFORMATION:
-                            id = 82;
-                            break;
-                        case MAV_CMD.MAV_CMD_RESET_CAMERA_SETTINGS:
-                            id = 83;
-                            break;
-                        case MAV_CMD.MAV_CMD_SET_CAMERA_MODE:
-                            id = 84;
-                            break;
-                        case MAV_CMD.MAV_CMD_IMAGE_START_CAPTURE:
-                            id = 85;
-                            break;
-                        case MAV_CMD.MAV_CMD_IMAGE_STOP_CAPTURE:
-                            id = 86;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE:
-                            id = 87;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_TRIGGER_CONTROL:
-                            id = 88;
-                            break;
-                        case MAV_CMD.MAV_CMD_VIDEO_START_CAPTURE:
-                            id = 89;
-                            break;
-                        case MAV_CMD.MAV_CMD_VIDEO_STOP_CAPTURE:
-                            id = 90;
-                            break;
-                        case MAV_CMD.MAV_CMD_VIDEO_START_STREAMING:
-                            id = 91;
-                            break;
-                        case MAV_CMD.MAV_CMD_VIDEO_STOP_STREAMING:
-                            id = 92;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION:
-                            id = 93;
-                            break;
-                        case MAV_CMD.MAV_CMD_LOGGING_START:
-                            id = 94;
-                            break;
-                        case MAV_CMD.MAV_CMD_LOGGING_STOP:
-                            id = 95;
-                            break;
-                        case MAV_CMD.MAV_CMD_AIRFRAME_CONFIGURATION:
-                            id = 96;
-                            break;
-                        case MAV_CMD.MAV_CMD_PANORAMA_CREATE:
-                            id = 97;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_VTOL_TRANSITION:
-                            id = 98;
-                            break;
-                        case MAV_CMD.MAV_CMD_ARM_AUTHORIZATION_REQUEST:
-                            id = 99;
-                            break;
-                        case MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_STANDARD:
-                            id = 100;
-                            break;
-                        case MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE:
-                            id = 101;
-                            break;
-                        case MAV_CMD.MAV_CMD_CONDITION_GATE:
-                            id = 102;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_FENCE_RETURN_POINT:
-                            id = 103;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION:
-                            id = 104;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION:
-                            id = 105;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION:
-                            id = 106;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION:
-                            id = 107;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_RALLY_POINT:
-                            id = 108;
-                            break;
-                        case MAV_CMD.MAV_CMD_UAVCAN_GET_NODE_INFO:
-                            id = 109;
-                            break;
-                        case MAV_CMD.MAV_CMD_PAYLOAD_PREPARE_DEPLOY:
-                            id = 110;
-                            break;
-                        case MAV_CMD.MAV_CMD_PAYLOAD_CONTROL_DEPLOY:
-                            id = 111;
-                            break;
-                        case MAV_CMD.MAV_CMD_WAYPOINT_USER_1:
-                            id = 112;
-                            break;
-                        case MAV_CMD.MAV_CMD_WAYPOINT_USER_2:
-                            id = 113;
-                            break;
-                        case MAV_CMD.MAV_CMD_WAYPOINT_USER_3:
-                            id = 114;
-                            break;
-                        case MAV_CMD.MAV_CMD_WAYPOINT_USER_4:
-                            id = 115;
-                            break;
-                        case MAV_CMD.MAV_CMD_WAYPOINT_USER_5:
-                            id = 116;
-                            break;
-                        case MAV_CMD.MAV_CMD_SPATIAL_USER_1:
-                            id = 117;
-                            break;
-                        case MAV_CMD.MAV_CMD_SPATIAL_USER_2:
-                            id = 118;
-                            break;
-                        case MAV_CMD.MAV_CMD_SPATIAL_USER_3:
-                            id = 119;
-                            break;
-                        case MAV_CMD.MAV_CMD_SPATIAL_USER_4:
-                            id = 120;
-                            break;
-                        case MAV_CMD.MAV_CMD_SPATIAL_USER_5:
-                            id = 121;
-                            break;
-                        case MAV_CMD.MAV_CMD_USER_1:
-                            id = 122;
-                            break;
-                        case MAV_CMD.MAV_CMD_USER_2:
-                            id = 123;
-                            break;
-                        case MAV_CMD.MAV_CMD_USER_3:
-                            id = 124;
-                            break;
-                        case MAV_CMD.MAV_CMD_USER_4:
-                            id = 125;
-                            break;
-                        case MAV_CMD.MAV_CMD_USER_5:
-                            id = 126;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
+                    ulong id = id__V(value);
                     BitUtils.set_bits(id, 7, data, 276);
                 }
             }
@@ -1925,24 +1173,7 @@ namespace org.noname
             {
                 set
                 {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION:
-                            id = 0;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE:
-                            id = 1;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY:
-                            id = 2;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL:
-                            id = 3;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
+                    ulong id = id__U(value);
                     BitUtils.set_bits(id, 3, data, 283);
                 }
             }
@@ -1968,24 +1199,7 @@ namespace org.noname
             {
                 set
                 {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION:
-                            id = 0;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE:
-                            id = 1;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY:
-                            id = 2;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL:
-                            id = 3;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
+                    ulong id = id__U(value);
                     BitUtils.set_bits(id, 3, data, 32);
                 }
             }
@@ -2030,24 +1244,7 @@ namespace org.noname
             {
                 set
                 {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION:
-                            id = 0;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE:
-                            id = 1;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY:
-                            id = 2;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL:
-                            id = 3;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
+                    ulong id = id__U(value);
                     BitUtils.set_bits(id, 3, data, 16);
                 }
             }
@@ -2073,24 +1270,7 @@ namespace org.noname
             {
                 set
                 {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION:
-                            id = 0;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE:
-                            id = 1;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY:
-                            id = 2;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL:
-                            id = 3;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
+                    ulong id = id__U(value);
                     BitUtils.set_bits(id, 3, data, 32);
                 }
             }
@@ -2111,24 +1291,7 @@ namespace org.noname
             {
                 set
                 {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION:
-                            id = 0;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE:
-                            id = 1;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY:
-                            id = 2;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL:
-                            id = 3;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
+                    ulong id = id__U(value);
                     BitUtils.set_bits(id, 3, data, 16);
                 }
             }
@@ -2161,24 +1324,7 @@ namespace org.noname
             {
                 set
                 {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION:
-                            id = 0;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE:
-                            id = 1;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY:
-                            id = 2;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL:
-                            id = 3;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
+                    ulong id = id__U(value);
                     BitUtils.set_bits(id, 3, data, 20);
                 }
             }
@@ -2323,24 +1469,7 @@ namespace org.noname
             {
                 set
                 {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION:
-                            id = 0;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE:
-                            id = 1;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY:
-                            id = 2;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL:
-                            id = 3;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
+                    ulong id = id__U(value);
                     BitUtils.set_bits(id, 3, data, 32);
                 }
             }
@@ -2976,393 +2105,7 @@ namespace org.noname
             {
                 set
                 {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_CMD.MAV_CMD_NAV_WAYPOINT:
-                            id = 0;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_LOITER_UNLIM:
-                            id = 1;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_LOITER_TURNS:
-                            id = 2;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_LOITER_TIME:
-                            id = 3;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_RETURN_TO_LAUNCH:
-                            id = 4;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_LAND:
-                            id = 5;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_TAKEOFF:
-                            id = 6;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_LAND_LOCAL:
-                            id = 7;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_TAKEOFF_LOCAL:
-                            id = 8;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_FOLLOW:
-                            id = 9;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
-                            id = 10;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_LOITER_TO_ALT:
-                            id = 11;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_FOLLOW:
-                            id = 12;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_FOLLOW_REPOSITION:
-                            id = 13;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_ROI:
-                            id = 14;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_PATHPLANNING:
-                            id = 15;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_SPLINE_WAYPOINT:
-                            id = 16;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_VTOL_TAKEOFF:
-                            id = 17;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_VTOL_LAND:
-                            id = 18;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_GUIDED_ENABLE:
-                            id = 19;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_DELAY:
-                            id = 20;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_PAYLOAD_PLACE:
-                            id = 21;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_LAST:
-                            id = 22;
-                            break;
-                        case MAV_CMD.MAV_CMD_CONDITION_DELAY:
-                            id = 23;
-                            break;
-                        case MAV_CMD.MAV_CMD_CONDITION_CHANGE_ALT:
-                            id = 24;
-                            break;
-                        case MAV_CMD.MAV_CMD_CONDITION_DISTANCE:
-                            id = 25;
-                            break;
-                        case MAV_CMD.MAV_CMD_CONDITION_YAW:
-                            id = 26;
-                            break;
-                        case MAV_CMD.MAV_CMD_CONDITION_LAST:
-                            id = 27;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_MODE:
-                            id = 28;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_JUMP:
-                            id = 29;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_CHANGE_SPEED:
-                            id = 30;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_HOME:
-                            id = 31;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_PARAMETER:
-                            id = 32;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_RELAY:
-                            id = 33;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_REPEAT_RELAY:
-                            id = 34;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_SERVO:
-                            id = 35;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_REPEAT_SERVO:
-                            id = 36;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_FLIGHTTERMINATION:
-                            id = 37;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_CHANGE_ALTITUDE:
-                            id = 38;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_LAND_START:
-                            id = 39;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_RALLY_LAND:
-                            id = 40;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_GO_AROUND:
-                            id = 41;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_REPOSITION:
-                            id = 42;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_PAUSE_CONTINUE:
-                            id = 43;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_REVERSE:
-                            id = 44;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_CONTROL_VIDEO:
-                            id = 45;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_ROI:
-                            id = 46;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_DIGICAM_CONFIGURE:
-                            id = 47;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_DIGICAM_CONTROL:
-                            id = 48;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_MOUNT_CONFIGURE:
-                            id = 49;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL:
-                            id = 50;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_DIST:
-                            id = 51;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_FENCE_ENABLE:
-                            id = 52;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_PARACHUTE:
-                            id = 53;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_MOTOR_TEST:
-                            id = 54;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_INVERTED_FLIGHT:
-                            id = 55;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_SET_YAW_SPEED:
-                            id = 56;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL:
-                            id = 57;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL_QUAT:
-                            id = 58;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_GUIDED_MASTER:
-                            id = 59;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_GUIDED_LIMITS:
-                            id = 60;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_ENGINE_CONTROL:
-                            id = 61;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_LAST:
-                            id = 62;
-                            break;
-                        case MAV_CMD.MAV_CMD_PREFLIGHT_CALIBRATION:
-                            id = 63;
-                            break;
-                        case MAV_CMD.MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS:
-                            id = 64;
-                            break;
-                        case MAV_CMD.MAV_CMD_PREFLIGHT_UAVCAN:
-                            id = 65;
-                            break;
-                        case MAV_CMD.MAV_CMD_PREFLIGHT_STORAGE:
-                            id = 66;
-                            break;
-                        case MAV_CMD.MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN:
-                            id = 67;
-                            break;
-                        case MAV_CMD.MAV_CMD_OVERRIDE_GOTO:
-                            id = 68;
-                            break;
-                        case MAV_CMD.MAV_CMD_MISSION_START:
-                            id = 69;
-                            break;
-                        case MAV_CMD.MAV_CMD_COMPONENT_ARM_DISARM:
-                            id = 70;
-                            break;
-                        case MAV_CMD.MAV_CMD_GET_HOME_POSITION:
-                            id = 71;
-                            break;
-                        case MAV_CMD.MAV_CMD_START_RX_PAIR:
-                            id = 72;
-                            break;
-                        case MAV_CMD.MAV_CMD_GET_MESSAGE_INTERVAL:
-                            id = 73;
-                            break;
-                        case MAV_CMD.MAV_CMD_SET_MESSAGE_INTERVAL:
-                            id = 74;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_PROTOCOL_VERSION:
-                            id = 75;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES:
-                            id = 76;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_CAMERA_INFORMATION:
-                            id = 77;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_CAMERA_SETTINGS:
-                            id = 78;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_STORAGE_INFORMATION:
-                            id = 79;
-                            break;
-                        case MAV_CMD.MAV_CMD_STORAGE_FORMAT:
-                            id = 80;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS:
-                            id = 81;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_FLIGHT_INFORMATION:
-                            id = 82;
-                            break;
-                        case MAV_CMD.MAV_CMD_RESET_CAMERA_SETTINGS:
-                            id = 83;
-                            break;
-                        case MAV_CMD.MAV_CMD_SET_CAMERA_MODE:
-                            id = 84;
-                            break;
-                        case MAV_CMD.MAV_CMD_IMAGE_START_CAPTURE:
-                            id = 85;
-                            break;
-                        case MAV_CMD.MAV_CMD_IMAGE_STOP_CAPTURE:
-                            id = 86;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE:
-                            id = 87;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_TRIGGER_CONTROL:
-                            id = 88;
-                            break;
-                        case MAV_CMD.MAV_CMD_VIDEO_START_CAPTURE:
-                            id = 89;
-                            break;
-                        case MAV_CMD.MAV_CMD_VIDEO_STOP_CAPTURE:
-                            id = 90;
-                            break;
-                        case MAV_CMD.MAV_CMD_VIDEO_START_STREAMING:
-                            id = 91;
-                            break;
-                        case MAV_CMD.MAV_CMD_VIDEO_STOP_STREAMING:
-                            id = 92;
-                            break;
-                        case MAV_CMD.MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION:
-                            id = 93;
-                            break;
-                        case MAV_CMD.MAV_CMD_LOGGING_START:
-                            id = 94;
-                            break;
-                        case MAV_CMD.MAV_CMD_LOGGING_STOP:
-                            id = 95;
-                            break;
-                        case MAV_CMD.MAV_CMD_AIRFRAME_CONFIGURATION:
-                            id = 96;
-                            break;
-                        case MAV_CMD.MAV_CMD_PANORAMA_CREATE:
-                            id = 97;
-                            break;
-                        case MAV_CMD.MAV_CMD_DO_VTOL_TRANSITION:
-                            id = 98;
-                            break;
-                        case MAV_CMD.MAV_CMD_ARM_AUTHORIZATION_REQUEST:
-                            id = 99;
-                            break;
-                        case MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_STANDARD:
-                            id = 100;
-                            break;
-                        case MAV_CMD.MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE:
-                            id = 101;
-                            break;
-                        case MAV_CMD.MAV_CMD_CONDITION_GATE:
-                            id = 102;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_FENCE_RETURN_POINT:
-                            id = 103;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION:
-                            id = 104;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION:
-                            id = 105;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION:
-                            id = 106;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION:
-                            id = 107;
-                            break;
-                        case MAV_CMD.MAV_CMD_NAV_RALLY_POINT:
-                            id = 108;
-                            break;
-                        case MAV_CMD.MAV_CMD_UAVCAN_GET_NODE_INFO:
-                            id = 109;
-                            break;
-                        case MAV_CMD.MAV_CMD_PAYLOAD_PREPARE_DEPLOY:
-                            id = 110;
-                            break;
-                        case MAV_CMD.MAV_CMD_PAYLOAD_CONTROL_DEPLOY:
-                            id = 111;
-                            break;
-                        case MAV_CMD.MAV_CMD_WAYPOINT_USER_1:
-                            id = 112;
-                            break;
-                        case MAV_CMD.MAV_CMD_WAYPOINT_USER_2:
-                            id = 113;
-                            break;
-                        case MAV_CMD.MAV_CMD_WAYPOINT_USER_3:
-                            id = 114;
-                            break;
-                        case MAV_CMD.MAV_CMD_WAYPOINT_USER_4:
-                            id = 115;
-                            break;
-                        case MAV_CMD.MAV_CMD_WAYPOINT_USER_5:
-                            id = 116;
-                            break;
-                        case MAV_CMD.MAV_CMD_SPATIAL_USER_1:
-                            id = 117;
-                            break;
-                        case MAV_CMD.MAV_CMD_SPATIAL_USER_2:
-                            id = 118;
-                            break;
-                        case MAV_CMD.MAV_CMD_SPATIAL_USER_3:
-                            id = 119;
-                            break;
-                        case MAV_CMD.MAV_CMD_SPATIAL_USER_4:
-                            id = 120;
-                            break;
-                        case MAV_CMD.MAV_CMD_SPATIAL_USER_5:
-                            id = 121;
-                            break;
-                        case MAV_CMD.MAV_CMD_USER_1:
-                            id = 122;
-                            break;
-                        case MAV_CMD.MAV_CMD_USER_2:
-                            id = 123;
-                            break;
-                        case MAV_CMD.MAV_CMD_USER_3:
-                            id = 124;
-                            break;
-                        case MAV_CMD.MAV_CMD_USER_4:
-                            id = 125;
-                            break;
-                        case MAV_CMD.MAV_CMD_USER_5:
-                            id = 126;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
+                    ulong id = id__V(value);
                     BitUtils.set_bits(id, 7, data, 276);
                 }
             }
@@ -3371,58 +2114,41 @@ namespace org.noname
             {
                 set
                 {
-                    ulong id = 0;
-                    switch(value)
-                    {
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION:
-                            id = 0;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE:
-                            id = 1;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY:
-                            id = 2;
-                            break;
-                        case MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL:
-                            id = 3;
-                            break;
-                        default:
-                            throw  new ArgumentException("Unknown enum " + value);
-                    }
+                    ulong id = id__U(value);
                     BitUtils.set_bits(id, 3, data, 283);
                 }
             }
         }
-        new class ATT_POS_MOCAP : GroundControl.ATT_POS_MOCAP
+        public class VFR_HUD : GroundControl.VFR_HUD
         {
-            public ulong time_usec //Timestamp (micros since boot or Unix epoch)
+            public ushort throttle //Current throttle setting in integer percent, 0 to 100
             {
-                get {  return (BitUtils.get_bytes(data,  0, 8));}
+                set {  BitUtils.set_bytes((ulong)(value), 2, data,  0);}
             }
 
-            public float[] q //Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
+            public float airspeed //Current airspeed in m/s
             {
-                get {return q_GET(new float[4], 0);}
-            }
-            public float[]q_GET(float[] dst_ch, int pos)  //Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
-            {
-                for(int BYTE = 8, dst_max = pos + 4; pos < dst_max ; pos++,  BYTE += 4)
-                    dst_ch[pos] = (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  BYTE, 4)));
-                return dst_ch;
-            }
-            public float x //X position in meters (NED)
-            {
-                get {  return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  24, 4)));}
+                set {  BitUtils.set_bytes(BitUtils.FloatToInt32Bits(value), 4, data, 2);}
             }
 
-            public float y //Y position in meters (NED)
+            public float groundspeed //Current ground speed in m/s
             {
-                get {  return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  28, 4)));}
+                set {  BitUtils.set_bytes(BitUtils.FloatToInt32Bits(value), 4, data, 6);}
             }
 
-            public float z //Z position in meters (NED)
+            public short heading //Current heading in degrees, in compass units (0..360, 0=north)
             {
-                get {  return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  32, 4)));}
+                set {  BitUtils.set_bytes((ushort)(value), 2, data,  10);}
+            }
+
+            public float alt //Current altitude (MSL), in meters
+            {
+                set {  BitUtils.set_bytes(BitUtils.FloatToInt32Bits(value), 4, data, 12);}
+            }
+
+            public float climb //Current climb rate in meters/second
+            {
+                set {  BitUtils.set_bytes(BitUtils.FloatToInt32Bits(value), 4, data, 16);}
             }
         }
         new class SET_ACTUATOR_CONTROL_TARGET : GroundControl.SET_ACTUATOR_CONTROL_TARGET
@@ -3969,54 +2695,14 @@ namespace org.noname
             }
             public MAV_PROTOCOL_CAPABILITY capabilities //bitmask of capabilities (see MAV_PROTOCOL_CAPABILITY enum)
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 416, 5))
-                    {
-                        case 0:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FLOAT;
-                        case 1:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_PARAM_FLOAT;
-                        case 2:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_INT;
-                        case 3:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_COMMAND_INT;
-                        case 4:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_PARAM_UNION;
-                        case 5:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FTP;
-                        case 6:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_ATTITUDE_TARGET;
-                        case 7:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_LOCAL_NED;
-                        case 8:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_GLOBAL_INT;
-                        case 9:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_TERRAIN;
-                        case 10:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_ACTUATOR_TARGET;
-                        case 11:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FLIGHT_TERMINATION;
-                        case 12:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_COMPASS_CALIBRATION;
-                        case 13:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MAVLINK2;
-                        case 14:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FENCE;
-                        case 15:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_RALLY;
-                        case 16:
-                            return MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FLIGHT_INFORMATION;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return (MAV_PROTOCOL_CAPABILITY)(1 +  BitUtils.get_bits(data, 416, 17));}
             }
             /**
             *UID if provided by hardware (supersedes the uid field. If this is non-zero, use this field, otherwise
             *	use uid*/
             public byte[] uid2_TRY(Inside ph)
             {
-                if(ph.field_bit !=  421 && !try_visit_field(ph, 421)) return null;
+                if(ph.field_bit !=  433 && !try_visit_field(ph, 433)) return null;
                 return uid2_GET(ph, new byte[ph.items], 0);
             }
             /**
@@ -4077,26 +2763,26 @@ namespace org.noname
 
             public LANDING_TARGET_TYPE type //LANDING_TARGET_TYPE enum specifying the type of landing target
             {
-                get {  return (LANDING_TARGET_TYPE)(0 +  BitUtils.get_bits(data, 236, 3));}
+                get {  return (LANDING_TARGET_TYPE)(0 +  BitUtils.get_bits(data, 236, 2));}
             }
             public float x_TRY(Inside ph)//X Position of the landing target on MAV_FRAME
             {
-                if(ph.field_bit !=  239 && !try_visit_field(ph, 239)) return 0;
+                if(ph.field_bit !=  238 && !try_visit_field(ph, 238)) return 0;
                 return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  ph.BYTE, 4)));
             }
             public float y_TRY(Inside ph)//Y Position of the landing target on MAV_FRAME
             {
-                if(ph.field_bit !=  240 && !try_visit_field(ph, 240)) return 0;
+                if(ph.field_bit !=  239 && !try_visit_field(ph, 239)) return 0;
                 return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  ph.BYTE, 4)));
             }
             public float z_TRY(Inside ph)//Z Position of the landing target on MAV_FRAME
             {
-                if(ph.field_bit !=  241 && !try_visit_field(ph, 241)) return 0;
+                if(ph.field_bit !=  240 && !try_visit_field(ph, 240)) return 0;
                 return (float)(BitUtils.Int32BitsToFloat((uint) BitUtils.get_bytes(data,  ph.BYTE, 4)));
             }
             public float[] q_TRY(Inside ph)//Quaternion of landing target orientation (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
             {
-                if(ph.field_bit !=  242 && !try_visit_field(ph, 242)) return null;
+                if(ph.field_bit !=  241 && !try_visit_field(ph, 241)) return null;
                 return q_GET(ph, new float[ph.items], 0);
             }
             public float[]q_GET(Inside ph, float[] dst_ch, int pos) //Quaternion of landing target orientation (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
@@ -4113,7 +2799,7 @@ namespace org.noname
 *	the landing targe*/
             public byte position_valid_TRY(Inside ph)
             {
-                if(ph.field_bit !=  243 && !try_visit_field(ph, 243)) return 0;
+                if(ph.field_bit !=  242 && !try_visit_field(ph, 242)) return 0;
                 return (byte)((byte) BitUtils.get_bytes(data,  ph.BYTE, 1));
             }
         }
@@ -4166,35 +2852,7 @@ namespace org.noname
 
             public ESTIMATOR_STATUS_FLAGS flags //Integer bitmask indicating which EKF outputs are valid. See definition for ESTIMATOR_STATUS_FLAGS.
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 320, 4))
-                    {
-                        case 0:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_ATTITUDE;
-                        case 1:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_VELOCITY_HORIZ;
-                        case 2:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_VELOCITY_VERT;
-                        case 3:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_HORIZ_REL;
-                        case 4:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_HORIZ_ABS;
-                        case 5:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_VERT_ABS;
-                        case 6:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_VERT_AGL;
-                        case 7:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_CONST_POS_MODE;
-                        case 8:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_PRED_POS_HORIZ_REL;
-                        case 9:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_PRED_POS_HORIZ_ABS;
-                        case 10:
-                            return ESTIMATOR_STATUS_FLAGS.ESTIMATOR_GPS_GLITCH;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return (ESTIMATOR_STATUS_FLAGS)(1 +  BitUtils.get_bits(data, 320, 11));}
             }
         }
         new class WIND_COV : GroundControl.WIND_COV
@@ -4333,29 +2991,7 @@ namespace org.noname
 
             public GPS_INPUT_IGNORE_FLAGS ignore_flags //Flags indicating which fields to ignore (see GPS_INPUT_IGNORE_FLAGS enum).  All other fields must be provided
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 488, 4))
-                    {
-                        case 0:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_ALT;
-                        case 1:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_HDOP;
-                        case 2:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VDOP;
-                        case 3:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VEL_HORIZ;
-                        case 4:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VEL_VERT;
-                        case 5:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_SPEED_ACCURACY;
-                        case 6:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_HORIZONTAL_ACCURACY;
-                        case 7:
-                            return GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VERTICAL_ACCURACY;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return (GPS_INPUT_IGNORE_FLAGS)(1 +  BitUtils.get_bits(data, 488, 8));}
             }
         }
         new class GPS_RTCM_DATA : GroundControl.GPS_RTCM_DATA
@@ -4501,39 +3137,17 @@ namespace org.noname
 
             public MAV_MODE_FLAG base_mode //System mode bitfield, see MAV_MODE_FLAG ENUM in mavlink/include/mavlink_types.h
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 296, 4))
-                    {
-                        case 0:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED;
-                        case 1:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_TEST_ENABLED;
-                        case 2:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_AUTO_ENABLED;
-                        case 3:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_GUIDED_ENABLED;
-                        case 4:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_STABILIZE_ENABLED;
-                        case 5:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_HIL_ENABLED;
-                        case 6:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_MANUAL_INPUT_ENABLED;
-                        case 7:
-                            return MAV_MODE_FLAG.MAV_MODE_FLAG_SAFETY_ARMED;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return (MAV_MODE_FLAG)(1 +  BitUtils.get_bits(data, 296, 8));}
             }
 
             public MAV_LANDED_STATE landed_state //The landed state. Is set to MAV_LANDED_STATE_UNDEFINED if landed state is unknown.
             {
-                get {  return (MAV_LANDED_STATE)(0 +  BitUtils.get_bits(data, 300, 3));}
+                get {  return (MAV_LANDED_STATE)(0 +  BitUtils.get_bits(data, 304, 3));}
             }
 
             public GPS_FIX_TYPE gps_fix_type //See the GPS_FIX_TYPE enum.
             {
-                get {  return (GPS_FIX_TYPE)(0 +  BitUtils.get_bits(data, 303, 4));}
+                get {  return (GPS_FIX_TYPE)(0 +  BitUtils.get_bits(data, 307, 4));}
             }
         }
         new class VIBRATION : GroundControl.VIBRATION
@@ -4817,41 +3431,21 @@ namespace org.noname
 
             public ADSB_ALTITUDE_TYPE altitude_type //Type from ADSB_ALTITUDE_TYPE enum
             {
-                get {  return (ADSB_ALTITUDE_TYPE)(0 +  BitUtils.get_bits(data, 200, 2));}
+                get {  return (ADSB_ALTITUDE_TYPE)(0 +  BitUtils.get_bits(data, 200, 1));}
             }
 
             public ADSB_EMITTER_TYPE emitter_type //Type from ADSB_EMITTER_TYPE enum
             {
-                get {  return (ADSB_EMITTER_TYPE)(0 +  BitUtils.get_bits(data, 202, 5));}
+                get {  return (ADSB_EMITTER_TYPE)(0 +  BitUtils.get_bits(data, 201, 5));}
             }
 
             public ADSB_FLAGS flags //Flags to indicate various statuses including valid data fields
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 207, 3))
-                    {
-                        case 0:
-                            return ADSB_FLAGS.ADSB_FLAGS_VALID_COORDS;
-                        case 1:
-                            return ADSB_FLAGS.ADSB_FLAGS_VALID_ALTITUDE;
-                        case 2:
-                            return ADSB_FLAGS.ADSB_FLAGS_VALID_HEADING;
-                        case 3:
-                            return ADSB_FLAGS.ADSB_FLAGS_VALID_VELOCITY;
-                        case 4:
-                            return ADSB_FLAGS.ADSB_FLAGS_VALID_CALLSIGN;
-                        case 5:
-                            return ADSB_FLAGS.ADSB_FLAGS_VALID_SQUAWK;
-                        case 6:
-                            return ADSB_FLAGS.ADSB_FLAGS_SIMULATED;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return (ADSB_FLAGS)(1 +  BitUtils.get_bits(data, 206, 7));}
             }
             public string callsign_TRY(Inside ph)//The callsign, 8+null
             {
-                if(ph.field_bit !=  210 && !try_visit_field(ph, 210)  ||  !try_visit_item(ph, 0)) return null;
+                if(ph.field_bit !=  213 && !try_visit_field(ph, 213)  ||  !try_visit_item(ph, 0)) return null;
                 return new string(callsign_GET(ph, new char[ph.items], 0));
             }
             public char[]callsign_GET(Inside ph, char[] dst_ch, int pos) //The callsign, 8+null
@@ -4862,7 +3456,7 @@ namespace org.noname
             }
             public int callsign_LEN(Inside ph)
             {
-                return (ph.field_bit !=  210 && !try_visit_field(ph, 210)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
+                return (ph.field_bit !=  213 && !try_visit_field(ph, 213)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
             }
         }
         new class COLLISION : GroundControl.COLLISION
@@ -4889,17 +3483,17 @@ namespace org.noname
 
             public MAV_COLLISION_SRC src_ //Collision data source
             {
-                get {  return (MAV_COLLISION_SRC)(0 +  BitUtils.get_bits(data, 128, 2));}
+                get {  return (MAV_COLLISION_SRC)(0 +  BitUtils.get_bits(data, 128, 1));}
             }
 
             public MAV_COLLISION_ACTION action //Action that is being taken to avoid this collision
             {
-                get {  return (MAV_COLLISION_ACTION)(0 +  BitUtils.get_bits(data, 130, 3));}
+                get {  return (MAV_COLLISION_ACTION)(0 +  BitUtils.get_bits(data, 129, 3));}
             }
 
             public MAV_COLLISION_THREAT_LEVEL threat_level //How concerned the aircraft is about this collision
             {
-                get {  return (MAV_COLLISION_THREAT_LEVEL)(0 +  BitUtils.get_bits(data, 133, 2));}
+                get {  return (MAV_COLLISION_THREAT_LEVEL)(0 +  BitUtils.get_bits(data, 132, 2));}
             }
         }
         new class V2_EXTENSION : GroundControl.V2_EXTENSION
@@ -5075,11 +3669,11 @@ namespace org.noname
         {
             public MAV_SEVERITY severity //Severity of status. Relies on the definitions within RFC-5424. See enum MAV_SEVERITY.
             {
-                get {  return (MAV_SEVERITY)(0 +  BitUtils.get_bits(data, 0, 4));}
+                get {  return (MAV_SEVERITY)(0 +  BitUtils.get_bits(data, 0, 3));}
             }
             public string text_TRY(Inside ph)//Status text message, without null termination character
             {
-                if(ph.field_bit !=  4 && !try_visit_field(ph, 4)  ||  !try_visit_item(ph, 0)) return null;
+                if(ph.field_bit !=  3 && !try_visit_field(ph, 3)  ||  !try_visit_item(ph, 0)) return null;
                 return new string(text_GET(ph, new char[ph.items], 0));
             }
             public char[]text_GET(Inside ph, char[] dst_ch, int pos) //Status text message, without null termination character
@@ -5090,7 +3684,7 @@ namespace org.noname
             }
             public int text_LEN(Inside ph)
             {
-                return (ph.field_bit !=  4 && !try_visit_field(ph, 4)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
+                return (ph.field_bit !=  3 && !try_visit_field(ph, 3)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
             }
         }
         new class DEBUG : GroundControl.DEBUG
@@ -5251,29 +3845,11 @@ namespace org.noname
 
             public CAMERA_CAP_FLAGS flags //CAMERA_CAP_FLAGS enum flags (bitmap) describing camera capabilities.
             {
-                get
-                {
-                    switch((int)BitUtils.get_bits(data, 728, 3))
-                    {
-                        case 0:
-                            return CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAPTURE_VIDEO;
-                        case 1:
-                            return CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAPTURE_IMAGE;
-                        case 2:
-                            return CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_HAS_MODES;
-                        case 3:
-                            return CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAN_CAPTURE_IMAGE_IN_VIDEO_MODE;
-                        case 4:
-                            return CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAN_CAPTURE_VIDEO_IN_IMAGE_MODE;
-                        case 5:
-                            return CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_HAS_IMAGE_SURVEY_MODE;
-                    }
-                    throw  new ArgumentException("Unknown enum ID ");
-                }
+                get {  return (CAMERA_CAP_FLAGS)(1 +  BitUtils.get_bits(data, 728, 6));}
             }
             public string cam_definition_uri_TRY(Inside ph)//Camera definition URI (if any, otherwise only basic functions will be available).
             {
-                if(ph.field_bit !=  731 && !try_visit_field(ph, 731)  ||  !try_visit_item(ph, 0)) return null;
+                if(ph.field_bit !=  734 && !try_visit_field(ph, 734)  ||  !try_visit_item(ph, 0)) return null;
                 return new string(cam_definition_uri_GET(ph, new char[ph.items], 0));
             }
             public char[]cam_definition_uri_GET(Inside ph, char[] dst_ch, int pos) //Camera definition URI (if any, otherwise only basic functions will be available).
@@ -5284,7 +3860,7 @@ namespace org.noname
             }
             public int cam_definition_uri_LEN(Inside ph)
             {
-                return (ph.field_bit !=  731 && !try_visit_field(ph, 731)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
+                return (ph.field_bit !=  734 && !try_visit_field(ph, 734)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
             }
         }
         new class CAMERA_SETTINGS : GroundControl.CAMERA_SETTINGS
@@ -5799,14 +4375,14 @@ namespace org.noname
 
             public UAVCAN_NODE_HEALTH health //Generalized node health status.
             {
-                get {  return (UAVCAN_NODE_HEALTH)(0 +  BitUtils.get_bits(data, 120, 3));}
+                get {  return (UAVCAN_NODE_HEALTH)(0 +  BitUtils.get_bits(data, 120, 2));}
             }
 
             public UAVCAN_NODE_MODE mode //Generalized operating mode.
             {
                 get
                 {
-                    switch((int)BitUtils.get_bits(data, 123, 3))
+                    switch((int)BitUtils.get_bits(data, 122, 3))
                     {
                         case 0:
                             return UAVCAN_NODE_MODE.UAVCAN_NODE_MODE_OPERATIONAL;
@@ -6054,7 +4630,7 @@ namespace org.noname
 
             public PARAM_ACK param_result //Result code: see the PARAM_ACK enum for possible codes.
             {
-                get {  return (PARAM_ACK)(0 +  BitUtils.get_bits(data, 4, 3));}
+                get {  return (PARAM_ACK)(0 +  BitUtils.get_bits(data, 4, 2));}
             }
             /**
             *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
@@ -6062,7 +4638,7 @@ namespace org.noname
             *	ID is stored as strin*/
             public string param_id_TRY(Inside ph)
             {
-                if(ph.field_bit !=  9 && !try_visit_field(ph, 9)  ||  !try_visit_item(ph, 0)) return null;
+                if(ph.field_bit !=  8 && !try_visit_field(ph, 8)  ||  !try_visit_item(ph, 0)) return null;
                 return new string(param_id_GET(ph, new char[ph.items], 0));
             }
             /**
@@ -6077,10 +4653,10 @@ namespace org.noname
             }
             public int param_id_LEN(Inside ph)
             {
-                return (ph.field_bit !=  9 && !try_visit_field(ph, 9)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
+                return (ph.field_bit !=  8 && !try_visit_field(ph, 8)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
             } public string param_value_TRY(Inside ph)//Parameter value (new value if PARAM_ACK_ACCEPTED, current value otherwise)
             {
-                if(ph.field_bit !=  10 && !try_visit_field(ph, 10)  ||  !try_visit_item(ph, 0)) return null;
+                if(ph.field_bit !=  9 && !try_visit_field(ph, 9)  ||  !try_visit_item(ph, 0)) return null;
                 return new string(param_value_GET(ph, new char[ph.items], 0));
             }
             public char[]param_value_GET(Inside ph, char[] dst_ch, int pos) //Parameter value (new value if PARAM_ACK_ACCEPTED, current value otherwise)
@@ -6091,7 +4667,7 @@ namespace org.noname
             }
             public int param_value_LEN(Inside ph)
             {
-                return (ph.field_bit !=  10 && !try_visit_field(ph, 10)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
+                return (ph.field_bit !=  9 && !try_visit_field(ph, 9)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
             }
         }
         new class OBSTACLE_DISTANCE : GroundControl.OBSTACLE_DISTANCE
@@ -6153,9 +4729,6 @@ namespace org.noname
                 Debug.Assert(false);
             }
 
-            public void OnATT_POS_MOCAPReceive_direct(Channel src, Inside ph, ATT_POS_MOCAP pack) {OnATT_POS_MOCAPReceive(this, ph,  pack);}
-            public event ATT_POS_MOCAPReceiveHandler OnATT_POS_MOCAPReceive;
-            public delegate void ATT_POS_MOCAPReceiveHandler(Channel src, Inside ph, ATT_POS_MOCAP pack);
             public void OnSET_ACTUATOR_CONTROL_TARGETReceive_direct(Channel src, Inside ph, SET_ACTUATOR_CONTROL_TARGET pack) {OnSET_ACTUATOR_CONTROL_TARGETReceive(this, ph,  pack);}
             public event SET_ACTUATOR_CONTROL_TARGETReceiveHandler OnSET_ACTUATOR_CONTROL_TARGETReceive;
             public delegate void SET_ACTUATOR_CONTROL_TARGETReceiveHandler(Channel src, Inside ph, SET_ACTUATOR_CONTROL_TARGET pack);
@@ -6506,9 +5079,8 @@ namespace org.noname
                     case 73:
                         if(pack == null) return new MISSION_ITEM_INT();
                         break;
-                    case 138:
-                        if(pack == null) return new ATT_POS_MOCAP();
-                        OnATT_POS_MOCAPReceive(this, ph, (ATT_POS_MOCAP) pack);//no any host channels can receive this pack. Handle it with test channel handler
+                    case 74:
+                        if(pack == null) return new VFR_HUD();
                         break;
                     case 139:
                         if(pack == null) return new SET_ACTUATOR_CONTROL_TARGET();
@@ -6767,3527 +5339,3599 @@ namespace org.noname
             Inside PH = new Inside();
             CommunicationChannel.instance.OnHEARTBEATReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.autopilot == (MAV_AUTOPILOT)MAV_AUTOPILOT.MAV_AUTOPILOT_GENERIC_MISSION_FULL);
-                Debug.Assert(pack.mavlink_version == (byte)(byte)96);
-                Debug.Assert(pack.custom_mode == (uint)1411729035U);
-                Debug.Assert(pack.system_status == (MAV_STATE)MAV_STATE.MAV_STATE_CALIBRATING);
-                Debug.Assert(pack.base_mode == (MAV_MODE_FLAG)MAV_MODE_FLAG.MAV_MODE_FLAG_STABILIZE_ENABLED);
-                Debug.Assert(pack.type == (MAV_TYPE)MAV_TYPE.MAV_TYPE_VTOL_RESERVED2);
+                Debug.Assert(pack.system_status == MAV_STATE.MAV_STATE_BOOT);
+                Debug.Assert(pack.custom_mode == (uint)346394411U);
+                Debug.Assert(pack.base_mode == (MAV_MODE_FLAG.MAV_MODE_FLAG_SAFETY_ARMED));
+                Debug.Assert(pack.autopilot == MAV_AUTOPILOT.MAV_AUTOPILOT_SMACCMPILOT);
+                Debug.Assert(pack.type == MAV_TYPE.MAV_TYPE_SUBMARINE);
+                Debug.Assert(pack.mavlink_version == (byte)(byte)86);
             };
             HEARTBEAT p0 = new HEARTBEAT();
             PH.setPack(p0);
-            p0.system_status = (MAV_STATE)MAV_STATE.MAV_STATE_CALIBRATING;
-            p0.mavlink_version = (byte)(byte)96;
-            p0.custom_mode = (uint)1411729035U;
-            p0.type = (MAV_TYPE)MAV_TYPE.MAV_TYPE_VTOL_RESERVED2;
-            p0.base_mode = (MAV_MODE_FLAG)MAV_MODE_FLAG.MAV_MODE_FLAG_STABILIZE_ENABLED;
-            p0.autopilot = (MAV_AUTOPILOT)MAV_AUTOPILOT.MAV_AUTOPILOT_GENERIC_MISSION_FULL;
+            p0.mavlink_version = (byte)(byte)86;
+            p0.autopilot = MAV_AUTOPILOT.MAV_AUTOPILOT_SMACCMPILOT;
+            p0.base_mode = (MAV_MODE_FLAG.MAV_MODE_FLAG_SAFETY_ARMED);
+            p0.system_status = MAV_STATE.MAV_STATE_BOOT;
+            p0.type = MAV_TYPE.MAV_TYPE_SUBMARINE;
+            p0.custom_mode = (uint)346394411U;
             ADV_TEST_CH.send(p0);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSYS_STATUSReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.onboard_control_sensors_health == (MAV_SYS_STATUS_SENSOR)MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE);
-                Debug.Assert(pack.errors_count4 == (ushort)(ushort)60187);
-                Debug.Assert(pack.current_battery == (short)(short)26238);
-                Debug.Assert(pack.errors_count3 == (ushort)(ushort)43844);
-                Debug.Assert(pack.errors_count2 == (ushort)(ushort)31996);
-                Debug.Assert(pack.onboard_control_sensors_present == (MAV_SYS_STATUS_SENSOR)MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_GEOFENCE);
-                Debug.Assert(pack.voltage_battery == (ushort)(ushort)41451);
-                Debug.Assert(pack.errors_comm == (ushort)(ushort)22367);
-                Debug.Assert(pack.errors_count1 == (ushort)(ushort)36256);
-                Debug.Assert(pack.onboard_control_sensors_enabled == (MAV_SYS_STATUS_SENSOR)MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL);
-                Debug.Assert(pack.drop_rate_comm == (ushort)(ushort)36802);
-                Debug.Assert(pack.battery_remaining == (sbyte)(sbyte)125);
-                Debug.Assert(pack.load == (ushort)(ushort)38051);
+                Debug.Assert(pack.onboard_control_sensors_present == (MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO2 |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_TERRAIN |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_LASER_POSITION |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL2 |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_RC_RECEIVER |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_AHRS |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_REVERSE_MOTOR |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_LOGGING |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_YAW_POSITION |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW));
+                Debug.Assert(pack.onboard_control_sensors_health == (MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL2 |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO |
+                             MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_RC_RECEIVER));
+                Debug.Assert(pack.onboard_control_sensors_enabled == (MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO));
+                Debug.Assert(pack.errors_count1 == (ushort)(ushort)19925);
+                Debug.Assert(pack.drop_rate_comm == (ushort)(ushort)45361);
+                Debug.Assert(pack.battery_remaining == (sbyte)(sbyte) - 116);
+                Debug.Assert(pack.current_battery == (short)(short) -31411);
+                Debug.Assert(pack.errors_count2 == (ushort)(ushort)30179);
+                Debug.Assert(pack.errors_count3 == (ushort)(ushort)56695);
+                Debug.Assert(pack.voltage_battery == (ushort)(ushort)1397);
+                Debug.Assert(pack.errors_count4 == (ushort)(ushort)38935);
+                Debug.Assert(pack.errors_comm == (ushort)(ushort)148);
+                Debug.Assert(pack.load == (ushort)(ushort)30914);
             };
             SYS_STATUS p1 = new SYS_STATUS();
             PH.setPack(p1);
-            p1.onboard_control_sensors_enabled = (MAV_SYS_STATUS_SENSOR)MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL;
-            p1.onboard_control_sensors_health = (MAV_SYS_STATUS_SENSOR)MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE;
-            p1.errors_count1 = (ushort)(ushort)36256;
-            p1.onboard_control_sensors_present = (MAV_SYS_STATUS_SENSOR)MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_GEOFENCE;
-            p1.drop_rate_comm = (ushort)(ushort)36802;
-            p1.errors_count2 = (ushort)(ushort)31996;
-            p1.voltage_battery = (ushort)(ushort)41451;
-            p1.errors_count3 = (ushort)(ushort)43844;
-            p1.errors_comm = (ushort)(ushort)22367;
-            p1.current_battery = (short)(short)26238;
-            p1.load = (ushort)(ushort)38051;
-            p1.battery_remaining = (sbyte)(sbyte)125;
-            p1.errors_count4 = (ushort)(ushort)60187;
+            p1.current_battery = (short)(short) -31411;
+            p1.voltage_battery = (ushort)(ushort)1397;
+            p1.onboard_control_sensors_enabled = (MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO);
+            p1.battery_remaining = (sbyte)(sbyte) - 116;
+            p1.onboard_control_sensors_present = (MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG |
+                                                  MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO2 |
+                                                  MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_TERRAIN |
+                                                  MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_LASER_POSITION |
+                                                  MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL2 |
+                                                  MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_RC_RECEIVER |
+                                                  MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL |
+                                                  MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION |
+                                                  MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_AHRS |
+                                                  MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_REVERSE_MOTOR |
+                                                  MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_LOGGING |
+                                                  MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL |
+                                                  MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_YAW_POSITION |
+                                                  MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW);
+            p1.errors_count3 = (ushort)(ushort)56695;
+            p1.drop_rate_comm = (ushort)(ushort)45361;
+            p1.errors_count1 = (ushort)(ushort)19925;
+            p1.onboard_control_sensors_health = (MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL2 |
+                                                 MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO |
+                                                 MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_RC_RECEIVER);
+            p1.errors_count2 = (ushort)(ushort)30179;
+            p1.errors_count4 = (ushort)(ushort)38935;
+            p1.errors_comm = (ushort)(ushort)148;
+            p1.load = (ushort)(ushort)30914;
             ADV_TEST_CH.send(p1);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSYSTEM_TIMEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.time_unix_usec == (ulong)1956992383840547691L);
-                Debug.Assert(pack.time_boot_ms == (uint)45844501U);
+                Debug.Assert(pack.time_unix_usec == (ulong)4220116390931598215L);
+                Debug.Assert(pack.time_boot_ms == (uint)3638772475U);
             };
             SYSTEM_TIME p2 = new SYSTEM_TIME();
             PH.setPack(p2);
-            p2.time_unix_usec = (ulong)1956992383840547691L;
-            p2.time_boot_ms = (uint)45844501U;
+            p2.time_unix_usec = (ulong)4220116390931598215L;
+            p2.time_boot_ms = (uint)3638772475U;
             ADV_TEST_CH.send(p2);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnPOSITION_TARGET_LOCAL_NEDReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.z == (float) -1.908199E38F);
-                Debug.Assert(pack.coordinate_frame == (MAV_FRAME)MAV_FRAME.MAV_FRAME_GLOBAL_INT);
-                Debug.Assert(pack.yaw == (float)2.1110751E38F);
-                Debug.Assert(pack.afx == (float)2.7659941E38F);
-                Debug.Assert(pack.vx == (float) -3.252622E38F);
-                Debug.Assert(pack.type_mask == (ushort)(ushort)62624);
-                Debug.Assert(pack.vy == (float)1.9883657E36F);
-                Debug.Assert(pack.time_boot_ms == (uint)1437509979U);
-                Debug.Assert(pack.x == (float) -1.2893719E38F);
-                Debug.Assert(pack.vz == (float) -2.8655128E38F);
-                Debug.Assert(pack.y == (float)1.708561E38F);
-                Debug.Assert(pack.yaw_rate == (float)1.5607491E38F);
-                Debug.Assert(pack.afy == (float)1.4302215E38F);
-                Debug.Assert(pack.afz == (float) -2.507065E38F);
+                Debug.Assert(pack.vz == (float) -3.2432934E38F);
+                Debug.Assert(pack.coordinate_frame == MAV_FRAME.MAV_FRAME_BODY_OFFSET_NED);
+                Debug.Assert(pack.yaw_rate == (float) -3.1907435E37F);
+                Debug.Assert(pack.z == (float) -2.9561058E38F);
+                Debug.Assert(pack.vy == (float)2.285409E38F);
+                Debug.Assert(pack.time_boot_ms == (uint)1660760328U);
+                Debug.Assert(pack.type_mask == (ushort)(ushort)65188);
+                Debug.Assert(pack.y == (float)1.2204557E38F);
+                Debug.Assert(pack.afz == (float) -2.4511785E38F);
+                Debug.Assert(pack.vx == (float) -3.2565062E38F);
+                Debug.Assert(pack.afy == (float)3.1615474E38F);
+                Debug.Assert(pack.x == (float) -2.2988817E38F);
+                Debug.Assert(pack.afx == (float) -2.3855527E38F);
+                Debug.Assert(pack.yaw == (float)1.9421285E38F);
             };
             GroundControl.POSITION_TARGET_LOCAL_NED p3 = CommunicationChannel.new_POSITION_TARGET_LOCAL_NED();
             PH.setPack(p3);
-            p3.z = (float) -1.908199E38F;
-            p3.yaw_rate = (float)1.5607491E38F;
-            p3.x = (float) -1.2893719E38F;
-            p3.vz = (float) -2.8655128E38F;
-            p3.vx = (float) -3.252622E38F;
-            p3.coordinate_frame = (MAV_FRAME)MAV_FRAME.MAV_FRAME_GLOBAL_INT;
-            p3.y = (float)1.708561E38F;
-            p3.vy = (float)1.9883657E36F;
-            p3.afx = (float)2.7659941E38F;
-            p3.time_boot_ms = (uint)1437509979U;
-            p3.type_mask = (ushort)(ushort)62624;
-            p3.afy = (float)1.4302215E38F;
-            p3.afz = (float) -2.507065E38F;
-            p3.yaw = (float)2.1110751E38F;
+            p3.afy = (float)3.1615474E38F;
+            p3.coordinate_frame = MAV_FRAME.MAV_FRAME_BODY_OFFSET_NED;
+            p3.vy = (float)2.285409E38F;
+            p3.type_mask = (ushort)(ushort)65188;
+            p3.vz = (float) -3.2432934E38F;
+            p3.vx = (float) -3.2565062E38F;
+            p3.x = (float) -2.2988817E38F;
+            p3.z = (float) -2.9561058E38F;
+            p3.afx = (float) -2.3855527E38F;
+            p3.y = (float)1.2204557E38F;
+            p3.time_boot_ms = (uint)1660760328U;
+            p3.yaw = (float)1.9421285E38F;
+            p3.yaw_rate = (float) -3.1907435E37F;
+            p3.afz = (float) -2.4511785E38F;
             CommunicationChannel.instance.send(p3);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnPINGReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_system == (byte)(byte)121);
-                Debug.Assert(pack.seq == (uint)2428941260U);
-                Debug.Assert(pack.time_usec == (ulong)5815009036843491979L);
-                Debug.Assert(pack.target_component == (byte)(byte)181);
+                Debug.Assert(pack.seq == (uint)522283805U);
+                Debug.Assert(pack.time_usec == (ulong)7389086267864437660L);
+                Debug.Assert(pack.target_system == (byte)(byte)190);
+                Debug.Assert(pack.target_component == (byte)(byte)92);
             };
             PING p4 = new PING();
             PH.setPack(p4);
-            p4.target_system = (byte)(byte)121;
-            p4.time_usec = (ulong)5815009036843491979L;
-            p4.target_component = (byte)(byte)181;
-            p4.seq = (uint)2428941260U;
+            p4.target_component = (byte)(byte)92;
+            p4.time_usec = (ulong)7389086267864437660L;
+            p4.seq = (uint)522283805U;
+            p4.target_system = (byte)(byte)190;
             ADV_TEST_CH.send(p4);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnCHANGE_OPERATOR_CONTROLReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.passkey_LEN(ph) == 21);
-                Debug.Assert(pack.passkey_TRY(ph).Equals("ebuteucsmbiTbwbjddJqf"));
-                Debug.Assert(pack.version == (byte)(byte)89);
-                Debug.Assert(pack.control_request == (byte)(byte)175);
-                Debug.Assert(pack.target_system == (byte)(byte)249);
+                Debug.Assert(pack.control_request == (byte)(byte)218);
+                Debug.Assert(pack.target_system == (byte)(byte)118);
+                Debug.Assert(pack.version == (byte)(byte)253);
+                Debug.Assert(pack.passkey_LEN(ph) == 8);
+                Debug.Assert(pack.passkey_TRY(ph).Equals("ueiubdrd"));
             };
             CHANGE_OPERATOR_CONTROL p5 = new CHANGE_OPERATOR_CONTROL();
             PH.setPack(p5);
-            p5.version = (byte)(byte)89;
-            p5.target_system = (byte)(byte)249;
-            p5.control_request = (byte)(byte)175;
-            p5.passkey_SET("ebuteucsmbiTbwbjddJqf", PH) ;
+            p5.version = (byte)(byte)253;
+            p5.passkey_SET("ueiubdrd", PH) ;
+            p5.control_request = (byte)(byte)218;
+            p5.target_system = (byte)(byte)118;
             ADV_TEST_CH.send(p5);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnCHANGE_OPERATOR_CONTROL_ACKReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.ack == (byte)(byte)171);
-                Debug.Assert(pack.control_request == (byte)(byte)240);
-                Debug.Assert(pack.gcs_system_id == (byte)(byte)136);
+                Debug.Assert(pack.ack == (byte)(byte)243);
+                Debug.Assert(pack.gcs_system_id == (byte)(byte)223);
+                Debug.Assert(pack.control_request == (byte)(byte)239);
             };
             CHANGE_OPERATOR_CONTROL_ACK p6 = new CHANGE_OPERATOR_CONTROL_ACK();
             PH.setPack(p6);
-            p6.gcs_system_id = (byte)(byte)136;
-            p6.ack = (byte)(byte)171;
-            p6.control_request = (byte)(byte)240;
+            p6.gcs_system_id = (byte)(byte)223;
+            p6.ack = (byte)(byte)243;
+            p6.control_request = (byte)(byte)239;
             ADV_TEST_CH.send(p6);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnAUTH_KEYReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.key_LEN(ph) == 2);
-                Debug.Assert(pack.key_TRY(ph).Equals("pl"));
+                Debug.Assert(pack.key_LEN(ph) == 28);
+                Debug.Assert(pack.key_TRY(ph).Equals("kcrqxjlxrvizviejdujxmzytqurx"));
             };
             AUTH_KEY p7 = new AUTH_KEY();
             PH.setPack(p7);
-            p7.key_SET("pl", PH) ;
+            p7.key_SET("kcrqxjlxrvizviejdujxmzytqurx", PH) ;
             ADV_TEST_CH.send(p7);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSET_MODEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_system == (byte)(byte)198);
-                Debug.Assert(pack.base_mode == (MAV_MODE)MAV_MODE.MAV_MODE_PREFLIGHT);
-                Debug.Assert(pack.custom_mode == (uint)263714717U);
+                Debug.Assert(pack.target_system == (byte)(byte)124);
+                Debug.Assert(pack.base_mode == MAV_MODE.MAV_MODE_MANUAL_DISARMED);
+                Debug.Assert(pack.custom_mode == (uint)1201363744U);
             };
             SET_MODE p11 = new SET_MODE();
             PH.setPack(p11);
-            p11.target_system = (byte)(byte)198;
-            p11.custom_mode = (uint)263714717U;
-            p11.base_mode = (MAV_MODE)MAV_MODE.MAV_MODE_PREFLIGHT;
+            p11.base_mode = MAV_MODE.MAV_MODE_MANUAL_DISARMED;
+            p11.target_system = (byte)(byte)124;
+            p11.custom_mode = (uint)1201363744U;
             ADV_TEST_CH.send(p11);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnPARAM_REQUEST_READReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.param_index == (short)(short)9132);
-                Debug.Assert(pack.param_id_LEN(ph) == 2);
-                Debug.Assert(pack.param_id_TRY(ph).Equals("Uk"));
-                Debug.Assert(pack.target_system == (byte)(byte)150);
-                Debug.Assert(pack.target_component == (byte)(byte)33);
+                Debug.Assert(pack.target_component == (byte)(byte)52);
+                Debug.Assert(pack.param_id_LEN(ph) == 6);
+                Debug.Assert(pack.param_id_TRY(ph).Equals("IcwnrP"));
+                Debug.Assert(pack.target_system == (byte)(byte)112);
+                Debug.Assert(pack.param_index == (short)(short) -23164);
             };
             PARAM_REQUEST_READ p20 = new PARAM_REQUEST_READ();
             PH.setPack(p20);
-            p20.param_index = (short)(short)9132;
-            p20.param_id_SET("Uk", PH) ;
-            p20.target_system = (byte)(byte)150;
-            p20.target_component = (byte)(byte)33;
+            p20.param_id_SET("IcwnrP", PH) ;
+            p20.param_index = (short)(short) -23164;
+            p20.target_system = (byte)(byte)112;
+            p20.target_component = (byte)(byte)52;
             ADV_TEST_CH.send(p20);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnPARAM_REQUEST_LISTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_component == (byte)(byte)99);
-                Debug.Assert(pack.target_system == (byte)(byte)8);
+                Debug.Assert(pack.target_system == (byte)(byte)29);
+                Debug.Assert(pack.target_component == (byte)(byte)48);
             };
             PARAM_REQUEST_LIST p21 = new PARAM_REQUEST_LIST();
             PH.setPack(p21);
-            p21.target_component = (byte)(byte)99;
-            p21.target_system = (byte)(byte)8;
+            p21.target_system = (byte)(byte)29;
+            p21.target_component = (byte)(byte)48;
             ADV_TEST_CH.send(p21);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnPARAM_VALUEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.param_type == (MAV_PARAM_TYPE)MAV_PARAM_TYPE.MAV_PARAM_TYPE_UINT32);
-                Debug.Assert(pack.param_value == (float)3.3007537E38F);
-                Debug.Assert(pack.param_count == (ushort)(ushort)27426);
-                Debug.Assert(pack.param_index == (ushort)(ushort)54328);
-                Debug.Assert(pack.param_id_LEN(ph) == 14);
-                Debug.Assert(pack.param_id_TRY(ph).Equals("ysbkakqhluudcv"));
+                Debug.Assert(pack.param_index == (ushort)(ushort)23408);
+                Debug.Assert(pack.param_id_LEN(ph) == 9);
+                Debug.Assert(pack.param_id_TRY(ph).Equals("kxesqbehz"));
+                Debug.Assert(pack.param_count == (ushort)(ushort)2036);
+                Debug.Assert(pack.param_value == (float) -2.4011178E38F);
+                Debug.Assert(pack.param_type == MAV_PARAM_TYPE.MAV_PARAM_TYPE_INT64);
             };
             PARAM_VALUE p22 = new PARAM_VALUE();
             PH.setPack(p22);
-            p22.param_index = (ushort)(ushort)54328;
-            p22.param_type = (MAV_PARAM_TYPE)MAV_PARAM_TYPE.MAV_PARAM_TYPE_UINT32;
-            p22.param_id_SET("ysbkakqhluudcv", PH) ;
-            p22.param_value = (float)3.3007537E38F;
-            p22.param_count = (ushort)(ushort)27426;
+            p22.param_value = (float) -2.4011178E38F;
+            p22.param_type = MAV_PARAM_TYPE.MAV_PARAM_TYPE_INT64;
+            p22.param_index = (ushort)(ushort)23408;
+            p22.param_count = (ushort)(ushort)2036;
+            p22.param_id_SET("kxesqbehz", PH) ;
             ADV_TEST_CH.send(p22);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnPARAM_SETReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_system == (byte)(byte)66);
-                Debug.Assert(pack.param_id_LEN(ph) == 8);
-                Debug.Assert(pack.param_id_TRY(ph).Equals("fvbnilfp"));
-                Debug.Assert(pack.param_type == (MAV_PARAM_TYPE)MAV_PARAM_TYPE.MAV_PARAM_TYPE_UINT64);
-                Debug.Assert(pack.param_value == (float)1.1272357E38F);
-                Debug.Assert(pack.target_component == (byte)(byte)43);
+                Debug.Assert(pack.param_value == (float)1.4480614E38F);
+                Debug.Assert(pack.param_type == MAV_PARAM_TYPE.MAV_PARAM_TYPE_UINT16);
+                Debug.Assert(pack.target_component == (byte)(byte)57);
+                Debug.Assert(pack.param_id_LEN(ph) == 3);
+                Debug.Assert(pack.param_id_TRY(ph).Equals("okq"));
+                Debug.Assert(pack.target_system == (byte)(byte)218);
             };
             PARAM_SET p23 = new PARAM_SET();
             PH.setPack(p23);
-            p23.param_id_SET("fvbnilfp", PH) ;
-            p23.param_type = (MAV_PARAM_TYPE)MAV_PARAM_TYPE.MAV_PARAM_TYPE_UINT64;
-            p23.target_component = (byte)(byte)43;
-            p23.param_value = (float)1.1272357E38F;
-            p23.target_system = (byte)(byte)66;
+            p23.target_component = (byte)(byte)57;
+            p23.param_id_SET("okq", PH) ;
+            p23.param_value = (float)1.4480614E38F;
+            p23.param_type = MAV_PARAM_TYPE.MAV_PARAM_TYPE_UINT16;
+            p23.target_system = (byte)(byte)218;
             ADV_TEST_CH.send(p23);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnGPS_RAW_INTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.fix_type == (GPS_FIX_TYPE)GPS_FIX_TYPE.GPS_FIX_TYPE_NO_GPS);
-                Debug.Assert(pack.h_acc_TRY(ph) == (uint)1496516950U);
-                Debug.Assert(pack.hdg_acc_TRY(ph) == (uint)3234173984U);
-                Debug.Assert(pack.lat == (int)1482445225);
-                Debug.Assert(pack.vel_acc_TRY(ph) == (uint)2464607561U);
-                Debug.Assert(pack.vel == (ushort)(ushort)15936);
-                Debug.Assert(pack.time_usec == (ulong)9126517564282504155L);
-                Debug.Assert(pack.satellites_visible == (byte)(byte)119);
-                Debug.Assert(pack.lon == (int) -1346512843);
-                Debug.Assert(pack.v_acc_TRY(ph) == (uint)1423344835U);
-                Debug.Assert(pack.cog == (ushort)(ushort)64290);
-                Debug.Assert(pack.eph == (ushort)(ushort)24360);
-                Debug.Assert(pack.alt == (int) -231460883);
-                Debug.Assert(pack.epv == (ushort)(ushort)46440);
-                Debug.Assert(pack.alt_ellipsoid_TRY(ph) == (int) -280710328);
+                Debug.Assert(pack.hdg_acc_TRY(ph) == (uint)3333127657U);
+                Debug.Assert(pack.alt == (int) -472943329);
+                Debug.Assert(pack.lat == (int) -1540701592);
+                Debug.Assert(pack.cog == (ushort)(ushort)22219);
+                Debug.Assert(pack.h_acc_TRY(ph) == (uint)1022403009U);
+                Debug.Assert(pack.eph == (ushort)(ushort)8126);
+                Debug.Assert(pack.time_usec == (ulong)4580595312339320083L);
+                Debug.Assert(pack.fix_type == GPS_FIX_TYPE.GPS_FIX_TYPE_RTK_FIXED);
+                Debug.Assert(pack.epv == (ushort)(ushort)23069);
+                Debug.Assert(pack.v_acc_TRY(ph) == (uint)2586938034U);
+                Debug.Assert(pack.vel == (ushort)(ushort)53561);
+                Debug.Assert(pack.alt_ellipsoid_TRY(ph) == (int)1466999069);
+                Debug.Assert(pack.satellites_visible == (byte)(byte)96);
+                Debug.Assert(pack.vel_acc_TRY(ph) == (uint)3088380258U);
+                Debug.Assert(pack.lon == (int) -533013898);
             };
             GPS_RAW_INT p24 = new GPS_RAW_INT();
             PH.setPack(p24);
-            p24.vel_acc_SET((uint)2464607561U, PH) ;
-            p24.v_acc_SET((uint)1423344835U, PH) ;
-            p24.cog = (ushort)(ushort)64290;
-            p24.time_usec = (ulong)9126517564282504155L;
-            p24.satellites_visible = (byte)(byte)119;
-            p24.hdg_acc_SET((uint)3234173984U, PH) ;
-            p24.alt_ellipsoid_SET((int) -280710328, PH) ;
-            p24.alt = (int) -231460883;
-            p24.lat = (int)1482445225;
-            p24.h_acc_SET((uint)1496516950U, PH) ;
-            p24.lon = (int) -1346512843;
-            p24.eph = (ushort)(ushort)24360;
-            p24.fix_type = (GPS_FIX_TYPE)GPS_FIX_TYPE.GPS_FIX_TYPE_NO_GPS;
-            p24.vel = (ushort)(ushort)15936;
-            p24.epv = (ushort)(ushort)46440;
+            p24.epv = (ushort)(ushort)23069;
+            p24.v_acc_SET((uint)2586938034U, PH) ;
+            p24.alt = (int) -472943329;
+            p24.satellites_visible = (byte)(byte)96;
+            p24.time_usec = (ulong)4580595312339320083L;
+            p24.h_acc_SET((uint)1022403009U, PH) ;
+            p24.hdg_acc_SET((uint)3333127657U, PH) ;
+            p24.cog = (ushort)(ushort)22219;
+            p24.lat = (int) -1540701592;
+            p24.vel_acc_SET((uint)3088380258U, PH) ;
+            p24.alt_ellipsoid_SET((int)1466999069, PH) ;
+            p24.fix_type = GPS_FIX_TYPE.GPS_FIX_TYPE_RTK_FIXED;
+            p24.vel = (ushort)(ushort)53561;
+            p24.lon = (int) -533013898;
+            p24.eph = (ushort)(ushort)8126;
             ADV_TEST_CH.send(p24);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnGPS_STATUSReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.satellite_elevation.SequenceEqual(new byte[] {(byte)249, (byte)234, (byte)109, (byte)183, (byte)192, (byte)131, (byte)35, (byte)197, (byte)165, (byte)100, (byte)224, (byte)55, (byte)90, (byte)61, (byte)185, (byte)161, (byte)172, (byte)87, (byte)114, (byte)132}));
-                Debug.Assert(pack.satellites_visible == (byte)(byte)153);
-                Debug.Assert(pack.satellite_prn.SequenceEqual(new byte[] {(byte)250, (byte)56, (byte)124, (byte)177, (byte)88, (byte)19, (byte)161, (byte)27, (byte)35, (byte)186, (byte)72, (byte)189, (byte)138, (byte)118, (byte)192, (byte)238, (byte)29, (byte)38, (byte)215, (byte)196}));
-                Debug.Assert(pack.satellite_snr.SequenceEqual(new byte[] {(byte)115, (byte)81, (byte)187, (byte)211, (byte)150, (byte)24, (byte)40, (byte)182, (byte)120, (byte)100, (byte)214, (byte)169, (byte)53, (byte)251, (byte)48, (byte)200, (byte)153, (byte)188, (byte)218, (byte)161}));
-                Debug.Assert(pack.satellite_azimuth.SequenceEqual(new byte[] {(byte)240, (byte)1, (byte)120, (byte)129, (byte)218, (byte)167, (byte)229, (byte)237, (byte)179, (byte)5, (byte)85, (byte)22, (byte)241, (byte)154, (byte)13, (byte)61, (byte)238, (byte)232, (byte)153, (byte)21}));
-                Debug.Assert(pack.satellite_used.SequenceEqual(new byte[] {(byte)5, (byte)66, (byte)194, (byte)188, (byte)170, (byte)36, (byte)7, (byte)215, (byte)224, (byte)71, (byte)109, (byte)132, (byte)167, (byte)42, (byte)151, (byte)150, (byte)40, (byte)66, (byte)205, (byte)13}));
+                Debug.Assert(pack.satellite_snr.SequenceEqual(new byte[] {(byte)249, (byte)103, (byte)28, (byte)29, (byte)48, (byte)82, (byte)92, (byte)226, (byte)198, (byte)91, (byte)222, (byte)19, (byte)93, (byte)90, (byte)215, (byte)0, (byte)207, (byte)123, (byte)249, (byte)233}));
+                Debug.Assert(pack.satellite_azimuth.SequenceEqual(new byte[] {(byte)9, (byte)41, (byte)97, (byte)201, (byte)29, (byte)139, (byte)173, (byte)184, (byte)138, (byte)166, (byte)62, (byte)30, (byte)84, (byte)139, (byte)152, (byte)134, (byte)168, (byte)193, (byte)9, (byte)204}));
+                Debug.Assert(pack.satellite_prn.SequenceEqual(new byte[] {(byte)82, (byte)229, (byte)7, (byte)227, (byte)82, (byte)14, (byte)18, (byte)16, (byte)128, (byte)159, (byte)43, (byte)13, (byte)222, (byte)121, (byte)90, (byte)22, (byte)221, (byte)123, (byte)61, (byte)137}));
+                Debug.Assert(pack.satellite_elevation.SequenceEqual(new byte[] {(byte)56, (byte)122, (byte)95, (byte)72, (byte)104, (byte)83, (byte)187, (byte)120, (byte)13, (byte)57, (byte)77, (byte)205, (byte)217, (byte)226, (byte)238, (byte)111, (byte)120, (byte)7, (byte)74, (byte)63}));
+                Debug.Assert(pack.satellite_used.SequenceEqual(new byte[] {(byte)167, (byte)231, (byte)24, (byte)253, (byte)124, (byte)174, (byte)180, (byte)28, (byte)3, (byte)153, (byte)214, (byte)145, (byte)214, (byte)138, (byte)219, (byte)79, (byte)226, (byte)122, (byte)92, (byte)149}));
+                Debug.Assert(pack.satellites_visible == (byte)(byte)186);
             };
             GPS_STATUS p25 = new GPS_STATUS();
             PH.setPack(p25);
-            p25.satellite_used_SET(new byte[] {(byte)5, (byte)66, (byte)194, (byte)188, (byte)170, (byte)36, (byte)7, (byte)215, (byte)224, (byte)71, (byte)109, (byte)132, (byte)167, (byte)42, (byte)151, (byte)150, (byte)40, (byte)66, (byte)205, (byte)13}, 0) ;
-            p25.satellite_snr_SET(new byte[] {(byte)115, (byte)81, (byte)187, (byte)211, (byte)150, (byte)24, (byte)40, (byte)182, (byte)120, (byte)100, (byte)214, (byte)169, (byte)53, (byte)251, (byte)48, (byte)200, (byte)153, (byte)188, (byte)218, (byte)161}, 0) ;
-            p25.satellite_prn_SET(new byte[] {(byte)250, (byte)56, (byte)124, (byte)177, (byte)88, (byte)19, (byte)161, (byte)27, (byte)35, (byte)186, (byte)72, (byte)189, (byte)138, (byte)118, (byte)192, (byte)238, (byte)29, (byte)38, (byte)215, (byte)196}, 0) ;
-            p25.satellites_visible = (byte)(byte)153;
-            p25.satellite_azimuth_SET(new byte[] {(byte)240, (byte)1, (byte)120, (byte)129, (byte)218, (byte)167, (byte)229, (byte)237, (byte)179, (byte)5, (byte)85, (byte)22, (byte)241, (byte)154, (byte)13, (byte)61, (byte)238, (byte)232, (byte)153, (byte)21}, 0) ;
-            p25.satellite_elevation_SET(new byte[] {(byte)249, (byte)234, (byte)109, (byte)183, (byte)192, (byte)131, (byte)35, (byte)197, (byte)165, (byte)100, (byte)224, (byte)55, (byte)90, (byte)61, (byte)185, (byte)161, (byte)172, (byte)87, (byte)114, (byte)132}, 0) ;
+            p25.satellite_snr_SET(new byte[] {(byte)249, (byte)103, (byte)28, (byte)29, (byte)48, (byte)82, (byte)92, (byte)226, (byte)198, (byte)91, (byte)222, (byte)19, (byte)93, (byte)90, (byte)215, (byte)0, (byte)207, (byte)123, (byte)249, (byte)233}, 0) ;
+            p25.satellites_visible = (byte)(byte)186;
+            p25.satellite_elevation_SET(new byte[] {(byte)56, (byte)122, (byte)95, (byte)72, (byte)104, (byte)83, (byte)187, (byte)120, (byte)13, (byte)57, (byte)77, (byte)205, (byte)217, (byte)226, (byte)238, (byte)111, (byte)120, (byte)7, (byte)74, (byte)63}, 0) ;
+            p25.satellite_azimuth_SET(new byte[] {(byte)9, (byte)41, (byte)97, (byte)201, (byte)29, (byte)139, (byte)173, (byte)184, (byte)138, (byte)166, (byte)62, (byte)30, (byte)84, (byte)139, (byte)152, (byte)134, (byte)168, (byte)193, (byte)9, (byte)204}, 0) ;
+            p25.satellite_used_SET(new byte[] {(byte)167, (byte)231, (byte)24, (byte)253, (byte)124, (byte)174, (byte)180, (byte)28, (byte)3, (byte)153, (byte)214, (byte)145, (byte)214, (byte)138, (byte)219, (byte)79, (byte)226, (byte)122, (byte)92, (byte)149}, 0) ;
+            p25.satellite_prn_SET(new byte[] {(byte)82, (byte)229, (byte)7, (byte)227, (byte)82, (byte)14, (byte)18, (byte)16, (byte)128, (byte)159, (byte)43, (byte)13, (byte)222, (byte)121, (byte)90, (byte)22, (byte)221, (byte)123, (byte)61, (byte)137}, 0) ;
             ADV_TEST_CH.send(p25);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSCALED_IMUReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.zacc == (short)(short)23533);
-                Debug.Assert(pack.xgyro == (short)(short) -177);
-                Debug.Assert(pack.xmag == (short)(short) -19532);
-                Debug.Assert(pack.yacc == (short)(short) -31863);
-                Debug.Assert(pack.zmag == (short)(short) -26822);
-                Debug.Assert(pack.zgyro == (short)(short) -968);
-                Debug.Assert(pack.ygyro == (short)(short) -16707);
-                Debug.Assert(pack.time_boot_ms == (uint)3818475959U);
-                Debug.Assert(pack.ymag == (short)(short) -29511);
-                Debug.Assert(pack.xacc == (short)(short)17945);
+                Debug.Assert(pack.xmag == (short)(short)21830);
+                Debug.Assert(pack.zacc == (short)(short) -18494);
+                Debug.Assert(pack.xgyro == (short)(short) -1780);
+                Debug.Assert(pack.ymag == (short)(short)15569);
+                Debug.Assert(pack.time_boot_ms == (uint)103522588U);
+                Debug.Assert(pack.zmag == (short)(short)20064);
+                Debug.Assert(pack.zgyro == (short)(short)26714);
+                Debug.Assert(pack.yacc == (short)(short)20644);
+                Debug.Assert(pack.ygyro == (short)(short)25625);
+                Debug.Assert(pack.xacc == (short)(short) -31701);
             };
             SCALED_IMU p26 = new SCALED_IMU();
             PH.setPack(p26);
-            p26.yacc = (short)(short) -31863;
-            p26.xgyro = (short)(short) -177;
-            p26.ygyro = (short)(short) -16707;
-            p26.zgyro = (short)(short) -968;
-            p26.ymag = (short)(short) -29511;
-            p26.xacc = (short)(short)17945;
-            p26.zacc = (short)(short)23533;
-            p26.time_boot_ms = (uint)3818475959U;
-            p26.xmag = (short)(short) -19532;
-            p26.zmag = (short)(short) -26822;
+            p26.xmag = (short)(short)21830;
+            p26.zgyro = (short)(short)26714;
+            p26.xacc = (short)(short) -31701;
+            p26.xgyro = (short)(short) -1780;
+            p26.yacc = (short)(short)20644;
+            p26.time_boot_ms = (uint)103522588U;
+            p26.ygyro = (short)(short)25625;
+            p26.zacc = (short)(short) -18494;
+            p26.zmag = (short)(short)20064;
+            p26.ymag = (short)(short)15569;
             ADV_TEST_CH.send(p26);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnRAW_IMUReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.time_usec == (ulong)6086875354473160732L);
-                Debug.Assert(pack.zacc == (short)(short)9866);
-                Debug.Assert(pack.zgyro == (short)(short) -3915);
-                Debug.Assert(pack.xacc == (short)(short) -24284);
-                Debug.Assert(pack.xgyro == (short)(short) -31012);
-                Debug.Assert(pack.zmag == (short)(short)29679);
-                Debug.Assert(pack.ymag == (short)(short) -9711);
-                Debug.Assert(pack.xmag == (short)(short) -16793);
-                Debug.Assert(pack.ygyro == (short)(short) -28295);
-                Debug.Assert(pack.yacc == (short)(short) -12047);
+                Debug.Assert(pack.zmag == (short)(short) -18257);
+                Debug.Assert(pack.zgyro == (short)(short) -24410);
+                Debug.Assert(pack.xmag == (short)(short)4191);
+                Debug.Assert(pack.zacc == (short)(short) -29484);
+                Debug.Assert(pack.xacc == (short)(short) -25622);
+                Debug.Assert(pack.xgyro == (short)(short) -27816);
+                Debug.Assert(pack.ymag == (short)(short) -11895);
+                Debug.Assert(pack.yacc == (short)(short)3448);
+                Debug.Assert(pack.time_usec == (ulong)5822457459697229240L);
+                Debug.Assert(pack.ygyro == (short)(short)17190);
             };
             RAW_IMU p27 = new RAW_IMU();
             PH.setPack(p27);
-            p27.xgyro = (short)(short) -31012;
-            p27.time_usec = (ulong)6086875354473160732L;
-            p27.zgyro = (short)(short) -3915;
-            p27.ymag = (short)(short) -9711;
-            p27.xacc = (short)(short) -24284;
-            p27.xmag = (short)(short) -16793;
-            p27.zmag = (short)(short)29679;
-            p27.ygyro = (short)(short) -28295;
-            p27.zacc = (short)(short)9866;
-            p27.yacc = (short)(short) -12047;
+            p27.xgyro = (short)(short) -27816;
+            p27.ygyro = (short)(short)17190;
+            p27.zmag = (short)(short) -18257;
+            p27.zacc = (short)(short) -29484;
+            p27.time_usec = (ulong)5822457459697229240L;
+            p27.xacc = (short)(short) -25622;
+            p27.xmag = (short)(short)4191;
+            p27.yacc = (short)(short)3448;
+            p27.zgyro = (short)(short) -24410;
+            p27.ymag = (short)(short) -11895;
             ADV_TEST_CH.send(p27);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnRAW_PRESSUREReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.press_diff2 == (short)(short)5238);
-                Debug.Assert(pack.time_usec == (ulong)4741727380683769836L);
-                Debug.Assert(pack.temperature == (short)(short) -14591);
-                Debug.Assert(pack.press_diff1 == (short)(short)1833);
-                Debug.Assert(pack.press_abs == (short)(short)23708);
+                Debug.Assert(pack.temperature == (short)(short)29421);
+                Debug.Assert(pack.time_usec == (ulong)4266559262460303624L);
+                Debug.Assert(pack.press_diff1 == (short)(short) -21831);
+                Debug.Assert(pack.press_diff2 == (short)(short)22991);
+                Debug.Assert(pack.press_abs == (short)(short)32383);
             };
             RAW_PRESSURE p28 = new RAW_PRESSURE();
             PH.setPack(p28);
-            p28.temperature = (short)(short) -14591;
-            p28.press_diff1 = (short)(short)1833;
-            p28.time_usec = (ulong)4741727380683769836L;
-            p28.press_diff2 = (short)(short)5238;
-            p28.press_abs = (short)(short)23708;
+            p28.temperature = (short)(short)29421;
+            p28.press_diff1 = (short)(short) -21831;
+            p28.press_abs = (short)(short)32383;
+            p28.time_usec = (ulong)4266559262460303624L;
+            p28.press_diff2 = (short)(short)22991;
             ADV_TEST_CH.send(p28);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSCALED_PRESSUREReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.press_diff == (float) -8.4723103E37F);
-                Debug.Assert(pack.press_abs == (float) -2.2195014E38F);
-                Debug.Assert(pack.temperature == (short)(short) -27700);
-                Debug.Assert(pack.time_boot_ms == (uint)3536321618U);
+                Debug.Assert(pack.temperature == (short)(short) -219);
+                Debug.Assert(pack.press_diff == (float) -2.6494326E38F);
+                Debug.Assert(pack.time_boot_ms == (uint)3814711941U);
+                Debug.Assert(pack.press_abs == (float) -2.461605E38F);
             };
             SCALED_PRESSURE p29 = new SCALED_PRESSURE();
             PH.setPack(p29);
-            p29.press_diff = (float) -8.4723103E37F;
-            p29.press_abs = (float) -2.2195014E38F;
-            p29.temperature = (short)(short) -27700;
-            p29.time_boot_ms = (uint)3536321618U;
+            p29.press_diff = (float) -2.6494326E38F;
+            p29.time_boot_ms = (uint)3814711941U;
+            p29.press_abs = (float) -2.461605E38F;
+            p29.temperature = (short)(short) -219;
             ADV_TEST_CH.send(p29);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnATTITUDEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.time_boot_ms == (uint)208254259U);
-                Debug.Assert(pack.yaw == (float) -3.2148433E38F);
-                Debug.Assert(pack.yawspeed == (float)9.496017E37F);
-                Debug.Assert(pack.pitchspeed == (float) -3.362341E38F);
-                Debug.Assert(pack.rollspeed == (float) -3.170699E38F);
-                Debug.Assert(pack.pitch == (float) -1.244951E38F);
-                Debug.Assert(pack.roll == (float) -2.4226695E38F);
+                Debug.Assert(pack.yawspeed == (float) -2.3503775E38F);
+                Debug.Assert(pack.roll == (float) -2.7993108E38F);
+                Debug.Assert(pack.time_boot_ms == (uint)2603851449U);
+                Debug.Assert(pack.yaw == (float) -2.6441334E38F);
+                Debug.Assert(pack.rollspeed == (float)3.2706483E37F);
+                Debug.Assert(pack.pitch == (float) -2.2393748E38F);
+                Debug.Assert(pack.pitchspeed == (float)2.413991E38F);
             };
             ATTITUDE p30 = new ATTITUDE();
             PH.setPack(p30);
-            p30.pitchspeed = (float) -3.362341E38F;
-            p30.yawspeed = (float)9.496017E37F;
-            p30.time_boot_ms = (uint)208254259U;
-            p30.yaw = (float) -3.2148433E38F;
-            p30.pitch = (float) -1.244951E38F;
-            p30.roll = (float) -2.4226695E38F;
-            p30.rollspeed = (float) -3.170699E38F;
+            p30.pitchspeed = (float)2.413991E38F;
+            p30.roll = (float) -2.7993108E38F;
+            p30.time_boot_ms = (uint)2603851449U;
+            p30.yawspeed = (float) -2.3503775E38F;
+            p30.pitch = (float) -2.2393748E38F;
+            p30.rollspeed = (float)3.2706483E37F;
+            p30.yaw = (float) -2.6441334E38F;
             ADV_TEST_CH.send(p30);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnATTITUDE_QUATERNIONReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.q1 == (float) -1.7912221E38F);
-                Debug.Assert(pack.q4 == (float) -2.4436294E38F);
-                Debug.Assert(pack.q2 == (float) -2.190248E38F);
-                Debug.Assert(pack.time_boot_ms == (uint)4035172161U);
-                Debug.Assert(pack.yawspeed == (float) -1.3579665E38F);
-                Debug.Assert(pack.q3 == (float) -2.6437867E38F);
-                Debug.Assert(pack.pitchspeed == (float)1.6095734E38F);
-                Debug.Assert(pack.rollspeed == (float)1.7809716E38F);
+                Debug.Assert(pack.q4 == (float)1.4695077E38F);
+                Debug.Assert(pack.yawspeed == (float)1.1277282E38F);
+                Debug.Assert(pack.q2 == (float)3.2094786E38F);
+                Debug.Assert(pack.q1 == (float) -2.703036E38F);
+                Debug.Assert(pack.pitchspeed == (float) -3.3449502E38F);
+                Debug.Assert(pack.time_boot_ms == (uint)3105166216U);
+                Debug.Assert(pack.rollspeed == (float) -2.07748E38F);
+                Debug.Assert(pack.q3 == (float) -2.24957E38F);
             };
             ATTITUDE_QUATERNION p31 = new ATTITUDE_QUATERNION();
             PH.setPack(p31);
-            p31.rollspeed = (float)1.7809716E38F;
-            p31.q4 = (float) -2.4436294E38F;
-            p31.q2 = (float) -2.190248E38F;
-            p31.yawspeed = (float) -1.3579665E38F;
-            p31.pitchspeed = (float)1.6095734E38F;
-            p31.q3 = (float) -2.6437867E38F;
-            p31.q1 = (float) -1.7912221E38F;
-            p31.time_boot_ms = (uint)4035172161U;
+            p31.q2 = (float)3.2094786E38F;
+            p31.pitchspeed = (float) -3.3449502E38F;
+            p31.q4 = (float)1.4695077E38F;
+            p31.yawspeed = (float)1.1277282E38F;
+            p31.rollspeed = (float) -2.07748E38F;
+            p31.q1 = (float) -2.703036E38F;
+            p31.time_boot_ms = (uint)3105166216U;
+            p31.q3 = (float) -2.24957E38F;
             ADV_TEST_CH.send(p31);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnLOCAL_POSITION_NEDReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.z == (float)6.205528E37F);
-                Debug.Assert(pack.vy == (float)2.7318586E38F);
-                Debug.Assert(pack.time_boot_ms == (uint)1638390632U);
-                Debug.Assert(pack.vx == (float) -1.911266E38F);
-                Debug.Assert(pack.y == (float)3.007036E38F);
-                Debug.Assert(pack.x == (float)9.928987E37F);
-                Debug.Assert(pack.vz == (float) -2.5246909E38F);
+                Debug.Assert(pack.vy == (float) -3.5863458E37F);
+                Debug.Assert(pack.time_boot_ms == (uint)873190728U);
+                Debug.Assert(pack.vx == (float) -3.1090683E38F);
+                Debug.Assert(pack.x == (float) -3.3933382E38F);
+                Debug.Assert(pack.vz == (float) -2.3939565E38F);
+                Debug.Assert(pack.y == (float)2.4919617E37F);
+                Debug.Assert(pack.z == (float)1.5731204E38F);
             };
             LOCAL_POSITION_NED p32 = new LOCAL_POSITION_NED();
             PH.setPack(p32);
-            p32.time_boot_ms = (uint)1638390632U;
-            p32.vx = (float) -1.911266E38F;
-            p32.x = (float)9.928987E37F;
-            p32.z = (float)6.205528E37F;
-            p32.y = (float)3.007036E38F;
-            p32.vy = (float)2.7318586E38F;
-            p32.vz = (float) -2.5246909E38F;
+            p32.time_boot_ms = (uint)873190728U;
+            p32.vz = (float) -2.3939565E38F;
+            p32.x = (float) -3.3933382E38F;
+            p32.vy = (float) -3.5863458E37F;
+            p32.z = (float)1.5731204E38F;
+            p32.y = (float)2.4919617E37F;
+            p32.vx = (float) -3.1090683E38F;
             ADV_TEST_CH.send(p32);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnGLOBAL_POSITION_INTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.vy == (short)(short)7016);
-                Debug.Assert(pack.lat == (int) -1105436255);
-                Debug.Assert(pack.alt == (int)502963779);
-                Debug.Assert(pack.vx == (short)(short) -14335);
-                Debug.Assert(pack.relative_alt == (int)1746453645);
-                Debug.Assert(pack.lon == (int) -1602029797);
-                Debug.Assert(pack.time_boot_ms == (uint)2855995137U);
-                Debug.Assert(pack.vz == (short)(short)8798);
-                Debug.Assert(pack.hdg == (ushort)(ushort)56070);
+                Debug.Assert(pack.relative_alt == (int)2068576149);
+                Debug.Assert(pack.vz == (short)(short) -5816);
+                Debug.Assert(pack.vy == (short)(short)17503);
+                Debug.Assert(pack.alt == (int) -104954014);
+                Debug.Assert(pack.lon == (int) -691194411);
+                Debug.Assert(pack.time_boot_ms == (uint)44320920U);
+                Debug.Assert(pack.lat == (int)1563610683);
+                Debug.Assert(pack.hdg == (ushort)(ushort)58481);
+                Debug.Assert(pack.vx == (short)(short) -27984);
             };
             GLOBAL_POSITION_INT p33 = new GLOBAL_POSITION_INT();
             PH.setPack(p33);
-            p33.relative_alt = (int)1746453645;
-            p33.hdg = (ushort)(ushort)56070;
-            p33.time_boot_ms = (uint)2855995137U;
-            p33.vz = (short)(short)8798;
-            p33.lat = (int) -1105436255;
-            p33.vx = (short)(short) -14335;
-            p33.vy = (short)(short)7016;
-            p33.alt = (int)502963779;
-            p33.lon = (int) -1602029797;
+            p33.time_boot_ms = (uint)44320920U;
+            p33.vy = (short)(short)17503;
+            p33.lat = (int)1563610683;
+            p33.lon = (int) -691194411;
+            p33.relative_alt = (int)2068576149;
+            p33.alt = (int) -104954014;
+            p33.vz = (short)(short) -5816;
+            p33.vx = (short)(short) -27984;
+            p33.hdg = (ushort)(ushort)58481;
             ADV_TEST_CH.send(p33);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnRC_CHANNELS_SCALEDReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.chan8_scaled == (short)(short)24872);
-                Debug.Assert(pack.chan5_scaled == (short)(short) -8242);
-                Debug.Assert(pack.chan4_scaled == (short)(short) -5514);
-                Debug.Assert(pack.chan1_scaled == (short)(short)16728);
-                Debug.Assert(pack.chan7_scaled == (short)(short) -23262);
-                Debug.Assert(pack.chan2_scaled == (short)(short)28352);
-                Debug.Assert(pack.chan3_scaled == (short)(short)21520);
-                Debug.Assert(pack.rssi == (byte)(byte)0);
-                Debug.Assert(pack.port == (byte)(byte)168);
-                Debug.Assert(pack.time_boot_ms == (uint)3047958245U);
-                Debug.Assert(pack.chan6_scaled == (short)(short) -4706);
+                Debug.Assert(pack.rssi == (byte)(byte)39);
+                Debug.Assert(pack.chan5_scaled == (short)(short)28812);
+                Debug.Assert(pack.chan8_scaled == (short)(short)4581);
+                Debug.Assert(pack.chan7_scaled == (short)(short)16760);
+                Debug.Assert(pack.chan2_scaled == (short)(short) -12354);
+                Debug.Assert(pack.time_boot_ms == (uint)1937079853U);
+                Debug.Assert(pack.chan1_scaled == (short)(short) -12839);
+                Debug.Assert(pack.chan4_scaled == (short)(short) -6139);
+                Debug.Assert(pack.chan6_scaled == (short)(short)15257);
+                Debug.Assert(pack.chan3_scaled == (short)(short) -16410);
+                Debug.Assert(pack.port == (byte)(byte)253);
             };
             RC_CHANNELS_SCALED p34 = new RC_CHANNELS_SCALED();
             PH.setPack(p34);
-            p34.rssi = (byte)(byte)0;
-            p34.chan1_scaled = (short)(short)16728;
-            p34.chan4_scaled = (short)(short) -5514;
-            p34.chan8_scaled = (short)(short)24872;
-            p34.time_boot_ms = (uint)3047958245U;
-            p34.chan7_scaled = (short)(short) -23262;
-            p34.chan6_scaled = (short)(short) -4706;
-            p34.chan2_scaled = (short)(short)28352;
-            p34.port = (byte)(byte)168;
-            p34.chan5_scaled = (short)(short) -8242;
-            p34.chan3_scaled = (short)(short)21520;
+            p34.chan6_scaled = (short)(short)15257;
+            p34.port = (byte)(byte)253;
+            p34.chan8_scaled = (short)(short)4581;
+            p34.chan3_scaled = (short)(short) -16410;
+            p34.chan5_scaled = (short)(short)28812;
+            p34.time_boot_ms = (uint)1937079853U;
+            p34.chan7_scaled = (short)(short)16760;
+            p34.rssi = (byte)(byte)39;
+            p34.chan4_scaled = (short)(short) -6139;
+            p34.chan2_scaled = (short)(short) -12354;
+            p34.chan1_scaled = (short)(short) -12839;
             ADV_TEST_CH.send(p34);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnRC_CHANNELS_RAWReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.chan7_raw == (ushort)(ushort)55892);
-                Debug.Assert(pack.rssi == (byte)(byte)150);
-                Debug.Assert(pack.chan4_raw == (ushort)(ushort)28900);
-                Debug.Assert(pack.time_boot_ms == (uint)18404252U);
-                Debug.Assert(pack.chan6_raw == (ushort)(ushort)10108);
-                Debug.Assert(pack.chan2_raw == (ushort)(ushort)49160);
-                Debug.Assert(pack.chan5_raw == (ushort)(ushort)55756);
-                Debug.Assert(pack.chan3_raw == (ushort)(ushort)49825);
-                Debug.Assert(pack.chan8_raw == (ushort)(ushort)37936);
-                Debug.Assert(pack.chan1_raw == (ushort)(ushort)18375);
-                Debug.Assert(pack.port == (byte)(byte)26);
+                Debug.Assert(pack.chan3_raw == (ushort)(ushort)46164);
+                Debug.Assert(pack.time_boot_ms == (uint)760508813U);
+                Debug.Assert(pack.chan4_raw == (ushort)(ushort)61867);
+                Debug.Assert(pack.chan1_raw == (ushort)(ushort)63203);
+                Debug.Assert(pack.chan5_raw == (ushort)(ushort)50002);
+                Debug.Assert(pack.chan6_raw == (ushort)(ushort)230);
+                Debug.Assert(pack.chan8_raw == (ushort)(ushort)25675);
+                Debug.Assert(pack.rssi == (byte)(byte)104);
+                Debug.Assert(pack.chan7_raw == (ushort)(ushort)12672);
+                Debug.Assert(pack.port == (byte)(byte)108);
+                Debug.Assert(pack.chan2_raw == (ushort)(ushort)42045);
             };
             RC_CHANNELS_RAW p35 = new RC_CHANNELS_RAW();
             PH.setPack(p35);
-            p35.chan7_raw = (ushort)(ushort)55892;
-            p35.port = (byte)(byte)26;
-            p35.chan1_raw = (ushort)(ushort)18375;
-            p35.chan3_raw = (ushort)(ushort)49825;
-            p35.chan5_raw = (ushort)(ushort)55756;
-            p35.rssi = (byte)(byte)150;
-            p35.chan4_raw = (ushort)(ushort)28900;
-            p35.time_boot_ms = (uint)18404252U;
-            p35.chan8_raw = (ushort)(ushort)37936;
-            p35.chan6_raw = (ushort)(ushort)10108;
-            p35.chan2_raw = (ushort)(ushort)49160;
+            p35.chan8_raw = (ushort)(ushort)25675;
+            p35.chan1_raw = (ushort)(ushort)63203;
+            p35.chan7_raw = (ushort)(ushort)12672;
+            p35.chan4_raw = (ushort)(ushort)61867;
+            p35.chan6_raw = (ushort)(ushort)230;
+            p35.port = (byte)(byte)108;
+            p35.rssi = (byte)(byte)104;
+            p35.time_boot_ms = (uint)760508813U;
+            p35.chan2_raw = (ushort)(ushort)42045;
+            p35.chan3_raw = (ushort)(ushort)46164;
+            p35.chan5_raw = (ushort)(ushort)50002;
             ADV_TEST_CH.send(p35);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSERVO_OUTPUT_RAWReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.servo1_raw == (ushort)(ushort)6178);
-                Debug.Assert(pack.servo12_raw_TRY(ph) == (ushort)(ushort)20179);
-                Debug.Assert(pack.servo16_raw_TRY(ph) == (ushort)(ushort)45785);
-                Debug.Assert(pack.servo9_raw_TRY(ph) == (ushort)(ushort)51123);
-                Debug.Assert(pack.servo6_raw == (ushort)(ushort)61661);
-                Debug.Assert(pack.servo11_raw_TRY(ph) == (ushort)(ushort)10501);
-                Debug.Assert(pack.servo13_raw_TRY(ph) == (ushort)(ushort)2606);
-                Debug.Assert(pack.servo7_raw == (ushort)(ushort)54512);
-                Debug.Assert(pack.port == (byte)(byte)130);
-                Debug.Assert(pack.servo10_raw_TRY(ph) == (ushort)(ushort)9431);
-                Debug.Assert(pack.servo14_raw_TRY(ph) == (ushort)(ushort)21611);
-                Debug.Assert(pack.servo4_raw == (ushort)(ushort)24504);
-                Debug.Assert(pack.time_usec == (uint)3423467928U);
-                Debug.Assert(pack.servo8_raw == (ushort)(ushort)12644);
-                Debug.Assert(pack.servo3_raw == (ushort)(ushort)17284);
-                Debug.Assert(pack.servo5_raw == (ushort)(ushort)51034);
-                Debug.Assert(pack.servo15_raw_TRY(ph) == (ushort)(ushort)40526);
-                Debug.Assert(pack.servo2_raw == (ushort)(ushort)26096);
+                Debug.Assert(pack.servo9_raw_TRY(ph) == (ushort)(ushort)62118);
+                Debug.Assert(pack.servo11_raw_TRY(ph) == (ushort)(ushort)5346);
+                Debug.Assert(pack.servo3_raw == (ushort)(ushort)36298);
+                Debug.Assert(pack.servo16_raw_TRY(ph) == (ushort)(ushort)12526);
+                Debug.Assert(pack.servo2_raw == (ushort)(ushort)35879);
+                Debug.Assert(pack.servo14_raw_TRY(ph) == (ushort)(ushort)58862);
+                Debug.Assert(pack.servo7_raw == (ushort)(ushort)64362);
+                Debug.Assert(pack.servo5_raw == (ushort)(ushort)48868);
+                Debug.Assert(pack.servo8_raw == (ushort)(ushort)37552);
+                Debug.Assert(pack.servo4_raw == (ushort)(ushort)53360);
+                Debug.Assert(pack.servo13_raw_TRY(ph) == (ushort)(ushort)49137);
+                Debug.Assert(pack.servo12_raw_TRY(ph) == (ushort)(ushort)39086);
+                Debug.Assert(pack.servo15_raw_TRY(ph) == (ushort)(ushort)1137);
+                Debug.Assert(pack.servo1_raw == (ushort)(ushort)22998);
+                Debug.Assert(pack.servo6_raw == (ushort)(ushort)49201);
+                Debug.Assert(pack.port == (byte)(byte)84);
+                Debug.Assert(pack.servo10_raw_TRY(ph) == (ushort)(ushort)56482);
+                Debug.Assert(pack.time_usec == (uint)3801239710U);
             };
             SERVO_OUTPUT_RAW p36 = new SERVO_OUTPUT_RAW();
             PH.setPack(p36);
-            p36.servo9_raw_SET((ushort)(ushort)51123, PH) ;
-            p36.servo15_raw_SET((ushort)(ushort)40526, PH) ;
-            p36.port = (byte)(byte)130;
-            p36.servo6_raw = (ushort)(ushort)61661;
-            p36.servo10_raw_SET((ushort)(ushort)9431, PH) ;
-            p36.servo5_raw = (ushort)(ushort)51034;
-            p36.time_usec = (uint)3423467928U;
-            p36.servo7_raw = (ushort)(ushort)54512;
-            p36.servo3_raw = (ushort)(ushort)17284;
-            p36.servo12_raw_SET((ushort)(ushort)20179, PH) ;
-            p36.servo8_raw = (ushort)(ushort)12644;
-            p36.servo1_raw = (ushort)(ushort)6178;
-            p36.servo13_raw_SET((ushort)(ushort)2606, PH) ;
-            p36.servo4_raw = (ushort)(ushort)24504;
-            p36.servo11_raw_SET((ushort)(ushort)10501, PH) ;
-            p36.servo16_raw_SET((ushort)(ushort)45785, PH) ;
-            p36.servo14_raw_SET((ushort)(ushort)21611, PH) ;
-            p36.servo2_raw = (ushort)(ushort)26096;
+            p36.servo13_raw_SET((ushort)(ushort)49137, PH) ;
+            p36.time_usec = (uint)3801239710U;
+            p36.servo1_raw = (ushort)(ushort)22998;
+            p36.servo2_raw = (ushort)(ushort)35879;
+            p36.servo11_raw_SET((ushort)(ushort)5346, PH) ;
+            p36.servo16_raw_SET((ushort)(ushort)12526, PH) ;
+            p36.servo15_raw_SET((ushort)(ushort)1137, PH) ;
+            p36.servo4_raw = (ushort)(ushort)53360;
+            p36.port = (byte)(byte)84;
+            p36.servo5_raw = (ushort)(ushort)48868;
+            p36.servo6_raw = (ushort)(ushort)49201;
+            p36.servo14_raw_SET((ushort)(ushort)58862, PH) ;
+            p36.servo7_raw = (ushort)(ushort)64362;
+            p36.servo8_raw = (ushort)(ushort)37552;
+            p36.servo10_raw_SET((ushort)(ushort)56482, PH) ;
+            p36.servo9_raw_SET((ushort)(ushort)62118, PH) ;
+            p36.servo3_raw = (ushort)(ushort)36298;
+            p36.servo12_raw_SET((ushort)(ushort)39086, PH) ;
             ADV_TEST_CH.send(p36);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMISSION_REQUEST_PARTIAL_LISTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.end_index == (short)(short) -24219);
-                Debug.Assert(pack.target_system == (byte)(byte)85);
-                Debug.Assert(pack.mission_type == (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL);
-                Debug.Assert(pack.start_index == (short)(short)17364);
-                Debug.Assert(pack.target_component == (byte)(byte)211);
+                Debug.Assert(pack.target_system == (byte)(byte)44);
+                Debug.Assert(pack.target_component == (byte)(byte)85);
+                Debug.Assert(pack.end_index == (short)(short) -5917);
+                Debug.Assert(pack.start_index == (short)(short)6346);
+                Debug.Assert(pack.mission_type == MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL);
             };
             MISSION_REQUEST_PARTIAL_LIST p37 = new MISSION_REQUEST_PARTIAL_LIST();
             PH.setPack(p37);
-            p37.mission_type = (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
-            p37.end_index = (short)(short) -24219;
-            p37.start_index = (short)(short)17364;
-            p37.target_component = (byte)(byte)211;
-            p37.target_system = (byte)(byte)85;
+            p37.start_index = (short)(short)6346;
+            p37.target_component = (byte)(byte)85;
+            p37.end_index = (short)(short) -5917;
+            p37.target_system = (byte)(byte)44;
+            p37.mission_type = MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
             ADV_TEST_CH.send(p37);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMISSION_WRITE_PARTIAL_LISTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.end_index == (short)(short) -14667);
-                Debug.Assert(pack.target_component == (byte)(byte)186);
-                Debug.Assert(pack.start_index == (short)(short) -27347);
-                Debug.Assert(pack.target_system == (byte)(byte)33);
-                Debug.Assert(pack.mission_type == (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION);
+                Debug.Assert(pack.target_component == (byte)(byte)107);
+                Debug.Assert(pack.start_index == (short)(short) -19473);
+                Debug.Assert(pack.mission_type == MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL);
+                Debug.Assert(pack.target_system == (byte)(byte)49);
+                Debug.Assert(pack.end_index == (short)(short)16461);
             };
             MISSION_WRITE_PARTIAL_LIST p38 = new MISSION_WRITE_PARTIAL_LIST();
             PH.setPack(p38);
-            p38.target_component = (byte)(byte)186;
-            p38.start_index = (short)(short) -27347;
-            p38.end_index = (short)(short) -14667;
-            p38.mission_type = (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
-            p38.target_system = (byte)(byte)33;
+            p38.end_index = (short)(short)16461;
+            p38.target_system = (byte)(byte)49;
+            p38.start_index = (short)(short) -19473;
+            p38.target_component = (byte)(byte)107;
+            p38.mission_type = MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
             ADV_TEST_CH.send(p38);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMISSION_ITEMReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.mission_type == (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY);
-                Debug.Assert(pack.current == (byte)(byte)19);
-                Debug.Assert(pack.param3 == (float) -7.693307E37F);
-                Debug.Assert(pack.param1 == (float) -6.649225E37F);
-                Debug.Assert(pack.y == (float)2.3737569E38F);
-                Debug.Assert(pack.target_component == (byte)(byte)135);
-                Debug.Assert(pack.target_system == (byte)(byte)5);
-                Debug.Assert(pack.command == (MAV_CMD)MAV_CMD.MAV_CMD_PANORAMA_CREATE);
-                Debug.Assert(pack.param4 == (float)2.1159946E38F);
-                Debug.Assert(pack.frame == (MAV_FRAME)MAV_FRAME.MAV_FRAME_GLOBAL_INT);
-                Debug.Assert(pack.z == (float) -7.936267E37F);
-                Debug.Assert(pack.autocontinue == (byte)(byte)199);
-                Debug.Assert(pack.seq == (ushort)(ushort)60563);
-                Debug.Assert(pack.param2 == (float) -2.7516772E38F);
-                Debug.Assert(pack.x == (float) -2.5351894E38F);
+                Debug.Assert(pack.target_component == (byte)(byte)140);
+                Debug.Assert(pack.param2 == (float)2.7385032E38F);
+                Debug.Assert(pack.z == (float)1.7305748E37F);
+                Debug.Assert(pack.autocontinue == (byte)(byte)80);
+                Debug.Assert(pack.param1 == (float) -1.316055E38F);
+                Debug.Assert(pack.current == (byte)(byte)187);
+                Debug.Assert(pack.frame == MAV_FRAME.MAV_FRAME_LOCAL_NED);
+                Debug.Assert(pack.command == MAV_CMD.MAV_CMD_REQUEST_FLIGHT_INFORMATION);
+                Debug.Assert(pack.x == (float)4.3658627E37F);
+                Debug.Assert(pack.y == (float) -2.4845272E38F);
+                Debug.Assert(pack.param4 == (float)2.3773053E38F);
+                Debug.Assert(pack.target_system == (byte)(byte)130);
+                Debug.Assert(pack.seq == (ushort)(ushort)16513);
+                Debug.Assert(pack.mission_type == MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL);
+                Debug.Assert(pack.param3 == (float)2.0005135E37F);
             };
             MISSION_ITEM p39 = new MISSION_ITEM();
             PH.setPack(p39);
-            p39.frame = (MAV_FRAME)MAV_FRAME.MAV_FRAME_GLOBAL_INT;
-            p39.x = (float) -2.5351894E38F;
-            p39.seq = (ushort)(ushort)60563;
-            p39.autocontinue = (byte)(byte)199;
-            p39.param4 = (float)2.1159946E38F;
-            p39.mission_type = (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
-            p39.param1 = (float) -6.649225E37F;
-            p39.target_system = (byte)(byte)5;
-            p39.z = (float) -7.936267E37F;
-            p39.current = (byte)(byte)19;
-            p39.param2 = (float) -2.7516772E38F;
-            p39.command = (MAV_CMD)MAV_CMD.MAV_CMD_PANORAMA_CREATE;
-            p39.target_component = (byte)(byte)135;
-            p39.y = (float)2.3737569E38F;
-            p39.param3 = (float) -7.693307E37F;
+            p39.mission_type = MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
+            p39.param2 = (float)2.7385032E38F;
+            p39.frame = MAV_FRAME.MAV_FRAME_LOCAL_NED;
+            p39.command = MAV_CMD.MAV_CMD_REQUEST_FLIGHT_INFORMATION;
+            p39.target_system = (byte)(byte)130;
+            p39.x = (float)4.3658627E37F;
+            p39.target_component = (byte)(byte)140;
+            p39.param3 = (float)2.0005135E37F;
+            p39.seq = (ushort)(ushort)16513;
+            p39.autocontinue = (byte)(byte)80;
+            p39.param4 = (float)2.3773053E38F;
+            p39.y = (float) -2.4845272E38F;
+            p39.z = (float)1.7305748E37F;
+            p39.current = (byte)(byte)187;
+            p39.param1 = (float) -1.316055E38F;
             ADV_TEST_CH.send(p39);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMISSION_REQUESTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.seq == (ushort)(ushort)61434);
-                Debug.Assert(pack.mission_type == (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE);
-                Debug.Assert(pack.target_component == (byte)(byte)162);
-                Debug.Assert(pack.target_system == (byte)(byte)56);
+                Debug.Assert(pack.seq == (ushort)(ushort)15843);
+                Debug.Assert(pack.target_system == (byte)(byte)211);
+                Debug.Assert(pack.mission_type == MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL);
+                Debug.Assert(pack.target_component == (byte)(byte)189);
             };
             MISSION_REQUEST p40 = new MISSION_REQUEST();
             PH.setPack(p40);
-            p40.target_component = (byte)(byte)162;
-            p40.target_system = (byte)(byte)56;
-            p40.mission_type = (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
-            p40.seq = (ushort)(ushort)61434;
+            p40.seq = (ushort)(ushort)15843;
+            p40.target_system = (byte)(byte)211;
+            p40.target_component = (byte)(byte)189;
+            p40.mission_type = MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
             ADV_TEST_CH.send(p40);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMISSION_SET_CURRENTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.seq == (ushort)(ushort)50317);
-                Debug.Assert(pack.target_system == (byte)(byte)106);
-                Debug.Assert(pack.target_component == (byte)(byte)88);
+                Debug.Assert(pack.seq == (ushort)(ushort)20092);
+                Debug.Assert(pack.target_system == (byte)(byte)162);
+                Debug.Assert(pack.target_component == (byte)(byte)196);
             };
             MISSION_SET_CURRENT p41 = new MISSION_SET_CURRENT();
             PH.setPack(p41);
-            p41.target_system = (byte)(byte)106;
-            p41.target_component = (byte)(byte)88;
-            p41.seq = (ushort)(ushort)50317;
+            p41.seq = (ushort)(ushort)20092;
+            p41.target_component = (byte)(byte)196;
+            p41.target_system = (byte)(byte)162;
             ADV_TEST_CH.send(p41);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMISSION_CURRENTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.seq == (ushort)(ushort)5296);
+                Debug.Assert(pack.seq == (ushort)(ushort)44477);
             };
             MISSION_CURRENT p42 = new MISSION_CURRENT();
             PH.setPack(p42);
-            p42.seq = (ushort)(ushort)5296;
+            p42.seq = (ushort)(ushort)44477;
             ADV_TEST_CH.send(p42);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMISSION_REQUEST_LISTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_system == (byte)(byte)7);
-                Debug.Assert(pack.mission_type == (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION);
-                Debug.Assert(pack.target_component == (byte)(byte)71);
+                Debug.Assert(pack.mission_type == MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY);
+                Debug.Assert(pack.target_component == (byte)(byte)64);
+                Debug.Assert(pack.target_system == (byte)(byte)64);
             };
             MISSION_REQUEST_LIST p43 = new MISSION_REQUEST_LIST();
             PH.setPack(p43);
-            p43.target_component = (byte)(byte)71;
-            p43.mission_type = (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
-            p43.target_system = (byte)(byte)7;
+            p43.mission_type = MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
+            p43.target_system = (byte)(byte)64;
+            p43.target_component = (byte)(byte)64;
             ADV_TEST_CH.send(p43);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMISSION_COUNTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.mission_type == (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY);
-                Debug.Assert(pack.target_system == (byte)(byte)85);
-                Debug.Assert(pack.target_component == (byte)(byte)206);
-                Debug.Assert(pack.count == (ushort)(ushort)4570);
+                Debug.Assert(pack.target_system == (byte)(byte)23);
+                Debug.Assert(pack.count == (ushort)(ushort)125);
+                Debug.Assert(pack.target_component == (byte)(byte)214);
+                Debug.Assert(pack.mission_type == MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION);
             };
             MISSION_COUNT p44 = new MISSION_COUNT();
             PH.setPack(p44);
-            p44.mission_type = (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
-            p44.count = (ushort)(ushort)4570;
-            p44.target_system = (byte)(byte)85;
-            p44.target_component = (byte)(byte)206;
+            p44.mission_type = MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
+            p44.target_system = (byte)(byte)23;
+            p44.target_component = (byte)(byte)214;
+            p44.count = (ushort)(ushort)125;
             ADV_TEST_CH.send(p44);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMISSION_CLEAR_ALLReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.mission_type == (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL);
-                Debug.Assert(pack.target_component == (byte)(byte)37);
-                Debug.Assert(pack.target_system == (byte)(byte)16);
+                Debug.Assert(pack.target_component == (byte)(byte)248);
+                Debug.Assert(pack.mission_type == MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE);
+                Debug.Assert(pack.target_system == (byte)(byte)165);
             };
             MISSION_CLEAR_ALL p45 = new MISSION_CLEAR_ALL();
             PH.setPack(p45);
-            p45.target_component = (byte)(byte)37;
-            p45.target_system = (byte)(byte)16;
-            p45.mission_type = (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL;
+            p45.mission_type = MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
+            p45.target_component = (byte)(byte)248;
+            p45.target_system = (byte)(byte)165;
             ADV_TEST_CH.send(p45);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMISSION_ITEM_REACHEDReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.seq == (ushort)(ushort)58202);
+                Debug.Assert(pack.seq == (ushort)(ushort)26446);
             };
             MISSION_ITEM_REACHED p46 = new MISSION_ITEM_REACHED();
             PH.setPack(p46);
-            p46.seq = (ushort)(ushort)58202;
+            p46.seq = (ushort)(ushort)26446;
             ADV_TEST_CH.send(p46);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMISSION_ACKReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_system == (byte)(byte)103);
-                Debug.Assert(pack.type == (MAV_MISSION_RESULT)MAV_MISSION_RESULT.MAV_MISSION_INVALID_PARAM7);
-                Debug.Assert(pack.target_component == (byte)(byte)21);
-                Debug.Assert(pack.mission_type == (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION);
+                Debug.Assert(pack.mission_type == MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY);
+                Debug.Assert(pack.type == MAV_MISSION_RESULT.MAV_MISSION_INVALID_PARAM4);
+                Debug.Assert(pack.target_system == (byte)(byte)150);
+                Debug.Assert(pack.target_component == (byte)(byte)240);
             };
             MISSION_ACK p47 = new MISSION_ACK();
             PH.setPack(p47);
-            p47.type = (MAV_MISSION_RESULT)MAV_MISSION_RESULT.MAV_MISSION_INVALID_PARAM7;
-            p47.target_component = (byte)(byte)21;
-            p47.target_system = (byte)(byte)103;
-            p47.mission_type = (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION;
+            p47.target_system = (byte)(byte)150;
+            p47.type = MAV_MISSION_RESULT.MAV_MISSION_INVALID_PARAM4;
+            p47.mission_type = MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
+            p47.target_component = (byte)(byte)240;
             ADV_TEST_CH.send(p47);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSET_GPS_GLOBAL_ORIGINReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.time_usec_TRY(ph) == (ulong)2157390933069835158L);
-                Debug.Assert(pack.target_system == (byte)(byte)220);
-                Debug.Assert(pack.latitude == (int)1933960642);
-                Debug.Assert(pack.longitude == (int)1954838938);
-                Debug.Assert(pack.altitude == (int) -1377314463);
+                Debug.Assert(pack.latitude == (int) -1543477585);
+                Debug.Assert(pack.longitude == (int)40932292);
+                Debug.Assert(pack.time_usec_TRY(ph) == (ulong)794469698088391152L);
+                Debug.Assert(pack.target_system == (byte)(byte)250);
+                Debug.Assert(pack.altitude == (int) -8955644);
             };
             SET_GPS_GLOBAL_ORIGIN p48 = new SET_GPS_GLOBAL_ORIGIN();
             PH.setPack(p48);
-            p48.time_usec_SET((ulong)2157390933069835158L, PH) ;
-            p48.target_system = (byte)(byte)220;
-            p48.longitude = (int)1954838938;
-            p48.latitude = (int)1933960642;
-            p48.altitude = (int) -1377314463;
+            p48.latitude = (int) -1543477585;
+            p48.longitude = (int)40932292;
+            p48.altitude = (int) -8955644;
+            p48.target_system = (byte)(byte)250;
+            p48.time_usec_SET((ulong)794469698088391152L, PH) ;
             ADV_TEST_CH.send(p48);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnGPS_GLOBAL_ORIGINReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.longitude == (int) -349353812);
-                Debug.Assert(pack.time_usec_TRY(ph) == (ulong)3865815016734014481L);
-                Debug.Assert(pack.latitude == (int)842467280);
-                Debug.Assert(pack.altitude == (int) -1992491853);
+                Debug.Assert(pack.time_usec_TRY(ph) == (ulong)2293913320183537018L);
+                Debug.Assert(pack.altitude == (int) -1760703892);
+                Debug.Assert(pack.latitude == (int) -241180439);
+                Debug.Assert(pack.longitude == (int)1516232947);
             };
             GPS_GLOBAL_ORIGIN p49 = new GPS_GLOBAL_ORIGIN();
             PH.setPack(p49);
-            p49.time_usec_SET((ulong)3865815016734014481L, PH) ;
-            p49.longitude = (int) -349353812;
-            p49.latitude = (int)842467280;
-            p49.altitude = (int) -1992491853;
+            p49.latitude = (int) -241180439;
+            p49.time_usec_SET((ulong)2293913320183537018L, PH) ;
+            p49.longitude = (int)1516232947;
+            p49.altitude = (int) -1760703892;
             ADV_TEST_CH.send(p49);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnPARAM_MAP_RCReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_system == (byte)(byte)213);
-                Debug.Assert(pack.param_value_min == (float) -1.9983654E38F);
-                Debug.Assert(pack.param_id_LEN(ph) == 8);
-                Debug.Assert(pack.param_id_TRY(ph).Equals("aveJliiZ"));
-                Debug.Assert(pack.target_component == (byte)(byte)91);
-                Debug.Assert(pack.parameter_rc_channel_index == (byte)(byte)182);
-                Debug.Assert(pack.param_value0 == (float) -3.3161608E38F);
-                Debug.Assert(pack.param_index == (short)(short) -28488);
-                Debug.Assert(pack.param_value_max == (float)2.3230539E38F);
-                Debug.Assert(pack.scale == (float) -2.2411386E37F);
+                Debug.Assert(pack.param_value_min == (float)7.890684E37F);
+                Debug.Assert(pack.scale == (float) -4.9819515E37F);
+                Debug.Assert(pack.target_component == (byte)(byte)57);
+                Debug.Assert(pack.parameter_rc_channel_index == (byte)(byte)175);
+                Debug.Assert(pack.param_value_max == (float)1.9883651E38F);
+                Debug.Assert(pack.param_value0 == (float)1.768941E38F);
+                Debug.Assert(pack.param_id_LEN(ph) == 14);
+                Debug.Assert(pack.param_id_TRY(ph).Equals("fxoxgwgWvekqob"));
+                Debug.Assert(pack.param_index == (short)(short)19973);
+                Debug.Assert(pack.target_system == (byte)(byte)22);
             };
             PARAM_MAP_RC p50 = new PARAM_MAP_RC();
             PH.setPack(p50);
-            p50.target_component = (byte)(byte)91;
-            p50.param_value_min = (float) -1.9983654E38F;
-            p50.param_index = (short)(short) -28488;
-            p50.parameter_rc_channel_index = (byte)(byte)182;
-            p50.param_value_max = (float)2.3230539E38F;
-            p50.scale = (float) -2.2411386E37F;
-            p50.param_id_SET("aveJliiZ", PH) ;
-            p50.target_system = (byte)(byte)213;
-            p50.param_value0 = (float) -3.3161608E38F;
+            p50.target_system = (byte)(byte)22;
+            p50.param_value_max = (float)1.9883651E38F;
+            p50.param_value0 = (float)1.768941E38F;
+            p50.scale = (float) -4.9819515E37F;
+            p50.param_index = (short)(short)19973;
+            p50.param_id_SET("fxoxgwgWvekqob", PH) ;
+            p50.parameter_rc_channel_index = (byte)(byte)175;
+            p50.target_component = (byte)(byte)57;
+            p50.param_value_min = (float)7.890684E37F;
             ADV_TEST_CH.send(p50);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMISSION_REQUEST_INTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.mission_type == (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY);
-                Debug.Assert(pack.target_component == (byte)(byte)180);
-                Debug.Assert(pack.seq == (ushort)(ushort)13276);
-                Debug.Assert(pack.target_system == (byte)(byte)101);
+                Debug.Assert(pack.mission_type == MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE);
+                Debug.Assert(pack.target_component == (byte)(byte)115);
+                Debug.Assert(pack.seq == (ushort)(ushort)49709);
+                Debug.Assert(pack.target_system == (byte)(byte)62);
             };
             MISSION_REQUEST_INT p51 = new MISSION_REQUEST_INT();
             PH.setPack(p51);
-            p51.seq = (ushort)(ushort)13276;
-            p51.target_component = (byte)(byte)180;
-            p51.mission_type = (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
-            p51.target_system = (byte)(byte)101;
+            p51.mission_type = MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
+            p51.target_system = (byte)(byte)62;
+            p51.seq = (ushort)(ushort)49709;
+            p51.target_component = (byte)(byte)115;
             ADV_TEST_CH.send(p51);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSAFETY_SET_ALLOWED_AREAReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.p2x == (float)3.8479714E37F);
-                Debug.Assert(pack.p2z == (float)5.845593E37F);
-                Debug.Assert(pack.target_component == (byte)(byte)228);
-                Debug.Assert(pack.target_system == (byte)(byte)13);
-                Debug.Assert(pack.p1y == (float)1.5328546E38F);
-                Debug.Assert(pack.p2y == (float)4.231354E37F);
-                Debug.Assert(pack.p1x == (float) -1.0461039E38F);
-                Debug.Assert(pack.p1z == (float)2.1863103E38F);
-                Debug.Assert(pack.frame == (MAV_FRAME)MAV_FRAME.MAV_FRAME_GLOBAL_RELATIVE_ALT);
+                Debug.Assert(pack.p1x == (float) -1.822412E38F);
+                Debug.Assert(pack.target_system == (byte)(byte)168);
+                Debug.Assert(pack.p2z == (float)1.0755616E38F);
+                Debug.Assert(pack.p1z == (float)1.5982535E38F);
+                Debug.Assert(pack.p2x == (float) -3.2285686E38F);
+                Debug.Assert(pack.target_component == (byte)(byte)179);
+                Debug.Assert(pack.p2y == (float) -3.2607817E38F);
+                Debug.Assert(pack.frame == MAV_FRAME.MAV_FRAME_GLOBAL_TERRAIN_ALT);
+                Debug.Assert(pack.p1y == (float) -6.348845E36F);
             };
             SAFETY_SET_ALLOWED_AREA p54 = new SAFETY_SET_ALLOWED_AREA();
             PH.setPack(p54);
-            p54.p2y = (float)4.231354E37F;
-            p54.frame = (MAV_FRAME)MAV_FRAME.MAV_FRAME_GLOBAL_RELATIVE_ALT;
-            p54.target_component = (byte)(byte)228;
-            p54.p1z = (float)2.1863103E38F;
-            p54.p1y = (float)1.5328546E38F;
-            p54.p1x = (float) -1.0461039E38F;
-            p54.p2z = (float)5.845593E37F;
-            p54.target_system = (byte)(byte)13;
-            p54.p2x = (float)3.8479714E37F;
+            p54.p1x = (float) -1.822412E38F;
+            p54.target_component = (byte)(byte)179;
+            p54.p2z = (float)1.0755616E38F;
+            p54.p2x = (float) -3.2285686E38F;
+            p54.target_system = (byte)(byte)168;
+            p54.frame = MAV_FRAME.MAV_FRAME_GLOBAL_TERRAIN_ALT;
+            p54.p2y = (float) -3.2607817E38F;
+            p54.p1z = (float)1.5982535E38F;
+            p54.p1y = (float) -6.348845E36F;
             ADV_TEST_CH.send(p54);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSAFETY_ALLOWED_AREAReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.frame == (MAV_FRAME)MAV_FRAME.MAV_FRAME_GLOBAL_RELATIVE_ALT);
-                Debug.Assert(pack.p2z == (float)2.402476E38F);
-                Debug.Assert(pack.p1z == (float)1.386975E38F);
-                Debug.Assert(pack.p1x == (float) -2.007704E38F);
-                Debug.Assert(pack.p2y == (float) -9.732062E37F);
-                Debug.Assert(pack.p2x == (float)2.1644734E38F);
-                Debug.Assert(pack.p1y == (float) -1.4581843E38F);
+                Debug.Assert(pack.frame == MAV_FRAME.MAV_FRAME_GLOBAL_INT);
+                Debug.Assert(pack.p2z == (float)7.3794044E37F);
+                Debug.Assert(pack.p1y == (float) -2.9787254E37F);
+                Debug.Assert(pack.p1z == (float)1.7108981E38F);
+                Debug.Assert(pack.p2y == (float)2.4872286E38F);
+                Debug.Assert(pack.p1x == (float)2.045115E38F);
+                Debug.Assert(pack.p2x == (float)1.2441178E38F);
             };
             SAFETY_ALLOWED_AREA p55 = new SAFETY_ALLOWED_AREA();
             PH.setPack(p55);
-            p55.p1x = (float) -2.007704E38F;
-            p55.p2z = (float)2.402476E38F;
-            p55.p1y = (float) -1.4581843E38F;
-            p55.frame = (MAV_FRAME)MAV_FRAME.MAV_FRAME_GLOBAL_RELATIVE_ALT;
-            p55.p2y = (float) -9.732062E37F;
-            p55.p2x = (float)2.1644734E38F;
-            p55.p1z = (float)1.386975E38F;
+            p55.p1y = (float) -2.9787254E37F;
+            p55.p1z = (float)1.7108981E38F;
+            p55.p2y = (float)2.4872286E38F;
+            p55.p2x = (float)1.2441178E38F;
+            p55.p1x = (float)2.045115E38F;
+            p55.frame = MAV_FRAME.MAV_FRAME_GLOBAL_INT;
+            p55.p2z = (float)7.3794044E37F;
             ADV_TEST_CH.send(p55);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnATTITUDE_QUATERNION_COVReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.covariance.SequenceEqual(new float[] {-1.0574156E38F, 1.7747855E38F, -1.246317E38F, -1.6953302E38F, 6.115796E37F, 6.1583795E37F, -7.085866E37F, -2.3330416E38F, -4.1695432E37F}));
-                Debug.Assert(pack.rollspeed == (float)5.2694197E37F);
-                Debug.Assert(pack.yawspeed == (float)1.1236277E38F);
-                Debug.Assert(pack.pitchspeed == (float) -2.7224513E37F);
-                Debug.Assert(pack.q.SequenceEqual(new float[] {-2.608023E38F, 7.7443934E37F, -2.2345823E37F, -5.4148243E37F}));
-                Debug.Assert(pack.time_usec == (ulong)6138010271435000545L);
+                Debug.Assert(pack.time_usec == (ulong)374822444108139497L);
+                Debug.Assert(pack.rollspeed == (float)2.1939422E38F);
+                Debug.Assert(pack.q.SequenceEqual(new float[] {-3.6177265E37F, -2.4952883E38F, 2.9344085E38F, 2.4225012E38F}));
+                Debug.Assert(pack.covariance.SequenceEqual(new float[] {-2.5824714E38F, -7.9635864E37F, 3.1876265E38F, 1.7936824E38F, -3.318354E37F, -7.9093366E37F, -3.2367935E38F, 2.834986E38F, 1.5113023E38F}));
+                Debug.Assert(pack.yawspeed == (float) -9.458858E37F);
+                Debug.Assert(pack.pitchspeed == (float) -2.5487158E38F);
             };
             ATTITUDE_QUATERNION_COV p61 = new ATTITUDE_QUATERNION_COV();
             PH.setPack(p61);
-            p61.q_SET(new float[] {-2.608023E38F, 7.7443934E37F, -2.2345823E37F, -5.4148243E37F}, 0) ;
-            p61.pitchspeed = (float) -2.7224513E37F;
-            p61.rollspeed = (float)5.2694197E37F;
-            p61.covariance_SET(new float[] {-1.0574156E38F, 1.7747855E38F, -1.246317E38F, -1.6953302E38F, 6.115796E37F, 6.1583795E37F, -7.085866E37F, -2.3330416E38F, -4.1695432E37F}, 0) ;
-            p61.time_usec = (ulong)6138010271435000545L;
-            p61.yawspeed = (float)1.1236277E38F;
+            p61.covariance_SET(new float[] {-2.5824714E38F, -7.9635864E37F, 3.1876265E38F, 1.7936824E38F, -3.318354E37F, -7.9093366E37F, -3.2367935E38F, 2.834986E38F, 1.5113023E38F}, 0) ;
+            p61.rollspeed = (float)2.1939422E38F;
+            p61.yawspeed = (float) -9.458858E37F;
+            p61.q_SET(new float[] {-3.6177265E37F, -2.4952883E38F, 2.9344085E38F, 2.4225012E38F}, 0) ;
+            p61.time_usec = (ulong)374822444108139497L;
+            p61.pitchspeed = (float) -2.5487158E38F;
             ADV_TEST_CH.send(p61);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnNAV_CONTROLLER_OUTPUTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.nav_pitch == (float)1.6096928E38F);
-                Debug.Assert(pack.nav_roll == (float)1.1962734E38F);
-                Debug.Assert(pack.target_bearing == (short)(short)19762);
-                Debug.Assert(pack.nav_bearing == (short)(short) -18938);
-                Debug.Assert(pack.alt_error == (float) -1.5686183E38F);
-                Debug.Assert(pack.xtrack_error == (float)6.0790524E37F);
-                Debug.Assert(pack.wp_dist == (ushort)(ushort)8102);
-                Debug.Assert(pack.aspd_error == (float)1.7250159E38F);
+                Debug.Assert(pack.alt_error == (float) -4.5667103E37F);
+                Debug.Assert(pack.aspd_error == (float)8.835334E37F);
+                Debug.Assert(pack.nav_pitch == (float)2.8777741E38F);
+                Debug.Assert(pack.wp_dist == (ushort)(ushort)30787);
+                Debug.Assert(pack.nav_bearing == (short)(short) -31134);
+                Debug.Assert(pack.nav_roll == (float) -2.452738E38F);
+                Debug.Assert(pack.target_bearing == (short)(short)25934);
+                Debug.Assert(pack.xtrack_error == (float) -1.048188E38F);
             };
             NAV_CONTROLLER_OUTPUT p62 = new NAV_CONTROLLER_OUTPUT();
             PH.setPack(p62);
-            p62.nav_pitch = (float)1.6096928E38F;
-            p62.nav_bearing = (short)(short) -18938;
-            p62.alt_error = (float) -1.5686183E38F;
-            p62.wp_dist = (ushort)(ushort)8102;
-            p62.xtrack_error = (float)6.0790524E37F;
-            p62.aspd_error = (float)1.7250159E38F;
-            p62.nav_roll = (float)1.1962734E38F;
-            p62.target_bearing = (short)(short)19762;
+            p62.aspd_error = (float)8.835334E37F;
+            p62.wp_dist = (ushort)(ushort)30787;
+            p62.nav_bearing = (short)(short) -31134;
+            p62.target_bearing = (short)(short)25934;
+            p62.xtrack_error = (float) -1.048188E38F;
+            p62.nav_pitch = (float)2.8777741E38F;
+            p62.nav_roll = (float) -2.452738E38F;
+            p62.alt_error = (float) -4.5667103E37F;
             ADV_TEST_CH.send(p62);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnGLOBAL_POSITION_INT_COVReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.lat == (int)223605294);
-                Debug.Assert(pack.lon == (int)1918904389);
-                Debug.Assert(pack.alt == (int) -344593767);
-                Debug.Assert(pack.relative_alt == (int)2113765551);
-                Debug.Assert(pack.vx == (float) -7.434784E37F);
-                Debug.Assert(pack.time_usec == (ulong)8869698817605485871L);
-                Debug.Assert(pack.estimator_type == (MAV_ESTIMATOR_TYPE)MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_GPS_INS);
-                Debug.Assert(pack.vy == (float)2.9620979E38F);
-                Debug.Assert(pack.vz == (float)1.6341976E38F);
-                Debug.Assert(pack.covariance.SequenceEqual(new float[] {-2.9083795E38F, 2.0278073E38F, -8.553875E37F, 2.3644708E38F, -2.3448985E38F, -2.6591002E37F, -1.7154288E38F, -3.4063382E37F, -1.338378E38F, -1.638921E37F, -8.585168E37F, 1.8473912E38F, -3.0833733E38F, -4.508121E37F, -1.5722069E38F, 7.9155E37F, -2.8355277E38F, -3.2347928E38F, 1.9235271E38F, -1.848111E38F, 2.0117873E38F, -3.0894233E38F, -1.2111624E38F, 2.5518184E38F, -3.39443E38F, 1.914975E38F, 2.9787434E37F, 1.159514E38F, 2.5525439E38F, -1.4951456E38F, 3.884262E37F, 1.5884072E38F, 1.3210417E38F, 1.1115471E38F, -1.3587669E38F, -1.4492263E37F}));
+                Debug.Assert(pack.vy == (float)9.529978E37F);
+                Debug.Assert(pack.time_usec == (ulong)8234368434408581617L);
+                Debug.Assert(pack.covariance.SequenceEqual(new float[] {2.1207502E37F, -1.9873405E38F, 7.113012E37F, -1.0116768E38F, 1.7901379E37F, -8.804346E37F, -2.8162932E37F, 1.4875567E38F, -2.238996E38F, 1.4800199E38F, -1.7408696E38F, 5.768072E37F, -2.6205802E38F, 1.0715516E38F, 4.416302E37F, -1.1795392E38F, -5.810442E37F, 3.190463E38F, -2.5938825E38F, 1.4559684E38F, 2.6722971E38F, -2.5161443E38F, -1.3223754E38F, 3.3155775E38F, -2.4037748E38F, -1.929924E38F, -1.3351633E38F, -2.6699452E38F, 8.4713424E37F, -1.0875856E38F, -1.6648744E38F, -2.890537E38F, -2.5261532E38F, 2.5077021E38F, -2.0060352E38F, -2.3540297E35F}));
+                Debug.Assert(pack.lon == (int)484599875);
+                Debug.Assert(pack.alt == (int) -2007112737);
+                Debug.Assert(pack.vx == (float)4.9205683E37F);
+                Debug.Assert(pack.estimator_type == MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_GPS_INS);
+                Debug.Assert(pack.lat == (int)638726849);
+                Debug.Assert(pack.vz == (float)3.3682929E38F);
+                Debug.Assert(pack.relative_alt == (int) -912611434);
             };
             GLOBAL_POSITION_INT_COV p63 = new GLOBAL_POSITION_INT_COV();
             PH.setPack(p63);
-            p63.time_usec = (ulong)8869698817605485871L;
-            p63.lat = (int)223605294;
-            p63.lon = (int)1918904389;
-            p63.relative_alt = (int)2113765551;
-            p63.vz = (float)1.6341976E38F;
-            p63.estimator_type = (MAV_ESTIMATOR_TYPE)MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_GPS_INS;
-            p63.alt = (int) -344593767;
-            p63.covariance_SET(new float[] {-2.9083795E38F, 2.0278073E38F, -8.553875E37F, 2.3644708E38F, -2.3448985E38F, -2.6591002E37F, -1.7154288E38F, -3.4063382E37F, -1.338378E38F, -1.638921E37F, -8.585168E37F, 1.8473912E38F, -3.0833733E38F, -4.508121E37F, -1.5722069E38F, 7.9155E37F, -2.8355277E38F, -3.2347928E38F, 1.9235271E38F, -1.848111E38F, 2.0117873E38F, -3.0894233E38F, -1.2111624E38F, 2.5518184E38F, -3.39443E38F, 1.914975E38F, 2.9787434E37F, 1.159514E38F, 2.5525439E38F, -1.4951456E38F, 3.884262E37F, 1.5884072E38F, 1.3210417E38F, 1.1115471E38F, -1.3587669E38F, -1.4492263E37F}, 0) ;
-            p63.vx = (float) -7.434784E37F;
-            p63.vy = (float)2.9620979E38F;
+            p63.vz = (float)3.3682929E38F;
+            p63.time_usec = (ulong)8234368434408581617L;
+            p63.vy = (float)9.529978E37F;
+            p63.vx = (float)4.9205683E37F;
+            p63.lat = (int)638726849;
+            p63.covariance_SET(new float[] {2.1207502E37F, -1.9873405E38F, 7.113012E37F, -1.0116768E38F, 1.7901379E37F, -8.804346E37F, -2.8162932E37F, 1.4875567E38F, -2.238996E38F, 1.4800199E38F, -1.7408696E38F, 5.768072E37F, -2.6205802E38F, 1.0715516E38F, 4.416302E37F, -1.1795392E38F, -5.810442E37F, 3.190463E38F, -2.5938825E38F, 1.4559684E38F, 2.6722971E38F, -2.5161443E38F, -1.3223754E38F, 3.3155775E38F, -2.4037748E38F, -1.929924E38F, -1.3351633E38F, -2.6699452E38F, 8.4713424E37F, -1.0875856E38F, -1.6648744E38F, -2.890537E38F, -2.5261532E38F, 2.5077021E38F, -2.0060352E38F, -2.3540297E35F}, 0) ;
+            p63.lon = (int)484599875;
+            p63.estimator_type = MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_GPS_INS;
+            p63.relative_alt = (int) -912611434;
+            p63.alt = (int) -2007112737;
             ADV_TEST_CH.send(p63);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnLOCAL_POSITION_NED_COVReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.ay == (float)1.2698902E37F);
-                Debug.Assert(pack.time_usec == (ulong)3751251069247550068L);
-                Debug.Assert(pack.vz == (float)8.037586E37F);
-                Debug.Assert(pack.x == (float)3.0451182E38F);
-                Debug.Assert(pack.y == (float)3.7069156E37F);
-                Debug.Assert(pack.az == (float) -5.5795175E37F);
-                Debug.Assert(pack.covariance.SequenceEqual(new float[] {-1.7350916E38F, -1.85115E38F, 3.0771543E38F, 6.4930316E37F, -3.2579917E36F, 1.25715E37F, 1.4175251E38F, -1.1311403E38F, -2.2290275E38F, -4.422233E37F, -2.605317E38F, -2.2058279E38F, 3.250113E38F, 1.7700144E38F, -1.7768786E38F, 1.7882846E38F, 2.777073E38F, 1.3443557E38F, 4.085667E37F, -2.8856898E38F, 2.7880058E38F, 9.046596E37F, 1.815989E38F, 5.6933074E37F, -1.5975091E38F, 3.1679661E38F, -2.3756845E38F, -1.789777E38F, 2.161218E38F, 2.9451349E38F, 3.1588143E38F, -2.1840851E38F, -2.0358195E38F, 3.335246E38F, 1.4550612E38F, -3.62769E37F, -2.5899998E38F, -1.0403774E38F, 1.250462E38F, 3.1050398E38F, 3.3056827E38F, 3.044621E38F, -3.0118484E38F, 2.133914E38F, 1.411094E37F}));
-                Debug.Assert(pack.vy == (float)1.4234178E38F);
-                Debug.Assert(pack.ax == (float)2.5312816E38F);
-                Debug.Assert(pack.z == (float)2.094937E38F);
-                Debug.Assert(pack.estimator_type == (MAV_ESTIMATOR_TYPE)MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_GPS);
-                Debug.Assert(pack.vx == (float)8.90532E37F);
+                Debug.Assert(pack.az == (float) -8.0907206E37F);
+                Debug.Assert(pack.vz == (float)3.0496812E38F);
+                Debug.Assert(pack.time_usec == (ulong)3861721836636014170L);
+                Debug.Assert(pack.x == (float)1.4441898E38F);
+                Debug.Assert(pack.covariance.SequenceEqual(new float[] {-1.1593371E38F, 1.1185815E37F, -8.713853E37F, -6.034977E37F, 2.6120318E38F, -2.5709867E38F, 9.724723E36F, 1.934808E38F, 2.8382423E37F, -2.1410815E38F, -1.2434611E38F, -2.8589567E38F, 2.2995506E38F, -1.7454664E38F, -1.956387E38F, -2.297568E38F, -2.4956734E38F, -4.951131E37F, -2.701913E38F, 2.9650524E38F, 8.899964E37F, 2.0745948E38F, -2.626103E38F, -2.5220207E38F, 2.7909277E38F, 2.3618548E38F, -2.0027113E38F, -1.7003161E38F, 1.3583603E38F, -1.7015623E38F, 3.2275252E38F, -1.8761083E38F, -1.6953671E38F, -2.1479993E38F, -3.0660364E36F, -3.820239E37F, 1.3571673E38F, -2.3064148E38F, -2.019833E38F, 4.1332432E37F, 1.4946747E37F, 7.896729E37F, -4.8178973E37F, 1.8006464E38F, 2.8854983E38F}));
+                Debug.Assert(pack.vy == (float) -8.730036E37F);
+                Debug.Assert(pack.vx == (float)1.4483365E38F);
+                Debug.Assert(pack.ay == (float)1.4165537E38F);
+                Debug.Assert(pack.z == (float)1.5709735E38F);
+                Debug.Assert(pack.estimator_type == MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_NAIVE);
+                Debug.Assert(pack.y == (float) -3.5707978E37F);
+                Debug.Assert(pack.ax == (float)6.4916027E37F);
             };
             LOCAL_POSITION_NED_COV p64 = new LOCAL_POSITION_NED_COV();
             PH.setPack(p64);
-            p64.y = (float)3.7069156E37F;
-            p64.vx = (float)8.90532E37F;
-            p64.estimator_type = (MAV_ESTIMATOR_TYPE)MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_GPS;
-            p64.az = (float) -5.5795175E37F;
-            p64.vz = (float)8.037586E37F;
-            p64.vy = (float)1.4234178E38F;
-            p64.ax = (float)2.5312816E38F;
-            p64.x = (float)3.0451182E38F;
-            p64.z = (float)2.094937E38F;
-            p64.covariance_SET(new float[] {-1.7350916E38F, -1.85115E38F, 3.0771543E38F, 6.4930316E37F, -3.2579917E36F, 1.25715E37F, 1.4175251E38F, -1.1311403E38F, -2.2290275E38F, -4.422233E37F, -2.605317E38F, -2.2058279E38F, 3.250113E38F, 1.7700144E38F, -1.7768786E38F, 1.7882846E38F, 2.777073E38F, 1.3443557E38F, 4.085667E37F, -2.8856898E38F, 2.7880058E38F, 9.046596E37F, 1.815989E38F, 5.6933074E37F, -1.5975091E38F, 3.1679661E38F, -2.3756845E38F, -1.789777E38F, 2.161218E38F, 2.9451349E38F, 3.1588143E38F, -2.1840851E38F, -2.0358195E38F, 3.335246E38F, 1.4550612E38F, -3.62769E37F, -2.5899998E38F, -1.0403774E38F, 1.250462E38F, 3.1050398E38F, 3.3056827E38F, 3.044621E38F, -3.0118484E38F, 2.133914E38F, 1.411094E37F}, 0) ;
-            p64.ay = (float)1.2698902E37F;
-            p64.time_usec = (ulong)3751251069247550068L;
+            p64.ax = (float)6.4916027E37F;
+            p64.z = (float)1.5709735E38F;
+            p64.vz = (float)3.0496812E38F;
+            p64.vy = (float) -8.730036E37F;
+            p64.time_usec = (ulong)3861721836636014170L;
+            p64.ay = (float)1.4165537E38F;
+            p64.estimator_type = MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_NAIVE;
+            p64.x = (float)1.4441898E38F;
+            p64.az = (float) -8.0907206E37F;
+            p64.y = (float) -3.5707978E37F;
+            p64.vx = (float)1.4483365E38F;
+            p64.covariance_SET(new float[] {-1.1593371E38F, 1.1185815E37F, -8.713853E37F, -6.034977E37F, 2.6120318E38F, -2.5709867E38F, 9.724723E36F, 1.934808E38F, 2.8382423E37F, -2.1410815E38F, -1.2434611E38F, -2.8589567E38F, 2.2995506E38F, -1.7454664E38F, -1.956387E38F, -2.297568E38F, -2.4956734E38F, -4.951131E37F, -2.701913E38F, 2.9650524E38F, 8.899964E37F, 2.0745948E38F, -2.626103E38F, -2.5220207E38F, 2.7909277E38F, 2.3618548E38F, -2.0027113E38F, -1.7003161E38F, 1.3583603E38F, -1.7015623E38F, 3.2275252E38F, -1.8761083E38F, -1.6953671E38F, -2.1479993E38F, -3.0660364E36F, -3.820239E37F, 1.3571673E38F, -2.3064148E38F, -2.019833E38F, 4.1332432E37F, 1.4946747E37F, 7.896729E37F, -4.8178973E37F, 1.8006464E38F, 2.8854983E38F}, 0) ;
             ADV_TEST_CH.send(p64);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnRC_CHANNELSReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.chan12_raw == (ushort)(ushort)31926);
-                Debug.Assert(pack.chan9_raw == (ushort)(ushort)58926);
-                Debug.Assert(pack.chan5_raw == (ushort)(ushort)60132);
-                Debug.Assert(pack.chan10_raw == (ushort)(ushort)16637);
-                Debug.Assert(pack.chan2_raw == (ushort)(ushort)51908);
-                Debug.Assert(pack.chancount == (byte)(byte)242);
-                Debug.Assert(pack.chan16_raw == (ushort)(ushort)19876);
-                Debug.Assert(pack.time_boot_ms == (uint)984327279U);
-                Debug.Assert(pack.chan18_raw == (ushort)(ushort)8010);
-                Debug.Assert(pack.chan11_raw == (ushort)(ushort)46137);
-                Debug.Assert(pack.chan1_raw == (ushort)(ushort)16835);
-                Debug.Assert(pack.chan14_raw == (ushort)(ushort)29795);
-                Debug.Assert(pack.chan4_raw == (ushort)(ushort)8416);
-                Debug.Assert(pack.chan6_raw == (ushort)(ushort)38040);
-                Debug.Assert(pack.rssi == (byte)(byte)27);
-                Debug.Assert(pack.chan8_raw == (ushort)(ushort)31635);
-                Debug.Assert(pack.chan17_raw == (ushort)(ushort)51919);
-                Debug.Assert(pack.chan15_raw == (ushort)(ushort)51091);
-                Debug.Assert(pack.chan7_raw == (ushort)(ushort)64271);
-                Debug.Assert(pack.chan3_raw == (ushort)(ushort)5367);
-                Debug.Assert(pack.chan13_raw == (ushort)(ushort)7144);
+                Debug.Assert(pack.chan6_raw == (ushort)(ushort)44094);
+                Debug.Assert(pack.chan3_raw == (ushort)(ushort)7070);
+                Debug.Assert(pack.rssi == (byte)(byte)59);
+                Debug.Assert(pack.chan18_raw == (ushort)(ushort)20195);
+                Debug.Assert(pack.chan5_raw == (ushort)(ushort)18829);
+                Debug.Assert(pack.chan9_raw == (ushort)(ushort)63305);
+                Debug.Assert(pack.chan10_raw == (ushort)(ushort)57587);
+                Debug.Assert(pack.chan14_raw == (ushort)(ushort)27428);
+                Debug.Assert(pack.chan1_raw == (ushort)(ushort)29025);
+                Debug.Assert(pack.chan8_raw == (ushort)(ushort)45301);
+                Debug.Assert(pack.chan4_raw == (ushort)(ushort)7901);
+                Debug.Assert(pack.chan2_raw == (ushort)(ushort)64879);
+                Debug.Assert(pack.chan7_raw == (ushort)(ushort)6432);
+                Debug.Assert(pack.chan12_raw == (ushort)(ushort)57140);
+                Debug.Assert(pack.chan17_raw == (ushort)(ushort)22567);
+                Debug.Assert(pack.chan16_raw == (ushort)(ushort)32484);
+                Debug.Assert(pack.time_boot_ms == (uint)796608646U);
+                Debug.Assert(pack.chancount == (byte)(byte)128);
+                Debug.Assert(pack.chan15_raw == (ushort)(ushort)16227);
+                Debug.Assert(pack.chan13_raw == (ushort)(ushort)38963);
+                Debug.Assert(pack.chan11_raw == (ushort)(ushort)21355);
             };
             RC_CHANNELS p65 = new RC_CHANNELS();
             PH.setPack(p65);
-            p65.chan7_raw = (ushort)(ushort)64271;
-            p65.chan1_raw = (ushort)(ushort)16835;
-            p65.chan12_raw = (ushort)(ushort)31926;
-            p65.chan5_raw = (ushort)(ushort)60132;
-            p65.chan11_raw = (ushort)(ushort)46137;
-            p65.rssi = (byte)(byte)27;
-            p65.chan13_raw = (ushort)(ushort)7144;
-            p65.chan8_raw = (ushort)(ushort)31635;
-            p65.chan10_raw = (ushort)(ushort)16637;
-            p65.chan14_raw = (ushort)(ushort)29795;
-            p65.chan17_raw = (ushort)(ushort)51919;
-            p65.chan16_raw = (ushort)(ushort)19876;
-            p65.chan6_raw = (ushort)(ushort)38040;
-            p65.chan3_raw = (ushort)(ushort)5367;
-            p65.chan18_raw = (ushort)(ushort)8010;
-            p65.chan2_raw = (ushort)(ushort)51908;
-            p65.chan4_raw = (ushort)(ushort)8416;
-            p65.chan15_raw = (ushort)(ushort)51091;
-            p65.chancount = (byte)(byte)242;
-            p65.chan9_raw = (ushort)(ushort)58926;
-            p65.time_boot_ms = (uint)984327279U;
+            p65.chan13_raw = (ushort)(ushort)38963;
+            p65.chancount = (byte)(byte)128;
+            p65.chan7_raw = (ushort)(ushort)6432;
+            p65.chan11_raw = (ushort)(ushort)21355;
+            p65.rssi = (byte)(byte)59;
+            p65.chan16_raw = (ushort)(ushort)32484;
+            p65.chan18_raw = (ushort)(ushort)20195;
+            p65.chan9_raw = (ushort)(ushort)63305;
+            p65.time_boot_ms = (uint)796608646U;
+            p65.chan17_raw = (ushort)(ushort)22567;
+            p65.chan8_raw = (ushort)(ushort)45301;
+            p65.chan1_raw = (ushort)(ushort)29025;
+            p65.chan15_raw = (ushort)(ushort)16227;
+            p65.chan14_raw = (ushort)(ushort)27428;
+            p65.chan10_raw = (ushort)(ushort)57587;
+            p65.chan6_raw = (ushort)(ushort)44094;
+            p65.chan2_raw = (ushort)(ushort)64879;
+            p65.chan12_raw = (ushort)(ushort)57140;
+            p65.chan3_raw = (ushort)(ushort)7070;
+            p65.chan5_raw = (ushort)(ushort)18829;
+            p65.chan4_raw = (ushort)(ushort)7901;
             ADV_TEST_CH.send(p65);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnREQUEST_DATA_STREAMReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.start_stop == (byte)(byte)105);
-                Debug.Assert(pack.target_system == (byte)(byte)202);
-                Debug.Assert(pack.req_stream_id == (byte)(byte)122);
-                Debug.Assert(pack.target_component == (byte)(byte)68);
-                Debug.Assert(pack.req_message_rate == (ushort)(ushort)48334);
+                Debug.Assert(pack.start_stop == (byte)(byte)173);
+                Debug.Assert(pack.req_message_rate == (ushort)(ushort)28969);
+                Debug.Assert(pack.req_stream_id == (byte)(byte)13);
+                Debug.Assert(pack.target_system == (byte)(byte)48);
+                Debug.Assert(pack.target_component == (byte)(byte)116);
             };
             REQUEST_DATA_STREAM p66 = new REQUEST_DATA_STREAM();
             PH.setPack(p66);
-            p66.req_message_rate = (ushort)(ushort)48334;
-            p66.start_stop = (byte)(byte)105;
-            p66.req_stream_id = (byte)(byte)122;
-            p66.target_system = (byte)(byte)202;
-            p66.target_component = (byte)(byte)68;
+            p66.req_message_rate = (ushort)(ushort)28969;
+            p66.start_stop = (byte)(byte)173;
+            p66.req_stream_id = (byte)(byte)13;
+            p66.target_component = (byte)(byte)116;
+            p66.target_system = (byte)(byte)48;
             ADV_TEST_CH.send(p66);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnDATA_STREAMReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.on_off == (byte)(byte)244);
-                Debug.Assert(pack.stream_id == (byte)(byte)241);
-                Debug.Assert(pack.message_rate == (ushort)(ushort)3269);
+                Debug.Assert(pack.on_off == (byte)(byte)90);
+                Debug.Assert(pack.message_rate == (ushort)(ushort)31239);
+                Debug.Assert(pack.stream_id == (byte)(byte)52);
             };
             DATA_STREAM p67 = new DATA_STREAM();
             PH.setPack(p67);
-            p67.on_off = (byte)(byte)244;
-            p67.stream_id = (byte)(byte)241;
-            p67.message_rate = (ushort)(ushort)3269;
+            p67.message_rate = (ushort)(ushort)31239;
+            p67.on_off = (byte)(byte)90;
+            p67.stream_id = (byte)(byte)52;
             ADV_TEST_CH.send(p67);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMANUAL_CONTROLReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.buttons == (ushort)(ushort)47845);
-                Debug.Assert(pack.target == (byte)(byte)217);
-                Debug.Assert(pack.z == (short)(short)1256);
-                Debug.Assert(pack.r == (short)(short) -32508);
-                Debug.Assert(pack.y == (short)(short) -26764);
-                Debug.Assert(pack.x == (short)(short)7860);
+                Debug.Assert(pack.r == (short)(short)24065);
+                Debug.Assert(pack.target == (byte)(byte)176);
+                Debug.Assert(pack.y == (short)(short)162);
+                Debug.Assert(pack.buttons == (ushort)(ushort)32379);
+                Debug.Assert(pack.z == (short)(short) -15991);
+                Debug.Assert(pack.x == (short)(short)27358);
             };
             MANUAL_CONTROL p69 = new MANUAL_CONTROL();
             PH.setPack(p69);
-            p69.x = (short)(short)7860;
-            p69.z = (short)(short)1256;
-            p69.y = (short)(short) -26764;
-            p69.target = (byte)(byte)217;
-            p69.r = (short)(short) -32508;
-            p69.buttons = (ushort)(ushort)47845;
+            p69.z = (short)(short) -15991;
+            p69.r = (short)(short)24065;
+            p69.buttons = (ushort)(ushort)32379;
+            p69.x = (short)(short)27358;
+            p69.target = (byte)(byte)176;
+            p69.y = (short)(short)162;
             ADV_TEST_CH.send(p69);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnRC_CHANNELS_OVERRIDEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_component == (byte)(byte)61);
-                Debug.Assert(pack.chan6_raw == (ushort)(ushort)48663);
-                Debug.Assert(pack.chan3_raw == (ushort)(ushort)56174);
-                Debug.Assert(pack.chan1_raw == (ushort)(ushort)11623);
-                Debug.Assert(pack.chan5_raw == (ushort)(ushort)33931);
-                Debug.Assert(pack.chan4_raw == (ushort)(ushort)45644);
-                Debug.Assert(pack.target_system == (byte)(byte)119);
-                Debug.Assert(pack.chan2_raw == (ushort)(ushort)39868);
-                Debug.Assert(pack.chan8_raw == (ushort)(ushort)28912);
-                Debug.Assert(pack.chan7_raw == (ushort)(ushort)15486);
+                Debug.Assert(pack.chan7_raw == (ushort)(ushort)36230);
+                Debug.Assert(pack.target_system == (byte)(byte)198);
+                Debug.Assert(pack.chan6_raw == (ushort)(ushort)64614);
+                Debug.Assert(pack.chan4_raw == (ushort)(ushort)56485);
+                Debug.Assert(pack.chan3_raw == (ushort)(ushort)47365);
+                Debug.Assert(pack.chan2_raw == (ushort)(ushort)58966);
+                Debug.Assert(pack.chan8_raw == (ushort)(ushort)6326);
+                Debug.Assert(pack.target_component == (byte)(byte)220);
+                Debug.Assert(pack.chan1_raw == (ushort)(ushort)49894);
+                Debug.Assert(pack.chan5_raw == (ushort)(ushort)9881);
             };
             RC_CHANNELS_OVERRIDE p70 = new RC_CHANNELS_OVERRIDE();
             PH.setPack(p70);
-            p70.chan2_raw = (ushort)(ushort)39868;
-            p70.chan3_raw = (ushort)(ushort)56174;
-            p70.chan6_raw = (ushort)(ushort)48663;
-            p70.chan5_raw = (ushort)(ushort)33931;
-            p70.chan4_raw = (ushort)(ushort)45644;
-            p70.target_system = (byte)(byte)119;
-            p70.target_component = (byte)(byte)61;
-            p70.chan7_raw = (ushort)(ushort)15486;
-            p70.chan8_raw = (ushort)(ushort)28912;
-            p70.chan1_raw = (ushort)(ushort)11623;
+            p70.target_system = (byte)(byte)198;
+            p70.chan2_raw = (ushort)(ushort)58966;
+            p70.chan8_raw = (ushort)(ushort)6326;
+            p70.chan3_raw = (ushort)(ushort)47365;
+            p70.chan7_raw = (ushort)(ushort)36230;
+            p70.chan4_raw = (ushort)(ushort)56485;
+            p70.chan6_raw = (ushort)(ushort)64614;
+            p70.target_component = (byte)(byte)220;
+            p70.chan1_raw = (ushort)(ushort)49894;
+            p70.chan5_raw = (ushort)(ushort)9881;
             ADV_TEST_CH.send(p70);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMISSION_ITEM_INTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.frame == (MAV_FRAME)MAV_FRAME.MAV_FRAME_LOCAL_ENU);
-                Debug.Assert(pack.y == (int) -1402160705);
-                Debug.Assert(pack.param2 == (float)1.7662983E38F);
-                Debug.Assert(pack.param3 == (float) -3.372448E38F);
-                Debug.Assert(pack.target_system == (byte)(byte)30);
-                Debug.Assert(pack.param4 == (float)1.3500301E38F);
-                Debug.Assert(pack.target_component == (byte)(byte)195);
-                Debug.Assert(pack.param1 == (float) -4.3089224E37F);
-                Debug.Assert(pack.autocontinue == (byte)(byte)190);
-                Debug.Assert(pack.x == (int)299569813);
-                Debug.Assert(pack.seq == (ushort)(ushort)34641);
-                Debug.Assert(pack.current == (byte)(byte)71);
-                Debug.Assert(pack.mission_type == (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY);
-                Debug.Assert(pack.z == (float) -3.0861065E38F);
-                Debug.Assert(pack.command == (MAV_CMD)MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL);
+                Debug.Assert(pack.mission_type == MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE);
+                Debug.Assert(pack.target_component == (byte)(byte)225);
+                Debug.Assert(pack.z == (float)1.4935241E38F);
+                Debug.Assert(pack.param2 == (float)1.0284855E38F);
+                Debug.Assert(pack.frame == MAV_FRAME.MAV_FRAME_LOCAL_OFFSET_NED);
+                Debug.Assert(pack.autocontinue == (byte)(byte)83);
+                Debug.Assert(pack.target_system == (byte)(byte)133);
+                Debug.Assert(pack.param4 == (float) -3.2704895E38F);
+                Debug.Assert(pack.param1 == (float)3.0847943E38F);
+                Debug.Assert(pack.command == MAV_CMD.MAV_CMD_START_RX_PAIR);
+                Debug.Assert(pack.seq == (ushort)(ushort)24796);
+                Debug.Assert(pack.param3 == (float)7.2298647E37F);
+                Debug.Assert(pack.current == (byte)(byte)113);
+                Debug.Assert(pack.x == (int) -1114578524);
+                Debug.Assert(pack.y == (int) -1154613873);
             };
             MISSION_ITEM_INT p73 = new MISSION_ITEM_INT();
             PH.setPack(p73);
-            p73.z = (float) -3.0861065E38F;
-            p73.command = (MAV_CMD)MAV_CMD.MAV_CMD_DO_MOUNT_CONTROL;
-            p73.param4 = (float)1.3500301E38F;
-            p73.target_component = (byte)(byte)195;
-            p73.current = (byte)(byte)71;
-            p73.x = (int)299569813;
-            p73.param1 = (float) -4.3089224E37F;
-            p73.target_system = (byte)(byte)30;
-            p73.seq = (ushort)(ushort)34641;
-            p73.frame = (MAV_FRAME)MAV_FRAME.MAV_FRAME_LOCAL_ENU;
-            p73.autocontinue = (byte)(byte)190;
-            p73.y = (int) -1402160705;
-            p73.mission_type = (MAV_MISSION_TYPE)MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY;
-            p73.param2 = (float)1.7662983E38F;
-            p73.param3 = (float) -3.372448E38F;
+            p73.z = (float)1.4935241E38F;
+            p73.target_component = (byte)(byte)225;
+            p73.x = (int) -1114578524;
+            p73.current = (byte)(byte)113;
+            p73.autocontinue = (byte)(byte)83;
+            p73.param2 = (float)1.0284855E38F;
+            p73.param4 = (float) -3.2704895E38F;
+            p73.frame = MAV_FRAME.MAV_FRAME_LOCAL_OFFSET_NED;
+            p73.seq = (ushort)(ushort)24796;
+            p73.target_system = (byte)(byte)133;
+            p73.y = (int) -1154613873;
+            p73.command = MAV_CMD.MAV_CMD_START_RX_PAIR;
+            p73.param3 = (float)7.2298647E37F;
+            p73.param1 = (float)3.0847943E38F;
+            p73.mission_type = MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE;
             ADV_TEST_CH.send(p73);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnVFR_HUDReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.climb == (float) -7.024138E37F);
-                Debug.Assert(pack.airspeed == (float) -1.4107109E38F);
-                Debug.Assert(pack.alt == (float)1.3678227E38F);
-                Debug.Assert(pack.throttle == (ushort)(ushort)52938);
-                Debug.Assert(pack.groundspeed == (float)2.7740187E38F);
-                Debug.Assert(pack.heading == (short)(short) -27116);
+                Debug.Assert(pack.groundspeed == (float)1.2482061E38F);
+                Debug.Assert(pack.airspeed == (float) -3.1357047E38F);
+                Debug.Assert(pack.heading == (short)(short) -4136);
+                Debug.Assert(pack.throttle == (ushort)(ushort)17761);
+                Debug.Assert(pack.climb == (float) -3.0725135E38F);
+                Debug.Assert(pack.alt == (float) -2.3609822E38F);
             };
-            GroundControl.VFR_HUD p74 = CommunicationChannel.new_VFR_HUD();
+            VFR_HUD p74 = new VFR_HUD();
             PH.setPack(p74);
-            p74.alt = (float)1.3678227E38F;
-            p74.throttle = (ushort)(ushort)52938;
-            p74.heading = (short)(short) -27116;
-            p74.climb = (float) -7.024138E37F;
-            p74.airspeed = (float) -1.4107109E38F;
-            p74.groundspeed = (float)2.7740187E38F;
-            CommunicationChannel.instance.send(p74);//put test pack to the  channel send buffer
-            TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
+            p74.groundspeed = (float)1.2482061E38F;
+            p74.climb = (float) -3.0725135E38F;
+            p74.airspeed = (float) -3.1357047E38F;
+            p74.alt = (float) -2.3609822E38F;
+            p74.heading = (short)(short) -4136;
+            p74.throttle = (ushort)(ushort)17761;
+            ADV_TEST_CH.send(p74);//put test pack to the  channel send buffer
+            TestChannelAdvanced.transmission(ADV_TEST_CH, CommunicationChannel.instance);
             CommunicationChannel.instance.OnCOMMAND_INTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_system == (byte)(byte)48);
-                Debug.Assert(pack.x == (int) -1689787131);
-                Debug.Assert(pack.current == (byte)(byte)60);
-                Debug.Assert(pack.param4 == (float) -2.6305395E38F);
-                Debug.Assert(pack.param3 == (float) -4.5515913E37F);
-                Debug.Assert(pack.param1 == (float)2.3934694E38F);
-                Debug.Assert(pack.param2 == (float)6.5583415E37F);
-                Debug.Assert(pack.z == (float)4.815302E37F);
-                Debug.Assert(pack.autocontinue == (byte)(byte)97);
-                Debug.Assert(pack.y == (int)2095945111);
-                Debug.Assert(pack.frame == (MAV_FRAME)MAV_FRAME.MAV_FRAME_GLOBAL_TERRAIN_ALT);
-                Debug.Assert(pack.target_component == (byte)(byte)223);
-                Debug.Assert(pack.command == (MAV_CMD)MAV_CMD.MAV_CMD_DO_RALLY_LAND);
+                Debug.Assert(pack.y == (int)948361132);
+                Debug.Assert(pack.current == (byte)(byte)140);
+                Debug.Assert(pack.autocontinue == (byte)(byte)94);
+                Debug.Assert(pack.frame == MAV_FRAME.MAV_FRAME_MISSION);
+                Debug.Assert(pack.target_component == (byte)(byte)101);
+                Debug.Assert(pack.param3 == (float) -2.119254E38F);
+                Debug.Assert(pack.param4 == (float) -3.3345602E38F);
+                Debug.Assert(pack.target_system == (byte)(byte)22);
+                Debug.Assert(pack.param2 == (float)2.023001E38F);
+                Debug.Assert(pack.param1 == (float)3.2651469E38F);
+                Debug.Assert(pack.command == MAV_CMD.MAV_CMD_SPATIAL_USER_5);
+                Debug.Assert(pack.x == (int)701767530);
+                Debug.Assert(pack.z == (float)1.642023E38F);
             };
             GroundControl.COMMAND_INT p75 = CommunicationChannel.new_COMMAND_INT();
             PH.setPack(p75);
-            p75.autocontinue = (byte)(byte)97;
-            p75.current = (byte)(byte)60;
-            p75.frame = (MAV_FRAME)MAV_FRAME.MAV_FRAME_GLOBAL_TERRAIN_ALT;
-            p75.param4 = (float) -2.6305395E38F;
-            p75.x = (int) -1689787131;
-            p75.target_component = (byte)(byte)223;
-            p75.command = (MAV_CMD)MAV_CMD.MAV_CMD_DO_RALLY_LAND;
-            p75.param3 = (float) -4.5515913E37F;
-            p75.y = (int)2095945111;
-            p75.target_system = (byte)(byte)48;
-            p75.param2 = (float)6.5583415E37F;
-            p75.z = (float)4.815302E37F;
-            p75.param1 = (float)2.3934694E38F;
+            p75.current = (byte)(byte)140;
+            p75.autocontinue = (byte)(byte)94;
+            p75.target_component = (byte)(byte)101;
+            p75.y = (int)948361132;
+            p75.frame = MAV_FRAME.MAV_FRAME_MISSION;
+            p75.command = MAV_CMD.MAV_CMD_SPATIAL_USER_5;
+            p75.param2 = (float)2.023001E38F;
+            p75.param1 = (float)3.2651469E38F;
+            p75.target_system = (byte)(byte)22;
+            p75.z = (float)1.642023E38F;
+            p75.x = (int)701767530;
+            p75.param4 = (float) -3.3345602E38F;
+            p75.param3 = (float) -2.119254E38F;
             CommunicationChannel.instance.send(p75);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnCOMMAND_LONGReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.param3 == (float) -1.7115591E38F);
-                Debug.Assert(pack.confirmation == (byte)(byte)71);
-                Debug.Assert(pack.param1 == (float)3.1639803E37F);
-                Debug.Assert(pack.command == (MAV_CMD)MAV_CMD.MAV_CMD_DO_INVERTED_FLIGHT);
-                Debug.Assert(pack.param2 == (float) -1.540697E38F);
-                Debug.Assert(pack.param7 == (float)2.327499E38F);
-                Debug.Assert(pack.param5 == (float) -1.6521936E38F);
-                Debug.Assert(pack.target_system == (byte)(byte)234);
-                Debug.Assert(pack.target_component == (byte)(byte)150);
-                Debug.Assert(pack.param4 == (float) -9.970396E37F);
-                Debug.Assert(pack.param6 == (float) -2.5704685E38F);
+                Debug.Assert(pack.target_system == (byte)(byte)138);
+                Debug.Assert(pack.command == MAV_CMD.MAV_CMD_REQUEST_STORAGE_INFORMATION);
+                Debug.Assert(pack.param3 == (float)6.716172E37F);
+                Debug.Assert(pack.confirmation == (byte)(byte)147);
+                Debug.Assert(pack.target_component == (byte)(byte)157);
+                Debug.Assert(pack.param4 == (float)2.9785889E38F);
+                Debug.Assert(pack.param1 == (float) -5.4069976E36F);
+                Debug.Assert(pack.param2 == (float) -2.441345E37F);
+                Debug.Assert(pack.param7 == (float)3.626634E37F);
+                Debug.Assert(pack.param6 == (float)6.271708E37F);
+                Debug.Assert(pack.param5 == (float) -2.1461446E38F);
             };
             GroundControl.COMMAND_LONG p76 = CommunicationChannel.new_COMMAND_LONG();
             PH.setPack(p76);
-            p76.target_component = (byte)(byte)150;
-            p76.param1 = (float)3.1639803E37F;
-            p76.param2 = (float) -1.540697E38F;
-            p76.param5 = (float) -1.6521936E38F;
-            p76.param7 = (float)2.327499E38F;
-            p76.param3 = (float) -1.7115591E38F;
-            p76.param4 = (float) -9.970396E37F;
-            p76.target_system = (byte)(byte)234;
-            p76.param6 = (float) -2.5704685E38F;
-            p76.command = (MAV_CMD)MAV_CMD.MAV_CMD_DO_INVERTED_FLIGHT;
-            p76.confirmation = (byte)(byte)71;
+            p76.param5 = (float) -2.1461446E38F;
+            p76.param3 = (float)6.716172E37F;
+            p76.param7 = (float)3.626634E37F;
+            p76.target_component = (byte)(byte)157;
+            p76.param6 = (float)6.271708E37F;
+            p76.param4 = (float)2.9785889E38F;
+            p76.confirmation = (byte)(byte)147;
+            p76.target_system = (byte)(byte)138;
+            p76.command = MAV_CMD.MAV_CMD_REQUEST_STORAGE_INFORMATION;
+            p76.param1 = (float) -5.4069976E36F;
+            p76.param2 = (float) -2.441345E37F;
             CommunicationChannel.instance.send(p76);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnCOMMAND_ACKReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_system_TRY(ph) == (byte)(byte)191);
-                Debug.Assert(pack.target_component_TRY(ph) == (byte)(byte)248);
-                Debug.Assert(pack.result_param2_TRY(ph) == (int) -1450266110);
-                Debug.Assert(pack.result == (MAV_RESULT)MAV_RESULT.MAV_RESULT_DENIED);
-                Debug.Assert(pack.command == (MAV_CMD)MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION);
-                Debug.Assert(pack.progress_TRY(ph) == (byte)(byte)48);
+                Debug.Assert(pack.result == MAV_RESULT.MAV_RESULT_FAILED);
+                Debug.Assert(pack.result_param2_TRY(ph) == (int) -1656995498);
+                Debug.Assert(pack.target_system_TRY(ph) == (byte)(byte)234);
+                Debug.Assert(pack.target_component_TRY(ph) == (byte)(byte)194);
+                Debug.Assert(pack.progress_TRY(ph) == (byte)(byte)228);
+                Debug.Assert(pack.command == MAV_CMD.MAV_CMD_DO_SET_PARAMETER);
             };
             GroundControl.COMMAND_ACK p77 = CommunicationChannel.new_COMMAND_ACK();
             PH.setPack(p77);
-            p77.result = (MAV_RESULT)MAV_RESULT.MAV_RESULT_DENIED;
-            p77.target_component_SET((byte)(byte)248, PH) ;
-            p77.command = (MAV_CMD)MAV_CMD.MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION;
-            p77.result_param2_SET((int) -1450266110, PH) ;
-            p77.target_system_SET((byte)(byte)191, PH) ;
-            p77.progress_SET((byte)(byte)48, PH) ;
+            p77.progress_SET((byte)(byte)228, PH) ;
+            p77.target_system_SET((byte)(byte)234, PH) ;
+            p77.result_param2_SET((int) -1656995498, PH) ;
+            p77.result = MAV_RESULT.MAV_RESULT_FAILED;
+            p77.command = MAV_CMD.MAV_CMD_DO_SET_PARAMETER;
+            p77.target_component_SET((byte)(byte)194, PH) ;
             CommunicationChannel.instance.send(p77);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnMANUAL_SETPOINTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.roll == (float)1.6580292E38F);
-                Debug.Assert(pack.manual_override_switch == (byte)(byte)167);
-                Debug.Assert(pack.thrust == (float) -1.6463825E38F);
-                Debug.Assert(pack.pitch == (float)1.3859779E38F);
-                Debug.Assert(pack.mode_switch == (byte)(byte)159);
-                Debug.Assert(pack.time_boot_ms == (uint)365247969U);
-                Debug.Assert(pack.yaw == (float) -3.3820366E38F);
+                Debug.Assert(pack.yaw == (float) -3.2457877E37F);
+                Debug.Assert(pack.thrust == (float)1.0324315E38F);
+                Debug.Assert(pack.time_boot_ms == (uint)541540991U);
+                Debug.Assert(pack.pitch == (float)9.652448E36F);
+                Debug.Assert(pack.mode_switch == (byte)(byte)37);
+                Debug.Assert(pack.manual_override_switch == (byte)(byte)145);
+                Debug.Assert(pack.roll == (float) -2.2501914E38F);
             };
             GroundControl.MANUAL_SETPOINT p81 = CommunicationChannel.new_MANUAL_SETPOINT();
             PH.setPack(p81);
-            p81.mode_switch = (byte)(byte)159;
-            p81.thrust = (float) -1.6463825E38F;
-            p81.pitch = (float)1.3859779E38F;
-            p81.roll = (float)1.6580292E38F;
-            p81.yaw = (float) -3.3820366E38F;
-            p81.time_boot_ms = (uint)365247969U;
-            p81.manual_override_switch = (byte)(byte)167;
+            p81.pitch = (float)9.652448E36F;
+            p81.yaw = (float) -3.2457877E37F;
+            p81.thrust = (float)1.0324315E38F;
+            p81.manual_override_switch = (byte)(byte)145;
+            p81.roll = (float) -2.2501914E38F;
+            p81.time_boot_ms = (uint)541540991U;
+            p81.mode_switch = (byte)(byte)37;
             CommunicationChannel.instance.send(p81);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSET_ATTITUDE_TARGETReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.body_pitch_rate == (float)1.5417409E38F);
-                Debug.Assert(pack.time_boot_ms == (uint)3528374270U);
-                Debug.Assert(pack.type_mask == (byte)(byte)211);
-                Debug.Assert(pack.target_system == (byte)(byte)135);
-                Debug.Assert(pack.body_yaw_rate == (float)6.45301E37F);
-                Debug.Assert(pack.q.SequenceEqual(new float[] {-9.57323E37F, -1.5620151E38F, -1.0880557E38F, -4.7298295E37F}));
-                Debug.Assert(pack.body_roll_rate == (float)2.8049564E38F);
-                Debug.Assert(pack.thrust == (float)1.9871778E38F);
-                Debug.Assert(pack.target_component == (byte)(byte)31);
+                Debug.Assert(pack.time_boot_ms == (uint)1751923482U);
+                Debug.Assert(pack.body_roll_rate == (float) -3.2877583E38F);
+                Debug.Assert(pack.q.SequenceEqual(new float[] {-2.5753003E38F, 3.0719855E38F, 2.9754974E38F, 1.309774E38F}));
+                Debug.Assert(pack.thrust == (float) -2.6278105E38F);
+                Debug.Assert(pack.target_component == (byte)(byte)130);
+                Debug.Assert(pack.type_mask == (byte)(byte)7);
+                Debug.Assert(pack.body_pitch_rate == (float)3.1271494E38F);
+                Debug.Assert(pack.target_system == (byte)(byte)129);
+                Debug.Assert(pack.body_yaw_rate == (float)2.1065564E38F);
             };
             GroundControl.SET_ATTITUDE_TARGET p82 = CommunicationChannel.new_SET_ATTITUDE_TARGET();
             PH.setPack(p82);
-            p82.target_component = (byte)(byte)31;
-            p82.time_boot_ms = (uint)3528374270U;
-            p82.body_yaw_rate = (float)6.45301E37F;
-            p82.body_roll_rate = (float)2.8049564E38F;
-            p82.thrust = (float)1.9871778E38F;
-            p82.type_mask = (byte)(byte)211;
-            p82.target_system = (byte)(byte)135;
-            p82.body_pitch_rate = (float)1.5417409E38F;
-            p82.q_SET(new float[] {-9.57323E37F, -1.5620151E38F, -1.0880557E38F, -4.7298295E37F}, 0) ;
+            p82.target_component = (byte)(byte)130;
+            p82.type_mask = (byte)(byte)7;
+            p82.time_boot_ms = (uint)1751923482U;
+            p82.body_yaw_rate = (float)2.1065564E38F;
+            p82.thrust = (float) -2.6278105E38F;
+            p82.q_SET(new float[] {-2.5753003E38F, 3.0719855E38F, 2.9754974E38F, 1.309774E38F}, 0) ;
+            p82.body_pitch_rate = (float)3.1271494E38F;
+            p82.target_system = (byte)(byte)129;
+            p82.body_roll_rate = (float) -3.2877583E38F;
             CommunicationChannel.instance.send(p82);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnATTITUDE_TARGETReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.time_boot_ms == (uint)1638580835U);
-                Debug.Assert(pack.q.SequenceEqual(new float[] {1.8774674E38F, 2.729821E38F, -2.1393446E38F, -3.3974446E38F}));
-                Debug.Assert(pack.body_roll_rate == (float)2.9082154E38F);
-                Debug.Assert(pack.thrust == (float) -2.3623498E37F);
-                Debug.Assert(pack.body_pitch_rate == (float) -7.38774E37F);
-                Debug.Assert(pack.body_yaw_rate == (float)1.4993114E38F);
-                Debug.Assert(pack.type_mask == (byte)(byte)163);
+                Debug.Assert(pack.type_mask == (byte)(byte)251);
+                Debug.Assert(pack.thrust == (float)2.2937556E38F);
+                Debug.Assert(pack.time_boot_ms == (uint)1787801854U);
+                Debug.Assert(pack.body_roll_rate == (float)2.1885616E38F);
+                Debug.Assert(pack.body_pitch_rate == (float) -1.393035E38F);
+                Debug.Assert(pack.body_yaw_rate == (float) -2.9548327E38F);
+                Debug.Assert(pack.q.SequenceEqual(new float[] {-2.4510833E37F, 1.6654421E38F, 1.3575696E38F, -9.295148E37F}));
             };
             GroundControl.ATTITUDE_TARGET p83 = CommunicationChannel.new_ATTITUDE_TARGET();
             PH.setPack(p83);
-            p83.type_mask = (byte)(byte)163;
-            p83.time_boot_ms = (uint)1638580835U;
-            p83.thrust = (float) -2.3623498E37F;
-            p83.body_roll_rate = (float)2.9082154E38F;
-            p83.q_SET(new float[] {1.8774674E38F, 2.729821E38F, -2.1393446E38F, -3.3974446E38F}, 0) ;
-            p83.body_pitch_rate = (float) -7.38774E37F;
-            p83.body_yaw_rate = (float)1.4993114E38F;
+            p83.type_mask = (byte)(byte)251;
+            p83.thrust = (float)2.2937556E38F;
+            p83.time_boot_ms = (uint)1787801854U;
+            p83.body_yaw_rate = (float) -2.9548327E38F;
+            p83.body_pitch_rate = (float) -1.393035E38F;
+            p83.body_roll_rate = (float)2.1885616E38F;
+            p83.q_SET(new float[] {-2.4510833E37F, 1.6654421E38F, 1.3575696E38F, -9.295148E37F}, 0) ;
             CommunicationChannel.instance.send(p83);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSET_POSITION_TARGET_LOCAL_NEDReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.y == (float)1.1892919E38F);
-                Debug.Assert(pack.yaw == (float) -1.7497736E38F);
-                Debug.Assert(pack.type_mask == (ushort)(ushort)31225);
-                Debug.Assert(pack.vz == (float) -4.324567E37F);
-                Debug.Assert(pack.time_boot_ms == (uint)1637437993U);
-                Debug.Assert(pack.afy == (float) -2.4472171E38F);
-                Debug.Assert(pack.yaw_rate == (float)2.1708533E38F);
-                Debug.Assert(pack.vx == (float)2.5976822E38F);
-                Debug.Assert(pack.afz == (float) -1.4832784E38F);
-                Debug.Assert(pack.z == (float)6.424178E37F);
-                Debug.Assert(pack.x == (float) -1.761652E38F);
-                Debug.Assert(pack.coordinate_frame == (MAV_FRAME)MAV_FRAME.MAV_FRAME_BODY_OFFSET_NED);
-                Debug.Assert(pack.afx == (float)1.7730158E38F);
-                Debug.Assert(pack.target_component == (byte)(byte)225);
-                Debug.Assert(pack.target_system == (byte)(byte)206);
-                Debug.Assert(pack.vy == (float) -2.5729727E37F);
+                Debug.Assert(pack.afx == (float)3.3950557E38F);
+                Debug.Assert(pack.time_boot_ms == (uint)836874310U);
+                Debug.Assert(pack.vx == (float)5.7583094E37F);
+                Debug.Assert(pack.type_mask == (ushort)(ushort)2697);
+                Debug.Assert(pack.z == (float) -1.156276E38F);
+                Debug.Assert(pack.y == (float)1.9959534E37F);
+                Debug.Assert(pack.vz == (float) -5.9813277E37F);
+                Debug.Assert(pack.target_system == (byte)(byte)91);
+                Debug.Assert(pack.afy == (float)2.4905371E38F);
+                Debug.Assert(pack.x == (float)1.4827226E38F);
+                Debug.Assert(pack.vy == (float) -3.1540465E38F);
+                Debug.Assert(pack.yaw == (float)7.059383E37F);
+                Debug.Assert(pack.coordinate_frame == MAV_FRAME.MAV_FRAME_BODY_NED);
+                Debug.Assert(pack.target_component == (byte)(byte)34);
+                Debug.Assert(pack.afz == (float)2.6502925E38F);
+                Debug.Assert(pack.yaw_rate == (float)1.891702E38F);
             };
             GroundControl.SET_POSITION_TARGET_LOCAL_NED p84 = CommunicationChannel.new_SET_POSITION_TARGET_LOCAL_NED();
             PH.setPack(p84);
-            p84.yaw = (float) -1.7497736E38F;
-            p84.x = (float) -1.761652E38F;
-            p84.type_mask = (ushort)(ushort)31225;
-            p84.afy = (float) -2.4472171E38F;
-            p84.vz = (float) -4.324567E37F;
-            p84.y = (float)1.1892919E38F;
-            p84.afx = (float)1.7730158E38F;
-            p84.z = (float)6.424178E37F;
-            p84.afz = (float) -1.4832784E38F;
-            p84.target_component = (byte)(byte)225;
-            p84.time_boot_ms = (uint)1637437993U;
-            p84.vy = (float) -2.5729727E37F;
-            p84.yaw_rate = (float)2.1708533E38F;
-            p84.vx = (float)2.5976822E38F;
-            p84.target_system = (byte)(byte)206;
-            p84.coordinate_frame = (MAV_FRAME)MAV_FRAME.MAV_FRAME_BODY_OFFSET_NED;
+            p84.vz = (float) -5.9813277E37F;
+            p84.type_mask = (ushort)(ushort)2697;
+            p84.afy = (float)2.4905371E38F;
+            p84.vx = (float)5.7583094E37F;
+            p84.vy = (float) -3.1540465E38F;
+            p84.target_component = (byte)(byte)34;
+            p84.afz = (float)2.6502925E38F;
+            p84.y = (float)1.9959534E37F;
+            p84.z = (float) -1.156276E38F;
+            p84.time_boot_ms = (uint)836874310U;
+            p84.target_system = (byte)(byte)91;
+            p84.coordinate_frame = MAV_FRAME.MAV_FRAME_BODY_NED;
+            p84.afx = (float)3.3950557E38F;
+            p84.x = (float)1.4827226E38F;
+            p84.yaw = (float)7.059383E37F;
+            p84.yaw_rate = (float)1.891702E38F;
             CommunicationChannel.instance.send(p84);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSET_POSITION_TARGET_GLOBAL_INTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_component == (byte)(byte)169);
-                Debug.Assert(pack.alt == (float)3.1944018E38F);
-                Debug.Assert(pack.afz == (float)2.6329144E38F);
-                Debug.Assert(pack.type_mask == (ushort)(ushort)42796);
-                Debug.Assert(pack.lon_int == (int)1723150335);
-                Debug.Assert(pack.time_boot_ms == (uint)1453095851U);
-                Debug.Assert(pack.vy == (float) -1.8654186E38F);
-                Debug.Assert(pack.vx == (float) -2.129187E38F);
-                Debug.Assert(pack.coordinate_frame == (MAV_FRAME)MAV_FRAME.MAV_FRAME_GLOBAL_TERRAIN_ALT);
-                Debug.Assert(pack.lat_int == (int)1964645314);
-                Debug.Assert(pack.yaw == (float) -3.2097566E38F);
-                Debug.Assert(pack.afy == (float) -3.1343314E38F);
-                Debug.Assert(pack.afx == (float)1.1263348E38F);
-                Debug.Assert(pack.yaw_rate == (float)5.1725235E37F);
-                Debug.Assert(pack.vz == (float) -9.28778E37F);
-                Debug.Assert(pack.target_system == (byte)(byte)243);
+                Debug.Assert(pack.type_mask == (ushort)(ushort)5079);
+                Debug.Assert(pack.vx == (float)2.9797032E37F);
+                Debug.Assert(pack.yaw_rate == (float)3.1844823E38F);
+                Debug.Assert(pack.afz == (float)2.8428482E38F);
+                Debug.Assert(pack.target_system == (byte)(byte)139);
+                Debug.Assert(pack.vy == (float) -1.032252E38F);
+                Debug.Assert(pack.lon_int == (int) -2046195492);
+                Debug.Assert(pack.afx == (float)2.448338E38F);
+                Debug.Assert(pack.afy == (float)1.4385626E38F);
+                Debug.Assert(pack.vz == (float) -2.4889399E38F);
+                Debug.Assert(pack.alt == (float) -6.7283405E37F);
+                Debug.Assert(pack.time_boot_ms == (uint)3046208343U);
+                Debug.Assert(pack.yaw == (float)3.141276E38F);
+                Debug.Assert(pack.target_component == (byte)(byte)82);
+                Debug.Assert(pack.lat_int == (int)177898436);
+                Debug.Assert(pack.coordinate_frame == MAV_FRAME.MAV_FRAME_GLOBAL_RELATIVE_ALT);
             };
             GroundControl.SET_POSITION_TARGET_GLOBAL_INT p86 = CommunicationChannel.new_SET_POSITION_TARGET_GLOBAL_INT();
             PH.setPack(p86);
-            p86.afx = (float)1.1263348E38F;
-            p86.yaw = (float) -3.2097566E38F;
-            p86.afz = (float)2.6329144E38F;
-            p86.alt = (float)3.1944018E38F;
-            p86.target_system = (byte)(byte)243;
-            p86.vx = (float) -2.129187E38F;
-            p86.yaw_rate = (float)5.1725235E37F;
-            p86.vz = (float) -9.28778E37F;
-            p86.time_boot_ms = (uint)1453095851U;
-            p86.vy = (float) -1.8654186E38F;
-            p86.type_mask = (ushort)(ushort)42796;
-            p86.lat_int = (int)1964645314;
-            p86.afy = (float) -3.1343314E38F;
-            p86.lon_int = (int)1723150335;
-            p86.coordinate_frame = (MAV_FRAME)MAV_FRAME.MAV_FRAME_GLOBAL_TERRAIN_ALT;
-            p86.target_component = (byte)(byte)169;
+            p86.target_component = (byte)(byte)82;
+            p86.coordinate_frame = MAV_FRAME.MAV_FRAME_GLOBAL_RELATIVE_ALT;
+            p86.afy = (float)1.4385626E38F;
+            p86.vz = (float) -2.4889399E38F;
+            p86.vy = (float) -1.032252E38F;
+            p86.lon_int = (int) -2046195492;
+            p86.afx = (float)2.448338E38F;
+            p86.afz = (float)2.8428482E38F;
+            p86.time_boot_ms = (uint)3046208343U;
+            p86.vx = (float)2.9797032E37F;
+            p86.target_system = (byte)(byte)139;
+            p86.lat_int = (int)177898436;
+            p86.type_mask = (ushort)(ushort)5079;
+            p86.yaw = (float)3.141276E38F;
+            p86.alt = (float) -6.7283405E37F;
+            p86.yaw_rate = (float)3.1844823E38F;
             CommunicationChannel.instance.send(p86);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnPOSITION_TARGET_GLOBAL_INTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.lon_int == (int)565245449);
-                Debug.Assert(pack.vz == (float) -1.5510527E38F);
-                Debug.Assert(pack.vx == (float) -6.2539045E37F);
-                Debug.Assert(pack.afy == (float) -8.323706E37F);
-                Debug.Assert(pack.yaw_rate == (float)2.998704E38F);
-                Debug.Assert(pack.afx == (float)1.4070672E38F);
-                Debug.Assert(pack.afz == (float) -7.8598237E37F);
-                Debug.Assert(pack.yaw == (float) -5.788046E37F);
-                Debug.Assert(pack.time_boot_ms == (uint)87950735U);
-                Debug.Assert(pack.coordinate_frame == (MAV_FRAME)MAV_FRAME.MAV_FRAME_BODY_OFFSET_NED);
-                Debug.Assert(pack.lat_int == (int) -705597566);
-                Debug.Assert(pack.vy == (float) -2.3355146E38F);
-                Debug.Assert(pack.alt == (float)1.2058973E38F);
-                Debug.Assert(pack.type_mask == (ushort)(ushort)22825);
+                Debug.Assert(pack.yaw == (float)1.6877324E38F);
+                Debug.Assert(pack.yaw_rate == (float) -2.8054947E38F);
+                Debug.Assert(pack.afx == (float)1.8794182E38F);
+                Debug.Assert(pack.lat_int == (int) -1118246385);
+                Debug.Assert(pack.vx == (float)1.8065986E38F);
+                Debug.Assert(pack.alt == (float) -1.8555143E38F);
+                Debug.Assert(pack.afz == (float) -2.9817684E38F);
+                Debug.Assert(pack.time_boot_ms == (uint)4261727962U);
+                Debug.Assert(pack.afy == (float)1.6581096E38F);
+                Debug.Assert(pack.vy == (float)7.520614E37F);
+                Debug.Assert(pack.vz == (float)1.2211073E38F);
+                Debug.Assert(pack.type_mask == (ushort)(ushort)42356);
+                Debug.Assert(pack.coordinate_frame == MAV_FRAME.MAV_FRAME_GLOBAL_TERRAIN_ALT_INT);
+                Debug.Assert(pack.lon_int == (int) -1105509401);
             };
             GroundControl.POSITION_TARGET_GLOBAL_INT p87 = CommunicationChannel.new_POSITION_TARGET_GLOBAL_INT();
             PH.setPack(p87);
-            p87.yaw_rate = (float)2.998704E38F;
-            p87.afz = (float) -7.8598237E37F;
-            p87.coordinate_frame = (MAV_FRAME)MAV_FRAME.MAV_FRAME_BODY_OFFSET_NED;
-            p87.vz = (float) -1.5510527E38F;
-            p87.lat_int = (int) -705597566;
-            p87.vx = (float) -6.2539045E37F;
-            p87.type_mask = (ushort)(ushort)22825;
-            p87.alt = (float)1.2058973E38F;
-            p87.time_boot_ms = (uint)87950735U;
-            p87.vy = (float) -2.3355146E38F;
-            p87.lon_int = (int)565245449;
-            p87.afy = (float) -8.323706E37F;
-            p87.yaw = (float) -5.788046E37F;
-            p87.afx = (float)1.4070672E38F;
+            p87.time_boot_ms = (uint)4261727962U;
+            p87.vy = (float)7.520614E37F;
+            p87.vx = (float)1.8065986E38F;
+            p87.yaw_rate = (float) -2.8054947E38F;
+            p87.lon_int = (int) -1105509401;
+            p87.coordinate_frame = MAV_FRAME.MAV_FRAME_GLOBAL_TERRAIN_ALT_INT;
+            p87.alt = (float) -1.8555143E38F;
+            p87.afy = (float)1.6581096E38F;
+            p87.afx = (float)1.8794182E38F;
+            p87.afz = (float) -2.9817684E38F;
+            p87.yaw = (float)1.6877324E38F;
+            p87.type_mask = (ushort)(ushort)42356;
+            p87.vz = (float)1.2211073E38F;
+            p87.lat_int = (int) -1118246385;
             CommunicationChannel.instance.send(p87);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnLOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSETReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.x == (float)2.461108E38F);
-                Debug.Assert(pack.time_boot_ms == (uint)3011590966U);
-                Debug.Assert(pack.z == (float) -8.1005074E37F);
-                Debug.Assert(pack.pitch == (float)9.40551E37F);
-                Debug.Assert(pack.roll == (float)3.0894343E38F);
-                Debug.Assert(pack.y == (float)3.3101888E38F);
-                Debug.Assert(pack.yaw == (float) -2.8407561E38F);
+                Debug.Assert(pack.x == (float) -1.9793666E37F);
+                Debug.Assert(pack.time_boot_ms == (uint)72052737U);
+                Debug.Assert(pack.z == (float) -5.3337165E37F);
+                Debug.Assert(pack.y == (float) -5.513441E37F);
+                Debug.Assert(pack.yaw == (float)2.3804547E38F);
+                Debug.Assert(pack.roll == (float)2.9445442E38F);
+                Debug.Assert(pack.pitch == (float)3.194542E38F);
             };
             GroundControl.LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET p89 = CommunicationChannel.new_LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET();
             PH.setPack(p89);
-            p89.time_boot_ms = (uint)3011590966U;
-            p89.x = (float)2.461108E38F;
-            p89.z = (float) -8.1005074E37F;
-            p89.yaw = (float) -2.8407561E38F;
-            p89.roll = (float)3.0894343E38F;
-            p89.pitch = (float)9.40551E37F;
-            p89.y = (float)3.3101888E38F;
+            p89.y = (float) -5.513441E37F;
+            p89.time_boot_ms = (uint)72052737U;
+            p89.roll = (float)2.9445442E38F;
+            p89.z = (float) -5.3337165E37F;
+            p89.yaw = (float)2.3804547E38F;
+            p89.x = (float) -1.9793666E37F;
+            p89.pitch = (float)3.194542E38F;
             CommunicationChannel.instance.send(p89);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnHIL_STATEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.roll == (float)2.6162805E38F);
-                Debug.Assert(pack.pitchspeed == (float)1.9613737E38F);
-                Debug.Assert(pack.rollspeed == (float)1.9714746E38F);
-                Debug.Assert(pack.xacc == (short)(short)29067);
-                Debug.Assert(pack.lat == (int)916108870);
-                Debug.Assert(pack.time_usec == (ulong)3230410455280904981L);
-                Debug.Assert(pack.yacc == (short)(short)11182);
-                Debug.Assert(pack.vz == (short)(short)17088);
-                Debug.Assert(pack.lon == (int) -1038429967);
-                Debug.Assert(pack.zacc == (short)(short) -3365);
-                Debug.Assert(pack.vx == (short)(short)28971);
-                Debug.Assert(pack.vy == (short)(short)2901);
-                Debug.Assert(pack.pitch == (float) -1.7504482E38F);
-                Debug.Assert(pack.yawspeed == (float)1.898721E38F);
-                Debug.Assert(pack.alt == (int)1491728081);
-                Debug.Assert(pack.yaw == (float) -2.3533402E38F);
+                Debug.Assert(pack.time_usec == (ulong)4801841411939691356L);
+                Debug.Assert(pack.vx == (short)(short)14506);
+                Debug.Assert(pack.vy == (short)(short) -22513);
+                Debug.Assert(pack.yaw == (float)1.3042972E38F);
+                Debug.Assert(pack.vz == (short)(short)3708);
+                Debug.Assert(pack.yawspeed == (float)1.2095458E38F);
+                Debug.Assert(pack.pitch == (float)2.339158E38F);
+                Debug.Assert(pack.rollspeed == (float) -2.8931036E38F);
+                Debug.Assert(pack.lat == (int)790708982);
+                Debug.Assert(pack.yacc == (short)(short) -4642);
+                Debug.Assert(pack.zacc == (short)(short) -17929);
+                Debug.Assert(pack.pitchspeed == (float) -2.6955124E38F);
+                Debug.Assert(pack.xacc == (short)(short) -19140);
+                Debug.Assert(pack.lon == (int)2005489336);
+                Debug.Assert(pack.alt == (int) -2061441768);
+                Debug.Assert(pack.roll == (float)2.0630675E37F);
             };
             GroundControl.HIL_STATE p90 = CommunicationChannel.new_HIL_STATE();
             PH.setPack(p90);
-            p90.roll = (float)2.6162805E38F;
-            p90.yaw = (float) -2.3533402E38F;
-            p90.pitchspeed = (float)1.9613737E38F;
-            p90.pitch = (float) -1.7504482E38F;
-            p90.vx = (short)(short)28971;
-            p90.zacc = (short)(short) -3365;
-            p90.yacc = (short)(short)11182;
-            p90.vy = (short)(short)2901;
-            p90.yawspeed = (float)1.898721E38F;
-            p90.vz = (short)(short)17088;
-            p90.xacc = (short)(short)29067;
-            p90.alt = (int)1491728081;
-            p90.lon = (int) -1038429967;
-            p90.time_usec = (ulong)3230410455280904981L;
-            p90.rollspeed = (float)1.9714746E38F;
-            p90.lat = (int)916108870;
+            p90.xacc = (short)(short) -19140;
+            p90.rollspeed = (float) -2.8931036E38F;
+            p90.vz = (short)(short)3708;
+            p90.yaw = (float)1.3042972E38F;
+            p90.roll = (float)2.0630675E37F;
+            p90.alt = (int) -2061441768;
+            p90.vx = (short)(short)14506;
+            p90.zacc = (short)(short) -17929;
+            p90.pitchspeed = (float) -2.6955124E38F;
+            p90.pitch = (float)2.339158E38F;
+            p90.lat = (int)790708982;
+            p90.yawspeed = (float)1.2095458E38F;
+            p90.time_usec = (ulong)4801841411939691356L;
+            p90.vy = (short)(short) -22513;
+            p90.yacc = (short)(short) -4642;
+            p90.lon = (int)2005489336;
             CommunicationChannel.instance.send(p90);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnHIL_CONTROLSReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.nav_mode == (byte)(byte)138);
-                Debug.Assert(pack.aux3 == (float)1.6833533E38F);
-                Debug.Assert(pack.throttle == (float)8.9137245E35F);
-                Debug.Assert(pack.aux4 == (float) -2.859699E38F);
-                Debug.Assert(pack.yaw_rudder == (float)1.1154067E38F);
-                Debug.Assert(pack.aux1 == (float)3.406571E37F);
-                Debug.Assert(pack.aux2 == (float)9.284001E37F);
-                Debug.Assert(pack.time_usec == (ulong)6076288258431621078L);
-                Debug.Assert(pack.roll_ailerons == (float)1.1998828E38F);
-                Debug.Assert(pack.mode == (MAV_MODE)MAV_MODE.MAV_MODE_GUIDED_ARMED);
-                Debug.Assert(pack.pitch_elevator == (float) -2.3393999E38F);
+                Debug.Assert(pack.aux4 == (float) -1.7033624E38F);
+                Debug.Assert(pack.mode == MAV_MODE.MAV_MODE_TEST_ARMED);
+                Debug.Assert(pack.time_usec == (ulong)5215497448846515986L);
+                Debug.Assert(pack.aux3 == (float)7.341736E37F);
+                Debug.Assert(pack.yaw_rudder == (float)3.1294752E38F);
+                Debug.Assert(pack.aux2 == (float)3.288556E38F);
+                Debug.Assert(pack.aux1 == (float)2.7146494E38F);
+                Debug.Assert(pack.pitch_elevator == (float) -5.6478443E37F);
+                Debug.Assert(pack.nav_mode == (byte)(byte)25);
+                Debug.Assert(pack.roll_ailerons == (float) -2.4901231E38F);
+                Debug.Assert(pack.throttle == (float)2.0660533E38F);
             };
             GroundControl.HIL_CONTROLS p91 = CommunicationChannel.new_HIL_CONTROLS();
             PH.setPack(p91);
-            p91.pitch_elevator = (float) -2.3393999E38F;
-            p91.mode = (MAV_MODE)MAV_MODE.MAV_MODE_GUIDED_ARMED;
-            p91.nav_mode = (byte)(byte)138;
-            p91.aux3 = (float)1.6833533E38F;
-            p91.aux1 = (float)3.406571E37F;
-            p91.aux2 = (float)9.284001E37F;
-            p91.time_usec = (ulong)6076288258431621078L;
-            p91.roll_ailerons = (float)1.1998828E38F;
-            p91.aux4 = (float) -2.859699E38F;
-            p91.throttle = (float)8.9137245E35F;
-            p91.yaw_rudder = (float)1.1154067E38F;
+            p91.time_usec = (ulong)5215497448846515986L;
+            p91.aux1 = (float)2.7146494E38F;
+            p91.throttle = (float)2.0660533E38F;
+            p91.yaw_rudder = (float)3.1294752E38F;
+            p91.roll_ailerons = (float) -2.4901231E38F;
+            p91.pitch_elevator = (float) -5.6478443E37F;
+            p91.aux4 = (float) -1.7033624E38F;
+            p91.mode = MAV_MODE.MAV_MODE_TEST_ARMED;
+            p91.nav_mode = (byte)(byte)25;
+            p91.aux3 = (float)7.341736E37F;
+            p91.aux2 = (float)3.288556E38F;
             CommunicationChannel.instance.send(p91);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnHIL_RC_INPUTS_RAWReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.time_usec == (ulong)2553922032287868470L);
-                Debug.Assert(pack.chan9_raw == (ushort)(ushort)37016);
-                Debug.Assert(pack.chan1_raw == (ushort)(ushort)31056);
-                Debug.Assert(pack.rssi == (byte)(byte)244);
-                Debug.Assert(pack.chan6_raw == (ushort)(ushort)28212);
-                Debug.Assert(pack.chan10_raw == (ushort)(ushort)7752);
-                Debug.Assert(pack.chan3_raw == (ushort)(ushort)10430);
-                Debug.Assert(pack.chan2_raw == (ushort)(ushort)3197);
-                Debug.Assert(pack.chan12_raw == (ushort)(ushort)23699);
-                Debug.Assert(pack.chan7_raw == (ushort)(ushort)54045);
-                Debug.Assert(pack.chan5_raw == (ushort)(ushort)30619);
-                Debug.Assert(pack.chan8_raw == (ushort)(ushort)42911);
-                Debug.Assert(pack.chan4_raw == (ushort)(ushort)23912);
-                Debug.Assert(pack.chan11_raw == (ushort)(ushort)10098);
+                Debug.Assert(pack.chan4_raw == (ushort)(ushort)17830);
+                Debug.Assert(pack.chan1_raw == (ushort)(ushort)53484);
+                Debug.Assert(pack.chan11_raw == (ushort)(ushort)42857);
+                Debug.Assert(pack.chan10_raw == (ushort)(ushort)14671);
+                Debug.Assert(pack.chan3_raw == (ushort)(ushort)35363);
+                Debug.Assert(pack.chan5_raw == (ushort)(ushort)38264);
+                Debug.Assert(pack.chan7_raw == (ushort)(ushort)4002);
+                Debug.Assert(pack.chan6_raw == (ushort)(ushort)5121);
+                Debug.Assert(pack.time_usec == (ulong)1748304397482177700L);
+                Debug.Assert(pack.rssi == (byte)(byte)219);
+                Debug.Assert(pack.chan9_raw == (ushort)(ushort)21944);
+                Debug.Assert(pack.chan12_raw == (ushort)(ushort)28149);
+                Debug.Assert(pack.chan2_raw == (ushort)(ushort)5557);
+                Debug.Assert(pack.chan8_raw == (ushort)(ushort)58449);
             };
             GroundControl.HIL_RC_INPUTS_RAW p92 = CommunicationChannel.new_HIL_RC_INPUTS_RAW();
             PH.setPack(p92);
-            p92.chan3_raw = (ushort)(ushort)10430;
-            p92.chan5_raw = (ushort)(ushort)30619;
-            p92.chan8_raw = (ushort)(ushort)42911;
-            p92.chan1_raw = (ushort)(ushort)31056;
-            p92.rssi = (byte)(byte)244;
-            p92.chan4_raw = (ushort)(ushort)23912;
-            p92.chan2_raw = (ushort)(ushort)3197;
-            p92.chan11_raw = (ushort)(ushort)10098;
-            p92.chan9_raw = (ushort)(ushort)37016;
-            p92.chan6_raw = (ushort)(ushort)28212;
-            p92.chan12_raw = (ushort)(ushort)23699;
-            p92.chan10_raw = (ushort)(ushort)7752;
-            p92.chan7_raw = (ushort)(ushort)54045;
-            p92.time_usec = (ulong)2553922032287868470L;
+            p92.chan10_raw = (ushort)(ushort)14671;
+            p92.time_usec = (ulong)1748304397482177700L;
+            p92.chan4_raw = (ushort)(ushort)17830;
+            p92.chan3_raw = (ushort)(ushort)35363;
+            p92.chan9_raw = (ushort)(ushort)21944;
+            p92.rssi = (byte)(byte)219;
+            p92.chan2_raw = (ushort)(ushort)5557;
+            p92.chan5_raw = (ushort)(ushort)38264;
+            p92.chan8_raw = (ushort)(ushort)58449;
+            p92.chan11_raw = (ushort)(ushort)42857;
+            p92.chan1_raw = (ushort)(ushort)53484;
+            p92.chan12_raw = (ushort)(ushort)28149;
+            p92.chan7_raw = (ushort)(ushort)4002;
+            p92.chan6_raw = (ushort)(ushort)5121;
             CommunicationChannel.instance.send(p92);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnHIL_ACTUATOR_CONTROLSReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.controls.SequenceEqual(new float[] {-3.2571507E38F, 3.133031E38F, -6.5261695E37F, -3.3469264E38F, 2.7488052E38F, 1.0965728E38F, 1.4885307E37F, 3.0770308E38F, -2.0081514E38F, -9.178043E37F, -4.8728765E36F, -3.3029444E38F, 2.8610432E38F, -1.9642753E38F, 8.654457E37F, 1.6550179E38F}));
-                Debug.Assert(pack.flags == (ulong)891414474604444698L);
-                Debug.Assert(pack.mode == (MAV_MODE)MAV_MODE.MAV_MODE_GUIDED_ARMED);
-                Debug.Assert(pack.time_usec == (ulong)7316003298369195843L);
+                Debug.Assert(pack.flags == (ulong)787879872371523599L);
+                Debug.Assert(pack.controls.SequenceEqual(new float[] {-1.8766545E38F, -3.2536237E36F, 3.1380524E38F, -2.553478E38F, 8.4900427E37F, -1.4259205E38F, 8.4542676E37F, 2.4291938E38F, -4.355909E37F, -2.2641842E38F, 1.3114114E38F, -3.2406183E38F, 1.0577132E38F, 3.2878806E38F, -2.1120541E37F, 7.017788E37F}));
+                Debug.Assert(pack.mode == MAV_MODE.MAV_MODE_TEST_ARMED);
+                Debug.Assert(pack.time_usec == (ulong)4724498391178880267L);
             };
             GroundControl.HIL_ACTUATOR_CONTROLS p93 = CommunicationChannel.new_HIL_ACTUATOR_CONTROLS();
             PH.setPack(p93);
-            p93.controls_SET(new float[] {-3.2571507E38F, 3.133031E38F, -6.5261695E37F, -3.3469264E38F, 2.7488052E38F, 1.0965728E38F, 1.4885307E37F, 3.0770308E38F, -2.0081514E38F, -9.178043E37F, -4.8728765E36F, -3.3029444E38F, 2.8610432E38F, -1.9642753E38F, 8.654457E37F, 1.6550179E38F}, 0) ;
-            p93.flags = (ulong)891414474604444698L;
-            p93.time_usec = (ulong)7316003298369195843L;
-            p93.mode = (MAV_MODE)MAV_MODE.MAV_MODE_GUIDED_ARMED;
+            p93.mode = MAV_MODE.MAV_MODE_TEST_ARMED;
+            p93.controls_SET(new float[] {-1.8766545E38F, -3.2536237E36F, 3.1380524E38F, -2.553478E38F, 8.4900427E37F, -1.4259205E38F, 8.4542676E37F, 2.4291938E38F, -4.355909E37F, -2.2641842E38F, 1.3114114E38F, -3.2406183E38F, 1.0577132E38F, 3.2878806E38F, -2.1120541E37F, 7.017788E37F}, 0) ;
+            p93.flags = (ulong)787879872371523599L;
+            p93.time_usec = (ulong)4724498391178880267L;
             CommunicationChannel.instance.send(p93);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnOPTICAL_FLOWReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.time_usec == (ulong)1649091083244510585L);
-                Debug.Assert(pack.flow_x == (short)(short)25779);
-                Debug.Assert(pack.flow_comp_m_x == (float) -1.1485906E38F);
-                Debug.Assert(pack.flow_comp_m_y == (float) -1.0790737E38F);
-                Debug.Assert(pack.flow_y == (short)(short) -6011);
-                Debug.Assert(pack.quality == (byte)(byte)211);
-                Debug.Assert(pack.flow_rate_x_TRY(ph) == (float) -3.145356E38F);
-                Debug.Assert(pack.flow_rate_y_TRY(ph) == (float) -1.1502376E38F);
-                Debug.Assert(pack.ground_distance == (float)1.2345112E37F);
-                Debug.Assert(pack.sensor_id == (byte)(byte)139);
+                Debug.Assert(pack.flow_comp_m_x == (float)2.5778563E38F);
+                Debug.Assert(pack.flow_y == (short)(short)29281);
+                Debug.Assert(pack.flow_x == (short)(short) -1287);
+                Debug.Assert(pack.flow_comp_m_y == (float)1.8411702E38F);
+                Debug.Assert(pack.flow_rate_y_TRY(ph) == (float)1.48359E38F);
+                Debug.Assert(pack.time_usec == (ulong)1799838107972301279L);
+                Debug.Assert(pack.flow_rate_x_TRY(ph) == (float) -2.1133157E37F);
+                Debug.Assert(pack.ground_distance == (float)3.2080403E38F);
+                Debug.Assert(pack.sensor_id == (byte)(byte)150);
+                Debug.Assert(pack.quality == (byte)(byte)80);
             };
             GroundControl.OPTICAL_FLOW p100 = CommunicationChannel.new_OPTICAL_FLOW();
             PH.setPack(p100);
-            p100.quality = (byte)(byte)211;
-            p100.sensor_id = (byte)(byte)139;
-            p100.flow_comp_m_x = (float) -1.1485906E38F;
-            p100.flow_y = (short)(short) -6011;
-            p100.flow_comp_m_y = (float) -1.0790737E38F;
-            p100.flow_rate_y_SET((float) -1.1502376E38F, PH) ;
-            p100.ground_distance = (float)1.2345112E37F;
-            p100.time_usec = (ulong)1649091083244510585L;
-            p100.flow_x = (short)(short)25779;
-            p100.flow_rate_x_SET((float) -3.145356E38F, PH) ;
+            p100.flow_rate_y_SET((float)1.48359E38F, PH) ;
+            p100.flow_x = (short)(short) -1287;
+            p100.flow_comp_m_x = (float)2.5778563E38F;
+            p100.sensor_id = (byte)(byte)150;
+            p100.flow_y = (short)(short)29281;
+            p100.flow_rate_x_SET((float) -2.1133157E37F, PH) ;
+            p100.quality = (byte)(byte)80;
+            p100.flow_comp_m_y = (float)1.8411702E38F;
+            p100.time_usec = (ulong)1799838107972301279L;
+            p100.ground_distance = (float)3.2080403E38F;
             CommunicationChannel.instance.send(p100);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnGLOBAL_VISION_POSITION_ESTIMATEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.yaw == (float)1.710293E38F);
-                Debug.Assert(pack.usec == (ulong)6074243367826997054L);
-                Debug.Assert(pack.roll == (float) -3.0567024E37F);
-                Debug.Assert(pack.x == (float) -6.4469474E37F);
-                Debug.Assert(pack.y == (float)1.7684342E38F);
-                Debug.Assert(pack.z == (float)8.0493607E37F);
-                Debug.Assert(pack.pitch == (float) -2.0836482E38F);
+                Debug.Assert(pack.roll == (float)2.468526E38F);
+                Debug.Assert(pack.y == (float)1.8849567E38F);
+                Debug.Assert(pack.yaw == (float)1.5581222E38F);
+                Debug.Assert(pack.z == (float)2.4989062E37F);
+                Debug.Assert(pack.x == (float) -1.289391E37F);
+                Debug.Assert(pack.usec == (ulong)2127778070390653204L);
+                Debug.Assert(pack.pitch == (float)3.2795417E38F);
             };
             GroundControl.GLOBAL_VISION_POSITION_ESTIMATE p101 = CommunicationChannel.new_GLOBAL_VISION_POSITION_ESTIMATE();
             PH.setPack(p101);
-            p101.yaw = (float)1.710293E38F;
-            p101.z = (float)8.0493607E37F;
-            p101.x = (float) -6.4469474E37F;
-            p101.usec = (ulong)6074243367826997054L;
-            p101.pitch = (float) -2.0836482E38F;
-            p101.roll = (float) -3.0567024E37F;
-            p101.y = (float)1.7684342E38F;
+            p101.x = (float) -1.289391E37F;
+            p101.roll = (float)2.468526E38F;
+            p101.yaw = (float)1.5581222E38F;
+            p101.z = (float)2.4989062E37F;
+            p101.pitch = (float)3.2795417E38F;
+            p101.usec = (ulong)2127778070390653204L;
+            p101.y = (float)1.8849567E38F;
             CommunicationChannel.instance.send(p101);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnVISION_POSITION_ESTIMATEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.usec == (ulong)4008265953392823042L);
-                Debug.Assert(pack.y == (float)2.5684972E38F);
-                Debug.Assert(pack.roll == (float) -1.7893712E38F);
-                Debug.Assert(pack.z == (float) -2.444658E38F);
-                Debug.Assert(pack.x == (float)2.5974807E37F);
-                Debug.Assert(pack.yaw == (float) -2.5368117E37F);
-                Debug.Assert(pack.pitch == (float) -1.1607306E37F);
+                Debug.Assert(pack.y == (float) -3.1449613E37F);
+                Debug.Assert(pack.yaw == (float)2.2782275E38F);
+                Debug.Assert(pack.roll == (float)8.4317465E37F);
+                Debug.Assert(pack.usec == (ulong)3887446398293899295L);
+                Debug.Assert(pack.pitch == (float) -5.3276343E37F);
+                Debug.Assert(pack.z == (float)8.348537E37F);
+                Debug.Assert(pack.x == (float)3.2768928E38F);
             };
             GroundControl.VISION_POSITION_ESTIMATE p102 = CommunicationChannel.new_VISION_POSITION_ESTIMATE();
             PH.setPack(p102);
-            p102.z = (float) -2.444658E38F;
-            p102.usec = (ulong)4008265953392823042L;
-            p102.roll = (float) -1.7893712E38F;
-            p102.yaw = (float) -2.5368117E37F;
-            p102.x = (float)2.5974807E37F;
-            p102.y = (float)2.5684972E38F;
-            p102.pitch = (float) -1.1607306E37F;
+            p102.roll = (float)8.4317465E37F;
+            p102.x = (float)3.2768928E38F;
+            p102.z = (float)8.348537E37F;
+            p102.y = (float) -3.1449613E37F;
+            p102.pitch = (float) -5.3276343E37F;
+            p102.usec = (ulong)3887446398293899295L;
+            p102.yaw = (float)2.2782275E38F;
             CommunicationChannel.instance.send(p102);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnVISION_SPEED_ESTIMATEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.y == (float)6.678695E36F);
-                Debug.Assert(pack.usec == (ulong)8609901223237448742L);
-                Debug.Assert(pack.x == (float)1.7892955E38F);
-                Debug.Assert(pack.z == (float) -2.4418348E38F);
+                Debug.Assert(pack.usec == (ulong)5356869658737506005L);
+                Debug.Assert(pack.z == (float) -1.2305943E38F);
+                Debug.Assert(pack.x == (float) -2.578412E38F);
+                Debug.Assert(pack.y == (float)3.1593173E38F);
             };
             GroundControl.VISION_SPEED_ESTIMATE p103 = CommunicationChannel.new_VISION_SPEED_ESTIMATE();
             PH.setPack(p103);
-            p103.y = (float)6.678695E36F;
-            p103.z = (float) -2.4418348E38F;
-            p103.usec = (ulong)8609901223237448742L;
-            p103.x = (float)1.7892955E38F;
+            p103.usec = (ulong)5356869658737506005L;
+            p103.y = (float)3.1593173E38F;
+            p103.z = (float) -1.2305943E38F;
+            p103.x = (float) -2.578412E38F;
             CommunicationChannel.instance.send(p103);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnVICON_POSITION_ESTIMATEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.roll == (float)2.7779077E37F);
-                Debug.Assert(pack.y == (float)2.3703799E38F);
-                Debug.Assert(pack.z == (float) -2.0671469E38F);
-                Debug.Assert(pack.pitch == (float)2.4595693E38F);
-                Debug.Assert(pack.x == (float) -1.2814361E38F);
-                Debug.Assert(pack.yaw == (float) -5.6032763E37F);
-                Debug.Assert(pack.usec == (ulong)2950370073427944893L);
+                Debug.Assert(pack.usec == (ulong)5100010459015134724L);
+                Debug.Assert(pack.z == (float)5.2628026E37F);
+                Debug.Assert(pack.pitch == (float)5.5534E37F);
+                Debug.Assert(pack.yaw == (float)9.952789E37F);
+                Debug.Assert(pack.y == (float)3.0417085E38F);
+                Debug.Assert(pack.x == (float)1.6270449E38F);
+                Debug.Assert(pack.roll == (float)1.201435E38F);
             };
             GroundControl.VICON_POSITION_ESTIMATE p104 = CommunicationChannel.new_VICON_POSITION_ESTIMATE();
             PH.setPack(p104);
-            p104.pitch = (float)2.4595693E38F;
-            p104.x = (float) -1.2814361E38F;
-            p104.z = (float) -2.0671469E38F;
-            p104.roll = (float)2.7779077E37F;
-            p104.yaw = (float) -5.6032763E37F;
-            p104.y = (float)2.3703799E38F;
-            p104.usec = (ulong)2950370073427944893L;
+            p104.x = (float)1.6270449E38F;
+            p104.roll = (float)1.201435E38F;
+            p104.pitch = (float)5.5534E37F;
+            p104.y = (float)3.0417085E38F;
+            p104.yaw = (float)9.952789E37F;
+            p104.z = (float)5.2628026E37F;
+            p104.usec = (ulong)5100010459015134724L;
             CommunicationChannel.instance.send(p104);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnHIGHRES_IMUReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.xgyro == (float) -2.6976347E38F);
-                Debug.Assert(pack.yacc == (float) -2.3978643E38F);
-                Debug.Assert(pack.diff_pressure == (float)2.0902433E38F);
-                Debug.Assert(pack.zacc == (float)2.896276E38F);
-                Debug.Assert(pack.abs_pressure == (float)1.5356989E38F);
-                Debug.Assert(pack.xacc == (float)2.5368122E38F);
-                Debug.Assert(pack.time_usec == (ulong)7070053634888191817L);
-                Debug.Assert(pack.ygyro == (float)6.6513024E37F);
-                Debug.Assert(pack.zmag == (float) -6.7389214E37F);
-                Debug.Assert(pack.zgyro == (float)2.7401586E38F);
-                Debug.Assert(pack.temperature == (float) -1.022753E38F);
-                Debug.Assert(pack.pressure_alt == (float) -4.1103173E37F);
-                Debug.Assert(pack.xmag == (float) -1.7197595E38F);
-                Debug.Assert(pack.ymag == (float)2.5564375E38F);
-                Debug.Assert(pack.fields_updated == (ushort)(ushort)26462);
+                Debug.Assert(pack.zmag == (float) -1.2411374E38F);
+                Debug.Assert(pack.temperature == (float) -1.5362235E38F);
+                Debug.Assert(pack.time_usec == (ulong)8633437475152140416L);
+                Debug.Assert(pack.zgyro == (float)2.0732507E38F);
+                Debug.Assert(pack.xacc == (float)1.9671972E38F);
+                Debug.Assert(pack.xmag == (float) -3.4001427E38F);
+                Debug.Assert(pack.diff_pressure == (float)2.8377176E38F);
+                Debug.Assert(pack.zacc == (float)7.752594E37F);
+                Debug.Assert(pack.xgyro == (float)1.2425466E38F);
+                Debug.Assert(pack.pressure_alt == (float) -8.129419E37F);
+                Debug.Assert(pack.fields_updated == (ushort)(ushort)63993);
+                Debug.Assert(pack.ymag == (float)1.1184229E38F);
+                Debug.Assert(pack.abs_pressure == (float) -1.7364047E38F);
+                Debug.Assert(pack.yacc == (float) -2.1475478E38F);
+                Debug.Assert(pack.ygyro == (float) -7.7725277E37F);
             };
             GroundControl.HIGHRES_IMU p105 = CommunicationChannel.new_HIGHRES_IMU();
             PH.setPack(p105);
-            p105.diff_pressure = (float)2.0902433E38F;
-            p105.zmag = (float) -6.7389214E37F;
-            p105.temperature = (float) -1.022753E38F;
-            p105.zacc = (float)2.896276E38F;
-            p105.xgyro = (float) -2.6976347E38F;
-            p105.xacc = (float)2.5368122E38F;
-            p105.zgyro = (float)2.7401586E38F;
-            p105.time_usec = (ulong)7070053634888191817L;
-            p105.ygyro = (float)6.6513024E37F;
-            p105.pressure_alt = (float) -4.1103173E37F;
-            p105.fields_updated = (ushort)(ushort)26462;
-            p105.xmag = (float) -1.7197595E38F;
-            p105.abs_pressure = (float)1.5356989E38F;
-            p105.yacc = (float) -2.3978643E38F;
-            p105.ymag = (float)2.5564375E38F;
+            p105.abs_pressure = (float) -1.7364047E38F;
+            p105.time_usec = (ulong)8633437475152140416L;
+            p105.pressure_alt = (float) -8.129419E37F;
+            p105.xmag = (float) -3.4001427E38F;
+            p105.diff_pressure = (float)2.8377176E38F;
+            p105.ygyro = (float) -7.7725277E37F;
+            p105.zmag = (float) -1.2411374E38F;
+            p105.zacc = (float)7.752594E37F;
+            p105.xacc = (float)1.9671972E38F;
+            p105.ymag = (float)1.1184229E38F;
+            p105.yacc = (float) -2.1475478E38F;
+            p105.xgyro = (float)1.2425466E38F;
+            p105.zgyro = (float)2.0732507E38F;
+            p105.fields_updated = (ushort)(ushort)63993;
+            p105.temperature = (float) -1.5362235E38F;
             CommunicationChannel.instance.send(p105);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnOPTICAL_FLOW_RADReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.integrated_zgyro == (float)2.079618E38F);
-                Debug.Assert(pack.integrated_x == (float)2.8587975E38F);
-                Debug.Assert(pack.integrated_ygyro == (float)3.3374892E38F);
-                Debug.Assert(pack.integration_time_us == (uint)4251442687U);
-                Debug.Assert(pack.distance == (float)2.1511534E37F);
-                Debug.Assert(pack.time_delta_distance_us == (uint)3309388932U);
-                Debug.Assert(pack.time_usec == (ulong)92933440106651654L);
-                Debug.Assert(pack.sensor_id == (byte)(byte)212);
-                Debug.Assert(pack.integrated_xgyro == (float)2.50125E38F);
-                Debug.Assert(pack.quality == (byte)(byte)10);
-                Debug.Assert(pack.integrated_y == (float)1.6980078E38F);
-                Debug.Assert(pack.temperature == (short)(short) -14264);
+                Debug.Assert(pack.temperature == (short)(short) -1549);
+                Debug.Assert(pack.integrated_y == (float) -3.1522572E38F);
+                Debug.Assert(pack.time_delta_distance_us == (uint)1884569952U);
+                Debug.Assert(pack.distance == (float)2.4473695E38F);
+                Debug.Assert(pack.quality == (byte)(byte)31);
+                Debug.Assert(pack.integration_time_us == (uint)48683950U);
+                Debug.Assert(pack.integrated_xgyro == (float) -1.4582434E38F);
+                Debug.Assert(pack.sensor_id == (byte)(byte)116);
+                Debug.Assert(pack.integrated_x == (float) -2.9808412E38F);
+                Debug.Assert(pack.integrated_ygyro == (float)1.3114392E38F);
+                Debug.Assert(pack.time_usec == (ulong)398298124823226399L);
+                Debug.Assert(pack.integrated_zgyro == (float)2.3284987E37F);
             };
             GroundControl.OPTICAL_FLOW_RAD p106 = CommunicationChannel.new_OPTICAL_FLOW_RAD();
             PH.setPack(p106);
-            p106.integrated_y = (float)1.6980078E38F;
-            p106.integration_time_us = (uint)4251442687U;
-            p106.time_delta_distance_us = (uint)3309388932U;
-            p106.time_usec = (ulong)92933440106651654L;
-            p106.quality = (byte)(byte)10;
-            p106.integrated_zgyro = (float)2.079618E38F;
-            p106.temperature = (short)(short) -14264;
-            p106.integrated_xgyro = (float)2.50125E38F;
-            p106.distance = (float)2.1511534E37F;
-            p106.sensor_id = (byte)(byte)212;
-            p106.integrated_ygyro = (float)3.3374892E38F;
-            p106.integrated_x = (float)2.8587975E38F;
+            p106.temperature = (short)(short) -1549;
+            p106.time_delta_distance_us = (uint)1884569952U;
+            p106.sensor_id = (byte)(byte)116;
+            p106.integrated_xgyro = (float) -1.4582434E38F;
+            p106.time_usec = (ulong)398298124823226399L;
+            p106.integrated_zgyro = (float)2.3284987E37F;
+            p106.distance = (float)2.4473695E38F;
+            p106.integrated_x = (float) -2.9808412E38F;
+            p106.integration_time_us = (uint)48683950U;
+            p106.integrated_y = (float) -3.1522572E38F;
+            p106.integrated_ygyro = (float)1.3114392E38F;
+            p106.quality = (byte)(byte)31;
             CommunicationChannel.instance.send(p106);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnHIL_SENSORReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.xmag == (float)1.8552032E34F);
-                Debug.Assert(pack.zacc == (float)2.4093375E38F);
-                Debug.Assert(pack.diff_pressure == (float) -3.1226283E37F);
-                Debug.Assert(pack.abs_pressure == (float)4.8757835E36F);
-                Debug.Assert(pack.temperature == (float) -8.4590974E37F);
-                Debug.Assert(pack.xgyro == (float) -2.4132376E38F);
-                Debug.Assert(pack.time_usec == (ulong)7691933059540381147L);
-                Debug.Assert(pack.zgyro == (float)8.080085E37F);
-                Debug.Assert(pack.pressure_alt == (float) -2.740173E38F);
-                Debug.Assert(pack.xacc == (float) -9.746878E37F);
-                Debug.Assert(pack.zmag == (float)2.1443882E38F);
-                Debug.Assert(pack.ymag == (float) -6.3366405E37F);
-                Debug.Assert(pack.yacc == (float)2.9609704E37F);
-                Debug.Assert(pack.ygyro == (float) -2.1191126E38F);
-                Debug.Assert(pack.fields_updated == (uint)2364459296U);
+                Debug.Assert(pack.time_usec == (ulong)4988837811488134358L);
+                Debug.Assert(pack.fields_updated == (uint)852822644U);
+                Debug.Assert(pack.xgyro == (float) -2.76544E38F);
+                Debug.Assert(pack.diff_pressure == (float)7.5023695E37F);
+                Debug.Assert(pack.ymag == (float) -5.6683874E37F);
+                Debug.Assert(pack.zmag == (float)9.341464E37F);
+                Debug.Assert(pack.yacc == (float)1.752015E37F);
+                Debug.Assert(pack.abs_pressure == (float) -4.3782735E37F);
+                Debug.Assert(pack.ygyro == (float) -5.022373E37F);
+                Debug.Assert(pack.pressure_alt == (float)3.3704675E38F);
+                Debug.Assert(pack.zgyro == (float)1.1106699E38F);
+                Debug.Assert(pack.temperature == (float)5.7898146E37F);
+                Debug.Assert(pack.zacc == (float)5.2516447E37F);
+                Debug.Assert(pack.xmag == (float)1.1739423E38F);
+                Debug.Assert(pack.xacc == (float) -2.661822E37F);
             };
             GroundControl.HIL_SENSOR p107 = CommunicationChannel.new_HIL_SENSOR();
             PH.setPack(p107);
-            p107.abs_pressure = (float)4.8757835E36F;
-            p107.temperature = (float) -8.4590974E37F;
-            p107.xmag = (float)1.8552032E34F;
-            p107.zacc = (float)2.4093375E38F;
-            p107.yacc = (float)2.9609704E37F;
-            p107.zmag = (float)2.1443882E38F;
-            p107.xacc = (float) -9.746878E37F;
-            p107.time_usec = (ulong)7691933059540381147L;
-            p107.ygyro = (float) -2.1191126E38F;
-            p107.ymag = (float) -6.3366405E37F;
-            p107.fields_updated = (uint)2364459296U;
-            p107.diff_pressure = (float) -3.1226283E37F;
-            p107.zgyro = (float)8.080085E37F;
-            p107.pressure_alt = (float) -2.740173E38F;
-            p107.xgyro = (float) -2.4132376E38F;
+            p107.yacc = (float)1.752015E37F;
+            p107.xgyro = (float) -2.76544E38F;
+            p107.xacc = (float) -2.661822E37F;
+            p107.zacc = (float)5.2516447E37F;
+            p107.diff_pressure = (float)7.5023695E37F;
+            p107.ymag = (float) -5.6683874E37F;
+            p107.zmag = (float)9.341464E37F;
+            p107.zgyro = (float)1.1106699E38F;
+            p107.abs_pressure = (float) -4.3782735E37F;
+            p107.ygyro = (float) -5.022373E37F;
+            p107.time_usec = (ulong)4988837811488134358L;
+            p107.pressure_alt = (float)3.3704675E38F;
+            p107.fields_updated = (uint)852822644U;
+            p107.xmag = (float)1.1739423E38F;
+            p107.temperature = (float)5.7898146E37F;
             CommunicationChannel.instance.send(p107);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSIM_STATEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.xgyro == (float) -2.2400341E38F);
-                Debug.Assert(pack.q1 == (float) -2.0045627E38F);
-                Debug.Assert(pack.zgyro == (float)2.0422326E38F);
-                Debug.Assert(pack.vd == (float)2.499688E38F);
-                Debug.Assert(pack.std_dev_horz == (float)1.0488558E38F);
-                Debug.Assert(pack.lat == (float) -3.0642212E38F);
-                Debug.Assert(pack.zacc == (float) -2.3659818E38F);
-                Debug.Assert(pack.pitch == (float) -2.9293592E38F);
-                Debug.Assert(pack.ve == (float) -3.3939187E37F);
-                Debug.Assert(pack.xacc == (float) -1.0184877E38F);
-                Debug.Assert(pack.q4 == (float)3.2685014E38F);
-                Debug.Assert(pack.vn == (float)3.06836E38F);
-                Debug.Assert(pack.alt == (float) -3.129824E38F);
-                Debug.Assert(pack.std_dev_vert == (float)3.696779E37F);
-                Debug.Assert(pack.yacc == (float)2.3044E38F);
-                Debug.Assert(pack.q3 == (float)2.4450388E38F);
-                Debug.Assert(pack.roll == (float)1.6365435E38F);
-                Debug.Assert(pack.lon == (float) -5.6785996E37F);
-                Debug.Assert(pack.yaw == (float)4.4269817E37F);
-                Debug.Assert(pack.ygyro == (float)6.419354E37F);
-                Debug.Assert(pack.q2 == (float) -2.3808486E38F);
+                Debug.Assert(pack.zacc == (float) -3.142334E38F);
+                Debug.Assert(pack.xacc == (float)2.2062114E38F);
+                Debug.Assert(pack.q2 == (float)1.1431044E38F);
+                Debug.Assert(pack.q3 == (float) -2.3256474E38F);
+                Debug.Assert(pack.lon == (float)3.6638675E37F);
+                Debug.Assert(pack.lat == (float) -1.6293898E38F);
+                Debug.Assert(pack.yaw == (float)1.5210164E37F);
+                Debug.Assert(pack.vn == (float)1.6740716E38F);
+                Debug.Assert(pack.ygyro == (float) -2.458431E38F);
+                Debug.Assert(pack.zgyro == (float) -1.5826459E37F);
+                Debug.Assert(pack.roll == (float)2.2244564E38F);
+                Debug.Assert(pack.vd == (float) -1.0118099E37F);
+                Debug.Assert(pack.ve == (float) -4.554082E37F);
+                Debug.Assert(pack.q4 == (float)1.0685659E38F);
+                Debug.Assert(pack.pitch == (float) -2.8407985E35F);
+                Debug.Assert(pack.alt == (float) -1.4568942E38F);
+                Debug.Assert(pack.q1 == (float) -2.1916217E38F);
+                Debug.Assert(pack.std_dev_vert == (float) -1.0801777E38F);
+                Debug.Assert(pack.xgyro == (float)2.5861092E38F);
+                Debug.Assert(pack.yacc == (float) -2.9658852E38F);
+                Debug.Assert(pack.std_dev_horz == (float) -1.627428E38F);
             };
             GroundControl.SIM_STATE p108 = CommunicationChannel.new_SIM_STATE();
             PH.setPack(p108);
-            p108.xacc = (float) -1.0184877E38F;
-            p108.pitch = (float) -2.9293592E38F;
-            p108.roll = (float)1.6365435E38F;
-            p108.yaw = (float)4.4269817E37F;
-            p108.lat = (float) -3.0642212E38F;
-            p108.q4 = (float)3.2685014E38F;
-            p108.std_dev_vert = (float)3.696779E37F;
-            p108.lon = (float) -5.6785996E37F;
-            p108.ve = (float) -3.3939187E37F;
-            p108.q1 = (float) -2.0045627E38F;
-            p108.zacc = (float) -2.3659818E38F;
-            p108.std_dev_horz = (float)1.0488558E38F;
-            p108.vd = (float)2.499688E38F;
-            p108.alt = (float) -3.129824E38F;
-            p108.q2 = (float) -2.3808486E38F;
-            p108.vn = (float)3.06836E38F;
-            p108.zgyro = (float)2.0422326E38F;
-            p108.q3 = (float)2.4450388E38F;
-            p108.ygyro = (float)6.419354E37F;
-            p108.xgyro = (float) -2.2400341E38F;
-            p108.yacc = (float)2.3044E38F;
+            p108.q2 = (float)1.1431044E38F;
+            p108.pitch = (float) -2.8407985E35F;
+            p108.xacc = (float)2.2062114E38F;
+            p108.lon = (float)3.6638675E37F;
+            p108.q4 = (float)1.0685659E38F;
+            p108.xgyro = (float)2.5861092E38F;
+            p108.std_dev_horz = (float) -1.627428E38F;
+            p108.std_dev_vert = (float) -1.0801777E38F;
+            p108.zgyro = (float) -1.5826459E37F;
+            p108.alt = (float) -1.4568942E38F;
+            p108.ve = (float) -4.554082E37F;
+            p108.q3 = (float) -2.3256474E38F;
+            p108.ygyro = (float) -2.458431E38F;
+            p108.q1 = (float) -2.1916217E38F;
+            p108.vn = (float)1.6740716E38F;
+            p108.lat = (float) -1.6293898E38F;
+            p108.zacc = (float) -3.142334E38F;
+            p108.yaw = (float)1.5210164E37F;
+            p108.roll = (float)2.2244564E38F;
+            p108.yacc = (float) -2.9658852E38F;
+            p108.vd = (float) -1.0118099E37F;
             CommunicationChannel.instance.send(p108);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnRADIO_STATUSReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.fixed_ == (ushort)(ushort)56505);
-                Debug.Assert(pack.noise == (byte)(byte)141);
-                Debug.Assert(pack.txbuf == (byte)(byte)168);
-                Debug.Assert(pack.remnoise == (byte)(byte)80);
-                Debug.Assert(pack.remrssi == (byte)(byte)186);
-                Debug.Assert(pack.rssi == (byte)(byte)145);
-                Debug.Assert(pack.rxerrors == (ushort)(ushort)24920);
+                Debug.Assert(pack.noise == (byte)(byte)69);
+                Debug.Assert(pack.fixed_ == (ushort)(ushort)25730);
+                Debug.Assert(pack.remrssi == (byte)(byte)198);
+                Debug.Assert(pack.rxerrors == (ushort)(ushort)23063);
+                Debug.Assert(pack.remnoise == (byte)(byte)164);
+                Debug.Assert(pack.rssi == (byte)(byte)213);
+                Debug.Assert(pack.txbuf == (byte)(byte)5);
             };
             GroundControl.RADIO_STATUS p109 = CommunicationChannel.new_RADIO_STATUS();
             PH.setPack(p109);
-            p109.remrssi = (byte)(byte)186;
-            p109.remnoise = (byte)(byte)80;
-            p109.rxerrors = (ushort)(ushort)24920;
-            p109.noise = (byte)(byte)141;
-            p109.rssi = (byte)(byte)145;
-            p109.txbuf = (byte)(byte)168;
-            p109.fixed_ = (ushort)(ushort)56505;
+            p109.txbuf = (byte)(byte)5;
+            p109.rssi = (byte)(byte)213;
+            p109.fixed_ = (ushort)(ushort)25730;
+            p109.rxerrors = (ushort)(ushort)23063;
+            p109.remnoise = (byte)(byte)164;
+            p109.noise = (byte)(byte)69;
+            p109.remrssi = (byte)(byte)198;
             CommunicationChannel.instance.send(p109);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnFILE_TRANSFER_PROTOCOLReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_network == (byte)(byte)182);
-                Debug.Assert(pack.target_system == (byte)(byte)61);
-                Debug.Assert(pack.target_component == (byte)(byte)214);
-                Debug.Assert(pack.payload.SequenceEqual(new byte[] {(byte)129, (byte)115, (byte)221, (byte)193, (byte)46, (byte)54, (byte)141, (byte)112, (byte)178, (byte)71, (byte)228, (byte)75, (byte)58, (byte)44, (byte)170, (byte)95, (byte)123, (byte)117, (byte)197, (byte)161, (byte)136, (byte)165, (byte)61, (byte)100, (byte)198, (byte)109, (byte)171, (byte)237, (byte)111, (byte)142, (byte)163, (byte)125, (byte)204, (byte)136, (byte)201, (byte)94, (byte)166, (byte)72, (byte)157, (byte)98, (byte)229, (byte)147, (byte)122, (byte)235, (byte)204, (byte)216, (byte)255, (byte)228, (byte)144, (byte)193, (byte)165, (byte)161, (byte)105, (byte)80, (byte)127, (byte)186, (byte)14, (byte)75, (byte)173, (byte)129, (byte)220, (byte)177, (byte)220, (byte)131, (byte)119, (byte)243, (byte)82, (byte)86, (byte)101, (byte)197, (byte)242, (byte)56, (byte)44, (byte)119, (byte)175, (byte)129, (byte)123, (byte)73, (byte)204, (byte)241, (byte)100, (byte)111, (byte)48, (byte)131, (byte)101, (byte)109, (byte)113, (byte)156, (byte)207, (byte)128, (byte)194, (byte)226, (byte)195, (byte)37, (byte)230, (byte)188, (byte)40, (byte)143, (byte)182, (byte)28, (byte)72, (byte)134, (byte)131, (byte)184, (byte)84, (byte)241, (byte)75, (byte)189, (byte)60, (byte)101, (byte)82, (byte)86, (byte)146, (byte)253, (byte)166, (byte)183, (byte)251, (byte)219, (byte)55, (byte)72, (byte)20, (byte)128, (byte)122, (byte)118, (byte)177, (byte)165, (byte)110, (byte)251, (byte)236, (byte)12, (byte)61, (byte)238, (byte)156, (byte)112, (byte)96, (byte)248, (byte)102, (byte)103, (byte)195, (byte)16, (byte)116, (byte)112, (byte)220, (byte)0, (byte)137, (byte)222, (byte)118, (byte)202, (byte)176, (byte)9, (byte)73, (byte)91, (byte)35, (byte)105, (byte)229, (byte)227, (byte)182, (byte)122, (byte)40, (byte)156, (byte)192, (byte)188, (byte)196, (byte)17, (byte)13, (byte)164, (byte)96, (byte)88, (byte)86, (byte)2, (byte)158, (byte)251, (byte)12, (byte)132, (byte)27, (byte)60, (byte)183, (byte)39, (byte)105, (byte)55, (byte)245, (byte)242, (byte)31, (byte)13, (byte)199, (byte)33, (byte)235, (byte)79, (byte)36, (byte)26, (byte)187, (byte)142, (byte)251, (byte)201, (byte)26, (byte)105, (byte)209, (byte)190, (byte)170, (byte)48, (byte)191, (byte)184, (byte)173, (byte)53, (byte)129, (byte)119, (byte)216, (byte)116, (byte)107, (byte)197, (byte)150, (byte)138, (byte)119, (byte)39, (byte)45, (byte)10, (byte)113, (byte)136, (byte)89, (byte)139, (byte)42, (byte)223, (byte)193, (byte)208, (byte)80, (byte)134, (byte)114, (byte)96, (byte)33, (byte)163, (byte)105, (byte)254, (byte)146, (byte)210, (byte)234, (byte)190, (byte)70, (byte)126, (byte)100, (byte)213, (byte)203, (byte)24, (byte)58, (byte)135, (byte)24, (byte)40, (byte)68, (byte)248, (byte)17, (byte)98, (byte)246}));
+                Debug.Assert(pack.target_network == (byte)(byte)21);
+                Debug.Assert(pack.payload.SequenceEqual(new byte[] {(byte)186, (byte)227, (byte)13, (byte)115, (byte)99, (byte)39, (byte)106, (byte)161, (byte)85, (byte)77, (byte)82, (byte)6, (byte)191, (byte)207, (byte)52, (byte)15, (byte)241, (byte)3, (byte)235, (byte)65, (byte)247, (byte)165, (byte)79, (byte)169, (byte)49, (byte)252, (byte)184, (byte)74, (byte)190, (byte)184, (byte)99, (byte)245, (byte)234, (byte)209, (byte)5, (byte)99, (byte)83, (byte)185, (byte)196, (byte)44, (byte)211, (byte)172, (byte)118, (byte)185, (byte)143, (byte)148, (byte)120, (byte)187, (byte)169, (byte)170, (byte)201, (byte)66, (byte)144, (byte)52, (byte)2, (byte)192, (byte)200, (byte)80, (byte)212, (byte)182, (byte)102, (byte)12, (byte)86, (byte)107, (byte)183, (byte)114, (byte)228, (byte)61, (byte)42, (byte)93, (byte)3, (byte)61, (byte)40, (byte)88, (byte)217, (byte)208, (byte)168, (byte)88, (byte)245, (byte)23, (byte)110, (byte)145, (byte)180, (byte)14, (byte)162, (byte)162, (byte)97, (byte)120, (byte)237, (byte)170, (byte)231, (byte)17, (byte)185, (byte)215, (byte)7, (byte)165, (byte)38, (byte)95, (byte)225, (byte)79, (byte)2, (byte)148, (byte)32, (byte)78, (byte)223, (byte)228, (byte)223, (byte)65, (byte)54, (byte)31, (byte)95, (byte)112, (byte)249, (byte)5, (byte)19, (byte)111, (byte)208, (byte)28, (byte)43, (byte)159, (byte)7, (byte)142, (byte)194, (byte)40, (byte)104, (byte)154, (byte)223, (byte)32, (byte)142, (byte)209, (byte)19, (byte)114, (byte)107, (byte)222, (byte)83, (byte)90, (byte)80, (byte)20, (byte)157, (byte)222, (byte)153, (byte)176, (byte)66, (byte)23, (byte)98, (byte)244, (byte)59, (byte)240, (byte)207, (byte)14, (byte)98, (byte)49, (byte)197, (byte)182, (byte)200, (byte)116, (byte)212, (byte)106, (byte)144, (byte)251, (byte)54, (byte)20, (byte)78, (byte)242, (byte)13, (byte)211, (byte)16, (byte)104, (byte)184, (byte)73, (byte)165, (byte)98, (byte)183, (byte)157, (byte)215, (byte)93, (byte)244, (byte)209, (byte)197, (byte)76, (byte)28, (byte)144, (byte)138, (byte)97, (byte)35, (byte)137, (byte)28, (byte)123, (byte)228, (byte)253, (byte)193, (byte)85, (byte)80, (byte)109, (byte)26, (byte)30, (byte)112, (byte)173, (byte)241, (byte)218, (byte)230, (byte)233, (byte)6, (byte)21, (byte)143, (byte)244, (byte)225, (byte)214, (byte)250, (byte)212, (byte)17, (byte)38, (byte)253, (byte)143, (byte)159, (byte)77, (byte)217, (byte)124, (byte)47, (byte)73, (byte)3, (byte)242, (byte)160, (byte)237, (byte)102, (byte)114, (byte)23, (byte)255, (byte)75, (byte)188, (byte)244, (byte)0, (byte)24, (byte)45, (byte)152, (byte)154, (byte)233, (byte)121, (byte)139, (byte)30, (byte)57, (byte)221, (byte)216, (byte)250, (byte)1, (byte)76, (byte)15, (byte)201, (byte)174, (byte)89, (byte)63}));
+                Debug.Assert(pack.target_system == (byte)(byte)217);
+                Debug.Assert(pack.target_component == (byte)(byte)185);
             };
             GroundControl.FILE_TRANSFER_PROTOCOL p110 = CommunicationChannel.new_FILE_TRANSFER_PROTOCOL();
             PH.setPack(p110);
-            p110.target_network = (byte)(byte)182;
-            p110.payload_SET(new byte[] {(byte)129, (byte)115, (byte)221, (byte)193, (byte)46, (byte)54, (byte)141, (byte)112, (byte)178, (byte)71, (byte)228, (byte)75, (byte)58, (byte)44, (byte)170, (byte)95, (byte)123, (byte)117, (byte)197, (byte)161, (byte)136, (byte)165, (byte)61, (byte)100, (byte)198, (byte)109, (byte)171, (byte)237, (byte)111, (byte)142, (byte)163, (byte)125, (byte)204, (byte)136, (byte)201, (byte)94, (byte)166, (byte)72, (byte)157, (byte)98, (byte)229, (byte)147, (byte)122, (byte)235, (byte)204, (byte)216, (byte)255, (byte)228, (byte)144, (byte)193, (byte)165, (byte)161, (byte)105, (byte)80, (byte)127, (byte)186, (byte)14, (byte)75, (byte)173, (byte)129, (byte)220, (byte)177, (byte)220, (byte)131, (byte)119, (byte)243, (byte)82, (byte)86, (byte)101, (byte)197, (byte)242, (byte)56, (byte)44, (byte)119, (byte)175, (byte)129, (byte)123, (byte)73, (byte)204, (byte)241, (byte)100, (byte)111, (byte)48, (byte)131, (byte)101, (byte)109, (byte)113, (byte)156, (byte)207, (byte)128, (byte)194, (byte)226, (byte)195, (byte)37, (byte)230, (byte)188, (byte)40, (byte)143, (byte)182, (byte)28, (byte)72, (byte)134, (byte)131, (byte)184, (byte)84, (byte)241, (byte)75, (byte)189, (byte)60, (byte)101, (byte)82, (byte)86, (byte)146, (byte)253, (byte)166, (byte)183, (byte)251, (byte)219, (byte)55, (byte)72, (byte)20, (byte)128, (byte)122, (byte)118, (byte)177, (byte)165, (byte)110, (byte)251, (byte)236, (byte)12, (byte)61, (byte)238, (byte)156, (byte)112, (byte)96, (byte)248, (byte)102, (byte)103, (byte)195, (byte)16, (byte)116, (byte)112, (byte)220, (byte)0, (byte)137, (byte)222, (byte)118, (byte)202, (byte)176, (byte)9, (byte)73, (byte)91, (byte)35, (byte)105, (byte)229, (byte)227, (byte)182, (byte)122, (byte)40, (byte)156, (byte)192, (byte)188, (byte)196, (byte)17, (byte)13, (byte)164, (byte)96, (byte)88, (byte)86, (byte)2, (byte)158, (byte)251, (byte)12, (byte)132, (byte)27, (byte)60, (byte)183, (byte)39, (byte)105, (byte)55, (byte)245, (byte)242, (byte)31, (byte)13, (byte)199, (byte)33, (byte)235, (byte)79, (byte)36, (byte)26, (byte)187, (byte)142, (byte)251, (byte)201, (byte)26, (byte)105, (byte)209, (byte)190, (byte)170, (byte)48, (byte)191, (byte)184, (byte)173, (byte)53, (byte)129, (byte)119, (byte)216, (byte)116, (byte)107, (byte)197, (byte)150, (byte)138, (byte)119, (byte)39, (byte)45, (byte)10, (byte)113, (byte)136, (byte)89, (byte)139, (byte)42, (byte)223, (byte)193, (byte)208, (byte)80, (byte)134, (byte)114, (byte)96, (byte)33, (byte)163, (byte)105, (byte)254, (byte)146, (byte)210, (byte)234, (byte)190, (byte)70, (byte)126, (byte)100, (byte)213, (byte)203, (byte)24, (byte)58, (byte)135, (byte)24, (byte)40, (byte)68, (byte)248, (byte)17, (byte)98, (byte)246}, 0) ;
-            p110.target_component = (byte)(byte)214;
-            p110.target_system = (byte)(byte)61;
+            p110.target_component = (byte)(byte)185;
+            p110.payload_SET(new byte[] {(byte)186, (byte)227, (byte)13, (byte)115, (byte)99, (byte)39, (byte)106, (byte)161, (byte)85, (byte)77, (byte)82, (byte)6, (byte)191, (byte)207, (byte)52, (byte)15, (byte)241, (byte)3, (byte)235, (byte)65, (byte)247, (byte)165, (byte)79, (byte)169, (byte)49, (byte)252, (byte)184, (byte)74, (byte)190, (byte)184, (byte)99, (byte)245, (byte)234, (byte)209, (byte)5, (byte)99, (byte)83, (byte)185, (byte)196, (byte)44, (byte)211, (byte)172, (byte)118, (byte)185, (byte)143, (byte)148, (byte)120, (byte)187, (byte)169, (byte)170, (byte)201, (byte)66, (byte)144, (byte)52, (byte)2, (byte)192, (byte)200, (byte)80, (byte)212, (byte)182, (byte)102, (byte)12, (byte)86, (byte)107, (byte)183, (byte)114, (byte)228, (byte)61, (byte)42, (byte)93, (byte)3, (byte)61, (byte)40, (byte)88, (byte)217, (byte)208, (byte)168, (byte)88, (byte)245, (byte)23, (byte)110, (byte)145, (byte)180, (byte)14, (byte)162, (byte)162, (byte)97, (byte)120, (byte)237, (byte)170, (byte)231, (byte)17, (byte)185, (byte)215, (byte)7, (byte)165, (byte)38, (byte)95, (byte)225, (byte)79, (byte)2, (byte)148, (byte)32, (byte)78, (byte)223, (byte)228, (byte)223, (byte)65, (byte)54, (byte)31, (byte)95, (byte)112, (byte)249, (byte)5, (byte)19, (byte)111, (byte)208, (byte)28, (byte)43, (byte)159, (byte)7, (byte)142, (byte)194, (byte)40, (byte)104, (byte)154, (byte)223, (byte)32, (byte)142, (byte)209, (byte)19, (byte)114, (byte)107, (byte)222, (byte)83, (byte)90, (byte)80, (byte)20, (byte)157, (byte)222, (byte)153, (byte)176, (byte)66, (byte)23, (byte)98, (byte)244, (byte)59, (byte)240, (byte)207, (byte)14, (byte)98, (byte)49, (byte)197, (byte)182, (byte)200, (byte)116, (byte)212, (byte)106, (byte)144, (byte)251, (byte)54, (byte)20, (byte)78, (byte)242, (byte)13, (byte)211, (byte)16, (byte)104, (byte)184, (byte)73, (byte)165, (byte)98, (byte)183, (byte)157, (byte)215, (byte)93, (byte)244, (byte)209, (byte)197, (byte)76, (byte)28, (byte)144, (byte)138, (byte)97, (byte)35, (byte)137, (byte)28, (byte)123, (byte)228, (byte)253, (byte)193, (byte)85, (byte)80, (byte)109, (byte)26, (byte)30, (byte)112, (byte)173, (byte)241, (byte)218, (byte)230, (byte)233, (byte)6, (byte)21, (byte)143, (byte)244, (byte)225, (byte)214, (byte)250, (byte)212, (byte)17, (byte)38, (byte)253, (byte)143, (byte)159, (byte)77, (byte)217, (byte)124, (byte)47, (byte)73, (byte)3, (byte)242, (byte)160, (byte)237, (byte)102, (byte)114, (byte)23, (byte)255, (byte)75, (byte)188, (byte)244, (byte)0, (byte)24, (byte)45, (byte)152, (byte)154, (byte)233, (byte)121, (byte)139, (byte)30, (byte)57, (byte)221, (byte)216, (byte)250, (byte)1, (byte)76, (byte)15, (byte)201, (byte)174, (byte)89, (byte)63}, 0) ;
+            p110.target_network = (byte)(byte)21;
+            p110.target_system = (byte)(byte)217;
             CommunicationChannel.instance.send(p110);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnTIMESYNCReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.ts1 == (long)9115888368743692344L);
-                Debug.Assert(pack.tc1 == (long)9083006618193519414L);
+                Debug.Assert(pack.ts1 == (long) -2470463746573243722L);
+                Debug.Assert(pack.tc1 == (long) -6214056004514709287L);
             };
             GroundControl.TIMESYNC p111 = CommunicationChannel.new_TIMESYNC();
             PH.setPack(p111);
-            p111.ts1 = (long)9115888368743692344L;
-            p111.tc1 = (long)9083006618193519414L;
+            p111.ts1 = (long) -2470463746573243722L;
+            p111.tc1 = (long) -6214056004514709287L;
             CommunicationChannel.instance.send(p111);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnCAMERA_TRIGGERReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.seq == (uint)1612331633U);
-                Debug.Assert(pack.time_usec == (ulong)7163584390224579385L);
+                Debug.Assert(pack.time_usec == (ulong)4006725325924808180L);
+                Debug.Assert(pack.seq == (uint)2776029553U);
             };
             GroundControl.CAMERA_TRIGGER p112 = CommunicationChannel.new_CAMERA_TRIGGER();
             PH.setPack(p112);
-            p112.seq = (uint)1612331633U;
-            p112.time_usec = (ulong)7163584390224579385L;
+            p112.time_usec = (ulong)4006725325924808180L;
+            p112.seq = (uint)2776029553U;
             CommunicationChannel.instance.send(p112);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnHIL_GPSReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.cog == (ushort)(ushort)11598);
-                Debug.Assert(pack.time_usec == (ulong)2686460328473179660L);
-                Debug.Assert(pack.alt == (int) -519844365);
-                Debug.Assert(pack.epv == (ushort)(ushort)10125);
-                Debug.Assert(pack.lon == (int) -1878383258);
-                Debug.Assert(pack.vn == (short)(short) -15074);
-                Debug.Assert(pack.satellites_visible == (byte)(byte)175);
-                Debug.Assert(pack.eph == (ushort)(ushort)58839);
-                Debug.Assert(pack.lat == (int)891450964);
-                Debug.Assert(pack.fix_type == (byte)(byte)137);
-                Debug.Assert(pack.ve == (short)(short) -19776);
-                Debug.Assert(pack.vel == (ushort)(ushort)60810);
-                Debug.Assert(pack.vd == (short)(short)31950);
+                Debug.Assert(pack.cog == (ushort)(ushort)42395);
+                Debug.Assert(pack.time_usec == (ulong)5991629348210291624L);
+                Debug.Assert(pack.eph == (ushort)(ushort)5883);
+                Debug.Assert(pack.alt == (int) -1959135525);
+                Debug.Assert(pack.lon == (int) -1359360697);
+                Debug.Assert(pack.vn == (short)(short)9573);
+                Debug.Assert(pack.ve == (short)(short)29916);
+                Debug.Assert(pack.vd == (short)(short)25854);
+                Debug.Assert(pack.satellites_visible == (byte)(byte)201);
+                Debug.Assert(pack.epv == (ushort)(ushort)21402);
+                Debug.Assert(pack.fix_type == (byte)(byte)244);
+                Debug.Assert(pack.vel == (ushort)(ushort)10175);
+                Debug.Assert(pack.lat == (int)1896858113);
             };
             GroundControl.HIL_GPS p113 = CommunicationChannel.new_HIL_GPS();
             PH.setPack(p113);
-            p113.vel = (ushort)(ushort)60810;
-            p113.lat = (int)891450964;
-            p113.ve = (short)(short) -19776;
-            p113.alt = (int) -519844365;
-            p113.cog = (ushort)(ushort)11598;
-            p113.fix_type = (byte)(byte)137;
-            p113.vd = (short)(short)31950;
-            p113.time_usec = (ulong)2686460328473179660L;
-            p113.eph = (ushort)(ushort)58839;
-            p113.vn = (short)(short) -15074;
-            p113.epv = (ushort)(ushort)10125;
-            p113.satellites_visible = (byte)(byte)175;
-            p113.lon = (int) -1878383258;
+            p113.vn = (short)(short)9573;
+            p113.epv = (ushort)(ushort)21402;
+            p113.ve = (short)(short)29916;
+            p113.time_usec = (ulong)5991629348210291624L;
+            p113.alt = (int) -1959135525;
+            p113.vd = (short)(short)25854;
+            p113.fix_type = (byte)(byte)244;
+            p113.eph = (ushort)(ushort)5883;
+            p113.satellites_visible = (byte)(byte)201;
+            p113.lat = (int)1896858113;
+            p113.lon = (int) -1359360697;
+            p113.vel = (ushort)(ushort)10175;
+            p113.cog = (ushort)(ushort)42395;
             CommunicationChannel.instance.send(p113);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnHIL_OPTICAL_FLOWReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.integrated_xgyro == (float)6.9993703E37F);
-                Debug.Assert(pack.time_usec == (ulong)390623326865072670L);
-                Debug.Assert(pack.temperature == (short)(short)30984);
-                Debug.Assert(pack.integrated_x == (float)3.1077335E38F);
-                Debug.Assert(pack.integrated_zgyro == (float)2.6234118E38F);
-                Debug.Assert(pack.quality == (byte)(byte)255);
-                Debug.Assert(pack.distance == (float) -2.543934E38F);
-                Debug.Assert(pack.integration_time_us == (uint)1906743328U);
-                Debug.Assert(pack.integrated_ygyro == (float) -1.6639179E38F);
-                Debug.Assert(pack.sensor_id == (byte)(byte)94);
-                Debug.Assert(pack.time_delta_distance_us == (uint)3079679476U);
-                Debug.Assert(pack.integrated_y == (float) -3.0286002E38F);
+                Debug.Assert(pack.integrated_zgyro == (float)2.5718252E36F);
+                Debug.Assert(pack.integrated_x == (float)2.1629519E38F);
+                Debug.Assert(pack.distance == (float)8.1053676E37F);
+                Debug.Assert(pack.temperature == (short)(short)10501);
+                Debug.Assert(pack.sensor_id == (byte)(byte)22);
+                Debug.Assert(pack.integrated_y == (float)3.2581162E38F);
+                Debug.Assert(pack.integrated_xgyro == (float) -2.916268E36F);
+                Debug.Assert(pack.time_delta_distance_us == (uint)3935095026U);
+                Debug.Assert(pack.integration_time_us == (uint)2207579369U);
+                Debug.Assert(pack.quality == (byte)(byte)95);
+                Debug.Assert(pack.time_usec == (ulong)3661057433640605538L);
+                Debug.Assert(pack.integrated_ygyro == (float) -1.7083551E38F);
             };
             GroundControl.HIL_OPTICAL_FLOW p114 = CommunicationChannel.new_HIL_OPTICAL_FLOW();
             PH.setPack(p114);
-            p114.integrated_y = (float) -3.0286002E38F;
-            p114.integrated_xgyro = (float)6.9993703E37F;
-            p114.temperature = (short)(short)30984;
-            p114.distance = (float) -2.543934E38F;
-            p114.quality = (byte)(byte)255;
-            p114.integration_time_us = (uint)1906743328U;
-            p114.integrated_zgyro = (float)2.6234118E38F;
-            p114.time_delta_distance_us = (uint)3079679476U;
-            p114.time_usec = (ulong)390623326865072670L;
-            p114.integrated_x = (float)3.1077335E38F;
-            p114.sensor_id = (byte)(byte)94;
-            p114.integrated_ygyro = (float) -1.6639179E38F;
+            p114.time_usec = (ulong)3661057433640605538L;
+            p114.integrated_xgyro = (float) -2.916268E36F;
+            p114.integrated_zgyro = (float)2.5718252E36F;
+            p114.integrated_ygyro = (float) -1.7083551E38F;
+            p114.quality = (byte)(byte)95;
+            p114.integration_time_us = (uint)2207579369U;
+            p114.time_delta_distance_us = (uint)3935095026U;
+            p114.integrated_y = (float)3.2581162E38F;
+            p114.distance = (float)8.1053676E37F;
+            p114.integrated_x = (float)2.1629519E38F;
+            p114.temperature = (short)(short)10501;
+            p114.sensor_id = (byte)(byte)22;
             CommunicationChannel.instance.send(p114);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnHIL_STATE_QUATERNIONReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.alt == (int) -1803733227);
-                Debug.Assert(pack.ind_airspeed == (ushort)(ushort)42636);
-                Debug.Assert(pack.zacc == (short)(short) -11631);
-                Debug.Assert(pack.rollspeed == (float)7.708553E37F);
-                Debug.Assert(pack.lon == (int) -476016011);
-                Debug.Assert(pack.yawspeed == (float)1.4469465E37F);
-                Debug.Assert(pack.vz == (short)(short) -22294);
-                Debug.Assert(pack.lat == (int)174695777);
-                Debug.Assert(pack.time_usec == (ulong)2175477130701592795L);
-                Debug.Assert(pack.pitchspeed == (float) -9.141599E36F);
-                Debug.Assert(pack.yacc == (short)(short) -26688);
-                Debug.Assert(pack.vx == (short)(short) -19185);
-                Debug.Assert(pack.xacc == (short)(short) -1667);
-                Debug.Assert(pack.attitude_quaternion.SequenceEqual(new float[] {-8.431313E37F, -2.8547633E38F, -9.8306456E36F, -1.4112477E38F}));
-                Debug.Assert(pack.true_airspeed == (ushort)(ushort)39408);
-                Debug.Assert(pack.vy == (short)(short) -3081);
+                Debug.Assert(pack.vz == (short)(short) -31687);
+                Debug.Assert(pack.ind_airspeed == (ushort)(ushort)64750);
+                Debug.Assert(pack.zacc == (short)(short) -32761);
+                Debug.Assert(pack.alt == (int)396704510);
+                Debug.Assert(pack.vx == (short)(short)32626);
+                Debug.Assert(pack.lon == (int)1976911185);
+                Debug.Assert(pack.rollspeed == (float) -1.2643466E38F);
+                Debug.Assert(pack.vy == (short)(short) -27901);
+                Debug.Assert(pack.pitchspeed == (float)1.5742647E38F);
+                Debug.Assert(pack.time_usec == (ulong)3985730774603418359L);
+                Debug.Assert(pack.attitude_quaternion.SequenceEqual(new float[] {-2.8055755E38F, 5.2556885E37F, -2.1467598E38F, -2.2956327E38F}));
+                Debug.Assert(pack.xacc == (short)(short) -25491);
+                Debug.Assert(pack.true_airspeed == (ushort)(ushort)65068);
+                Debug.Assert(pack.yawspeed == (float) -3.0059004E38F);
+                Debug.Assert(pack.yacc == (short)(short)1516);
+                Debug.Assert(pack.lat == (int) -1229815964);
             };
             GroundControl.HIL_STATE_QUATERNION p115 = CommunicationChannel.new_HIL_STATE_QUATERNION();
             PH.setPack(p115);
-            p115.ind_airspeed = (ushort)(ushort)42636;
-            p115.xacc = (short)(short) -1667;
-            p115.true_airspeed = (ushort)(ushort)39408;
-            p115.pitchspeed = (float) -9.141599E36F;
-            p115.zacc = (short)(short) -11631;
-            p115.alt = (int) -1803733227;
-            p115.vy = (short)(short) -3081;
-            p115.vx = (short)(short) -19185;
-            p115.lon = (int) -476016011;
-            p115.attitude_quaternion_SET(new float[] {-8.431313E37F, -2.8547633E38F, -9.8306456E36F, -1.4112477E38F}, 0) ;
-            p115.yacc = (short)(short) -26688;
-            p115.vz = (short)(short) -22294;
-            p115.lat = (int)174695777;
-            p115.time_usec = (ulong)2175477130701592795L;
-            p115.rollspeed = (float)7.708553E37F;
-            p115.yawspeed = (float)1.4469465E37F;
+            p115.vx = (short)(short)32626;
+            p115.pitchspeed = (float)1.5742647E38F;
+            p115.yawspeed = (float) -3.0059004E38F;
+            p115.vz = (short)(short) -31687;
+            p115.yacc = (short)(short)1516;
+            p115.ind_airspeed = (ushort)(ushort)64750;
+            p115.zacc = (short)(short) -32761;
+            p115.xacc = (short)(short) -25491;
+            p115.vy = (short)(short) -27901;
+            p115.attitude_quaternion_SET(new float[] {-2.8055755E38F, 5.2556885E37F, -2.1467598E38F, -2.2956327E38F}, 0) ;
+            p115.rollspeed = (float) -1.2643466E38F;
+            p115.true_airspeed = (ushort)(ushort)65068;
+            p115.lat = (int) -1229815964;
+            p115.alt = (int)396704510;
+            p115.lon = (int)1976911185;
+            p115.time_usec = (ulong)3985730774603418359L;
             CommunicationChannel.instance.send(p115);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSCALED_IMU2Receive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.time_boot_ms == (uint)2631476911U);
-                Debug.Assert(pack.xacc == (short)(short) -32309);
-                Debug.Assert(pack.yacc == (short)(short) -14415);
-                Debug.Assert(pack.ymag == (short)(short)11517);
-                Debug.Assert(pack.zgyro == (short)(short) -20501);
-                Debug.Assert(pack.zacc == (short)(short) -10599);
-                Debug.Assert(pack.zmag == (short)(short) -30821);
-                Debug.Assert(pack.xmag == (short)(short) -30581);
-                Debug.Assert(pack.xgyro == (short)(short)4914);
-                Debug.Assert(pack.ygyro == (short)(short) -18748);
+                Debug.Assert(pack.zacc == (short)(short) -19738);
+                Debug.Assert(pack.yacc == (short)(short)79);
+                Debug.Assert(pack.xmag == (short)(short)26351);
+                Debug.Assert(pack.time_boot_ms == (uint)3149846891U);
+                Debug.Assert(pack.xgyro == (short)(short)2049);
+                Debug.Assert(pack.ymag == (short)(short) -15505);
+                Debug.Assert(pack.zmag == (short)(short)22517);
+                Debug.Assert(pack.xacc == (short)(short) -8176);
+                Debug.Assert(pack.ygyro == (short)(short) -6689);
+                Debug.Assert(pack.zgyro == (short)(short) -32274);
             };
             GroundControl.SCALED_IMU2 p116 = CommunicationChannel.new_SCALED_IMU2();
             PH.setPack(p116);
-            p116.time_boot_ms = (uint)2631476911U;
-            p116.ygyro = (short)(short) -18748;
-            p116.xacc = (short)(short) -32309;
-            p116.zgyro = (short)(short) -20501;
-            p116.zmag = (short)(short) -30821;
-            p116.xmag = (short)(short) -30581;
-            p116.ymag = (short)(short)11517;
-            p116.xgyro = (short)(short)4914;
-            p116.yacc = (short)(short) -14415;
-            p116.zacc = (short)(short) -10599;
+            p116.xgyro = (short)(short)2049;
+            p116.xmag = (short)(short)26351;
+            p116.zmag = (short)(short)22517;
+            p116.zacc = (short)(short) -19738;
+            p116.yacc = (short)(short)79;
+            p116.zgyro = (short)(short) -32274;
+            p116.ymag = (short)(short) -15505;
+            p116.time_boot_ms = (uint)3149846891U;
+            p116.ygyro = (short)(short) -6689;
+            p116.xacc = (short)(short) -8176;
             CommunicationChannel.instance.send(p116);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnLOG_REQUEST_LISTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_component == (byte)(byte)228);
-                Debug.Assert(pack.target_system == (byte)(byte)57);
-                Debug.Assert(pack.start == (ushort)(ushort)16978);
-                Debug.Assert(pack.end == (ushort)(ushort)10994);
+                Debug.Assert(pack.end == (ushort)(ushort)32526);
+                Debug.Assert(pack.start == (ushort)(ushort)63880);
+                Debug.Assert(pack.target_system == (byte)(byte)27);
+                Debug.Assert(pack.target_component == (byte)(byte)159);
             };
             GroundControl.LOG_REQUEST_LIST p117 = CommunicationChannel.new_LOG_REQUEST_LIST();
             PH.setPack(p117);
-            p117.start = (ushort)(ushort)16978;
-            p117.end = (ushort)(ushort)10994;
-            p117.target_component = (byte)(byte)228;
-            p117.target_system = (byte)(byte)57;
+            p117.end = (ushort)(ushort)32526;
+            p117.target_component = (byte)(byte)159;
+            p117.start = (ushort)(ushort)63880;
+            p117.target_system = (byte)(byte)27;
             CommunicationChannel.instance.send(p117);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnLOG_ENTRYReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.size == (uint)4156398480U);
-                Debug.Assert(pack.last_log_num == (ushort)(ushort)51177);
-                Debug.Assert(pack.id == (ushort)(ushort)45347);
-                Debug.Assert(pack.num_logs == (ushort)(ushort)41313);
-                Debug.Assert(pack.time_utc == (uint)783981061U);
+                Debug.Assert(pack.num_logs == (ushort)(ushort)9527);
+                Debug.Assert(pack.last_log_num == (ushort)(ushort)4568);
+                Debug.Assert(pack.time_utc == (uint)1337295765U);
+                Debug.Assert(pack.id == (ushort)(ushort)5448);
+                Debug.Assert(pack.size == (uint)124715492U);
             };
             GroundControl.LOG_ENTRY p118 = CommunicationChannel.new_LOG_ENTRY();
             PH.setPack(p118);
-            p118.time_utc = (uint)783981061U;
-            p118.size = (uint)4156398480U;
-            p118.id = (ushort)(ushort)45347;
-            p118.last_log_num = (ushort)(ushort)51177;
-            p118.num_logs = (ushort)(ushort)41313;
+            p118.id = (ushort)(ushort)5448;
+            p118.num_logs = (ushort)(ushort)9527;
+            p118.size = (uint)124715492U;
+            p118.last_log_num = (ushort)(ushort)4568;
+            p118.time_utc = (uint)1337295765U;
             CommunicationChannel.instance.send(p118);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnLOG_REQUEST_DATAReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_component == (byte)(byte)201);
-                Debug.Assert(pack.target_system == (byte)(byte)208);
-                Debug.Assert(pack.id == (ushort)(ushort)60331);
-                Debug.Assert(pack.ofs == (uint)4029839663U);
-                Debug.Assert(pack.count == (uint)405288522U);
+                Debug.Assert(pack.count == (uint)266144220U);
+                Debug.Assert(pack.target_system == (byte)(byte)142);
+                Debug.Assert(pack.id == (ushort)(ushort)63086);
+                Debug.Assert(pack.target_component == (byte)(byte)138);
+                Debug.Assert(pack.ofs == (uint)3766378028U);
             };
             GroundControl.LOG_REQUEST_DATA p119 = CommunicationChannel.new_LOG_REQUEST_DATA();
             PH.setPack(p119);
-            p119.count = (uint)405288522U;
-            p119.ofs = (uint)4029839663U;
-            p119.target_system = (byte)(byte)208;
-            p119.id = (ushort)(ushort)60331;
-            p119.target_component = (byte)(byte)201;
+            p119.count = (uint)266144220U;
+            p119.target_system = (byte)(byte)142;
+            p119.id = (ushort)(ushort)63086;
+            p119.ofs = (uint)3766378028U;
+            p119.target_component = (byte)(byte)138;
             CommunicationChannel.instance.send(p119);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnLOG_DATAReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.count == (byte)(byte)13);
-                Debug.Assert(pack.id == (ushort)(ushort)52911);
-                Debug.Assert(pack.ofs == (uint)1291897954U);
-                Debug.Assert(pack.data_.SequenceEqual(new byte[] {(byte)178, (byte)122, (byte)194, (byte)120, (byte)100, (byte)237, (byte)145, (byte)198, (byte)32, (byte)124, (byte)172, (byte)113, (byte)32, (byte)26, (byte)78, (byte)146, (byte)40, (byte)248, (byte)247, (byte)47, (byte)194, (byte)52, (byte)125, (byte)173, (byte)113, (byte)185, (byte)109, (byte)84, (byte)72, (byte)34, (byte)82, (byte)122, (byte)116, (byte)250, (byte)78, (byte)157, (byte)99, (byte)101, (byte)177, (byte)181, (byte)109, (byte)85, (byte)72, (byte)18, (byte)180, (byte)31, (byte)238, (byte)129, (byte)10, (byte)92, (byte)78, (byte)113, (byte)49, (byte)108, (byte)134, (byte)100, (byte)70, (byte)15, (byte)11, (byte)184, (byte)81, (byte)122, (byte)189, (byte)164, (byte)123, (byte)189, (byte)116, (byte)222, (byte)217, (byte)195, (byte)105, (byte)202, (byte)156, (byte)120, (byte)81, (byte)134, (byte)243, (byte)231, (byte)174, (byte)107, (byte)79, (byte)199, (byte)113, (byte)51, (byte)90, (byte)42, (byte)35, (byte)183, (byte)148, (byte)30}));
+                Debug.Assert(pack.ofs == (uint)273705009U);
+                Debug.Assert(pack.data_.SequenceEqual(new byte[] {(byte)27, (byte)14, (byte)248, (byte)39, (byte)37, (byte)61, (byte)38, (byte)229, (byte)188, (byte)62, (byte)169, (byte)47, (byte)62, (byte)97, (byte)198, (byte)199, (byte)235, (byte)138, (byte)227, (byte)228, (byte)245, (byte)254, (byte)39, (byte)224, (byte)247, (byte)163, (byte)148, (byte)39, (byte)119, (byte)83, (byte)30, (byte)17, (byte)179, (byte)77, (byte)53, (byte)229, (byte)145, (byte)21, (byte)211, (byte)252, (byte)66, (byte)136, (byte)205, (byte)203, (byte)78, (byte)174, (byte)0, (byte)8, (byte)35, (byte)214, (byte)186, (byte)2, (byte)168, (byte)139, (byte)5, (byte)44, (byte)111, (byte)173, (byte)111, (byte)144, (byte)17, (byte)77, (byte)30, (byte)204, (byte)229, (byte)164, (byte)91, (byte)42, (byte)248, (byte)182, (byte)245, (byte)14, (byte)78, (byte)49, (byte)232, (byte)131, (byte)63, (byte)122, (byte)142, (byte)55, (byte)202, (byte)234, (byte)117, (byte)57, (byte)40, (byte)130, (byte)164, (byte)30, (byte)237, (byte)37}));
+                Debug.Assert(pack.count == (byte)(byte)41);
+                Debug.Assert(pack.id == (ushort)(ushort)38045);
             };
             GroundControl.LOG_DATA p120 = CommunicationChannel.new_LOG_DATA();
             PH.setPack(p120);
-            p120.count = (byte)(byte)13;
-            p120.id = (ushort)(ushort)52911;
-            p120.ofs = (uint)1291897954U;
-            p120.data__SET(new byte[] {(byte)178, (byte)122, (byte)194, (byte)120, (byte)100, (byte)237, (byte)145, (byte)198, (byte)32, (byte)124, (byte)172, (byte)113, (byte)32, (byte)26, (byte)78, (byte)146, (byte)40, (byte)248, (byte)247, (byte)47, (byte)194, (byte)52, (byte)125, (byte)173, (byte)113, (byte)185, (byte)109, (byte)84, (byte)72, (byte)34, (byte)82, (byte)122, (byte)116, (byte)250, (byte)78, (byte)157, (byte)99, (byte)101, (byte)177, (byte)181, (byte)109, (byte)85, (byte)72, (byte)18, (byte)180, (byte)31, (byte)238, (byte)129, (byte)10, (byte)92, (byte)78, (byte)113, (byte)49, (byte)108, (byte)134, (byte)100, (byte)70, (byte)15, (byte)11, (byte)184, (byte)81, (byte)122, (byte)189, (byte)164, (byte)123, (byte)189, (byte)116, (byte)222, (byte)217, (byte)195, (byte)105, (byte)202, (byte)156, (byte)120, (byte)81, (byte)134, (byte)243, (byte)231, (byte)174, (byte)107, (byte)79, (byte)199, (byte)113, (byte)51, (byte)90, (byte)42, (byte)35, (byte)183, (byte)148, (byte)30}, 0) ;
+            p120.ofs = (uint)273705009U;
+            p120.count = (byte)(byte)41;
+            p120.data__SET(new byte[] {(byte)27, (byte)14, (byte)248, (byte)39, (byte)37, (byte)61, (byte)38, (byte)229, (byte)188, (byte)62, (byte)169, (byte)47, (byte)62, (byte)97, (byte)198, (byte)199, (byte)235, (byte)138, (byte)227, (byte)228, (byte)245, (byte)254, (byte)39, (byte)224, (byte)247, (byte)163, (byte)148, (byte)39, (byte)119, (byte)83, (byte)30, (byte)17, (byte)179, (byte)77, (byte)53, (byte)229, (byte)145, (byte)21, (byte)211, (byte)252, (byte)66, (byte)136, (byte)205, (byte)203, (byte)78, (byte)174, (byte)0, (byte)8, (byte)35, (byte)214, (byte)186, (byte)2, (byte)168, (byte)139, (byte)5, (byte)44, (byte)111, (byte)173, (byte)111, (byte)144, (byte)17, (byte)77, (byte)30, (byte)204, (byte)229, (byte)164, (byte)91, (byte)42, (byte)248, (byte)182, (byte)245, (byte)14, (byte)78, (byte)49, (byte)232, (byte)131, (byte)63, (byte)122, (byte)142, (byte)55, (byte)202, (byte)234, (byte)117, (byte)57, (byte)40, (byte)130, (byte)164, (byte)30, (byte)237, (byte)37}, 0) ;
+            p120.id = (ushort)(ushort)38045;
             CommunicationChannel.instance.send(p120);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnLOG_ERASEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_component == (byte)(byte)237);
-                Debug.Assert(pack.target_system == (byte)(byte)160);
+                Debug.Assert(pack.target_component == (byte)(byte)165);
+                Debug.Assert(pack.target_system == (byte)(byte)171);
             };
             GroundControl.LOG_ERASE p121 = CommunicationChannel.new_LOG_ERASE();
             PH.setPack(p121);
-            p121.target_system = (byte)(byte)160;
-            p121.target_component = (byte)(byte)237;
+            p121.target_system = (byte)(byte)171;
+            p121.target_component = (byte)(byte)165;
             CommunicationChannel.instance.send(p121);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnLOG_REQUEST_ENDReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_system == (byte)(byte)15);
-                Debug.Assert(pack.target_component == (byte)(byte)228);
+                Debug.Assert(pack.target_component == (byte)(byte)81);
+                Debug.Assert(pack.target_system == (byte)(byte)235);
             };
             GroundControl.LOG_REQUEST_END p122 = CommunicationChannel.new_LOG_REQUEST_END();
             PH.setPack(p122);
-            p122.target_system = (byte)(byte)15;
-            p122.target_component = (byte)(byte)228;
+            p122.target_system = (byte)(byte)235;
+            p122.target_component = (byte)(byte)81;
             CommunicationChannel.instance.send(p122);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnGPS_INJECT_DATAReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_component == (byte)(byte)87);
-                Debug.Assert(pack.data_.SequenceEqual(new byte[] {(byte)103, (byte)37, (byte)198, (byte)166, (byte)100, (byte)53, (byte)23, (byte)86, (byte)200, (byte)135, (byte)105, (byte)5, (byte)67, (byte)162, (byte)118, (byte)104, (byte)159, (byte)126, (byte)3, (byte)58, (byte)185, (byte)123, (byte)6, (byte)112, (byte)131, (byte)183, (byte)241, (byte)173, (byte)199, (byte)42, (byte)15, (byte)39, (byte)214, (byte)162, (byte)71, (byte)210, (byte)211, (byte)113, (byte)75, (byte)72, (byte)167, (byte)172, (byte)213, (byte)77, (byte)151, (byte)69, (byte)69, (byte)243, (byte)183, (byte)249, (byte)110, (byte)230, (byte)40, (byte)53, (byte)230, (byte)51, (byte)77, (byte)0, (byte)215, (byte)250, (byte)41, (byte)67, (byte)1, (byte)152, (byte)142, (byte)113, (byte)235, (byte)243, (byte)100, (byte)158, (byte)46, (byte)8, (byte)34, (byte)230, (byte)157, (byte)119, (byte)108, (byte)80, (byte)27, (byte)112, (byte)176, (byte)82, (byte)180, (byte)50, (byte)150, (byte)71, (byte)192, (byte)145, (byte)43, (byte)139, (byte)130, (byte)222, (byte)24, (byte)153, (byte)216, (byte)24, (byte)29, (byte)113, (byte)181, (byte)25, (byte)48, (byte)193, (byte)150, (byte)21, (byte)193, (byte)146, (byte)114, (byte)162, (byte)110, (byte)89}));
-                Debug.Assert(pack.len == (byte)(byte)77);
-                Debug.Assert(pack.target_system == (byte)(byte)95);
+                Debug.Assert(pack.target_system == (byte)(byte)24);
+                Debug.Assert(pack.target_component == (byte)(byte)82);
+                Debug.Assert(pack.data_.SequenceEqual(new byte[] {(byte)229, (byte)237, (byte)225, (byte)15, (byte)145, (byte)162, (byte)182, (byte)14, (byte)196, (byte)92, (byte)72, (byte)122, (byte)147, (byte)209, (byte)43, (byte)145, (byte)230, (byte)163, (byte)168, (byte)206, (byte)57, (byte)138, (byte)46, (byte)17, (byte)18, (byte)165, (byte)226, (byte)18, (byte)252, (byte)110, (byte)90, (byte)147, (byte)104, (byte)93, (byte)224, (byte)96, (byte)117, (byte)17, (byte)125, (byte)138, (byte)49, (byte)123, (byte)153, (byte)178, (byte)112, (byte)255, (byte)53, (byte)171, (byte)85, (byte)4, (byte)156, (byte)77, (byte)232, (byte)2, (byte)22, (byte)163, (byte)157, (byte)18, (byte)8, (byte)118, (byte)126, (byte)174, (byte)131, (byte)45, (byte)154, (byte)142, (byte)68, (byte)137, (byte)209, (byte)160, (byte)46, (byte)65, (byte)15, (byte)209, (byte)226, (byte)117, (byte)166, (byte)128, (byte)5, (byte)4, (byte)106, (byte)97, (byte)230, (byte)104, (byte)71, (byte)234, (byte)150, (byte)73, (byte)42, (byte)223, (byte)156, (byte)143, (byte)239, (byte)233, (byte)83, (byte)36, (byte)178, (byte)238, (byte)231, (byte)73, (byte)62, (byte)129, (byte)165, (byte)51, (byte)164, (byte)199, (byte)212, (byte)139, (byte)229, (byte)88}));
+                Debug.Assert(pack.len == (byte)(byte)74);
             };
             GroundControl.GPS_INJECT_DATA p123 = CommunicationChannel.new_GPS_INJECT_DATA();
             PH.setPack(p123);
-            p123.target_system = (byte)(byte)95;
-            p123.len = (byte)(byte)77;
-            p123.data__SET(new byte[] {(byte)103, (byte)37, (byte)198, (byte)166, (byte)100, (byte)53, (byte)23, (byte)86, (byte)200, (byte)135, (byte)105, (byte)5, (byte)67, (byte)162, (byte)118, (byte)104, (byte)159, (byte)126, (byte)3, (byte)58, (byte)185, (byte)123, (byte)6, (byte)112, (byte)131, (byte)183, (byte)241, (byte)173, (byte)199, (byte)42, (byte)15, (byte)39, (byte)214, (byte)162, (byte)71, (byte)210, (byte)211, (byte)113, (byte)75, (byte)72, (byte)167, (byte)172, (byte)213, (byte)77, (byte)151, (byte)69, (byte)69, (byte)243, (byte)183, (byte)249, (byte)110, (byte)230, (byte)40, (byte)53, (byte)230, (byte)51, (byte)77, (byte)0, (byte)215, (byte)250, (byte)41, (byte)67, (byte)1, (byte)152, (byte)142, (byte)113, (byte)235, (byte)243, (byte)100, (byte)158, (byte)46, (byte)8, (byte)34, (byte)230, (byte)157, (byte)119, (byte)108, (byte)80, (byte)27, (byte)112, (byte)176, (byte)82, (byte)180, (byte)50, (byte)150, (byte)71, (byte)192, (byte)145, (byte)43, (byte)139, (byte)130, (byte)222, (byte)24, (byte)153, (byte)216, (byte)24, (byte)29, (byte)113, (byte)181, (byte)25, (byte)48, (byte)193, (byte)150, (byte)21, (byte)193, (byte)146, (byte)114, (byte)162, (byte)110, (byte)89}, 0) ;
-            p123.target_component = (byte)(byte)87;
+            p123.target_system = (byte)(byte)24;
+            p123.data__SET(new byte[] {(byte)229, (byte)237, (byte)225, (byte)15, (byte)145, (byte)162, (byte)182, (byte)14, (byte)196, (byte)92, (byte)72, (byte)122, (byte)147, (byte)209, (byte)43, (byte)145, (byte)230, (byte)163, (byte)168, (byte)206, (byte)57, (byte)138, (byte)46, (byte)17, (byte)18, (byte)165, (byte)226, (byte)18, (byte)252, (byte)110, (byte)90, (byte)147, (byte)104, (byte)93, (byte)224, (byte)96, (byte)117, (byte)17, (byte)125, (byte)138, (byte)49, (byte)123, (byte)153, (byte)178, (byte)112, (byte)255, (byte)53, (byte)171, (byte)85, (byte)4, (byte)156, (byte)77, (byte)232, (byte)2, (byte)22, (byte)163, (byte)157, (byte)18, (byte)8, (byte)118, (byte)126, (byte)174, (byte)131, (byte)45, (byte)154, (byte)142, (byte)68, (byte)137, (byte)209, (byte)160, (byte)46, (byte)65, (byte)15, (byte)209, (byte)226, (byte)117, (byte)166, (byte)128, (byte)5, (byte)4, (byte)106, (byte)97, (byte)230, (byte)104, (byte)71, (byte)234, (byte)150, (byte)73, (byte)42, (byte)223, (byte)156, (byte)143, (byte)239, (byte)233, (byte)83, (byte)36, (byte)178, (byte)238, (byte)231, (byte)73, (byte)62, (byte)129, (byte)165, (byte)51, (byte)164, (byte)199, (byte)212, (byte)139, (byte)229, (byte)88}, 0) ;
+            p123.len = (byte)(byte)74;
+            p123.target_component = (byte)(byte)82;
             CommunicationChannel.instance.send(p123);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnGPS2_RAWReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.dgps_numch == (byte)(byte)96);
-                Debug.Assert(pack.dgps_age == (uint)512818141U);
-                Debug.Assert(pack.fix_type == (GPS_FIX_TYPE)GPS_FIX_TYPE.GPS_FIX_TYPE_RTK_FLOAT);
-                Debug.Assert(pack.epv == (ushort)(ushort)27019);
-                Debug.Assert(pack.vel == (ushort)(ushort)31607);
-                Debug.Assert(pack.eph == (ushort)(ushort)32319);
-                Debug.Assert(pack.lon == (int) -196620221);
-                Debug.Assert(pack.time_usec == (ulong)2554332017725283243L);
-                Debug.Assert(pack.cog == (ushort)(ushort)12131);
-                Debug.Assert(pack.lat == (int)847243854);
-                Debug.Assert(pack.satellites_visible == (byte)(byte)253);
-                Debug.Assert(pack.alt == (int)67825769);
+                Debug.Assert(pack.dgps_age == (uint)1283000U);
+                Debug.Assert(pack.eph == (ushort)(ushort)37443);
+                Debug.Assert(pack.time_usec == (ulong)7749198947367961053L);
+                Debug.Assert(pack.lon == (int) -1924804420);
+                Debug.Assert(pack.lat == (int)1551639762);
+                Debug.Assert(pack.epv == (ushort)(ushort)36273);
+                Debug.Assert(pack.satellites_visible == (byte)(byte)198);
+                Debug.Assert(pack.dgps_numch == (byte)(byte)123);
+                Debug.Assert(pack.cog == (ushort)(ushort)57953);
+                Debug.Assert(pack.alt == (int) -986384447);
+                Debug.Assert(pack.vel == (ushort)(ushort)42275);
+                Debug.Assert(pack.fix_type == GPS_FIX_TYPE.GPS_FIX_TYPE_NO_FIX);
             };
             GroundControl.GPS2_RAW p124 = CommunicationChannel.new_GPS2_RAW();
             PH.setPack(p124);
-            p124.time_usec = (ulong)2554332017725283243L;
-            p124.cog = (ushort)(ushort)12131;
-            p124.epv = (ushort)(ushort)27019;
-            p124.vel = (ushort)(ushort)31607;
-            p124.satellites_visible = (byte)(byte)253;
-            p124.lon = (int) -196620221;
-            p124.alt = (int)67825769;
-            p124.eph = (ushort)(ushort)32319;
-            p124.fix_type = (GPS_FIX_TYPE)GPS_FIX_TYPE.GPS_FIX_TYPE_RTK_FLOAT;
-            p124.dgps_numch = (byte)(byte)96;
-            p124.lat = (int)847243854;
-            p124.dgps_age = (uint)512818141U;
+            p124.time_usec = (ulong)7749198947367961053L;
+            p124.vel = (ushort)(ushort)42275;
+            p124.eph = (ushort)(ushort)37443;
+            p124.satellites_visible = (byte)(byte)198;
+            p124.epv = (ushort)(ushort)36273;
+            p124.lon = (int) -1924804420;
+            p124.fix_type = GPS_FIX_TYPE.GPS_FIX_TYPE_NO_FIX;
+            p124.lat = (int)1551639762;
+            p124.alt = (int) -986384447;
+            p124.dgps_age = (uint)1283000U;
+            p124.dgps_numch = (byte)(byte)123;
+            p124.cog = (ushort)(ushort)57953;
             CommunicationChannel.instance.send(p124);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnPOWER_STATUSReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.Vcc == (ushort)(ushort)6530);
-                Debug.Assert(pack.flags == (MAV_POWER_STATUS)MAV_POWER_STATUS.MAV_POWER_STATUS_BRICK_VALID);
-                Debug.Assert(pack.Vservo == (ushort)(ushort)33884);
+                Debug.Assert(pack.Vservo == (ushort)(ushort)25970);
+                Debug.Assert(pack.flags == (MAV_POWER_STATUS.MAV_POWER_STATUS_SERVO_VALID |
+                                            MAV_POWER_STATUS.MAV_POWER_STATUS_PERIPH_HIPOWER_OVERCURRENT |
+                                            MAV_POWER_STATUS.MAV_POWER_STATUS_CHANGED));
+                Debug.Assert(pack.Vcc == (ushort)(ushort)21495);
             };
             GroundControl.POWER_STATUS p125 = CommunicationChannel.new_POWER_STATUS();
             PH.setPack(p125);
-            p125.Vcc = (ushort)(ushort)6530;
-            p125.Vservo = (ushort)(ushort)33884;
-            p125.flags = (MAV_POWER_STATUS)MAV_POWER_STATUS.MAV_POWER_STATUS_BRICK_VALID;
+            p125.Vcc = (ushort)(ushort)21495;
+            p125.flags = (MAV_POWER_STATUS.MAV_POWER_STATUS_SERVO_VALID |
+                          MAV_POWER_STATUS.MAV_POWER_STATUS_PERIPH_HIPOWER_OVERCURRENT |
+                          MAV_POWER_STATUS.MAV_POWER_STATUS_CHANGED);
+            p125.Vservo = (ushort)(ushort)25970;
             CommunicationChannel.instance.send(p125);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSERIAL_CONTROLReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.device == (SERIAL_CONTROL_DEV)SERIAL_CONTROL_DEV.SERIAL_CONTROL_DEV_SHELL);
-                Debug.Assert(pack.count == (byte)(byte)255);
-                Debug.Assert(pack.timeout == (ushort)(ushort)37635);
-                Debug.Assert(pack.data_.SequenceEqual(new byte[] {(byte)50, (byte)119, (byte)251, (byte)242, (byte)29, (byte)93, (byte)166, (byte)172, (byte)17, (byte)112, (byte)73, (byte)34, (byte)184, (byte)16, (byte)222, (byte)4, (byte)65, (byte)72, (byte)212, (byte)45, (byte)164, (byte)22, (byte)128, (byte)175, (byte)62, (byte)26, (byte)149, (byte)138, (byte)98, (byte)133, (byte)203, (byte)218, (byte)23, (byte)255, (byte)122, (byte)181, (byte)103, (byte)235, (byte)31, (byte)243, (byte)16, (byte)61, (byte)166, (byte)215, (byte)13, (byte)167, (byte)64, (byte)117, (byte)120, (byte)240, (byte)249, (byte)88, (byte)193, (byte)123, (byte)144, (byte)173, (byte)128, (byte)141, (byte)19, (byte)153, (byte)9, (byte)67, (byte)110, (byte)233, (byte)163, (byte)206, (byte)196, (byte)52, (byte)171, (byte)143}));
-                Debug.Assert(pack.flags == (SERIAL_CONTROL_FLAG)SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_MULTI);
-                Debug.Assert(pack.baudrate == (uint)2837246062U);
+                Debug.Assert(pack.count == (byte)(byte)14);
+                Debug.Assert(pack.flags == (SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_BLOCKING |
+                                            SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_EXCLUSIVE));
+                Debug.Assert(pack.data_.SequenceEqual(new byte[] {(byte)231, (byte)83, (byte)199, (byte)107, (byte)190, (byte)29, (byte)58, (byte)119, (byte)2, (byte)71, (byte)234, (byte)175, (byte)208, (byte)41, (byte)219, (byte)7, (byte)221, (byte)174, (byte)152, (byte)10, (byte)192, (byte)135, (byte)65, (byte)252, (byte)78, (byte)123, (byte)156, (byte)242, (byte)87, (byte)229, (byte)183, (byte)20, (byte)80, (byte)94, (byte)11, (byte)93, (byte)181, (byte)25, (byte)250, (byte)0, (byte)212, (byte)16, (byte)152, (byte)116, (byte)208, (byte)44, (byte)162, (byte)27, (byte)24, (byte)187, (byte)112, (byte)124, (byte)157, (byte)180, (byte)147, (byte)60, (byte)198, (byte)145, (byte)31, (byte)187, (byte)20, (byte)71, (byte)207, (byte)100, (byte)187, (byte)167, (byte)224, (byte)51, (byte)3, (byte)130}));
+                Debug.Assert(pack.baudrate == (uint)114560305U);
+                Debug.Assert(pack.timeout == (ushort)(ushort)44008);
+                Debug.Assert(pack.device == SERIAL_CONTROL_DEV.SERIAL_CONTROL_DEV_TELEM2);
             };
             GroundControl.SERIAL_CONTROL p126 = CommunicationChannel.new_SERIAL_CONTROL();
             PH.setPack(p126);
-            p126.baudrate = (uint)2837246062U;
-            p126.device = (SERIAL_CONTROL_DEV)SERIAL_CONTROL_DEV.SERIAL_CONTROL_DEV_SHELL;
-            p126.count = (byte)(byte)255;
-            p126.flags = (SERIAL_CONTROL_FLAG)SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_MULTI;
-            p126.data__SET(new byte[] {(byte)50, (byte)119, (byte)251, (byte)242, (byte)29, (byte)93, (byte)166, (byte)172, (byte)17, (byte)112, (byte)73, (byte)34, (byte)184, (byte)16, (byte)222, (byte)4, (byte)65, (byte)72, (byte)212, (byte)45, (byte)164, (byte)22, (byte)128, (byte)175, (byte)62, (byte)26, (byte)149, (byte)138, (byte)98, (byte)133, (byte)203, (byte)218, (byte)23, (byte)255, (byte)122, (byte)181, (byte)103, (byte)235, (byte)31, (byte)243, (byte)16, (byte)61, (byte)166, (byte)215, (byte)13, (byte)167, (byte)64, (byte)117, (byte)120, (byte)240, (byte)249, (byte)88, (byte)193, (byte)123, (byte)144, (byte)173, (byte)128, (byte)141, (byte)19, (byte)153, (byte)9, (byte)67, (byte)110, (byte)233, (byte)163, (byte)206, (byte)196, (byte)52, (byte)171, (byte)143}, 0) ;
-            p126.timeout = (ushort)(ushort)37635;
+            p126.data__SET(new byte[] {(byte)231, (byte)83, (byte)199, (byte)107, (byte)190, (byte)29, (byte)58, (byte)119, (byte)2, (byte)71, (byte)234, (byte)175, (byte)208, (byte)41, (byte)219, (byte)7, (byte)221, (byte)174, (byte)152, (byte)10, (byte)192, (byte)135, (byte)65, (byte)252, (byte)78, (byte)123, (byte)156, (byte)242, (byte)87, (byte)229, (byte)183, (byte)20, (byte)80, (byte)94, (byte)11, (byte)93, (byte)181, (byte)25, (byte)250, (byte)0, (byte)212, (byte)16, (byte)152, (byte)116, (byte)208, (byte)44, (byte)162, (byte)27, (byte)24, (byte)187, (byte)112, (byte)124, (byte)157, (byte)180, (byte)147, (byte)60, (byte)198, (byte)145, (byte)31, (byte)187, (byte)20, (byte)71, (byte)207, (byte)100, (byte)187, (byte)167, (byte)224, (byte)51, (byte)3, (byte)130}, 0) ;
+            p126.count = (byte)(byte)14;
+            p126.baudrate = (uint)114560305U;
+            p126.timeout = (ushort)(ushort)44008;
+            p126.flags = (SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_BLOCKING |
+                          SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_EXCLUSIVE);
+            p126.device = SERIAL_CONTROL_DEV.SERIAL_CONTROL_DEV_TELEM2;
             CommunicationChannel.instance.send(p126);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnGPS_RTKReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.baseline_b_mm == (int)693592735);
-                Debug.Assert(pack.baseline_coords_type == (byte)(byte)206);
-                Debug.Assert(pack.time_last_baseline_ms == (uint)637957315U);
-                Debug.Assert(pack.rtk_receiver_id == (byte)(byte)0);
-                Debug.Assert(pack.accuracy == (uint)4244202013U);
-                Debug.Assert(pack.rtk_rate == (byte)(byte)101);
-                Debug.Assert(pack.tow == (uint)4189778453U);
-                Debug.Assert(pack.rtk_health == (byte)(byte)9);
-                Debug.Assert(pack.wn == (ushort)(ushort)42566);
-                Debug.Assert(pack.nsats == (byte)(byte)0);
-                Debug.Assert(pack.baseline_c_mm == (int)9652535);
-                Debug.Assert(pack.baseline_a_mm == (int) -2024202641);
-                Debug.Assert(pack.iar_num_hypotheses == (int) -1439142658);
+                Debug.Assert(pack.baseline_c_mm == (int) -1858103974);
+                Debug.Assert(pack.rtk_receiver_id == (byte)(byte)216);
+                Debug.Assert(pack.accuracy == (uint)751103811U);
+                Debug.Assert(pack.baseline_a_mm == (int) -1663066990);
+                Debug.Assert(pack.rtk_rate == (byte)(byte)249);
+                Debug.Assert(pack.baseline_b_mm == (int)1263655726);
+                Debug.Assert(pack.baseline_coords_type == (byte)(byte)226);
+                Debug.Assert(pack.tow == (uint)1887559956U);
+                Debug.Assert(pack.rtk_health == (byte)(byte)204);
+                Debug.Assert(pack.iar_num_hypotheses == (int)862690534);
+                Debug.Assert(pack.wn == (ushort)(ushort)44320);
+                Debug.Assert(pack.time_last_baseline_ms == (uint)1222322248U);
+                Debug.Assert(pack.nsats == (byte)(byte)220);
             };
             GroundControl.GPS_RTK p127 = CommunicationChannel.new_GPS_RTK();
             PH.setPack(p127);
-            p127.baseline_a_mm = (int) -2024202641;
-            p127.baseline_c_mm = (int)9652535;
-            p127.tow = (uint)4189778453U;
-            p127.rtk_rate = (byte)(byte)101;
-            p127.rtk_receiver_id = (byte)(byte)0;
-            p127.time_last_baseline_ms = (uint)637957315U;
-            p127.nsats = (byte)(byte)0;
-            p127.baseline_b_mm = (int)693592735;
-            p127.baseline_coords_type = (byte)(byte)206;
-            p127.iar_num_hypotheses = (int) -1439142658;
-            p127.rtk_health = (byte)(byte)9;
-            p127.wn = (ushort)(ushort)42566;
-            p127.accuracy = (uint)4244202013U;
+            p127.baseline_c_mm = (int) -1858103974;
+            p127.iar_num_hypotheses = (int)862690534;
+            p127.nsats = (byte)(byte)220;
+            p127.tow = (uint)1887559956U;
+            p127.wn = (ushort)(ushort)44320;
+            p127.baseline_b_mm = (int)1263655726;
+            p127.rtk_health = (byte)(byte)204;
+            p127.time_last_baseline_ms = (uint)1222322248U;
+            p127.rtk_rate = (byte)(byte)249;
+            p127.baseline_coords_type = (byte)(byte)226;
+            p127.rtk_receiver_id = (byte)(byte)216;
+            p127.accuracy = (uint)751103811U;
+            p127.baseline_a_mm = (int) -1663066990;
             CommunicationChannel.instance.send(p127);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnGPS2_RTKReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.baseline_coords_type == (byte)(byte)234);
-                Debug.Assert(pack.wn == (ushort)(ushort)34828);
-                Debug.Assert(pack.rtk_health == (byte)(byte)148);
-                Debug.Assert(pack.rtk_rate == (byte)(byte)206);
-                Debug.Assert(pack.rtk_receiver_id == (byte)(byte)227);
-                Debug.Assert(pack.tow == (uint)1281432477U);
-                Debug.Assert(pack.time_last_baseline_ms == (uint)3271608152U);
-                Debug.Assert(pack.iar_num_hypotheses == (int)2118525509);
-                Debug.Assert(pack.baseline_a_mm == (int) -1376871490);
-                Debug.Assert(pack.baseline_c_mm == (int)781725587);
-                Debug.Assert(pack.nsats == (byte)(byte)200);
-                Debug.Assert(pack.baseline_b_mm == (int)699318497);
-                Debug.Assert(pack.accuracy == (uint)741861607U);
+                Debug.Assert(pack.wn == (ushort)(ushort)16373);
+                Debug.Assert(pack.rtk_health == (byte)(byte)247);
+                Debug.Assert(pack.baseline_c_mm == (int) -461166434);
+                Debug.Assert(pack.rtk_receiver_id == (byte)(byte)150);
+                Debug.Assert(pack.tow == (uint)1129218661U);
+                Debug.Assert(pack.nsats == (byte)(byte)6);
+                Debug.Assert(pack.baseline_a_mm == (int) -360958597);
+                Debug.Assert(pack.accuracy == (uint)2636794524U);
+                Debug.Assert(pack.iar_num_hypotheses == (int)711260891);
+                Debug.Assert(pack.rtk_rate == (byte)(byte)82);
+                Debug.Assert(pack.time_last_baseline_ms == (uint)1316226993U);
+                Debug.Assert(pack.baseline_coords_type == (byte)(byte)232);
+                Debug.Assert(pack.baseline_b_mm == (int)906838904);
             };
             GroundControl.GPS2_RTK p128 = CommunicationChannel.new_GPS2_RTK();
             PH.setPack(p128);
-            p128.baseline_c_mm = (int)781725587;
-            p128.iar_num_hypotheses = (int)2118525509;
-            p128.nsats = (byte)(byte)200;
-            p128.rtk_rate = (byte)(byte)206;
-            p128.time_last_baseline_ms = (uint)3271608152U;
-            p128.baseline_a_mm = (int) -1376871490;
-            p128.baseline_b_mm = (int)699318497;
-            p128.rtk_health = (byte)(byte)148;
-            p128.tow = (uint)1281432477U;
-            p128.baseline_coords_type = (byte)(byte)234;
-            p128.rtk_receiver_id = (byte)(byte)227;
-            p128.wn = (ushort)(ushort)34828;
-            p128.accuracy = (uint)741861607U;
+            p128.iar_num_hypotheses = (int)711260891;
+            p128.baseline_c_mm = (int) -461166434;
+            p128.rtk_rate = (byte)(byte)82;
+            p128.time_last_baseline_ms = (uint)1316226993U;
+            p128.nsats = (byte)(byte)6;
+            p128.baseline_a_mm = (int) -360958597;
+            p128.tow = (uint)1129218661U;
+            p128.wn = (ushort)(ushort)16373;
+            p128.accuracy = (uint)2636794524U;
+            p128.baseline_coords_type = (byte)(byte)232;
+            p128.rtk_health = (byte)(byte)247;
+            p128.rtk_receiver_id = (byte)(byte)150;
+            p128.baseline_b_mm = (int)906838904;
             CommunicationChannel.instance.send(p128);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSCALED_IMU3Receive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.ygyro == (short)(short)4622);
-                Debug.Assert(pack.zgyro == (short)(short)26663);
-                Debug.Assert(pack.xgyro == (short)(short)861);
-                Debug.Assert(pack.zmag == (short)(short)3580);
-                Debug.Assert(pack.xacc == (short)(short) -18030);
-                Debug.Assert(pack.time_boot_ms == (uint)1490548918U);
-                Debug.Assert(pack.zacc == (short)(short)22881);
-                Debug.Assert(pack.xmag == (short)(short) -5511);
-                Debug.Assert(pack.yacc == (short)(short)13094);
-                Debug.Assert(pack.ymag == (short)(short)32156);
+                Debug.Assert(pack.ymag == (short)(short)20441);
+                Debug.Assert(pack.zmag == (short)(short)30710);
+                Debug.Assert(pack.yacc == (short)(short)32308);
+                Debug.Assert(pack.zacc == (short)(short) -26674);
+                Debug.Assert(pack.time_boot_ms == (uint)3253005126U);
+                Debug.Assert(pack.zgyro == (short)(short) -16350);
+                Debug.Assert(pack.xgyro == (short)(short) -30079);
+                Debug.Assert(pack.ygyro == (short)(short) -13223);
+                Debug.Assert(pack.xacc == (short)(short) -5800);
+                Debug.Assert(pack.xmag == (short)(short)1796);
             };
             GroundControl.SCALED_IMU3 p129 = CommunicationChannel.new_SCALED_IMU3();
             PH.setPack(p129);
-            p129.zgyro = (short)(short)26663;
-            p129.ygyro = (short)(short)4622;
-            p129.ymag = (short)(short)32156;
-            p129.xacc = (short)(short) -18030;
-            p129.xmag = (short)(short) -5511;
-            p129.yacc = (short)(short)13094;
-            p129.time_boot_ms = (uint)1490548918U;
-            p129.zmag = (short)(short)3580;
-            p129.xgyro = (short)(short)861;
-            p129.zacc = (short)(short)22881;
+            p129.zmag = (short)(short)30710;
+            p129.xgyro = (short)(short) -30079;
+            p129.xacc = (short)(short) -5800;
+            p129.ymag = (short)(short)20441;
+            p129.xmag = (short)(short)1796;
+            p129.zgyro = (short)(short) -16350;
+            p129.time_boot_ms = (uint)3253005126U;
+            p129.zacc = (short)(short) -26674;
+            p129.yacc = (short)(short)32308;
+            p129.ygyro = (short)(short) -13223;
             CommunicationChannel.instance.send(p129);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnDATA_TRANSMISSION_HANDSHAKEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.jpg_quality == (byte)(byte)73);
-                Debug.Assert(pack.type == (byte)(byte)56);
-                Debug.Assert(pack.size == (uint)3019332228U);
-                Debug.Assert(pack.width == (ushort)(ushort)46780);
-                Debug.Assert(pack.packets == (ushort)(ushort)28902);
-                Debug.Assert(pack.payload == (byte)(byte)23);
-                Debug.Assert(pack.height == (ushort)(ushort)10091);
+                Debug.Assert(pack.jpg_quality == (byte)(byte)201);
+                Debug.Assert(pack.height == (ushort)(ushort)40645);
+                Debug.Assert(pack.packets == (ushort)(ushort)20532);
+                Debug.Assert(pack.size == (uint)220526335U);
+                Debug.Assert(pack.width == (ushort)(ushort)22879);
+                Debug.Assert(pack.type == (byte)(byte)153);
+                Debug.Assert(pack.payload == (byte)(byte)74);
             };
             GroundControl.DATA_TRANSMISSION_HANDSHAKE p130 = CommunicationChannel.new_DATA_TRANSMISSION_HANDSHAKE();
             PH.setPack(p130);
-            p130.packets = (ushort)(ushort)28902;
-            p130.payload = (byte)(byte)23;
-            p130.width = (ushort)(ushort)46780;
-            p130.height = (ushort)(ushort)10091;
-            p130.type = (byte)(byte)56;
-            p130.size = (uint)3019332228U;
-            p130.jpg_quality = (byte)(byte)73;
+            p130.size = (uint)220526335U;
+            p130.height = (ushort)(ushort)40645;
+            p130.width = (ushort)(ushort)22879;
+            p130.packets = (ushort)(ushort)20532;
+            p130.type = (byte)(byte)153;
+            p130.payload = (byte)(byte)74;
+            p130.jpg_quality = (byte)(byte)201;
             CommunicationChannel.instance.send(p130);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnENCAPSULATED_DATAReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.seqnr == (ushort)(ushort)359);
-                Debug.Assert(pack.data_.SequenceEqual(new byte[] {(byte)193, (byte)43, (byte)37, (byte)223, (byte)19, (byte)210, (byte)172, (byte)246, (byte)31, (byte)169, (byte)174, (byte)130, (byte)81, (byte)177, (byte)15, (byte)134, (byte)88, (byte)229, (byte)235, (byte)78, (byte)213, (byte)124, (byte)4, (byte)127, (byte)128, (byte)38, (byte)11, (byte)238, (byte)15, (byte)247, (byte)114, (byte)155, (byte)199, (byte)130, (byte)181, (byte)186, (byte)87, (byte)106, (byte)41, (byte)177, (byte)127, (byte)70, (byte)10, (byte)149, (byte)222, (byte)30, (byte)66, (byte)251, (byte)243, (byte)152, (byte)83, (byte)69, (byte)155, (byte)212, (byte)200, (byte)79, (byte)230, (byte)14, (byte)50, (byte)151, (byte)103, (byte)6, (byte)27, (byte)38, (byte)6, (byte)182, (byte)236, (byte)5, (byte)215, (byte)228, (byte)73, (byte)169, (byte)4, (byte)232, (byte)212, (byte)194, (byte)73, (byte)79, (byte)126, (byte)169, (byte)152, (byte)232, (byte)214, (byte)88, (byte)205, (byte)56, (byte)36, (byte)12, (byte)97, (byte)150, (byte)218, (byte)188, (byte)168, (byte)247, (byte)52, (byte)77, (byte)76, (byte)84, (byte)96, (byte)57, (byte)126, (byte)222, (byte)112, (byte)79, (byte)255, (byte)17, (byte)213, (byte)159, (byte)144, (byte)208, (byte)44, (byte)7, (byte)228, (byte)108, (byte)158, (byte)203, (byte)56, (byte)56, (byte)149, (byte)230, (byte)176, (byte)185, (byte)210, (byte)44, (byte)79, (byte)71, (byte)220, (byte)132, (byte)174, (byte)116, (byte)190, (byte)165, (byte)70, (byte)170, (byte)60, (byte)255, (byte)79, (byte)35, (byte)16, (byte)255, (byte)156, (byte)191, (byte)190, (byte)249, (byte)48, (byte)2, (byte)251, (byte)10, (byte)189, (byte)191, (byte)45, (byte)54, (byte)148, (byte)63, (byte)187, (byte)203, (byte)25, (byte)190, (byte)168, (byte)155, (byte)78, (byte)90, (byte)97, (byte)246, (byte)203, (byte)175, (byte)134, (byte)105, (byte)189, (byte)94, (byte)145, (byte)135, (byte)141, (byte)132, (byte)220, (byte)255, (byte)62, (byte)199, (byte)80, (byte)113, (byte)102, (byte)78, (byte)218, (byte)206, (byte)6, (byte)99, (byte)141, (byte)114, (byte)82, (byte)36, (byte)192, (byte)219, (byte)13, (byte)213, (byte)168, (byte)102, (byte)114, (byte)204, (byte)35, (byte)217, (byte)160, (byte)122, (byte)105, (byte)205, (byte)189, (byte)245, (byte)91, (byte)232, (byte)47, (byte)56, (byte)216, (byte)142, (byte)58, (byte)177, (byte)74, (byte)213, (byte)204, (byte)163, (byte)126, (byte)163, (byte)229, (byte)72, (byte)186, (byte)165, (byte)99, (byte)50, (byte)168, (byte)126, (byte)178, (byte)67, (byte)245, (byte)26, (byte)36, (byte)240, (byte)30, (byte)62, (byte)184, (byte)119, (byte)76, (byte)220, (byte)100, (byte)245, (byte)154, (byte)55, (byte)64, (byte)84, (byte)250, (byte)134, (byte)74, (byte)226, (byte)79, (byte)22, (byte)207}));
+                Debug.Assert(pack.data_.SequenceEqual(new byte[] {(byte)113, (byte)116, (byte)108, (byte)177, (byte)117, (byte)181, (byte)123, (byte)242, (byte)195, (byte)187, (byte)229, (byte)231, (byte)252, (byte)178, (byte)56, (byte)123, (byte)64, (byte)255, (byte)38, (byte)183, (byte)170, (byte)109, (byte)170, (byte)178, (byte)9, (byte)134, (byte)143, (byte)208, (byte)54, (byte)101, (byte)122, (byte)206, (byte)48, (byte)17, (byte)144, (byte)144, (byte)196, (byte)94, (byte)134, (byte)42, (byte)225, (byte)58, (byte)170, (byte)57, (byte)77, (byte)84, (byte)217, (byte)32, (byte)240, (byte)144, (byte)168, (byte)235, (byte)83, (byte)187, (byte)161, (byte)196, (byte)105, (byte)251, (byte)46, (byte)97, (byte)255, (byte)165, (byte)162, (byte)157, (byte)186, (byte)221, (byte)47, (byte)70, (byte)250, (byte)57, (byte)52, (byte)160, (byte)182, (byte)99, (byte)210, (byte)216, (byte)115, (byte)220, (byte)197, (byte)66, (byte)118, (byte)44, (byte)195, (byte)39, (byte)167, (byte)230, (byte)151, (byte)203, (byte)91, (byte)32, (byte)111, (byte)174, (byte)219, (byte)234, (byte)109, (byte)67, (byte)147, (byte)66, (byte)114, (byte)92, (byte)103, (byte)139, (byte)207, (byte)113, (byte)183, (byte)85, (byte)31, (byte)204, (byte)19, (byte)57, (byte)128, (byte)204, (byte)5, (byte)241, (byte)212, (byte)211, (byte)58, (byte)202, (byte)101, (byte)243, (byte)72, (byte)36, (byte)143, (byte)139, (byte)252, (byte)162, (byte)189, (byte)2, (byte)200, (byte)41, (byte)31, (byte)7, (byte)171, (byte)88, (byte)95, (byte)45, (byte)207, (byte)190, (byte)61, (byte)242, (byte)237, (byte)60, (byte)161, (byte)14, (byte)198, (byte)219, (byte)173, (byte)70, (byte)158, (byte)64, (byte)159, (byte)51, (byte)237, (byte)67, (byte)255, (byte)121, (byte)79, (byte)150, (byte)49, (byte)144, (byte)21, (byte)133, (byte)249, (byte)112, (byte)165, (byte)148, (byte)36, (byte)84, (byte)182, (byte)210, (byte)150, (byte)99, (byte)224, (byte)51, (byte)87, (byte)116, (byte)229, (byte)236, (byte)56, (byte)206, (byte)101, (byte)111, (byte)31, (byte)221, (byte)116, (byte)24, (byte)203, (byte)130, (byte)16, (byte)174, (byte)211, (byte)202, (byte)136, (byte)94, (byte)18, (byte)104, (byte)113, (byte)203, (byte)15, (byte)238, (byte)226, (byte)150, (byte)239, (byte)72, (byte)15, (byte)237, (byte)216, (byte)25, (byte)163, (byte)53, (byte)1, (byte)29, (byte)166, (byte)132, (byte)184, (byte)187, (byte)10, (byte)83, (byte)65, (byte)195, (byte)234, (byte)24, (byte)130, (byte)186, (byte)58, (byte)235, (byte)243, (byte)142, (byte)128, (byte)138, (byte)191, (byte)81, (byte)172, (byte)150, (byte)74, (byte)173, (byte)98, (byte)32, (byte)146, (byte)22, (byte)36, (byte)121, (byte)156, (byte)223, (byte)223, (byte)203, (byte)104, (byte)253, (byte)48, (byte)228, (byte)185, (byte)15, (byte)32}));
+                Debug.Assert(pack.seqnr == (ushort)(ushort)38407);
             };
             GroundControl.ENCAPSULATED_DATA p131 = CommunicationChannel.new_ENCAPSULATED_DATA();
             PH.setPack(p131);
-            p131.seqnr = (ushort)(ushort)359;
-            p131.data__SET(new byte[] {(byte)193, (byte)43, (byte)37, (byte)223, (byte)19, (byte)210, (byte)172, (byte)246, (byte)31, (byte)169, (byte)174, (byte)130, (byte)81, (byte)177, (byte)15, (byte)134, (byte)88, (byte)229, (byte)235, (byte)78, (byte)213, (byte)124, (byte)4, (byte)127, (byte)128, (byte)38, (byte)11, (byte)238, (byte)15, (byte)247, (byte)114, (byte)155, (byte)199, (byte)130, (byte)181, (byte)186, (byte)87, (byte)106, (byte)41, (byte)177, (byte)127, (byte)70, (byte)10, (byte)149, (byte)222, (byte)30, (byte)66, (byte)251, (byte)243, (byte)152, (byte)83, (byte)69, (byte)155, (byte)212, (byte)200, (byte)79, (byte)230, (byte)14, (byte)50, (byte)151, (byte)103, (byte)6, (byte)27, (byte)38, (byte)6, (byte)182, (byte)236, (byte)5, (byte)215, (byte)228, (byte)73, (byte)169, (byte)4, (byte)232, (byte)212, (byte)194, (byte)73, (byte)79, (byte)126, (byte)169, (byte)152, (byte)232, (byte)214, (byte)88, (byte)205, (byte)56, (byte)36, (byte)12, (byte)97, (byte)150, (byte)218, (byte)188, (byte)168, (byte)247, (byte)52, (byte)77, (byte)76, (byte)84, (byte)96, (byte)57, (byte)126, (byte)222, (byte)112, (byte)79, (byte)255, (byte)17, (byte)213, (byte)159, (byte)144, (byte)208, (byte)44, (byte)7, (byte)228, (byte)108, (byte)158, (byte)203, (byte)56, (byte)56, (byte)149, (byte)230, (byte)176, (byte)185, (byte)210, (byte)44, (byte)79, (byte)71, (byte)220, (byte)132, (byte)174, (byte)116, (byte)190, (byte)165, (byte)70, (byte)170, (byte)60, (byte)255, (byte)79, (byte)35, (byte)16, (byte)255, (byte)156, (byte)191, (byte)190, (byte)249, (byte)48, (byte)2, (byte)251, (byte)10, (byte)189, (byte)191, (byte)45, (byte)54, (byte)148, (byte)63, (byte)187, (byte)203, (byte)25, (byte)190, (byte)168, (byte)155, (byte)78, (byte)90, (byte)97, (byte)246, (byte)203, (byte)175, (byte)134, (byte)105, (byte)189, (byte)94, (byte)145, (byte)135, (byte)141, (byte)132, (byte)220, (byte)255, (byte)62, (byte)199, (byte)80, (byte)113, (byte)102, (byte)78, (byte)218, (byte)206, (byte)6, (byte)99, (byte)141, (byte)114, (byte)82, (byte)36, (byte)192, (byte)219, (byte)13, (byte)213, (byte)168, (byte)102, (byte)114, (byte)204, (byte)35, (byte)217, (byte)160, (byte)122, (byte)105, (byte)205, (byte)189, (byte)245, (byte)91, (byte)232, (byte)47, (byte)56, (byte)216, (byte)142, (byte)58, (byte)177, (byte)74, (byte)213, (byte)204, (byte)163, (byte)126, (byte)163, (byte)229, (byte)72, (byte)186, (byte)165, (byte)99, (byte)50, (byte)168, (byte)126, (byte)178, (byte)67, (byte)245, (byte)26, (byte)36, (byte)240, (byte)30, (byte)62, (byte)184, (byte)119, (byte)76, (byte)220, (byte)100, (byte)245, (byte)154, (byte)55, (byte)64, (byte)84, (byte)250, (byte)134, (byte)74, (byte)226, (byte)79, (byte)22, (byte)207}, 0) ;
+            p131.seqnr = (ushort)(ushort)38407;
+            p131.data__SET(new byte[] {(byte)113, (byte)116, (byte)108, (byte)177, (byte)117, (byte)181, (byte)123, (byte)242, (byte)195, (byte)187, (byte)229, (byte)231, (byte)252, (byte)178, (byte)56, (byte)123, (byte)64, (byte)255, (byte)38, (byte)183, (byte)170, (byte)109, (byte)170, (byte)178, (byte)9, (byte)134, (byte)143, (byte)208, (byte)54, (byte)101, (byte)122, (byte)206, (byte)48, (byte)17, (byte)144, (byte)144, (byte)196, (byte)94, (byte)134, (byte)42, (byte)225, (byte)58, (byte)170, (byte)57, (byte)77, (byte)84, (byte)217, (byte)32, (byte)240, (byte)144, (byte)168, (byte)235, (byte)83, (byte)187, (byte)161, (byte)196, (byte)105, (byte)251, (byte)46, (byte)97, (byte)255, (byte)165, (byte)162, (byte)157, (byte)186, (byte)221, (byte)47, (byte)70, (byte)250, (byte)57, (byte)52, (byte)160, (byte)182, (byte)99, (byte)210, (byte)216, (byte)115, (byte)220, (byte)197, (byte)66, (byte)118, (byte)44, (byte)195, (byte)39, (byte)167, (byte)230, (byte)151, (byte)203, (byte)91, (byte)32, (byte)111, (byte)174, (byte)219, (byte)234, (byte)109, (byte)67, (byte)147, (byte)66, (byte)114, (byte)92, (byte)103, (byte)139, (byte)207, (byte)113, (byte)183, (byte)85, (byte)31, (byte)204, (byte)19, (byte)57, (byte)128, (byte)204, (byte)5, (byte)241, (byte)212, (byte)211, (byte)58, (byte)202, (byte)101, (byte)243, (byte)72, (byte)36, (byte)143, (byte)139, (byte)252, (byte)162, (byte)189, (byte)2, (byte)200, (byte)41, (byte)31, (byte)7, (byte)171, (byte)88, (byte)95, (byte)45, (byte)207, (byte)190, (byte)61, (byte)242, (byte)237, (byte)60, (byte)161, (byte)14, (byte)198, (byte)219, (byte)173, (byte)70, (byte)158, (byte)64, (byte)159, (byte)51, (byte)237, (byte)67, (byte)255, (byte)121, (byte)79, (byte)150, (byte)49, (byte)144, (byte)21, (byte)133, (byte)249, (byte)112, (byte)165, (byte)148, (byte)36, (byte)84, (byte)182, (byte)210, (byte)150, (byte)99, (byte)224, (byte)51, (byte)87, (byte)116, (byte)229, (byte)236, (byte)56, (byte)206, (byte)101, (byte)111, (byte)31, (byte)221, (byte)116, (byte)24, (byte)203, (byte)130, (byte)16, (byte)174, (byte)211, (byte)202, (byte)136, (byte)94, (byte)18, (byte)104, (byte)113, (byte)203, (byte)15, (byte)238, (byte)226, (byte)150, (byte)239, (byte)72, (byte)15, (byte)237, (byte)216, (byte)25, (byte)163, (byte)53, (byte)1, (byte)29, (byte)166, (byte)132, (byte)184, (byte)187, (byte)10, (byte)83, (byte)65, (byte)195, (byte)234, (byte)24, (byte)130, (byte)186, (byte)58, (byte)235, (byte)243, (byte)142, (byte)128, (byte)138, (byte)191, (byte)81, (byte)172, (byte)150, (byte)74, (byte)173, (byte)98, (byte)32, (byte)146, (byte)22, (byte)36, (byte)121, (byte)156, (byte)223, (byte)223, (byte)203, (byte)104, (byte)253, (byte)48, (byte)228, (byte)185, (byte)15, (byte)32}, 0) ;
             CommunicationChannel.instance.send(p131);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnDISTANCE_SENSORReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.type == (MAV_DISTANCE_SENSOR)MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_INFRARED);
-                Debug.Assert(pack.min_distance == (ushort)(ushort)4914);
-                Debug.Assert(pack.time_boot_ms == (uint)968990071U);
-                Debug.Assert(pack.covariance == (byte)(byte)111);
-                Debug.Assert(pack.id == (byte)(byte)46);
-                Debug.Assert(pack.orientation == (MAV_SENSOR_ORIENTATION)MAV_SENSOR_ORIENTATION.MAV_SENSOR_ROTATION_ROLL_180_YAW_135);
-                Debug.Assert(pack.current_distance == (ushort)(ushort)14911);
-                Debug.Assert(pack.max_distance == (ushort)(ushort)33629);
+                Debug.Assert(pack.orientation == MAV_SENSOR_ORIENTATION.MAV_SENSOR_ROTATION_YAW_225);
+                Debug.Assert(pack.id == (byte)(byte)148);
+                Debug.Assert(pack.max_distance == (ushort)(ushort)34622);
+                Debug.Assert(pack.min_distance == (ushort)(ushort)11415);
+                Debug.Assert(pack.time_boot_ms == (uint)1240728609U);
+                Debug.Assert(pack.covariance == (byte)(byte)20);
+                Debug.Assert(pack.current_distance == (ushort)(ushort)26604);
+                Debug.Assert(pack.type == MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_UNKNOWN);
             };
             GroundControl.DISTANCE_SENSOR p132 = CommunicationChannel.new_DISTANCE_SENSOR();
             PH.setPack(p132);
-            p132.time_boot_ms = (uint)968990071U;
-            p132.min_distance = (ushort)(ushort)4914;
-            p132.covariance = (byte)(byte)111;
-            p132.max_distance = (ushort)(ushort)33629;
-            p132.type = (MAV_DISTANCE_SENSOR)MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_INFRARED;
-            p132.orientation = (MAV_SENSOR_ORIENTATION)MAV_SENSOR_ORIENTATION.MAV_SENSOR_ROTATION_ROLL_180_YAW_135;
-            p132.id = (byte)(byte)46;
-            p132.current_distance = (ushort)(ushort)14911;
+            p132.id = (byte)(byte)148;
+            p132.current_distance = (ushort)(ushort)26604;
+            p132.covariance = (byte)(byte)20;
+            p132.type = MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_UNKNOWN;
+            p132.time_boot_ms = (uint)1240728609U;
+            p132.min_distance = (ushort)(ushort)11415;
+            p132.orientation = MAV_SENSOR_ORIENTATION.MAV_SENSOR_ROTATION_YAW_225;
+            p132.max_distance = (ushort)(ushort)34622;
             CommunicationChannel.instance.send(p132);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnTERRAIN_REQUESTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.lon == (int) -592572447);
-                Debug.Assert(pack.grid_spacing == (ushort)(ushort)5715);
-                Debug.Assert(pack.lat == (int) -519532592);
-                Debug.Assert(pack.mask == (ulong)7386661522870035856L);
+                Debug.Assert(pack.lat == (int) -40690596);
+                Debug.Assert(pack.mask == (ulong)2608799007126757150L);
+                Debug.Assert(pack.lon == (int)724896197);
+                Debug.Assert(pack.grid_spacing == (ushort)(ushort)25981);
             };
             GroundControl.TERRAIN_REQUEST p133 = CommunicationChannel.new_TERRAIN_REQUEST();
             PH.setPack(p133);
-            p133.mask = (ulong)7386661522870035856L;
-            p133.grid_spacing = (ushort)(ushort)5715;
-            p133.lon = (int) -592572447;
-            p133.lat = (int) -519532592;
+            p133.grid_spacing = (ushort)(ushort)25981;
+            p133.lon = (int)724896197;
+            p133.mask = (ulong)2608799007126757150L;
+            p133.lat = (int) -40690596;
             CommunicationChannel.instance.send(p133);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnTERRAIN_DATAReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.gridbit == (byte)(byte)36);
-                Debug.Assert(pack.lat == (int)1567345534);
-                Debug.Assert(pack.data_.SequenceEqual(new short[] {(short) -20392, (short)5853, (short)11264, (short)16986, (short)3631, (short)11636, (short)1982, (short)15176, (short) -31839, (short)16105, (short) -13665, (short)6716, (short)1666, (short) -31874, (short) -6549, (short) -23583}));
-                Debug.Assert(pack.grid_spacing == (ushort)(ushort)60638);
-                Debug.Assert(pack.lon == (int)386971837);
+                Debug.Assert(pack.lat == (int) -293670772);
+                Debug.Assert(pack.data_.SequenceEqual(new short[] {(short) -25092, (short) -12514, (short)31847, (short) -12510, (short)18264, (short) -18158, (short)23918, (short)31111, (short)23726, (short) -11087, (short) -23408, (short) -22951, (short)4120, (short)10328, (short)23656, (short)18727}));
+                Debug.Assert(pack.grid_spacing == (ushort)(ushort)30564);
+                Debug.Assert(pack.gridbit == (byte)(byte)247);
+                Debug.Assert(pack.lon == (int) -531950692);
             };
             GroundControl.TERRAIN_DATA p134 = CommunicationChannel.new_TERRAIN_DATA();
             PH.setPack(p134);
-            p134.lon = (int)386971837;
-            p134.data__SET(new short[] {(short) -20392, (short)5853, (short)11264, (short)16986, (short)3631, (short)11636, (short)1982, (short)15176, (short) -31839, (short)16105, (short) -13665, (short)6716, (short)1666, (short) -31874, (short) -6549, (short) -23583}, 0) ;
-            p134.gridbit = (byte)(byte)36;
-            p134.lat = (int)1567345534;
-            p134.grid_spacing = (ushort)(ushort)60638;
+            p134.gridbit = (byte)(byte)247;
+            p134.data__SET(new short[] {(short) -25092, (short) -12514, (short)31847, (short) -12510, (short)18264, (short) -18158, (short)23918, (short)31111, (short)23726, (short) -11087, (short) -23408, (short) -22951, (short)4120, (short)10328, (short)23656, (short)18727}, 0) ;
+            p134.grid_spacing = (ushort)(ushort)30564;
+            p134.lon = (int) -531950692;
+            p134.lat = (int) -293670772;
             CommunicationChannel.instance.send(p134);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnTERRAIN_CHECKReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.lon == (int)659683821);
-                Debug.Assert(pack.lat == (int) -1632224033);
+                Debug.Assert(pack.lat == (int) -521573519);
+                Debug.Assert(pack.lon == (int) -337986814);
             };
             GroundControl.TERRAIN_CHECK p135 = CommunicationChannel.new_TERRAIN_CHECK();
             PH.setPack(p135);
-            p135.lat = (int) -1632224033;
-            p135.lon = (int)659683821;
+            p135.lon = (int) -337986814;
+            p135.lat = (int) -521573519;
             CommunicationChannel.instance.send(p135);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnTERRAIN_REPORTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.spacing == (ushort)(ushort)5542);
-                Debug.Assert(pack.terrain_height == (float)1.7201345E38F);
-                Debug.Assert(pack.lat == (int) -1304429152);
-                Debug.Assert(pack.pending == (ushort)(ushort)64027);
-                Debug.Assert(pack.lon == (int) -1621023319);
-                Debug.Assert(pack.loaded == (ushort)(ushort)29554);
-                Debug.Assert(pack.current_height == (float) -1.4610002E38F);
+                Debug.Assert(pack.lat == (int) -1337295682);
+                Debug.Assert(pack.terrain_height == (float)1.18118E38F);
+                Debug.Assert(pack.lon == (int) -259654821);
+                Debug.Assert(pack.loaded == (ushort)(ushort)20614);
+                Debug.Assert(pack.current_height == (float) -3.1427953E38F);
+                Debug.Assert(pack.spacing == (ushort)(ushort)40153);
+                Debug.Assert(pack.pending == (ushort)(ushort)14085);
             };
             GroundControl.TERRAIN_REPORT p136 = CommunicationChannel.new_TERRAIN_REPORT();
             PH.setPack(p136);
-            p136.lon = (int) -1621023319;
-            p136.current_height = (float) -1.4610002E38F;
-            p136.terrain_height = (float)1.7201345E38F;
-            p136.lat = (int) -1304429152;
-            p136.loaded = (ushort)(ushort)29554;
-            p136.pending = (ushort)(ushort)64027;
-            p136.spacing = (ushort)(ushort)5542;
+            p136.pending = (ushort)(ushort)14085;
+            p136.current_height = (float) -3.1427953E38F;
+            p136.lat = (int) -1337295682;
+            p136.lon = (int) -259654821;
+            p136.spacing = (ushort)(ushort)40153;
+            p136.loaded = (ushort)(ushort)20614;
+            p136.terrain_height = (float)1.18118E38F;
             CommunicationChannel.instance.send(p136);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             CommunicationChannel.instance.OnSCALED_PRESSURE2Receive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.time_boot_ms == (uint)1984282540U);
-                Debug.Assert(pack.press_diff == (float)1.5212309E38F);
-                Debug.Assert(pack.press_abs == (float)2.103409E38F);
-                Debug.Assert(pack.temperature == (short)(short)24698);
+                Debug.Assert(pack.press_abs == (float)2.3192211E38F);
+                Debug.Assert(pack.temperature == (short)(short) -24541);
+                Debug.Assert(pack.press_diff == (float)2.2115956E38F);
+                Debug.Assert(pack.time_boot_ms == (uint)2950639816U);
             };
             GroundControl.SCALED_PRESSURE2 p137 = CommunicationChannel.new_SCALED_PRESSURE2();
             PH.setPack(p137);
-            p137.press_abs = (float)2.103409E38F;
-            p137.temperature = (short)(short)24698;
-            p137.time_boot_ms = (uint)1984282540U;
-            p137.press_diff = (float)1.5212309E38F;
+            p137.press_diff = (float)2.2115956E38F;
+            p137.temperature = (short)(short) -24541;
+            p137.time_boot_ms = (uint)2950639816U;
+            p137.press_abs = (float)2.3192211E38F;
             CommunicationChannel.instance.send(p137);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
-            ADV_TEST_CH.OnATT_POS_MOCAPReceive += (src, ph, pack) =>
+            CommunicationChannel.instance.OnATT_POS_MOCAPReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.q.SequenceEqual(new float[] {9.5945666E36F, -7.493466E37F, -1.2412856E38F, -3.067988E38F}));
-                Debug.Assert(pack.time_usec == (ulong)4201608005149836085L);
-                Debug.Assert(pack.x == (float) -2.7775586E38F);
-                Debug.Assert(pack.z == (float) -5.2359147E37F);
-                Debug.Assert(pack.y == (float)3.4027233E38F);
+                Debug.Assert(pack.x == (float) -8.807041E37F);
+                Debug.Assert(pack.z == (float)2.369955E38F);
+                Debug.Assert(pack.y == (float) -1.1502163E38F);
+                Debug.Assert(pack.time_usec == (ulong)3350406339972876654L);
+                Debug.Assert(pack.q.SequenceEqual(new float[] {-9.949236E37F, 1.2411985E38F, -2.9608714E38F, 2.5514158E38F}));
             };
             GroundControl.ATT_POS_MOCAP p138 = CommunicationChannel.new_ATT_POS_MOCAP();
             PH.setPack(p138);
-            p138.z = (float) -5.2359147E37F;
-            p138.q_SET(new float[] {9.5945666E36F, -7.493466E37F, -1.2412856E38F, -3.067988E38F}, 0) ;
-            p138.x = (float) -2.7775586E38F;
-            p138.y = (float)3.4027233E38F;
-            p138.time_usec = (ulong)4201608005149836085L;
+            p138.x = (float) -8.807041E37F;
+            p138.y = (float) -1.1502163E38F;
+            p138.q_SET(new float[] {-9.949236E37F, 1.2411985E38F, -2.9608714E38F, 2.5514158E38F}, 0) ;
+            p138.z = (float)2.369955E38F;
+            p138.time_usec = (ulong)3350406339972876654L;
             CommunicationChannel.instance.send(p138);//put test pack to the  channel send buffer
-            TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
+            TestChannelAdvanced.transmission(CommunicationChannel.instance, CommunicationChannel.instance);
             ADV_TEST_CH.OnSET_ACTUATOR_CONTROL_TARGETReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_component == (byte)(byte)83);
-                Debug.Assert(pack.target_system == (byte)(byte)31);
-                Debug.Assert(pack.controls.SequenceEqual(new float[] {2.2726203E38F, 2.5050585E38F, -7.681128E37F, 1.6267285E38F, -2.5136622E37F, 4.7308786E37F, -1.8710732E38F, -5.961404E37F}));
-                Debug.Assert(pack.group_mlx == (byte)(byte)37);
-                Debug.Assert(pack.time_usec == (ulong)7516243543046029561L);
+                Debug.Assert(pack.target_component == (byte)(byte)77);
+                Debug.Assert(pack.controls.SequenceEqual(new float[] {-6.855102E37F, 2.1972328E38F, 5.211704E37F, -5.7474305E37F, 1.1108947E38F, -2.5545754E38F, 9.674276E37F, 2.1271496E38F}));
+                Debug.Assert(pack.group_mlx == (byte)(byte)51);
+                Debug.Assert(pack.target_system == (byte)(byte)119);
+                Debug.Assert(pack.time_usec == (ulong)5996991406127465167L);
             };
             GroundControl.SET_ACTUATOR_CONTROL_TARGET p139 = CommunicationChannel.new_SET_ACTUATOR_CONTROL_TARGET();
             PH.setPack(p139);
-            p139.group_mlx = (byte)(byte)37;
-            p139.time_usec = (ulong)7516243543046029561L;
-            p139.target_system = (byte)(byte)31;
-            p139.target_component = (byte)(byte)83;
-            p139.controls_SET(new float[] {2.2726203E38F, 2.5050585E38F, -7.681128E37F, 1.6267285E38F, -2.5136622E37F, 4.7308786E37F, -1.8710732E38F, -5.961404E37F}, 0) ;
+            p139.target_system = (byte)(byte)119;
+            p139.group_mlx = (byte)(byte)51;
+            p139.time_usec = (ulong)5996991406127465167L;
+            p139.target_component = (byte)(byte)77;
+            p139.controls_SET(new float[] {-6.855102E37F, 2.1972328E38F, 5.211704E37F, -5.7474305E37F, 1.1108947E38F, -2.5545754E38F, 9.674276E37F, 2.1271496E38F}, 0) ;
             CommunicationChannel.instance.send(p139);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnACTUATOR_CONTROL_TARGETReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.group_mlx == (byte)(byte)77);
-                Debug.Assert(pack.time_usec == (ulong)3034379045263369691L);
-                Debug.Assert(pack.controls.SequenceEqual(new float[] {-1.7937883E38F, -1.8332615E38F, 1.9003705E38F, -5.9506136E37F, -2.3518174E38F, 2.302769E38F, 4.7990483E37F, 7.120844E36F}));
+                Debug.Assert(pack.time_usec == (ulong)7351517304530450519L);
+                Debug.Assert(pack.controls.SequenceEqual(new float[] {-1.8499987E38F, 2.6732524E38F, 3.3674889E38F, 2.1569219E38F, -3.493981E36F, -1.6668754E38F, -1.442886E35F, 1.989621E38F}));
+                Debug.Assert(pack.group_mlx == (byte)(byte)187);
             };
             GroundControl.ACTUATOR_CONTROL_TARGET p140 = CommunicationChannel.new_ACTUATOR_CONTROL_TARGET();
             PH.setPack(p140);
-            p140.time_usec = (ulong)3034379045263369691L;
-            p140.group_mlx = (byte)(byte)77;
-            p140.controls_SET(new float[] {-1.7937883E38F, -1.8332615E38F, 1.9003705E38F, -5.9506136E37F, -2.3518174E38F, 2.302769E38F, 4.7990483E37F, 7.120844E36F}, 0) ;
+            p140.controls_SET(new float[] {-1.8499987E38F, 2.6732524E38F, 3.3674889E38F, 2.1569219E38F, -3.493981E36F, -1.6668754E38F, -1.442886E35F, 1.989621E38F}, 0) ;
+            p140.group_mlx = (byte)(byte)187;
+            p140.time_usec = (ulong)7351517304530450519L;
             CommunicationChannel.instance.send(p140);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnALTITUDEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.altitude_terrain == (float) -2.5622312E38F);
-                Debug.Assert(pack.altitude_amsl == (float)1.6171415E38F);
-                Debug.Assert(pack.altitude_local == (float)3.6102423E37F);
-                Debug.Assert(pack.time_usec == (ulong)2530582752215849718L);
-                Debug.Assert(pack.altitude_relative == (float)4.9047187E37F);
-                Debug.Assert(pack.bottom_clearance == (float)2.4927743E38F);
-                Debug.Assert(pack.altitude_monotonic == (float) -1.1178068E38F);
+                Debug.Assert(pack.bottom_clearance == (float)2.7438973E38F);
+                Debug.Assert(pack.altitude_relative == (float)1.8711354E38F);
+                Debug.Assert(pack.altitude_terrain == (float) -2.9140483E37F);
+                Debug.Assert(pack.altitude_local == (float) -1.4063999E38F);
+                Debug.Assert(pack.time_usec == (ulong)8943643354320316275L);
+                Debug.Assert(pack.altitude_monotonic == (float) -1.6511622E38F);
+                Debug.Assert(pack.altitude_amsl == (float)1.2034179E38F);
             };
             GroundControl.ALTITUDE p141 = CommunicationChannel.new_ALTITUDE();
             PH.setPack(p141);
-            p141.altitude_local = (float)3.6102423E37F;
-            p141.altitude_relative = (float)4.9047187E37F;
-            p141.time_usec = (ulong)2530582752215849718L;
-            p141.altitude_terrain = (float) -2.5622312E38F;
-            p141.altitude_amsl = (float)1.6171415E38F;
-            p141.altitude_monotonic = (float) -1.1178068E38F;
-            p141.bottom_clearance = (float)2.4927743E38F;
+            p141.altitude_monotonic = (float) -1.6511622E38F;
+            p141.altitude_local = (float) -1.4063999E38F;
+            p141.altitude_terrain = (float) -2.9140483E37F;
+            p141.time_usec = (ulong)8943643354320316275L;
+            p141.altitude_amsl = (float)1.2034179E38F;
+            p141.altitude_relative = (float)1.8711354E38F;
+            p141.bottom_clearance = (float)2.7438973E38F;
             CommunicationChannel.instance.send(p141);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnRESOURCE_REQUESTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.uri_type == (byte)(byte)151);
-                Debug.Assert(pack.request_id == (byte)(byte)67);
-                Debug.Assert(pack.uri.SequenceEqual(new byte[] {(byte)226, (byte)97, (byte)107, (byte)155, (byte)139, (byte)115, (byte)162, (byte)239, (byte)83, (byte)92, (byte)121, (byte)99, (byte)53, (byte)231, (byte)127, (byte)245, (byte)29, (byte)217, (byte)66, (byte)231, (byte)117, (byte)195, (byte)39, (byte)212, (byte)40, (byte)151, (byte)115, (byte)128, (byte)120, (byte)231, (byte)191, (byte)48, (byte)60, (byte)61, (byte)132, (byte)119, (byte)22, (byte)242, (byte)100, (byte)50, (byte)42, (byte)243, (byte)94, (byte)254, (byte)77, (byte)3, (byte)65, (byte)138, (byte)3, (byte)82, (byte)162, (byte)106, (byte)199, (byte)217, (byte)13, (byte)131, (byte)232, (byte)198, (byte)171, (byte)121, (byte)136, (byte)109, (byte)219, (byte)247, (byte)134, (byte)79, (byte)68, (byte)28, (byte)243, (byte)16, (byte)106, (byte)138, (byte)223, (byte)99, (byte)65, (byte)230, (byte)218, (byte)242, (byte)55, (byte)68, (byte)192, (byte)81, (byte)62, (byte)68, (byte)9, (byte)179, (byte)178, (byte)174, (byte)48, (byte)119, (byte)251, (byte)185, (byte)69, (byte)135, (byte)5, (byte)225, (byte)34, (byte)23, (byte)95, (byte)172, (byte)95, (byte)218, (byte)140, (byte)215, (byte)26, (byte)80, (byte)39, (byte)243, (byte)157, (byte)232, (byte)21, (byte)42, (byte)51, (byte)66, (byte)253, (byte)186, (byte)26, (byte)81, (byte)21, (byte)48}));
-                Debug.Assert(pack.transfer_type == (byte)(byte)20);
-                Debug.Assert(pack.storage.SequenceEqual(new byte[] {(byte)78, (byte)68, (byte)148, (byte)225, (byte)15, (byte)54, (byte)143, (byte)221, (byte)215, (byte)21, (byte)22, (byte)59, (byte)9, (byte)233, (byte)34, (byte)25, (byte)11, (byte)252, (byte)168, (byte)23, (byte)87, (byte)181, (byte)168, (byte)239, (byte)196, (byte)121, (byte)7, (byte)24, (byte)62, (byte)169, (byte)9, (byte)114, (byte)69, (byte)131, (byte)83, (byte)183, (byte)159, (byte)36, (byte)103, (byte)218, (byte)220, (byte)243, (byte)90, (byte)96, (byte)53, (byte)122, (byte)206, (byte)31, (byte)208, (byte)240, (byte)206, (byte)33, (byte)169, (byte)88, (byte)30, (byte)238, (byte)144, (byte)248, (byte)140, (byte)26, (byte)255, (byte)87, (byte)198, (byte)64, (byte)169, (byte)189, (byte)51, (byte)168, (byte)239, (byte)223, (byte)119, (byte)230, (byte)193, (byte)87, (byte)108, (byte)55, (byte)198, (byte)171, (byte)126, (byte)124, (byte)118, (byte)111, (byte)204, (byte)96, (byte)80, (byte)94, (byte)113, (byte)94, (byte)67, (byte)53, (byte)229, (byte)114, (byte)98, (byte)141, (byte)183, (byte)105, (byte)127, (byte)207, (byte)180, (byte)131, (byte)222, (byte)133, (byte)198, (byte)252, (byte)72, (byte)33, (byte)93, (byte)154, (byte)231, (byte)85, (byte)49, (byte)155, (byte)65, (byte)98, (byte)190, (byte)19, (byte)158, (byte)58, (byte)225, (byte)51}));
+                Debug.Assert(pack.transfer_type == (byte)(byte)142);
+                Debug.Assert(pack.uri_type == (byte)(byte)156);
+                Debug.Assert(pack.uri.SequenceEqual(new byte[] {(byte)172, (byte)20, (byte)241, (byte)102, (byte)31, (byte)234, (byte)13, (byte)227, (byte)132, (byte)65, (byte)183, (byte)107, (byte)5, (byte)172, (byte)205, (byte)0, (byte)23, (byte)229, (byte)239, (byte)126, (byte)125, (byte)36, (byte)122, (byte)79, (byte)36, (byte)144, (byte)163, (byte)74, (byte)198, (byte)211, (byte)23, (byte)245, (byte)89, (byte)198, (byte)92, (byte)97, (byte)113, (byte)98, (byte)107, (byte)78, (byte)16, (byte)110, (byte)85, (byte)233, (byte)203, (byte)158, (byte)179, (byte)194, (byte)253, (byte)6, (byte)83, (byte)119, (byte)179, (byte)86, (byte)77, (byte)196, (byte)162, (byte)156, (byte)232, (byte)20, (byte)139, (byte)107, (byte)52, (byte)192, (byte)132, (byte)13, (byte)149, (byte)64, (byte)108, (byte)149, (byte)95, (byte)251, (byte)249, (byte)52, (byte)0, (byte)147, (byte)158, (byte)227, (byte)183, (byte)211, (byte)156, (byte)0, (byte)81, (byte)106, (byte)150, (byte)251, (byte)43, (byte)192, (byte)180, (byte)142, (byte)46, (byte)38, (byte)147, (byte)201, (byte)144, (byte)117, (byte)9, (byte)239, (byte)148, (byte)232, (byte)210, (byte)47, (byte)89, (byte)171, (byte)188, (byte)31, (byte)76, (byte)127, (byte)177, (byte)151, (byte)179, (byte)217, (byte)147, (byte)21, (byte)16, (byte)166, (byte)175, (byte)104, (byte)232, (byte)153}));
+                Debug.Assert(pack.storage.SequenceEqual(new byte[] {(byte)121, (byte)16, (byte)70, (byte)43, (byte)232, (byte)17, (byte)91, (byte)197, (byte)6, (byte)246, (byte)13, (byte)147, (byte)51, (byte)35, (byte)160, (byte)68, (byte)26, (byte)200, (byte)80, (byte)46, (byte)50, (byte)213, (byte)21, (byte)139, (byte)29, (byte)161, (byte)157, (byte)134, (byte)241, (byte)93, (byte)133, (byte)156, (byte)49, (byte)31, (byte)29, (byte)75, (byte)8, (byte)108, (byte)122, (byte)212, (byte)163, (byte)21, (byte)211, (byte)78, (byte)77, (byte)8, (byte)107, (byte)228, (byte)166, (byte)175, (byte)90, (byte)191, (byte)117, (byte)203, (byte)175, (byte)201, (byte)123, (byte)26, (byte)227, (byte)189, (byte)211, (byte)174, (byte)26, (byte)179, (byte)180, (byte)196, (byte)118, (byte)51, (byte)195, (byte)145, (byte)247, (byte)174, (byte)44, (byte)46, (byte)197, (byte)153, (byte)127, (byte)32, (byte)78, (byte)100, (byte)142, (byte)21, (byte)137, (byte)9, (byte)136, (byte)152, (byte)220, (byte)157, (byte)184, (byte)153, (byte)224, (byte)95, (byte)228, (byte)84, (byte)91, (byte)126, (byte)176, (byte)27, (byte)27, (byte)49, (byte)230, (byte)185, (byte)155, (byte)89, (byte)223, (byte)163, (byte)68, (byte)227, (byte)100, (byte)38, (byte)3, (byte)149, (byte)120, (byte)227, (byte)117, (byte)114, (byte)225, (byte)71, (byte)92, (byte)148}));
+                Debug.Assert(pack.request_id == (byte)(byte)74);
             };
             GroundControl.RESOURCE_REQUEST p142 = CommunicationChannel.new_RESOURCE_REQUEST();
             PH.setPack(p142);
-            p142.transfer_type = (byte)(byte)20;
-            p142.request_id = (byte)(byte)67;
-            p142.uri_type = (byte)(byte)151;
-            p142.storage_SET(new byte[] {(byte)78, (byte)68, (byte)148, (byte)225, (byte)15, (byte)54, (byte)143, (byte)221, (byte)215, (byte)21, (byte)22, (byte)59, (byte)9, (byte)233, (byte)34, (byte)25, (byte)11, (byte)252, (byte)168, (byte)23, (byte)87, (byte)181, (byte)168, (byte)239, (byte)196, (byte)121, (byte)7, (byte)24, (byte)62, (byte)169, (byte)9, (byte)114, (byte)69, (byte)131, (byte)83, (byte)183, (byte)159, (byte)36, (byte)103, (byte)218, (byte)220, (byte)243, (byte)90, (byte)96, (byte)53, (byte)122, (byte)206, (byte)31, (byte)208, (byte)240, (byte)206, (byte)33, (byte)169, (byte)88, (byte)30, (byte)238, (byte)144, (byte)248, (byte)140, (byte)26, (byte)255, (byte)87, (byte)198, (byte)64, (byte)169, (byte)189, (byte)51, (byte)168, (byte)239, (byte)223, (byte)119, (byte)230, (byte)193, (byte)87, (byte)108, (byte)55, (byte)198, (byte)171, (byte)126, (byte)124, (byte)118, (byte)111, (byte)204, (byte)96, (byte)80, (byte)94, (byte)113, (byte)94, (byte)67, (byte)53, (byte)229, (byte)114, (byte)98, (byte)141, (byte)183, (byte)105, (byte)127, (byte)207, (byte)180, (byte)131, (byte)222, (byte)133, (byte)198, (byte)252, (byte)72, (byte)33, (byte)93, (byte)154, (byte)231, (byte)85, (byte)49, (byte)155, (byte)65, (byte)98, (byte)190, (byte)19, (byte)158, (byte)58, (byte)225, (byte)51}, 0) ;
-            p142.uri_SET(new byte[] {(byte)226, (byte)97, (byte)107, (byte)155, (byte)139, (byte)115, (byte)162, (byte)239, (byte)83, (byte)92, (byte)121, (byte)99, (byte)53, (byte)231, (byte)127, (byte)245, (byte)29, (byte)217, (byte)66, (byte)231, (byte)117, (byte)195, (byte)39, (byte)212, (byte)40, (byte)151, (byte)115, (byte)128, (byte)120, (byte)231, (byte)191, (byte)48, (byte)60, (byte)61, (byte)132, (byte)119, (byte)22, (byte)242, (byte)100, (byte)50, (byte)42, (byte)243, (byte)94, (byte)254, (byte)77, (byte)3, (byte)65, (byte)138, (byte)3, (byte)82, (byte)162, (byte)106, (byte)199, (byte)217, (byte)13, (byte)131, (byte)232, (byte)198, (byte)171, (byte)121, (byte)136, (byte)109, (byte)219, (byte)247, (byte)134, (byte)79, (byte)68, (byte)28, (byte)243, (byte)16, (byte)106, (byte)138, (byte)223, (byte)99, (byte)65, (byte)230, (byte)218, (byte)242, (byte)55, (byte)68, (byte)192, (byte)81, (byte)62, (byte)68, (byte)9, (byte)179, (byte)178, (byte)174, (byte)48, (byte)119, (byte)251, (byte)185, (byte)69, (byte)135, (byte)5, (byte)225, (byte)34, (byte)23, (byte)95, (byte)172, (byte)95, (byte)218, (byte)140, (byte)215, (byte)26, (byte)80, (byte)39, (byte)243, (byte)157, (byte)232, (byte)21, (byte)42, (byte)51, (byte)66, (byte)253, (byte)186, (byte)26, (byte)81, (byte)21, (byte)48}, 0) ;
+            p142.uri_type = (byte)(byte)156;
+            p142.request_id = (byte)(byte)74;
+            p142.storage_SET(new byte[] {(byte)121, (byte)16, (byte)70, (byte)43, (byte)232, (byte)17, (byte)91, (byte)197, (byte)6, (byte)246, (byte)13, (byte)147, (byte)51, (byte)35, (byte)160, (byte)68, (byte)26, (byte)200, (byte)80, (byte)46, (byte)50, (byte)213, (byte)21, (byte)139, (byte)29, (byte)161, (byte)157, (byte)134, (byte)241, (byte)93, (byte)133, (byte)156, (byte)49, (byte)31, (byte)29, (byte)75, (byte)8, (byte)108, (byte)122, (byte)212, (byte)163, (byte)21, (byte)211, (byte)78, (byte)77, (byte)8, (byte)107, (byte)228, (byte)166, (byte)175, (byte)90, (byte)191, (byte)117, (byte)203, (byte)175, (byte)201, (byte)123, (byte)26, (byte)227, (byte)189, (byte)211, (byte)174, (byte)26, (byte)179, (byte)180, (byte)196, (byte)118, (byte)51, (byte)195, (byte)145, (byte)247, (byte)174, (byte)44, (byte)46, (byte)197, (byte)153, (byte)127, (byte)32, (byte)78, (byte)100, (byte)142, (byte)21, (byte)137, (byte)9, (byte)136, (byte)152, (byte)220, (byte)157, (byte)184, (byte)153, (byte)224, (byte)95, (byte)228, (byte)84, (byte)91, (byte)126, (byte)176, (byte)27, (byte)27, (byte)49, (byte)230, (byte)185, (byte)155, (byte)89, (byte)223, (byte)163, (byte)68, (byte)227, (byte)100, (byte)38, (byte)3, (byte)149, (byte)120, (byte)227, (byte)117, (byte)114, (byte)225, (byte)71, (byte)92, (byte)148}, 0) ;
+            p142.transfer_type = (byte)(byte)142;
+            p142.uri_SET(new byte[] {(byte)172, (byte)20, (byte)241, (byte)102, (byte)31, (byte)234, (byte)13, (byte)227, (byte)132, (byte)65, (byte)183, (byte)107, (byte)5, (byte)172, (byte)205, (byte)0, (byte)23, (byte)229, (byte)239, (byte)126, (byte)125, (byte)36, (byte)122, (byte)79, (byte)36, (byte)144, (byte)163, (byte)74, (byte)198, (byte)211, (byte)23, (byte)245, (byte)89, (byte)198, (byte)92, (byte)97, (byte)113, (byte)98, (byte)107, (byte)78, (byte)16, (byte)110, (byte)85, (byte)233, (byte)203, (byte)158, (byte)179, (byte)194, (byte)253, (byte)6, (byte)83, (byte)119, (byte)179, (byte)86, (byte)77, (byte)196, (byte)162, (byte)156, (byte)232, (byte)20, (byte)139, (byte)107, (byte)52, (byte)192, (byte)132, (byte)13, (byte)149, (byte)64, (byte)108, (byte)149, (byte)95, (byte)251, (byte)249, (byte)52, (byte)0, (byte)147, (byte)158, (byte)227, (byte)183, (byte)211, (byte)156, (byte)0, (byte)81, (byte)106, (byte)150, (byte)251, (byte)43, (byte)192, (byte)180, (byte)142, (byte)46, (byte)38, (byte)147, (byte)201, (byte)144, (byte)117, (byte)9, (byte)239, (byte)148, (byte)232, (byte)210, (byte)47, (byte)89, (byte)171, (byte)188, (byte)31, (byte)76, (byte)127, (byte)177, (byte)151, (byte)179, (byte)217, (byte)147, (byte)21, (byte)16, (byte)166, (byte)175, (byte)104, (byte)232, (byte)153}, 0) ;
             CommunicationChannel.instance.send(p142);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnSCALED_PRESSURE3Receive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.temperature == (short)(short)13635);
-                Debug.Assert(pack.press_diff == (float) -8.933577E37F);
-                Debug.Assert(pack.press_abs == (float)2.6574265E38F);
-                Debug.Assert(pack.time_boot_ms == (uint)3776805966U);
+                Debug.Assert(pack.time_boot_ms == (uint)2170288497U);
+                Debug.Assert(pack.press_diff == (float) -1.00416245E36F);
+                Debug.Assert(pack.temperature == (short)(short) -28448);
+                Debug.Assert(pack.press_abs == (float) -3.3573042E37F);
             };
             GroundControl.SCALED_PRESSURE3 p143 = CommunicationChannel.new_SCALED_PRESSURE3();
             PH.setPack(p143);
-            p143.press_abs = (float)2.6574265E38F;
-            p143.time_boot_ms = (uint)3776805966U;
-            p143.press_diff = (float) -8.933577E37F;
-            p143.temperature = (short)(short)13635;
+            p143.press_diff = (float) -1.00416245E36F;
+            p143.temperature = (short)(short) -28448;
+            p143.press_abs = (float) -3.3573042E37F;
+            p143.time_boot_ms = (uint)2170288497U;
             CommunicationChannel.instance.send(p143);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnFOLLOW_TARGETReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.est_capabilities == (byte)(byte)202);
-                Debug.Assert(pack.attitude_q.SequenceEqual(new float[] {3.6446326E37F, -5.78167E37F, -3.049111E37F, 1.8374916E38F}));
-                Debug.Assert(pack.lon == (int) -1582855465);
-                Debug.Assert(pack.timestamp == (ulong)3601732838639705590L);
-                Debug.Assert(pack.alt == (float) -1.1396179E38F);
-                Debug.Assert(pack.rates.SequenceEqual(new float[] {-1.7570223E38F, -2.5826956E37F, 1.0307761E38F}));
-                Debug.Assert(pack.lat == (int)1735697873);
-                Debug.Assert(pack.acc.SequenceEqual(new float[] {3.1770904E38F, 1.5940934E38F, -2.6517767E37F}));
-                Debug.Assert(pack.vel.SequenceEqual(new float[] {-2.5434724E38F, -1.1961823E38F, 1.4358539E38F}));
-                Debug.Assert(pack.custom_state == (ulong)7336167033996729872L);
-                Debug.Assert(pack.position_cov.SequenceEqual(new float[] {2.224574E38F, 3.0896098E37F, -1.699611E38F}));
+                Debug.Assert(pack.rates.SequenceEqual(new float[] {3.159684E38F, 3.3035932E38F, -2.923783E37F}));
+                Debug.Assert(pack.acc.SequenceEqual(new float[] {-2.5490502E38F, -2.9692663E38F, 3.3057068E38F}));
+                Debug.Assert(pack.position_cov.SequenceEqual(new float[] {-2.119673E38F, -2.388219E38F, -2.167644E38F}));
+                Debug.Assert(pack.lon == (int)519380877);
+                Debug.Assert(pack.timestamp == (ulong)4623463448915892697L);
+                Debug.Assert(pack.vel.SequenceEqual(new float[] {2.3319907E38F, -1.6885902E38F, 6.5404174E37F}));
+                Debug.Assert(pack.lat == (int) -1253885070);
+                Debug.Assert(pack.attitude_q.SequenceEqual(new float[] {-1.1529457E38F, -2.6995632E38F, 4.9609085E37F, 1.3981878E38F}));
+                Debug.Assert(pack.est_capabilities == (byte)(byte)192);
+                Debug.Assert(pack.custom_state == (ulong)5920076937623278169L);
+                Debug.Assert(pack.alt == (float)1.039697E38F);
             };
             GroundControl.FOLLOW_TARGET p144 = CommunicationChannel.new_FOLLOW_TARGET();
             PH.setPack(p144);
-            p144.attitude_q_SET(new float[] {3.6446326E37F, -5.78167E37F, -3.049111E37F, 1.8374916E38F}, 0) ;
-            p144.custom_state = (ulong)7336167033996729872L;
-            p144.timestamp = (ulong)3601732838639705590L;
-            p144.acc_SET(new float[] {3.1770904E38F, 1.5940934E38F, -2.6517767E37F}, 0) ;
-            p144.rates_SET(new float[] {-1.7570223E38F, -2.5826956E37F, 1.0307761E38F}, 0) ;
-            p144.lat = (int)1735697873;
-            p144.est_capabilities = (byte)(byte)202;
-            p144.lon = (int) -1582855465;
-            p144.vel_SET(new float[] {-2.5434724E38F, -1.1961823E38F, 1.4358539E38F}, 0) ;
-            p144.position_cov_SET(new float[] {2.224574E38F, 3.0896098E37F, -1.699611E38F}, 0) ;
-            p144.alt = (float) -1.1396179E38F;
+            p144.attitude_q_SET(new float[] {-1.1529457E38F, -2.6995632E38F, 4.9609085E37F, 1.3981878E38F}, 0) ;
+            p144.lon = (int)519380877;
+            p144.custom_state = (ulong)5920076937623278169L;
+            p144.position_cov_SET(new float[] {-2.119673E38F, -2.388219E38F, -2.167644E38F}, 0) ;
+            p144.est_capabilities = (byte)(byte)192;
+            p144.alt = (float)1.039697E38F;
+            p144.timestamp = (ulong)4623463448915892697L;
+            p144.vel_SET(new float[] {2.3319907E38F, -1.6885902E38F, 6.5404174E37F}, 0) ;
+            p144.acc_SET(new float[] {-2.5490502E38F, -2.9692663E38F, 3.3057068E38F}, 0) ;
+            p144.lat = (int) -1253885070;
+            p144.rates_SET(new float[] {3.159684E38F, 3.3035932E38F, -2.923783E37F}, 0) ;
             CommunicationChannel.instance.send(p144);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnCONTROL_SYSTEM_STATEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.y_pos == (float) -2.7072082E38F);
-                Debug.Assert(pack.y_vel == (float)2.0536765E38F);
-                Debug.Assert(pack.z_vel == (float)3.1206685E37F);
-                Debug.Assert(pack.yaw_rate == (float) -2.5886196E38F);
-                Debug.Assert(pack.pos_variance.SequenceEqual(new float[] {2.0508173E38F, 7.902504E37F, -1.0041743E38F}));
-                Debug.Assert(pack.x_pos == (float)1.1558396E38F);
-                Debug.Assert(pack.x_acc == (float) -3.3253191E38F);
-                Debug.Assert(pack.y_acc == (float) -2.6831894E37F);
-                Debug.Assert(pack.z_acc == (float) -9.796202E37F);
-                Debug.Assert(pack.z_pos == (float)2.3990154E38F);
-                Debug.Assert(pack.pitch_rate == (float) -2.457784E38F);
-                Debug.Assert(pack.vel_variance.SequenceEqual(new float[] {6.849111E37F, -1.1163837E38F, -1.572107E38F}));
-                Debug.Assert(pack.time_usec == (ulong)2384124161779339468L);
-                Debug.Assert(pack.x_vel == (float)2.7676983E38F);
-                Debug.Assert(pack.airspeed == (float)1.9166058E38F);
-                Debug.Assert(pack.q.SequenceEqual(new float[] {9.774359E37F, 1.4383333E38F, -2.0733738E38F, 1.4666043E37F}));
-                Debug.Assert(pack.roll_rate == (float)2.018377E38F);
+                Debug.Assert(pack.y_pos == (float)1.9683844E37F);
+                Debug.Assert(pack.airspeed == (float)1.6599585E38F);
+                Debug.Assert(pack.y_acc == (float) -1.6274871E38F);
+                Debug.Assert(pack.x_vel == (float)2.9101895E38F);
+                Debug.Assert(pack.yaw_rate == (float)2.4431807E38F);
+                Debug.Assert(pack.x_pos == (float)3.1166904E38F);
+                Debug.Assert(pack.pos_variance.SequenceEqual(new float[] {2.9631186E37F, 3.5396537E37F, -1.0022216E38F}));
+                Debug.Assert(pack.z_acc == (float) -2.3342208E38F);
+                Debug.Assert(pack.q.SequenceEqual(new float[] {-1.4037716E38F, -6.149984E37F, -6.5994524E37F, -1.8960962E38F}));
+                Debug.Assert(pack.x_acc == (float) -2.3526196E38F);
+                Debug.Assert(pack.time_usec == (ulong)4477241877416352466L);
+                Debug.Assert(pack.roll_rate == (float) -2.4796302E38F);
+                Debug.Assert(pack.y_vel == (float) -1.5907331E38F);
+                Debug.Assert(pack.z_vel == (float)1.6005452E38F);
+                Debug.Assert(pack.z_pos == (float) -1.3028302E38F);
+                Debug.Assert(pack.vel_variance.SequenceEqual(new float[] {1.1063014E37F, -3.096395E38F, 2.5237392E38F}));
+                Debug.Assert(pack.pitch_rate == (float)1.6678946E38F);
             };
             GroundControl.CONTROL_SYSTEM_STATE p146 = CommunicationChannel.new_CONTROL_SYSTEM_STATE();
             PH.setPack(p146);
-            p146.pos_variance_SET(new float[] {2.0508173E38F, 7.902504E37F, -1.0041743E38F}, 0) ;
-            p146.y_acc = (float) -2.6831894E37F;
-            p146.z_pos = (float)2.3990154E38F;
-            p146.x_vel = (float)2.7676983E38F;
-            p146.airspeed = (float)1.9166058E38F;
-            p146.yaw_rate = (float) -2.5886196E38F;
-            p146.pitch_rate = (float) -2.457784E38F;
-            p146.z_acc = (float) -9.796202E37F;
-            p146.q_SET(new float[] {9.774359E37F, 1.4383333E38F, -2.0733738E38F, 1.4666043E37F}, 0) ;
-            p146.y_vel = (float)2.0536765E38F;
-            p146.roll_rate = (float)2.018377E38F;
-            p146.z_vel = (float)3.1206685E37F;
-            p146.x_acc = (float) -3.3253191E38F;
-            p146.vel_variance_SET(new float[] {6.849111E37F, -1.1163837E38F, -1.572107E38F}, 0) ;
-            p146.time_usec = (ulong)2384124161779339468L;
-            p146.y_pos = (float) -2.7072082E38F;
-            p146.x_pos = (float)1.1558396E38F;
+            p146.y_vel = (float) -1.5907331E38F;
+            p146.yaw_rate = (float)2.4431807E38F;
+            p146.x_acc = (float) -2.3526196E38F;
+            p146.x_pos = (float)3.1166904E38F;
+            p146.z_vel = (float)1.6005452E38F;
+            p146.y_acc = (float) -1.6274871E38F;
+            p146.pitch_rate = (float)1.6678946E38F;
+            p146.z_acc = (float) -2.3342208E38F;
+            p146.y_pos = (float)1.9683844E37F;
+            p146.q_SET(new float[] {-1.4037716E38F, -6.149984E37F, -6.5994524E37F, -1.8960962E38F}, 0) ;
+            p146.z_pos = (float) -1.3028302E38F;
+            p146.vel_variance_SET(new float[] {1.1063014E37F, -3.096395E38F, 2.5237392E38F}, 0) ;
+            p146.x_vel = (float)2.9101895E38F;
+            p146.time_usec = (ulong)4477241877416352466L;
+            p146.roll_rate = (float) -2.4796302E38F;
+            p146.airspeed = (float)1.6599585E38F;
+            p146.pos_variance_SET(new float[] {2.9631186E37F, 3.5396537E37F, -1.0022216E38F}, 0) ;
             CommunicationChannel.instance.send(p146);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnBATTERY_STATUSReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.current_consumed == (int)391440870);
-                Debug.Assert(pack.energy_consumed == (int) -1142832446);
-                Debug.Assert(pack.temperature == (short)(short) -16250);
-                Debug.Assert(pack.battery_remaining == (sbyte)(sbyte)55);
-                Debug.Assert(pack.current_battery == (short)(short) -9328);
-                Debug.Assert(pack.voltages.SequenceEqual(new ushort[] {(ushort)48208, (ushort)35699, (ushort)21880, (ushort)50761, (ushort)19645, (ushort)36314, (ushort)3478, (ushort)52046, (ushort)62378, (ushort)26010}));
-                Debug.Assert(pack.id == (byte)(byte)239);
-                Debug.Assert(pack.battery_function == (MAV_BATTERY_FUNCTION)MAV_BATTERY_FUNCTION.MAV_BATTERY_FUNCTION_ALL);
-                Debug.Assert(pack.type == (MAV_BATTERY_TYPE)MAV_BATTERY_TYPE.MAV_BATTERY_TYPE_NIMH);
+                Debug.Assert(pack.battery_function == MAV_BATTERY_FUNCTION.MAV_BATTERY_FUNCTION_ALL);
+                Debug.Assert(pack.id == (byte)(byte)148);
+                Debug.Assert(pack.temperature == (short)(short) -11795);
+                Debug.Assert(pack.current_battery == (short)(short)12751);
+                Debug.Assert(pack.energy_consumed == (int)1315038830);
+                Debug.Assert(pack.battery_remaining == (sbyte)(sbyte)95);
+                Debug.Assert(pack.type == MAV_BATTERY_TYPE.MAV_BATTERY_TYPE_LION);
+                Debug.Assert(pack.voltages.SequenceEqual(new ushort[] {(ushort)30264, (ushort)60134, (ushort)43846, (ushort)5321, (ushort)45068, (ushort)48570, (ushort)17195, (ushort)16748, (ushort)23958, (ushort)24014}));
+                Debug.Assert(pack.current_consumed == (int)1229222670);
             };
             GroundControl.BATTERY_STATUS p147 = CommunicationChannel.new_BATTERY_STATUS();
             PH.setPack(p147);
-            p147.id = (byte)(byte)239;
-            p147.energy_consumed = (int) -1142832446;
-            p147.voltages_SET(new ushort[] {(ushort)48208, (ushort)35699, (ushort)21880, (ushort)50761, (ushort)19645, (ushort)36314, (ushort)3478, (ushort)52046, (ushort)62378, (ushort)26010}, 0) ;
-            p147.temperature = (short)(short) -16250;
-            p147.current_battery = (short)(short) -9328;
-            p147.battery_remaining = (sbyte)(sbyte)55;
-            p147.battery_function = (MAV_BATTERY_FUNCTION)MAV_BATTERY_FUNCTION.MAV_BATTERY_FUNCTION_ALL;
-            p147.current_consumed = (int)391440870;
-            p147.type = (MAV_BATTERY_TYPE)MAV_BATTERY_TYPE.MAV_BATTERY_TYPE_NIMH;
+            p147.type = MAV_BATTERY_TYPE.MAV_BATTERY_TYPE_LION;
+            p147.voltages_SET(new ushort[] {(ushort)30264, (ushort)60134, (ushort)43846, (ushort)5321, (ushort)45068, (ushort)48570, (ushort)17195, (ushort)16748, (ushort)23958, (ushort)24014}, 0) ;
+            p147.id = (byte)(byte)148;
+            p147.current_battery = (short)(short)12751;
+            p147.battery_function = MAV_BATTERY_FUNCTION.MAV_BATTERY_FUNCTION_ALL;
+            p147.battery_remaining = (sbyte)(sbyte)95;
+            p147.energy_consumed = (int)1315038830;
+            p147.current_consumed = (int)1229222670;
+            p147.temperature = (short)(short) -11795;
             CommunicationChannel.instance.send(p147);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnAUTOPILOT_VERSIONReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.flight_sw_version == (uint)566652698U);
-                Debug.Assert(pack.uid2_TRY(ph).SequenceEqual(new byte[] {(byte)198, (byte)137, (byte)68, (byte)183, (byte)95, (byte)40, (byte)11, (byte)124, (byte)117, (byte)234, (byte)160, (byte)73, (byte)243, (byte)237, (byte)123, (byte)107, (byte)65, (byte)103}));
-                Debug.Assert(pack.flight_custom_version.SequenceEqual(new byte[] {(byte)88, (byte)25, (byte)215, (byte)45, (byte)234, (byte)12, (byte)95, (byte)216}));
-                Debug.Assert(pack.os_sw_version == (uint)4287872145U);
-                Debug.Assert(pack.middleware_custom_version.SequenceEqual(new byte[] {(byte)149, (byte)112, (byte)223, (byte)242, (byte)76, (byte)169, (byte)204, (byte)33}));
-                Debug.Assert(pack.os_custom_version.SequenceEqual(new byte[] {(byte)101, (byte)48, (byte)249, (byte)91, (byte)154, (byte)41, (byte)28, (byte)80}));
-                Debug.Assert(pack.capabilities == (MAV_PROTOCOL_CAPABILITY)MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FLOAT);
-                Debug.Assert(pack.product_id == (ushort)(ushort)19326);
-                Debug.Assert(pack.middleware_sw_version == (uint)4180676966U);
-                Debug.Assert(pack.board_version == (uint)851041632U);
-                Debug.Assert(pack.uid == (ulong)8640934396626693325L);
-                Debug.Assert(pack.vendor_id == (ushort)(ushort)31625);
+                Debug.Assert(pack.os_sw_version == (uint)167816167U);
+                Debug.Assert(pack.middleware_sw_version == (uint)2984529170U);
+                Debug.Assert(pack.flight_sw_version == (uint)2163451462U);
+                Debug.Assert(pack.board_version == (uint)1614883107U);
+                Debug.Assert(pack.capabilities == (MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_LOCAL_NED |
+                                                   MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MAVLINK2 |
+                                                   MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_RALLY |
+                                                   MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_PARAM_UNION |
+                                                   MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FLOAT |
+                                                   MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_ACTUATOR_TARGET |
+                                                   MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_PARAM_FLOAT |
+                                                   MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_INT));
+                Debug.Assert(pack.flight_custom_version.SequenceEqual(new byte[] {(byte)2, (byte)14, (byte)222, (byte)167, (byte)21, (byte)23, (byte)103, (byte)31}));
+                Debug.Assert(pack.vendor_id == (ushort)(ushort)25772);
+                Debug.Assert(pack.os_custom_version.SequenceEqual(new byte[] {(byte)104, (byte)103, (byte)84, (byte)187, (byte)196, (byte)120, (byte)126, (byte)87}));
+                Debug.Assert(pack.uid2_TRY(ph).SequenceEqual(new byte[] {(byte)58, (byte)6, (byte)22, (byte)97, (byte)113, (byte)177, (byte)14, (byte)206, (byte)242, (byte)215, (byte)207, (byte)223, (byte)254, (byte)172, (byte)36, (byte)194, (byte)218, (byte)136}));
+                Debug.Assert(pack.uid == (ulong)1472605650816302719L);
+                Debug.Assert(pack.product_id == (ushort)(ushort)31156);
+                Debug.Assert(pack.middleware_custom_version.SequenceEqual(new byte[] {(byte)73, (byte)188, (byte)44, (byte)211, (byte)32, (byte)192, (byte)171, (byte)54}));
             };
             GroundControl.AUTOPILOT_VERSION p148 = CommunicationChannel.new_AUTOPILOT_VERSION();
             PH.setPack(p148);
-            p148.capabilities = (MAV_PROTOCOL_CAPABILITY)MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FLOAT;
-            p148.flight_sw_version = (uint)566652698U;
-            p148.flight_custom_version_SET(new byte[] {(byte)88, (byte)25, (byte)215, (byte)45, (byte)234, (byte)12, (byte)95, (byte)216}, 0) ;
-            p148.uid2_SET(new byte[] {(byte)198, (byte)137, (byte)68, (byte)183, (byte)95, (byte)40, (byte)11, (byte)124, (byte)117, (byte)234, (byte)160, (byte)73, (byte)243, (byte)237, (byte)123, (byte)107, (byte)65, (byte)103}, 0, PH) ;
-            p148.middleware_sw_version = (uint)4180676966U;
-            p148.os_custom_version_SET(new byte[] {(byte)101, (byte)48, (byte)249, (byte)91, (byte)154, (byte)41, (byte)28, (byte)80}, 0) ;
-            p148.board_version = (uint)851041632U;
-            p148.vendor_id = (ushort)(ushort)31625;
-            p148.product_id = (ushort)(ushort)19326;
-            p148.middleware_custom_version_SET(new byte[] {(byte)149, (byte)112, (byte)223, (byte)242, (byte)76, (byte)169, (byte)204, (byte)33}, 0) ;
-            p148.os_sw_version = (uint)4287872145U;
-            p148.uid = (ulong)8640934396626693325L;
+            p148.flight_custom_version_SET(new byte[] {(byte)2, (byte)14, (byte)222, (byte)167, (byte)21, (byte)23, (byte)103, (byte)31}, 0) ;
+            p148.vendor_id = (ushort)(ushort)25772;
+            p148.os_sw_version = (uint)167816167U;
+            p148.middleware_sw_version = (uint)2984529170U;
+            p148.capabilities = (MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_LOCAL_NED |
+                                 MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MAVLINK2 |
+                                 MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_RALLY |
+                                 MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_PARAM_UNION |
+                                 MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FLOAT |
+                                 MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_ACTUATOR_TARGET |
+                                 MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_PARAM_FLOAT |
+                                 MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_INT);
+            p148.uid = (ulong)1472605650816302719L;
+            p148.os_custom_version_SET(new byte[] {(byte)104, (byte)103, (byte)84, (byte)187, (byte)196, (byte)120, (byte)126, (byte)87}, 0) ;
+            p148.middleware_custom_version_SET(new byte[] {(byte)73, (byte)188, (byte)44, (byte)211, (byte)32, (byte)192, (byte)171, (byte)54}, 0) ;
+            p148.uid2_SET(new byte[] {(byte)58, (byte)6, (byte)22, (byte)97, (byte)113, (byte)177, (byte)14, (byte)206, (byte)242, (byte)215, (byte)207, (byte)223, (byte)254, (byte)172, (byte)36, (byte)194, (byte)218, (byte)136}, 0, PH) ;
+            p148.flight_sw_version = (uint)2163451462U;
+            p148.product_id = (ushort)(ushort)31156;
+            p148.board_version = (uint)1614883107U;
             CommunicationChannel.instance.send(p148);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnLANDING_TARGETReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.size_x == (float)2.1901232E38F);
-                Debug.Assert(pack.angle_y == (float) -2.0801572E37F);
-                Debug.Assert(pack.x_TRY(ph) == (float) -2.2251396E38F);
-                Debug.Assert(pack.distance == (float)1.7170587E38F);
-                Debug.Assert(pack.frame == (MAV_FRAME)MAV_FRAME.MAV_FRAME_GLOBAL_RELATIVE_ALT);
-                Debug.Assert(pack.q_TRY(ph).SequenceEqual(new float[] {2.770082E38F, 2.3900725E38F, -1.4220303E37F, -1.725871E38F}));
-                Debug.Assert(pack.position_valid_TRY(ph) == (byte)(byte)246);
-                Debug.Assert(pack.type == (LANDING_TARGET_TYPE)LANDING_TARGET_TYPE.LANDING_TARGET_TYPE_VISION_OTHER);
-                Debug.Assert(pack.target_num == (byte)(byte)185);
-                Debug.Assert(pack.z_TRY(ph) == (float) -5.991742E37F);
-                Debug.Assert(pack.angle_x == (float) -7.173474E37F);
-                Debug.Assert(pack.time_usec == (ulong)6072528249186007791L);
-                Debug.Assert(pack.size_y == (float)2.0315945E38F);
-                Debug.Assert(pack.y_TRY(ph) == (float) -1.0606844E38F);
+                Debug.Assert(pack.distance == (float)2.3740222E38F);
+                Debug.Assert(pack.size_y == (float) -4.9489495E37F);
+                Debug.Assert(pack.y_TRY(ph) == (float) -7.370586E37F);
+                Debug.Assert(pack.angle_y == (float)3.2506058E38F);
+                Debug.Assert(pack.time_usec == (ulong)796248454642782424L);
+                Debug.Assert(pack.frame == MAV_FRAME.MAV_FRAME_GLOBAL_INT);
+                Debug.Assert(pack.type == LANDING_TARGET_TYPE.LANDING_TARGET_TYPE_LIGHT_BEACON);
+                Debug.Assert(pack.size_x == (float)2.7766193E38F);
+                Debug.Assert(pack.position_valid_TRY(ph) == (byte)(byte)143);
+                Debug.Assert(pack.z_TRY(ph) == (float)8.651578E37F);
+                Debug.Assert(pack.q_TRY(ph).SequenceEqual(new float[] {3.0003237E38F, 1.6029306E37F, -3.0785995E37F, -4.4281634E36F}));
+                Debug.Assert(pack.angle_x == (float)1.5814602E38F);
+                Debug.Assert(pack.x_TRY(ph) == (float)3.2062796E38F);
+                Debug.Assert(pack.target_num == (byte)(byte)131);
             };
             GroundControl.LANDING_TARGET p149 = CommunicationChannel.new_LANDING_TARGET();
             PH.setPack(p149);
-            p149.frame = (MAV_FRAME)MAV_FRAME.MAV_FRAME_GLOBAL_RELATIVE_ALT;
-            p149.size_x = (float)2.1901232E38F;
-            p149.distance = (float)1.7170587E38F;
-            p149.type = (LANDING_TARGET_TYPE)LANDING_TARGET_TYPE.LANDING_TARGET_TYPE_VISION_OTHER;
-            p149.q_SET(new float[] {2.770082E38F, 2.3900725E38F, -1.4220303E37F, -1.725871E38F}, 0, PH) ;
-            p149.time_usec = (ulong)6072528249186007791L;
-            p149.y_SET((float) -1.0606844E38F, PH) ;
-            p149.angle_y = (float) -2.0801572E37F;
-            p149.z_SET((float) -5.991742E37F, PH) ;
-            p149.angle_x = (float) -7.173474E37F;
-            p149.x_SET((float) -2.2251396E38F, PH) ;
-            p149.size_y = (float)2.0315945E38F;
-            p149.position_valid_SET((byte)(byte)246, PH) ;
-            p149.target_num = (byte)(byte)185;
+            p149.size_y = (float) -4.9489495E37F;
+            p149.size_x = (float)2.7766193E38F;
+            p149.angle_x = (float)1.5814602E38F;
+            p149.angle_y = (float)3.2506058E38F;
+            p149.type = LANDING_TARGET_TYPE.LANDING_TARGET_TYPE_LIGHT_BEACON;
+            p149.distance = (float)2.3740222E38F;
+            p149.y_SET((float) -7.370586E37F, PH) ;
+            p149.position_valid_SET((byte)(byte)143, PH) ;
+            p149.target_num = (byte)(byte)131;
+            p149.x_SET((float)3.2062796E38F, PH) ;
+            p149.q_SET(new float[] {3.0003237E38F, 1.6029306E37F, -3.0785995E37F, -4.4281634E36F}, 0, PH) ;
+            p149.frame = MAV_FRAME.MAV_FRAME_GLOBAL_INT;
+            p149.time_usec = (ulong)796248454642782424L;
+            p149.z_SET((float)8.651578E37F, PH) ;
             CommunicationChannel.instance.send(p149);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnESTIMATOR_STATUSReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.mag_ratio == (float)1.8771749E36F);
-                Debug.Assert(pack.pos_vert_ratio == (float)3.0041398E38F);
-                Debug.Assert(pack.tas_ratio == (float) -2.576508E38F);
-                Debug.Assert(pack.pos_horiz_accuracy == (float)8.1395105E37F);
-                Debug.Assert(pack.vel_ratio == (float) -3.9669632E37F);
-                Debug.Assert(pack.pos_horiz_ratio == (float)1.4933058E38F);
-                Debug.Assert(pack.time_usec == (ulong)3194757029528808662L);
-                Debug.Assert(pack.hagl_ratio == (float) -1.650282E38F);
-                Debug.Assert(pack.flags == (ESTIMATOR_STATUS_FLAGS)ESTIMATOR_STATUS_FLAGS.ESTIMATOR_VELOCITY_HORIZ);
-                Debug.Assert(pack.pos_vert_accuracy == (float) -3.2531953E37F);
+                Debug.Assert(pack.vel_ratio == (float)2.0533914E38F);
+                Debug.Assert(pack.tas_ratio == (float) -9.736916E37F);
+                Debug.Assert(pack.hagl_ratio == (float)1.3086395E38F);
+                Debug.Assert(pack.pos_horiz_ratio == (float)1.1365496E38F);
+                Debug.Assert(pack.time_usec == (ulong)5692781827543204685L);
+                Debug.Assert(pack.mag_ratio == (float) -6.502649E37F);
+                Debug.Assert(pack.pos_vert_ratio == (float)1.2273146E37F);
+                Debug.Assert(pack.pos_vert_accuracy == (float)1.111397E38F);
+                Debug.Assert(pack.pos_horiz_accuracy == (float) -3.3830343E38F);
+                Debug.Assert(pack.flags == (ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_VERT_ABS |
+                                            ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_HORIZ_ABS |
+                                            ESTIMATOR_STATUS_FLAGS.ESTIMATOR_VELOCITY_VERT));
             };
             GroundControl.ESTIMATOR_STATUS p230 = CommunicationChannel.new_ESTIMATOR_STATUS();
             PH.setPack(p230);
-            p230.vel_ratio = (float) -3.9669632E37F;
-            p230.tas_ratio = (float) -2.576508E38F;
-            p230.pos_vert_ratio = (float)3.0041398E38F;
-            p230.flags = (ESTIMATOR_STATUS_FLAGS)ESTIMATOR_STATUS_FLAGS.ESTIMATOR_VELOCITY_HORIZ;
-            p230.pos_horiz_accuracy = (float)8.1395105E37F;
-            p230.mag_ratio = (float)1.8771749E36F;
-            p230.hagl_ratio = (float) -1.650282E38F;
-            p230.pos_horiz_ratio = (float)1.4933058E38F;
-            p230.time_usec = (ulong)3194757029528808662L;
-            p230.pos_vert_accuracy = (float) -3.2531953E37F;
+            p230.pos_vert_ratio = (float)1.2273146E37F;
+            p230.time_usec = (ulong)5692781827543204685L;
+            p230.vel_ratio = (float)2.0533914E38F;
+            p230.pos_horiz_accuracy = (float) -3.3830343E38F;
+            p230.flags = (ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_VERT_ABS |
+                          ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_HORIZ_ABS |
+                          ESTIMATOR_STATUS_FLAGS.ESTIMATOR_VELOCITY_VERT);
+            p230.mag_ratio = (float) -6.502649E37F;
+            p230.hagl_ratio = (float)1.3086395E38F;
+            p230.pos_horiz_ratio = (float)1.1365496E38F;
+            p230.pos_vert_accuracy = (float)1.111397E38F;
+            p230.tas_ratio = (float) -9.736916E37F;
             CommunicationChannel.instance.send(p230);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnWIND_COVReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.vert_accuracy == (float) -2.758899E37F);
-                Debug.Assert(pack.time_usec == (ulong)139187151597477175L);
-                Debug.Assert(pack.wind_y == (float) -4.266592E37F);
-                Debug.Assert(pack.wind_alt == (float) -5.973406E37F);
-                Debug.Assert(pack.wind_x == (float)2.207162E38F);
-                Debug.Assert(pack.horiz_accuracy == (float)3.1778145E38F);
-                Debug.Assert(pack.var_horiz == (float) -1.9273887E38F);
-                Debug.Assert(pack.var_vert == (float) -1.8399634E37F);
-                Debug.Assert(pack.wind_z == (float) -3.2355628E37F);
+                Debug.Assert(pack.time_usec == (ulong)7157955813164513249L);
+                Debug.Assert(pack.wind_y == (float)8.83502E37F);
+                Debug.Assert(pack.wind_z == (float)9.778549E37F);
+                Debug.Assert(pack.var_vert == (float)7.8646706E37F);
+                Debug.Assert(pack.wind_alt == (float) -1.0575717E38F);
+                Debug.Assert(pack.wind_x == (float) -5.4285707E37F);
+                Debug.Assert(pack.vert_accuracy == (float)3.1873028E38F);
+                Debug.Assert(pack.horiz_accuracy == (float)1.1272074E38F);
+                Debug.Assert(pack.var_horiz == (float)2.322633E38F);
             };
             GroundControl.WIND_COV p231 = CommunicationChannel.new_WIND_COV();
             PH.setPack(p231);
-            p231.horiz_accuracy = (float)3.1778145E38F;
-            p231.vert_accuracy = (float) -2.758899E37F;
-            p231.wind_y = (float) -4.266592E37F;
-            p231.var_vert = (float) -1.8399634E37F;
-            p231.time_usec = (ulong)139187151597477175L;
-            p231.wind_alt = (float) -5.973406E37F;
-            p231.var_horiz = (float) -1.9273887E38F;
-            p231.wind_z = (float) -3.2355628E37F;
-            p231.wind_x = (float)2.207162E38F;
+            p231.wind_x = (float) -5.4285707E37F;
+            p231.var_horiz = (float)2.322633E38F;
+            p231.wind_y = (float)8.83502E37F;
+            p231.wind_z = (float)9.778549E37F;
+            p231.vert_accuracy = (float)3.1873028E38F;
+            p231.var_vert = (float)7.8646706E37F;
+            p231.time_usec = (ulong)7157955813164513249L;
+            p231.wind_alt = (float) -1.0575717E38F;
+            p231.horiz_accuracy = (float)1.1272074E38F;
             CommunicationChannel.instance.send(p231);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnGPS_INPUTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.speed_accuracy == (float) -1.8375334E38F);
-                Debug.Assert(pack.alt == (float) -1.7938828E38F);
-                Debug.Assert(pack.horiz_accuracy == (float)1.2281353E38F);
-                Debug.Assert(pack.vdop == (float)1.161251E38F);
-                Debug.Assert(pack.time_week == (ushort)(ushort)32019);
-                Debug.Assert(pack.vd == (float)1.6631965E38F);
-                Debug.Assert(pack.time_usec == (ulong)7598351009084707938L);
-                Debug.Assert(pack.lon == (int) -926971113);
-                Debug.Assert(pack.gps_id == (byte)(byte)46);
-                Debug.Assert(pack.vert_accuracy == (float)1.9511384E38F);
-                Debug.Assert(pack.time_week_ms == (uint)2295202943U);
-                Debug.Assert(pack.ignore_flags == (GPS_INPUT_IGNORE_FLAGS)GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VEL_HORIZ);
-                Debug.Assert(pack.satellites_visible == (byte)(byte)50);
-                Debug.Assert(pack.fix_type == (byte)(byte)27);
-                Debug.Assert(pack.lat == (int)383208734);
-                Debug.Assert(pack.hdop == (float) -2.8072072E37F);
-                Debug.Assert(pack.vn == (float) -1.3344517E38F);
-                Debug.Assert(pack.ve == (float)3.1132917E38F);
+                Debug.Assert(pack.time_week_ms == (uint)496438817U);
+                Debug.Assert(pack.fix_type == (byte)(byte)235);
+                Debug.Assert(pack.lat == (int)740143052);
+                Debug.Assert(pack.ignore_flags == (GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_SPEED_ACCURACY |
+                                                   GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VEL_VERT |
+                                                   GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_HORIZONTAL_ACCURACY |
+                                                   GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_ALT |
+                                                   GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VEL_HORIZ));
+                Debug.Assert(pack.time_week == (ushort)(ushort)34026);
+                Debug.Assert(pack.hdop == (float)2.0325099E37F);
+                Debug.Assert(pack.vert_accuracy == (float) -4.89527E35F);
+                Debug.Assert(pack.lon == (int) -1191791693);
+                Debug.Assert(pack.horiz_accuracy == (float) -2.0516562E38F);
+                Debug.Assert(pack.satellites_visible == (byte)(byte)242);
+                Debug.Assert(pack.vd == (float)1.6060374E38F);
+                Debug.Assert(pack.speed_accuracy == (float)1.07323396E36F);
+                Debug.Assert(pack.gps_id == (byte)(byte)116);
+                Debug.Assert(pack.ve == (float) -3.3765786E38F);
+                Debug.Assert(pack.alt == (float)2.5279608E38F);
+                Debug.Assert(pack.vn == (float) -2.0440303E37F);
+                Debug.Assert(pack.time_usec == (ulong)2481052603896235553L);
+                Debug.Assert(pack.vdop == (float)8.4261126E37F);
             };
             GroundControl.GPS_INPUT p232 = CommunicationChannel.new_GPS_INPUT();
             PH.setPack(p232);
-            p232.ignore_flags = (GPS_INPUT_IGNORE_FLAGS)GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VEL_HORIZ;
-            p232.ve = (float)3.1132917E38F;
-            p232.vert_accuracy = (float)1.9511384E38F;
-            p232.satellites_visible = (byte)(byte)50;
-            p232.vd = (float)1.6631965E38F;
-            p232.lon = (int) -926971113;
-            p232.gps_id = (byte)(byte)46;
-            p232.time_week = (ushort)(ushort)32019;
-            p232.time_usec = (ulong)7598351009084707938L;
-            p232.vn = (float) -1.3344517E38F;
-            p232.alt = (float) -1.7938828E38F;
-            p232.vdop = (float)1.161251E38F;
-            p232.time_week_ms = (uint)2295202943U;
-            p232.fix_type = (byte)(byte)27;
-            p232.speed_accuracy = (float) -1.8375334E38F;
-            p232.lat = (int)383208734;
-            p232.horiz_accuracy = (float)1.2281353E38F;
-            p232.hdop = (float) -2.8072072E37F;
+            p232.time_week = (ushort)(ushort)34026;
+            p232.fix_type = (byte)(byte)235;
+            p232.time_usec = (ulong)2481052603896235553L;
+            p232.horiz_accuracy = (float) -2.0516562E38F;
+            p232.time_week_ms = (uint)496438817U;
+            p232.lat = (int)740143052;
+            p232.vdop = (float)8.4261126E37F;
+            p232.satellites_visible = (byte)(byte)242;
+            p232.vd = (float)1.6060374E38F;
+            p232.gps_id = (byte)(byte)116;
+            p232.ve = (float) -3.3765786E38F;
+            p232.hdop = (float)2.0325099E37F;
+            p232.ignore_flags = (GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_SPEED_ACCURACY |
+                                 GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VEL_VERT |
+                                 GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_HORIZONTAL_ACCURACY |
+                                 GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_ALT |
+                                 GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VEL_HORIZ);
+            p232.speed_accuracy = (float)1.07323396E36F;
+            p232.lon = (int) -1191791693;
+            p232.vert_accuracy = (float) -4.89527E35F;
+            p232.vn = (float) -2.0440303E37F;
+            p232.alt = (float)2.5279608E38F;
             CommunicationChannel.instance.send(p232);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnGPS_RTCM_DATAReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.flags == (byte)(byte)210);
-                Debug.Assert(pack.len == (byte)(byte)114);
-                Debug.Assert(pack.data_.SequenceEqual(new byte[] {(byte)5, (byte)199, (byte)5, (byte)59, (byte)16, (byte)31, (byte)218, (byte)238, (byte)51, (byte)134, (byte)35, (byte)255, (byte)68, (byte)173, (byte)77, (byte)11, (byte)63, (byte)48, (byte)73, (byte)92, (byte)115, (byte)207, (byte)57, (byte)29, (byte)143, (byte)58, (byte)49, (byte)65, (byte)241, (byte)202, (byte)200, (byte)179, (byte)195, (byte)243, (byte)7, (byte)165, (byte)60, (byte)86, (byte)141, (byte)209, (byte)100, (byte)110, (byte)165, (byte)41, (byte)34, (byte)153, (byte)226, (byte)18, (byte)22, (byte)214, (byte)26, (byte)55, (byte)94, (byte)50, (byte)183, (byte)135, (byte)77, (byte)119, (byte)127, (byte)251, (byte)164, (byte)38, (byte)77, (byte)165, (byte)118, (byte)149, (byte)204, (byte)13, (byte)136, (byte)188, (byte)34, (byte)163, (byte)160, (byte)77, (byte)104, (byte)224, (byte)101, (byte)53, (byte)187, (byte)215, (byte)13, (byte)151, (byte)192, (byte)233, (byte)160, (byte)99, (byte)156, (byte)100, (byte)7, (byte)251, (byte)17, (byte)71, (byte)22, (byte)41, (byte)220, (byte)71, (byte)101, (byte)165, (byte)71, (byte)12, (byte)109, (byte)85, (byte)57, (byte)114, (byte)52, (byte)229, (byte)85, (byte)230, (byte)145, (byte)196, (byte)219, (byte)147, (byte)94, (byte)31, (byte)164, (byte)6, (byte)188, (byte)231, (byte)78, (byte)230, (byte)139, (byte)61, (byte)52, (byte)61, (byte)231, (byte)52, (byte)137, (byte)145, (byte)138, (byte)35, (byte)108, (byte)14, (byte)242, (byte)235, (byte)110, (byte)189, (byte)68, (byte)45, (byte)15, (byte)247, (byte)181, (byte)180, (byte)23, (byte)138, (byte)92, (byte)153, (byte)139, (byte)208, (byte)156, (byte)80, (byte)184, (byte)253, (byte)212, (byte)216, (byte)52, (byte)184, (byte)30, (byte)228, (byte)204, (byte)32, (byte)205, (byte)101, (byte)199, (byte)105, (byte)152, (byte)194, (byte)93, (byte)36, (byte)149, (byte)252, (byte)237, (byte)169, (byte)184, (byte)182, (byte)50, (byte)171, (byte)77, (byte)88, (byte)35, (byte)126}));
+                Debug.Assert(pack.data_.SequenceEqual(new byte[] {(byte)246, (byte)42, (byte)25, (byte)170, (byte)11, (byte)254, (byte)87, (byte)116, (byte)127, (byte)2, (byte)249, (byte)4, (byte)149, (byte)153, (byte)210, (byte)121, (byte)55, (byte)122, (byte)252, (byte)58, (byte)8, (byte)97, (byte)32, (byte)58, (byte)248, (byte)195, (byte)133, (byte)40, (byte)81, (byte)253, (byte)124, (byte)92, (byte)126, (byte)61, (byte)119, (byte)130, (byte)193, (byte)250, (byte)40, (byte)5, (byte)162, (byte)197, (byte)103, (byte)102, (byte)99, (byte)137, (byte)148, (byte)248, (byte)116, (byte)210, (byte)247, (byte)104, (byte)209, (byte)42, (byte)55, (byte)161, (byte)176, (byte)81, (byte)235, (byte)68, (byte)47, (byte)130, (byte)155, (byte)152, (byte)95, (byte)243, (byte)86, (byte)51, (byte)21, (byte)220, (byte)250, (byte)86, (byte)253, (byte)217, (byte)125, (byte)106, (byte)65, (byte)115, (byte)117, (byte)90, (byte)62, (byte)247, (byte)128, (byte)97, (byte)42, (byte)238, (byte)237, (byte)120, (byte)54, (byte)253, (byte)171, (byte)28, (byte)125, (byte)150, (byte)128, (byte)182, (byte)34, (byte)133, (byte)129, (byte)24, (byte)141, (byte)226, (byte)139, (byte)41, (byte)54, (byte)28, (byte)248, (byte)12, (byte)188, (byte)75, (byte)0, (byte)103, (byte)145, (byte)75, (byte)226, (byte)38, (byte)80, (byte)50, (byte)47, (byte)80, (byte)172, (byte)128, (byte)214, (byte)173, (byte)105, (byte)176, (byte)34, (byte)82, (byte)168, (byte)55, (byte)21, (byte)8, (byte)213, (byte)73, (byte)123, (byte)198, (byte)142, (byte)171, (byte)43, (byte)111, (byte)120, (byte)218, (byte)194, (byte)230, (byte)127, (byte)83, (byte)94, (byte)154, (byte)87, (byte)164, (byte)97, (byte)124, (byte)31, (byte)101, (byte)93, (byte)97, (byte)63, (byte)217, (byte)114, (byte)37, (byte)243, (byte)77, (byte)236, (byte)156, (byte)47, (byte)183, (byte)240, (byte)160, (byte)163, (byte)130, (byte)197, (byte)73, (byte)166, (byte)29, (byte)218, (byte)27, (byte)56, (byte)61, (byte)242, (byte)16}));
+                Debug.Assert(pack.len == (byte)(byte)52);
+                Debug.Assert(pack.flags == (byte)(byte)218);
             };
             GroundControl.GPS_RTCM_DATA p233 = CommunicationChannel.new_GPS_RTCM_DATA();
             PH.setPack(p233);
-            p233.flags = (byte)(byte)210;
-            p233.len = (byte)(byte)114;
-            p233.data__SET(new byte[] {(byte)5, (byte)199, (byte)5, (byte)59, (byte)16, (byte)31, (byte)218, (byte)238, (byte)51, (byte)134, (byte)35, (byte)255, (byte)68, (byte)173, (byte)77, (byte)11, (byte)63, (byte)48, (byte)73, (byte)92, (byte)115, (byte)207, (byte)57, (byte)29, (byte)143, (byte)58, (byte)49, (byte)65, (byte)241, (byte)202, (byte)200, (byte)179, (byte)195, (byte)243, (byte)7, (byte)165, (byte)60, (byte)86, (byte)141, (byte)209, (byte)100, (byte)110, (byte)165, (byte)41, (byte)34, (byte)153, (byte)226, (byte)18, (byte)22, (byte)214, (byte)26, (byte)55, (byte)94, (byte)50, (byte)183, (byte)135, (byte)77, (byte)119, (byte)127, (byte)251, (byte)164, (byte)38, (byte)77, (byte)165, (byte)118, (byte)149, (byte)204, (byte)13, (byte)136, (byte)188, (byte)34, (byte)163, (byte)160, (byte)77, (byte)104, (byte)224, (byte)101, (byte)53, (byte)187, (byte)215, (byte)13, (byte)151, (byte)192, (byte)233, (byte)160, (byte)99, (byte)156, (byte)100, (byte)7, (byte)251, (byte)17, (byte)71, (byte)22, (byte)41, (byte)220, (byte)71, (byte)101, (byte)165, (byte)71, (byte)12, (byte)109, (byte)85, (byte)57, (byte)114, (byte)52, (byte)229, (byte)85, (byte)230, (byte)145, (byte)196, (byte)219, (byte)147, (byte)94, (byte)31, (byte)164, (byte)6, (byte)188, (byte)231, (byte)78, (byte)230, (byte)139, (byte)61, (byte)52, (byte)61, (byte)231, (byte)52, (byte)137, (byte)145, (byte)138, (byte)35, (byte)108, (byte)14, (byte)242, (byte)235, (byte)110, (byte)189, (byte)68, (byte)45, (byte)15, (byte)247, (byte)181, (byte)180, (byte)23, (byte)138, (byte)92, (byte)153, (byte)139, (byte)208, (byte)156, (byte)80, (byte)184, (byte)253, (byte)212, (byte)216, (byte)52, (byte)184, (byte)30, (byte)228, (byte)204, (byte)32, (byte)205, (byte)101, (byte)199, (byte)105, (byte)152, (byte)194, (byte)93, (byte)36, (byte)149, (byte)252, (byte)237, (byte)169, (byte)184, (byte)182, (byte)50, (byte)171, (byte)77, (byte)88, (byte)35, (byte)126}, 0) ;
+            p233.len = (byte)(byte)52;
+            p233.flags = (byte)(byte)218;
+            p233.data__SET(new byte[] {(byte)246, (byte)42, (byte)25, (byte)170, (byte)11, (byte)254, (byte)87, (byte)116, (byte)127, (byte)2, (byte)249, (byte)4, (byte)149, (byte)153, (byte)210, (byte)121, (byte)55, (byte)122, (byte)252, (byte)58, (byte)8, (byte)97, (byte)32, (byte)58, (byte)248, (byte)195, (byte)133, (byte)40, (byte)81, (byte)253, (byte)124, (byte)92, (byte)126, (byte)61, (byte)119, (byte)130, (byte)193, (byte)250, (byte)40, (byte)5, (byte)162, (byte)197, (byte)103, (byte)102, (byte)99, (byte)137, (byte)148, (byte)248, (byte)116, (byte)210, (byte)247, (byte)104, (byte)209, (byte)42, (byte)55, (byte)161, (byte)176, (byte)81, (byte)235, (byte)68, (byte)47, (byte)130, (byte)155, (byte)152, (byte)95, (byte)243, (byte)86, (byte)51, (byte)21, (byte)220, (byte)250, (byte)86, (byte)253, (byte)217, (byte)125, (byte)106, (byte)65, (byte)115, (byte)117, (byte)90, (byte)62, (byte)247, (byte)128, (byte)97, (byte)42, (byte)238, (byte)237, (byte)120, (byte)54, (byte)253, (byte)171, (byte)28, (byte)125, (byte)150, (byte)128, (byte)182, (byte)34, (byte)133, (byte)129, (byte)24, (byte)141, (byte)226, (byte)139, (byte)41, (byte)54, (byte)28, (byte)248, (byte)12, (byte)188, (byte)75, (byte)0, (byte)103, (byte)145, (byte)75, (byte)226, (byte)38, (byte)80, (byte)50, (byte)47, (byte)80, (byte)172, (byte)128, (byte)214, (byte)173, (byte)105, (byte)176, (byte)34, (byte)82, (byte)168, (byte)55, (byte)21, (byte)8, (byte)213, (byte)73, (byte)123, (byte)198, (byte)142, (byte)171, (byte)43, (byte)111, (byte)120, (byte)218, (byte)194, (byte)230, (byte)127, (byte)83, (byte)94, (byte)154, (byte)87, (byte)164, (byte)97, (byte)124, (byte)31, (byte)101, (byte)93, (byte)97, (byte)63, (byte)217, (byte)114, (byte)37, (byte)243, (byte)77, (byte)236, (byte)156, (byte)47, (byte)183, (byte)240, (byte)160, (byte)163, (byte)130, (byte)197, (byte)73, (byte)166, (byte)29, (byte)218, (byte)27, (byte)56, (byte)61, (byte)242, (byte)16}, 0) ;
             CommunicationChannel.instance.send(p233);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnHIGH_LATENCYReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.base_mode == (MAV_MODE_FLAG)MAV_MODE_FLAG.MAV_MODE_FLAG_AUTO_ENABLED);
-                Debug.Assert(pack.pitch == (short)(short)24058);
-                Debug.Assert(pack.latitude == (int)426515807);
-                Debug.Assert(pack.failsafe == (byte)(byte)100);
-                Debug.Assert(pack.landed_state == (MAV_LANDED_STATE)MAV_LANDED_STATE.MAV_LANDED_STATE_UNDEFINED);
-                Debug.Assert(pack.gps_nsat == (byte)(byte)3);
-                Debug.Assert(pack.airspeed == (byte)(byte)251);
-                Debug.Assert(pack.altitude_amsl == (short)(short)30298);
-                Debug.Assert(pack.gps_fix_type == (GPS_FIX_TYPE)GPS_FIX_TYPE.GPS_FIX_TYPE_PPP);
-                Debug.Assert(pack.heading_sp == (short)(short)18409);
-                Debug.Assert(pack.custom_mode == (uint)1059946731U);
-                Debug.Assert(pack.wp_distance == (ushort)(ushort)16403);
-                Debug.Assert(pack.airspeed_sp == (byte)(byte)66);
-                Debug.Assert(pack.roll == (short)(short)22758);
-                Debug.Assert(pack.temperature_air == (sbyte)(sbyte) - 125);
-                Debug.Assert(pack.altitude_sp == (short)(short) -8613);
-                Debug.Assert(pack.groundspeed == (byte)(byte)209);
-                Debug.Assert(pack.climb_rate == (sbyte)(sbyte)114);
-                Debug.Assert(pack.throttle == (sbyte)(sbyte) - 34);
-                Debug.Assert(pack.longitude == (int) -501917987);
-                Debug.Assert(pack.temperature == (sbyte)(sbyte) - 104);
-                Debug.Assert(pack.heading == (ushort)(ushort)20801);
-                Debug.Assert(pack.wp_num == (byte)(byte)89);
-                Debug.Assert(pack.battery_remaining == (byte)(byte)180);
+                Debug.Assert(pack.airspeed_sp == (byte)(byte)159);
+                Debug.Assert(pack.roll == (short)(short)11520);
+                Debug.Assert(pack.failsafe == (byte)(byte)240);
+                Debug.Assert(pack.temperature == (sbyte)(sbyte)78);
+                Debug.Assert(pack.pitch == (short)(short)10686);
+                Debug.Assert(pack.altitude_sp == (short)(short) -24902);
+                Debug.Assert(pack.landed_state == MAV_LANDED_STATE.MAV_LANDED_STATE_TAKEOFF);
+                Debug.Assert(pack.heading_sp == (short)(short) -27428);
+                Debug.Assert(pack.custom_mode == (uint)1727569603U);
+                Debug.Assert(pack.throttle == (sbyte)(sbyte) - 29);
+                Debug.Assert(pack.gps_nsat == (byte)(byte)56);
+                Debug.Assert(pack.altitude_amsl == (short)(short) -27023);
+                Debug.Assert(pack.wp_num == (byte)(byte)12);
+                Debug.Assert(pack.heading == (ushort)(ushort)12312);
+                Debug.Assert(pack.climb_rate == (sbyte)(sbyte)75);
+                Debug.Assert(pack.latitude == (int) -587534200);
+                Debug.Assert(pack.base_mode == (MAV_MODE_FLAG.MAV_MODE_FLAG_GUIDED_ENABLED |
+                                                MAV_MODE_FLAG.MAV_MODE_FLAG_TEST_ENABLED |
+                                                MAV_MODE_FLAG.MAV_MODE_FLAG_STABILIZE_ENABLED |
+                                                MAV_MODE_FLAG.MAV_MODE_FLAG_SAFETY_ARMED |
+                                                MAV_MODE_FLAG.MAV_MODE_FLAG_HIL_ENABLED));
+                Debug.Assert(pack.groundspeed == (byte)(byte)113);
+                Debug.Assert(pack.airspeed == (byte)(byte)180);
+                Debug.Assert(pack.temperature_air == (sbyte)(sbyte)66);
+                Debug.Assert(pack.wp_distance == (ushort)(ushort)11743);
+                Debug.Assert(pack.gps_fix_type == GPS_FIX_TYPE.GPS_FIX_TYPE_PPP);
+                Debug.Assert(pack.battery_remaining == (byte)(byte)194);
+                Debug.Assert(pack.longitude == (int) -555649570);
             };
             GroundControl.HIGH_LATENCY p234 = CommunicationChannel.new_HIGH_LATENCY();
             PH.setPack(p234);
-            p234.pitch = (short)(short)24058;
-            p234.latitude = (int)426515807;
-            p234.wp_distance = (ushort)(ushort)16403;
-            p234.airspeed_sp = (byte)(byte)66;
-            p234.gps_nsat = (byte)(byte)3;
-            p234.failsafe = (byte)(byte)100;
-            p234.temperature_air = (sbyte)(sbyte) - 125;
-            p234.heading = (ushort)(ushort)20801;
-            p234.climb_rate = (sbyte)(sbyte)114;
-            p234.temperature = (sbyte)(sbyte) - 104;
-            p234.gps_fix_type = (GPS_FIX_TYPE)GPS_FIX_TYPE.GPS_FIX_TYPE_PPP;
-            p234.wp_num = (byte)(byte)89;
-            p234.altitude_sp = (short)(short) -8613;
-            p234.base_mode = (MAV_MODE_FLAG)MAV_MODE_FLAG.MAV_MODE_FLAG_AUTO_ENABLED;
-            p234.custom_mode = (uint)1059946731U;
-            p234.altitude_amsl = (short)(short)30298;
-            p234.battery_remaining = (byte)(byte)180;
-            p234.groundspeed = (byte)(byte)209;
-            p234.landed_state = (MAV_LANDED_STATE)MAV_LANDED_STATE.MAV_LANDED_STATE_UNDEFINED;
-            p234.heading_sp = (short)(short)18409;
-            p234.airspeed = (byte)(byte)251;
-            p234.roll = (short)(short)22758;
-            p234.throttle = (sbyte)(sbyte) - 34;
-            p234.longitude = (int) -501917987;
+            p234.roll = (short)(short)11520;
+            p234.wp_num = (byte)(byte)12;
+            p234.battery_remaining = (byte)(byte)194;
+            p234.temperature_air = (sbyte)(sbyte)66;
+            p234.heading = (ushort)(ushort)12312;
+            p234.temperature = (sbyte)(sbyte)78;
+            p234.longitude = (int) -555649570;
+            p234.pitch = (short)(short)10686;
+            p234.gps_nsat = (byte)(byte)56;
+            p234.base_mode = (MAV_MODE_FLAG.MAV_MODE_FLAG_GUIDED_ENABLED |
+                              MAV_MODE_FLAG.MAV_MODE_FLAG_TEST_ENABLED |
+                              MAV_MODE_FLAG.MAV_MODE_FLAG_STABILIZE_ENABLED |
+                              MAV_MODE_FLAG.MAV_MODE_FLAG_SAFETY_ARMED |
+                              MAV_MODE_FLAG.MAV_MODE_FLAG_HIL_ENABLED);
+            p234.landed_state = MAV_LANDED_STATE.MAV_LANDED_STATE_TAKEOFF;
+            p234.custom_mode = (uint)1727569603U;
+            p234.latitude = (int) -587534200;
+            p234.altitude_sp = (short)(short) -24902;
+            p234.climb_rate = (sbyte)(sbyte)75;
+            p234.wp_distance = (ushort)(ushort)11743;
+            p234.throttle = (sbyte)(sbyte) - 29;
+            p234.failsafe = (byte)(byte)240;
+            p234.heading_sp = (short)(short) -27428;
+            p234.groundspeed = (byte)(byte)113;
+            p234.airspeed_sp = (byte)(byte)159;
+            p234.altitude_amsl = (short)(short) -27023;
+            p234.airspeed = (byte)(byte)180;
+            p234.gps_fix_type = GPS_FIX_TYPE.GPS_FIX_TYPE_PPP;
             CommunicationChannel.instance.send(p234);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnVIBRATIONReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.clipping_0 == (uint)1984732874U);
-                Debug.Assert(pack.vibration_x == (float) -1.9793906E38F);
-                Debug.Assert(pack.vibration_y == (float)1.968372E38F);
-                Debug.Assert(pack.vibration_z == (float)1.0894171E38F);
-                Debug.Assert(pack.clipping_1 == (uint)534524590U);
-                Debug.Assert(pack.time_usec == (ulong)5261066560884574098L);
-                Debug.Assert(pack.clipping_2 == (uint)3858621437U);
+                Debug.Assert(pack.time_usec == (ulong)6812401522297420429L);
+                Debug.Assert(pack.vibration_z == (float)1.0082417E38F);
+                Debug.Assert(pack.vibration_x == (float)4.167033E37F);
+                Debug.Assert(pack.clipping_1 == (uint)3853199150U);
+                Debug.Assert(pack.vibration_y == (float) -1.1162161E38F);
+                Debug.Assert(pack.clipping_0 == (uint)1444021100U);
+                Debug.Assert(pack.clipping_2 == (uint)1424155544U);
             };
             GroundControl.VIBRATION p241 = CommunicationChannel.new_VIBRATION();
             PH.setPack(p241);
-            p241.time_usec = (ulong)5261066560884574098L;
-            p241.clipping_0 = (uint)1984732874U;
-            p241.clipping_1 = (uint)534524590U;
-            p241.vibration_y = (float)1.968372E38F;
-            p241.vibration_x = (float) -1.9793906E38F;
-            p241.vibration_z = (float)1.0894171E38F;
-            p241.clipping_2 = (uint)3858621437U;
+            p241.vibration_x = (float)4.167033E37F;
+            p241.clipping_1 = (uint)3853199150U;
+            p241.clipping_2 = (uint)1424155544U;
+            p241.vibration_z = (float)1.0082417E38F;
+            p241.time_usec = (ulong)6812401522297420429L;
+            p241.vibration_y = (float) -1.1162161E38F;
+            p241.clipping_0 = (uint)1444021100U;
             CommunicationChannel.instance.send(p241);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnHOME_POSITIONReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.z == (float)1.09948E38F);
-                Debug.Assert(pack.time_usec_TRY(ph) == (ulong)3546616014772063110L);
-                Debug.Assert(pack.longitude == (int) -16619345);
-                Debug.Assert(pack.y == (float) -3.1788306E38F);
-                Debug.Assert(pack.approach_x == (float)1.5575715E38F);
-                Debug.Assert(pack.x == (float) -1.5531369E38F);
-                Debug.Assert(pack.q.SequenceEqual(new float[] {-1.3234499E38F, -1.3913111E38F, 4.2299168E37F, -2.3221424E38F}));
-                Debug.Assert(pack.latitude == (int) -924937136);
-                Debug.Assert(pack.altitude == (int) -1384533851);
-                Debug.Assert(pack.approach_z == (float) -3.1646266E37F);
-                Debug.Assert(pack.approach_y == (float)2.8875123E38F);
+                Debug.Assert(pack.z == (float)2.5646111E38F);
+                Debug.Assert(pack.latitude == (int) -801060292);
+                Debug.Assert(pack.x == (float) -2.7167343E38F);
+                Debug.Assert(pack.y == (float) -1.9015108E38F);
+                Debug.Assert(pack.longitude == (int) -1632147059);
+                Debug.Assert(pack.q.SequenceEqual(new float[] {-3.112353E38F, -1.441717E38F, 6.1670624E37F, -9.022282E37F}));
+                Debug.Assert(pack.approach_x == (float)1.1248683E38F);
+                Debug.Assert(pack.time_usec_TRY(ph) == (ulong)7296535189156388669L);
+                Debug.Assert(pack.approach_y == (float)3.4841767E37F);
+                Debug.Assert(pack.altitude == (int)1686979877);
+                Debug.Assert(pack.approach_z == (float)2.3688222E38F);
             };
             GroundControl.HOME_POSITION p242 = CommunicationChannel.new_HOME_POSITION();
             PH.setPack(p242);
-            p242.approach_x = (float)1.5575715E38F;
-            p242.longitude = (int) -16619345;
-            p242.approach_z = (float) -3.1646266E37F;
-            p242.q_SET(new float[] {-1.3234499E38F, -1.3913111E38F, 4.2299168E37F, -2.3221424E38F}, 0) ;
-            p242.approach_y = (float)2.8875123E38F;
-            p242.latitude = (int) -924937136;
-            p242.z = (float)1.09948E38F;
-            p242.time_usec_SET((ulong)3546616014772063110L, PH) ;
-            p242.y = (float) -3.1788306E38F;
-            p242.altitude = (int) -1384533851;
-            p242.x = (float) -1.5531369E38F;
+            p242.approach_z = (float)2.3688222E38F;
+            p242.x = (float) -2.7167343E38F;
+            p242.q_SET(new float[] {-3.112353E38F, -1.441717E38F, 6.1670624E37F, -9.022282E37F}, 0) ;
+            p242.latitude = (int) -801060292;
+            p242.approach_y = (float)3.4841767E37F;
+            p242.longitude = (int) -1632147059;
+            p242.approach_x = (float)1.1248683E38F;
+            p242.y = (float) -1.9015108E38F;
+            p242.z = (float)2.5646111E38F;
+            p242.altitude = (int)1686979877;
+            p242.time_usec_SET((ulong)7296535189156388669L, PH) ;
             CommunicationChannel.instance.send(p242);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnSET_HOME_POSITIONReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_system == (byte)(byte)210);
-                Debug.Assert(pack.approach_y == (float)3.1040127E38F);
-                Debug.Assert(pack.y == (float) -1.8156418E38F);
-                Debug.Assert(pack.time_usec_TRY(ph) == (ulong)7278592662484160882L);
-                Debug.Assert(pack.altitude == (int)1809005020);
-                Debug.Assert(pack.approach_x == (float)2.4992598E38F);
-                Debug.Assert(pack.z == (float) -4.8233974E37F);
-                Debug.Assert(pack.longitude == (int) -309410366);
-                Debug.Assert(pack.approach_z == (float) -2.1484006E38F);
-                Debug.Assert(pack.latitude == (int)502369842);
-                Debug.Assert(pack.x == (float)7.108236E37F);
-                Debug.Assert(pack.q.SequenceEqual(new float[] {-2.4450359E37F, 8.625847E36F, -3.1269663E38F, -1.9459351E38F}));
+                Debug.Assert(pack.approach_y == (float) -2.7663892E38F);
+                Debug.Assert(pack.y == (float) -1.9227497E38F);
+                Debug.Assert(pack.latitude == (int) -1894680030);
+                Debug.Assert(pack.approach_x == (float) -3.3868054E38F);
+                Debug.Assert(pack.approach_z == (float)3.5047895E37F);
+                Debug.Assert(pack.longitude == (int)91874143);
+                Debug.Assert(pack.target_system == (byte)(byte)200);
+                Debug.Assert(pack.x == (float) -3.2093577E37F);
+                Debug.Assert(pack.time_usec_TRY(ph) == (ulong)4384185138586342442L);
+                Debug.Assert(pack.q.SequenceEqual(new float[] {3.1186949E38F, -2.3369275E38F, -2.0110814E38F, -7.6972774E37F}));
+                Debug.Assert(pack.altitude == (int) -129649804);
+                Debug.Assert(pack.z == (float)4.399204E37F);
             };
             GroundControl.SET_HOME_POSITION p243 = CommunicationChannel.new_SET_HOME_POSITION();
             PH.setPack(p243);
-            p243.target_system = (byte)(byte)210;
-            p243.z = (float) -4.8233974E37F;
-            p243.y = (float) -1.8156418E38F;
-            p243.approach_y = (float)3.1040127E38F;
-            p243.longitude = (int) -309410366;
-            p243.q_SET(new float[] {-2.4450359E37F, 8.625847E36F, -3.1269663E38F, -1.9459351E38F}, 0) ;
-            p243.x = (float)7.108236E37F;
-            p243.approach_x = (float)2.4992598E38F;
-            p243.time_usec_SET((ulong)7278592662484160882L, PH) ;
-            p243.approach_z = (float) -2.1484006E38F;
-            p243.altitude = (int)1809005020;
-            p243.latitude = (int)502369842;
+            p243.time_usec_SET((ulong)4384185138586342442L, PH) ;
+            p243.approach_z = (float)3.5047895E37F;
+            p243.target_system = (byte)(byte)200;
+            p243.q_SET(new float[] {3.1186949E38F, -2.3369275E38F, -2.0110814E38F, -7.6972774E37F}, 0) ;
+            p243.latitude = (int) -1894680030;
+            p243.altitude = (int) -129649804;
+            p243.approach_x = (float) -3.3868054E38F;
+            p243.longitude = (int)91874143;
+            p243.y = (float) -1.9227497E38F;
+            p243.x = (float) -3.2093577E37F;
+            p243.approach_y = (float) -2.7663892E38F;
+            p243.z = (float)4.399204E37F;
             CommunicationChannel.instance.send(p243);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnMESSAGE_INTERVALReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.message_id == (ushort)(ushort)21462);
-                Debug.Assert(pack.interval_us == (int)719356209);
+                Debug.Assert(pack.message_id == (ushort)(ushort)31289);
+                Debug.Assert(pack.interval_us == (int)808641204);
             };
             GroundControl.MESSAGE_INTERVAL p244 = CommunicationChannel.new_MESSAGE_INTERVAL();
             PH.setPack(p244);
-            p244.message_id = (ushort)(ushort)21462;
-            p244.interval_us = (int)719356209;
+            p244.interval_us = (int)808641204;
+            p244.message_id = (ushort)(ushort)31289;
             CommunicationChannel.instance.send(p244);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnEXTENDED_SYS_STATEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.vtol_state == (MAV_VTOL_STATE)MAV_VTOL_STATE.MAV_VTOL_STATE_TRANSITION_TO_FW);
-                Debug.Assert(pack.landed_state == (MAV_LANDED_STATE)MAV_LANDED_STATE.MAV_LANDED_STATE_IN_AIR);
+                Debug.Assert(pack.vtol_state == MAV_VTOL_STATE.MAV_VTOL_STATE_TRANSITION_TO_MC);
+                Debug.Assert(pack.landed_state == MAV_LANDED_STATE.MAV_LANDED_STATE_ON_GROUND);
             };
             GroundControl.EXTENDED_SYS_STATE p245 = CommunicationChannel.new_EXTENDED_SYS_STATE();
             PH.setPack(p245);
-            p245.landed_state = (MAV_LANDED_STATE)MAV_LANDED_STATE.MAV_LANDED_STATE_IN_AIR;
-            p245.vtol_state = (MAV_VTOL_STATE)MAV_VTOL_STATE.MAV_VTOL_STATE_TRANSITION_TO_FW;
+            p245.vtol_state = MAV_VTOL_STATE.MAV_VTOL_STATE_TRANSITION_TO_MC;
+            p245.landed_state = MAV_LANDED_STATE.MAV_LANDED_STATE_ON_GROUND;
             CommunicationChannel.instance.send(p245);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnADSB_VEHICLEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.callsign_LEN(ph) == 5);
-                Debug.Assert(pack.callsign_TRY(ph).Equals("ykdki"));
-                Debug.Assert(pack.ver_velocity == (short)(short)23389);
-                Debug.Assert(pack.squawk == (ushort)(ushort)24089);
-                Debug.Assert(pack.altitude_type == (ADSB_ALTITUDE_TYPE)ADSB_ALTITUDE_TYPE.ADSB_ALTITUDE_TYPE_GEOMETRIC);
-                Debug.Assert(pack.lon == (int) -792047127);
-                Debug.Assert(pack.emitter_type == (ADSB_EMITTER_TYPE)ADSB_EMITTER_TYPE.ADSB_EMITTER_TYPE_ULTRA_LIGHT);
-                Debug.Assert(pack.tslc == (byte)(byte)165);
-                Debug.Assert(pack.heading == (ushort)(ushort)5587);
-                Debug.Assert(pack.altitude == (int) -1176721339);
-                Debug.Assert(pack.lat == (int)395273537);
-                Debug.Assert(pack.hor_velocity == (ushort)(ushort)36460);
-                Debug.Assert(pack.flags == (ADSB_FLAGS)ADSB_FLAGS.ADSB_FLAGS_VALID_VELOCITY);
-                Debug.Assert(pack.ICAO_address == (uint)4244742657U);
+                Debug.Assert(pack.hor_velocity == (ushort)(ushort)30268);
+                Debug.Assert(pack.callsign_LEN(ph) == 1);
+                Debug.Assert(pack.callsign_TRY(ph).Equals("i"));
+                Debug.Assert(pack.ICAO_address == (uint)1382990763U);
+                Debug.Assert(pack.tslc == (byte)(byte)31);
+                Debug.Assert(pack.altitude_type == ADSB_ALTITUDE_TYPE.ADSB_ALTITUDE_TYPE_GEOMETRIC);
+                Debug.Assert(pack.flags == (ADSB_FLAGS.ADSB_FLAGS_SIMULATED));
+                Debug.Assert(pack.altitude == (int)1062446282);
+                Debug.Assert(pack.ver_velocity == (short)(short) -858);
+                Debug.Assert(pack.lat == (int)424087576);
+                Debug.Assert(pack.lon == (int) -1735179258);
+                Debug.Assert(pack.squawk == (ushort)(ushort)14702);
+                Debug.Assert(pack.heading == (ushort)(ushort)21101);
+                Debug.Assert(pack.emitter_type == ADSB_EMITTER_TYPE.ADSB_EMITTER_TYPE_LIGHT);
             };
             GroundControl.ADSB_VEHICLE p246 = CommunicationChannel.new_ADSB_VEHICLE();
             PH.setPack(p246);
-            p246.ICAO_address = (uint)4244742657U;
-            p246.altitude_type = (ADSB_ALTITUDE_TYPE)ADSB_ALTITUDE_TYPE.ADSB_ALTITUDE_TYPE_GEOMETRIC;
-            p246.tslc = (byte)(byte)165;
-            p246.squawk = (ushort)(ushort)24089;
-            p246.heading = (ushort)(ushort)5587;
-            p246.emitter_type = (ADSB_EMITTER_TYPE)ADSB_EMITTER_TYPE.ADSB_EMITTER_TYPE_ULTRA_LIGHT;
-            p246.flags = (ADSB_FLAGS)ADSB_FLAGS.ADSB_FLAGS_VALID_VELOCITY;
-            p246.hor_velocity = (ushort)(ushort)36460;
-            p246.lon = (int) -792047127;
-            p246.lat = (int)395273537;
-            p246.callsign_SET("ykdki", PH) ;
-            p246.altitude = (int) -1176721339;
-            p246.ver_velocity = (short)(short)23389;
+            p246.squawk = (ushort)(ushort)14702;
+            p246.hor_velocity = (ushort)(ushort)30268;
+            p246.callsign_SET("i", PH) ;
+            p246.lat = (int)424087576;
+            p246.altitude = (int)1062446282;
+            p246.altitude_type = ADSB_ALTITUDE_TYPE.ADSB_ALTITUDE_TYPE_GEOMETRIC;
+            p246.heading = (ushort)(ushort)21101;
+            p246.lon = (int) -1735179258;
+            p246.ver_velocity = (short)(short) -858;
+            p246.flags = (ADSB_FLAGS.ADSB_FLAGS_SIMULATED);
+            p246.emitter_type = ADSB_EMITTER_TYPE.ADSB_EMITTER_TYPE_LIGHT;
+            p246.ICAO_address = (uint)1382990763U;
+            p246.tslc = (byte)(byte)31;
             CommunicationChannel.instance.send(p246);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnCOLLISIONReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.altitude_minimum_delta == (float)1.9158395E38F);
-                Debug.Assert(pack.action == (MAV_COLLISION_ACTION)MAV_COLLISION_ACTION.MAV_COLLISION_ACTION_NONE);
-                Debug.Assert(pack.threat_level == (MAV_COLLISION_THREAT_LEVEL)MAV_COLLISION_THREAT_LEVEL.MAV_COLLISION_THREAT_LEVEL_HIGH);
-                Debug.Assert(pack.src_ == (MAV_COLLISION_SRC)MAV_COLLISION_SRC.MAV_COLLISION_SRC_MAVLINK_GPS_GLOBAL_INT);
-                Debug.Assert(pack.time_to_minimum_delta == (float)2.55471E38F);
-                Debug.Assert(pack.horizontal_minimum_delta == (float) -1.4538107E38F);
-                Debug.Assert(pack.id == (uint)1904106255U);
+                Debug.Assert(pack.src_ == MAV_COLLISION_SRC.MAV_COLLISION_SRC_ADSB);
+                Debug.Assert(pack.altitude_minimum_delta == (float) -2.608962E38F);
+                Debug.Assert(pack.time_to_minimum_delta == (float)2.6847602E38F);
+                Debug.Assert(pack.action == MAV_COLLISION_ACTION.MAV_COLLISION_ACTION_MOVE_PERPENDICULAR);
+                Debug.Assert(pack.id == (uint)1912477375U);
+                Debug.Assert(pack.horizontal_minimum_delta == (float) -1.1759958E38F);
+                Debug.Assert(pack.threat_level == MAV_COLLISION_THREAT_LEVEL.MAV_COLLISION_THREAT_LEVEL_LOW);
             };
             GroundControl.COLLISION p247 = CommunicationChannel.new_COLLISION();
             PH.setPack(p247);
-            p247.altitude_minimum_delta = (float)1.9158395E38F;
-            p247.horizontal_minimum_delta = (float) -1.4538107E38F;
-            p247.threat_level = (MAV_COLLISION_THREAT_LEVEL)MAV_COLLISION_THREAT_LEVEL.MAV_COLLISION_THREAT_LEVEL_HIGH;
-            p247.src_ = (MAV_COLLISION_SRC)MAV_COLLISION_SRC.MAV_COLLISION_SRC_MAVLINK_GPS_GLOBAL_INT;
-            p247.time_to_minimum_delta = (float)2.55471E38F;
-            p247.id = (uint)1904106255U;
-            p247.action = (MAV_COLLISION_ACTION)MAV_COLLISION_ACTION.MAV_COLLISION_ACTION_NONE;
+            p247.action = MAV_COLLISION_ACTION.MAV_COLLISION_ACTION_MOVE_PERPENDICULAR;
+            p247.id = (uint)1912477375U;
+            p247.time_to_minimum_delta = (float)2.6847602E38F;
+            p247.altitude_minimum_delta = (float) -2.608962E38F;
+            p247.src_ = MAV_COLLISION_SRC.MAV_COLLISION_SRC_ADSB;
+            p247.threat_level = MAV_COLLISION_THREAT_LEVEL.MAV_COLLISION_THREAT_LEVEL_LOW;
+            p247.horizontal_minimum_delta = (float) -1.1759958E38F;
             CommunicationChannel.instance.send(p247);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnV2_EXTENSIONReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.payload.SequenceEqual(new byte[] {(byte)95, (byte)149, (byte)182, (byte)103, (byte)156, (byte)58, (byte)88, (byte)94, (byte)229, (byte)18, (byte)226, (byte)44, (byte)209, (byte)68, (byte)175, (byte)155, (byte)214, (byte)141, (byte)239, (byte)109, (byte)244, (byte)55, (byte)10, (byte)113, (byte)176, (byte)62, (byte)199, (byte)35, (byte)130, (byte)11, (byte)21, (byte)216, (byte)125, (byte)80, (byte)185, (byte)23, (byte)157, (byte)55, (byte)73, (byte)86, (byte)30, (byte)81, (byte)151, (byte)51, (byte)175, (byte)74, (byte)237, (byte)6, (byte)59, (byte)111, (byte)148, (byte)175, (byte)215, (byte)229, (byte)61, (byte)52, (byte)36, (byte)78, (byte)111, (byte)24, (byte)40, (byte)32, (byte)234, (byte)182, (byte)110, (byte)95, (byte)177, (byte)144, (byte)230, (byte)154, (byte)219, (byte)41, (byte)13, (byte)89, (byte)164, (byte)229, (byte)33, (byte)126, (byte)0, (byte)26, (byte)109, (byte)124, (byte)1, (byte)35, (byte)3, (byte)209, (byte)183, (byte)170, (byte)95, (byte)153, (byte)51, (byte)71, (byte)224, (byte)154, (byte)148, (byte)227, (byte)104, (byte)150, (byte)64, (byte)123, (byte)155, (byte)142, (byte)159, (byte)47, (byte)216, (byte)128, (byte)83, (byte)27, (byte)179, (byte)3, (byte)206, (byte)160, (byte)13, (byte)81, (byte)31, (byte)122, (byte)238, (byte)8, (byte)220, (byte)205, (byte)249, (byte)75, (byte)173, (byte)150, (byte)46, (byte)49, (byte)41, (byte)105, (byte)193, (byte)42, (byte)81, (byte)255, (byte)115, (byte)12, (byte)8, (byte)43, (byte)3, (byte)243, (byte)121, (byte)192, (byte)155, (byte)157, (byte)189, (byte)93, (byte)101, (byte)69, (byte)24, (byte)195, (byte)26, (byte)163, (byte)19, (byte)179, (byte)146, (byte)85, (byte)227, (byte)92, (byte)40, (byte)49, (byte)158, (byte)88, (byte)65, (byte)143, (byte)144, (byte)190, (byte)62, (byte)26, (byte)50, (byte)226, (byte)197, (byte)140, (byte)233, (byte)165, (byte)96, (byte)52, (byte)52, (byte)162, (byte)136, (byte)63, (byte)99, (byte)31, (byte)45, (byte)138, (byte)73, (byte)17, (byte)82, (byte)120, (byte)102, (byte)1, (byte)191, (byte)62, (byte)215, (byte)135, (byte)208, (byte)119, (byte)251, (byte)64, (byte)77, (byte)146, (byte)123, (byte)212, (byte)220, (byte)39, (byte)174, (byte)65, (byte)156, (byte)149, (byte)69, (byte)34, (byte)59, (byte)25, (byte)201, (byte)84, (byte)35, (byte)17, (byte)218, (byte)193, (byte)113, (byte)122, (byte)124, (byte)11, (byte)199, (byte)59, (byte)66, (byte)195, (byte)152, (byte)37, (byte)128, (byte)84, (byte)104, (byte)113, (byte)161, (byte)6, (byte)179, (byte)96, (byte)225, (byte)195, (byte)40, (byte)138, (byte)94, (byte)227, (byte)254, (byte)10, (byte)192, (byte)91, (byte)150, (byte)207, (byte)246, (byte)159, (byte)200}));
-                Debug.Assert(pack.target_network == (byte)(byte)207);
-                Debug.Assert(pack.target_system == (byte)(byte)185);
-                Debug.Assert(pack.message_type == (ushort)(ushort)19139);
-                Debug.Assert(pack.target_component == (byte)(byte)149);
+                Debug.Assert(pack.payload.SequenceEqual(new byte[] {(byte)125, (byte)192, (byte)129, (byte)146, (byte)223, (byte)27, (byte)25, (byte)52, (byte)252, (byte)101, (byte)225, (byte)98, (byte)161, (byte)254, (byte)126, (byte)55, (byte)202, (byte)47, (byte)80, (byte)12, (byte)91, (byte)30, (byte)176, (byte)95, (byte)133, (byte)23, (byte)70, (byte)232, (byte)10, (byte)90, (byte)116, (byte)123, (byte)132, (byte)149, (byte)193, (byte)160, (byte)98, (byte)231, (byte)220, (byte)221, (byte)11, (byte)226, (byte)157, (byte)174, (byte)59, (byte)241, (byte)93, (byte)96, (byte)73, (byte)2, (byte)245, (byte)39, (byte)9, (byte)79, (byte)41, (byte)179, (byte)213, (byte)132, (byte)245, (byte)254, (byte)247, (byte)198, (byte)114, (byte)87, (byte)94, (byte)13, (byte)247, (byte)11, (byte)164, (byte)39, (byte)248, (byte)160, (byte)120, (byte)242, (byte)83, (byte)123, (byte)165, (byte)78, (byte)14, (byte)81, (byte)84, (byte)48, (byte)189, (byte)0, (byte)218, (byte)218, (byte)35, (byte)85, (byte)88, (byte)218, (byte)27, (byte)182, (byte)52, (byte)201, (byte)199, (byte)64, (byte)162, (byte)88, (byte)21, (byte)53, (byte)25, (byte)164, (byte)114, (byte)56, (byte)236, (byte)1, (byte)186, (byte)46, (byte)242, (byte)233, (byte)157, (byte)211, (byte)57, (byte)222, (byte)140, (byte)145, (byte)137, (byte)245, (byte)67, (byte)134, (byte)162, (byte)70, (byte)41, (byte)156, (byte)65, (byte)255, (byte)197, (byte)41, (byte)146, (byte)24, (byte)129, (byte)31, (byte)127, (byte)59, (byte)197, (byte)222, (byte)194, (byte)227, (byte)80, (byte)168, (byte)97, (byte)81, (byte)227, (byte)3, (byte)226, (byte)197, (byte)237, (byte)173, (byte)155, (byte)68, (byte)205, (byte)149, (byte)57, (byte)2, (byte)34, (byte)29, (byte)141, (byte)112, (byte)66, (byte)141, (byte)90, (byte)27, (byte)237, (byte)91, (byte)231, (byte)135, (byte)33, (byte)208, (byte)202, (byte)51, (byte)230, (byte)99, (byte)77, (byte)238, (byte)4, (byte)127, (byte)171, (byte)144, (byte)139, (byte)184, (byte)131, (byte)33, (byte)33, (byte)11, (byte)179, (byte)39, (byte)31, (byte)149, (byte)181, (byte)125, (byte)233, (byte)81, (byte)131, (byte)86, (byte)163, (byte)231, (byte)246, (byte)253, (byte)224, (byte)138, (byte)132, (byte)86, (byte)44, (byte)255, (byte)189, (byte)232, (byte)154, (byte)238, (byte)45, (byte)117, (byte)16, (byte)37, (byte)170, (byte)45, (byte)122, (byte)245, (byte)80, (byte)106, (byte)141, (byte)135, (byte)227, (byte)177, (byte)90, (byte)87, (byte)120, (byte)192, (byte)5, (byte)142, (byte)194, (byte)182, (byte)180, (byte)202, (byte)182, (byte)215, (byte)161, (byte)233, (byte)190, (byte)47, (byte)159, (byte)204, (byte)163, (byte)201, (byte)16, (byte)185, (byte)147, (byte)126, (byte)59, (byte)217, (byte)110}));
+                Debug.Assert(pack.message_type == (ushort)(ushort)38882);
+                Debug.Assert(pack.target_network == (byte)(byte)142);
+                Debug.Assert(pack.target_system == (byte)(byte)182);
+                Debug.Assert(pack.target_component == (byte)(byte)223);
             };
             GroundControl.V2_EXTENSION p248 = CommunicationChannel.new_V2_EXTENSION();
             PH.setPack(p248);
-            p248.target_component = (byte)(byte)149;
-            p248.target_network = (byte)(byte)207;
-            p248.payload_SET(new byte[] {(byte)95, (byte)149, (byte)182, (byte)103, (byte)156, (byte)58, (byte)88, (byte)94, (byte)229, (byte)18, (byte)226, (byte)44, (byte)209, (byte)68, (byte)175, (byte)155, (byte)214, (byte)141, (byte)239, (byte)109, (byte)244, (byte)55, (byte)10, (byte)113, (byte)176, (byte)62, (byte)199, (byte)35, (byte)130, (byte)11, (byte)21, (byte)216, (byte)125, (byte)80, (byte)185, (byte)23, (byte)157, (byte)55, (byte)73, (byte)86, (byte)30, (byte)81, (byte)151, (byte)51, (byte)175, (byte)74, (byte)237, (byte)6, (byte)59, (byte)111, (byte)148, (byte)175, (byte)215, (byte)229, (byte)61, (byte)52, (byte)36, (byte)78, (byte)111, (byte)24, (byte)40, (byte)32, (byte)234, (byte)182, (byte)110, (byte)95, (byte)177, (byte)144, (byte)230, (byte)154, (byte)219, (byte)41, (byte)13, (byte)89, (byte)164, (byte)229, (byte)33, (byte)126, (byte)0, (byte)26, (byte)109, (byte)124, (byte)1, (byte)35, (byte)3, (byte)209, (byte)183, (byte)170, (byte)95, (byte)153, (byte)51, (byte)71, (byte)224, (byte)154, (byte)148, (byte)227, (byte)104, (byte)150, (byte)64, (byte)123, (byte)155, (byte)142, (byte)159, (byte)47, (byte)216, (byte)128, (byte)83, (byte)27, (byte)179, (byte)3, (byte)206, (byte)160, (byte)13, (byte)81, (byte)31, (byte)122, (byte)238, (byte)8, (byte)220, (byte)205, (byte)249, (byte)75, (byte)173, (byte)150, (byte)46, (byte)49, (byte)41, (byte)105, (byte)193, (byte)42, (byte)81, (byte)255, (byte)115, (byte)12, (byte)8, (byte)43, (byte)3, (byte)243, (byte)121, (byte)192, (byte)155, (byte)157, (byte)189, (byte)93, (byte)101, (byte)69, (byte)24, (byte)195, (byte)26, (byte)163, (byte)19, (byte)179, (byte)146, (byte)85, (byte)227, (byte)92, (byte)40, (byte)49, (byte)158, (byte)88, (byte)65, (byte)143, (byte)144, (byte)190, (byte)62, (byte)26, (byte)50, (byte)226, (byte)197, (byte)140, (byte)233, (byte)165, (byte)96, (byte)52, (byte)52, (byte)162, (byte)136, (byte)63, (byte)99, (byte)31, (byte)45, (byte)138, (byte)73, (byte)17, (byte)82, (byte)120, (byte)102, (byte)1, (byte)191, (byte)62, (byte)215, (byte)135, (byte)208, (byte)119, (byte)251, (byte)64, (byte)77, (byte)146, (byte)123, (byte)212, (byte)220, (byte)39, (byte)174, (byte)65, (byte)156, (byte)149, (byte)69, (byte)34, (byte)59, (byte)25, (byte)201, (byte)84, (byte)35, (byte)17, (byte)218, (byte)193, (byte)113, (byte)122, (byte)124, (byte)11, (byte)199, (byte)59, (byte)66, (byte)195, (byte)152, (byte)37, (byte)128, (byte)84, (byte)104, (byte)113, (byte)161, (byte)6, (byte)179, (byte)96, (byte)225, (byte)195, (byte)40, (byte)138, (byte)94, (byte)227, (byte)254, (byte)10, (byte)192, (byte)91, (byte)150, (byte)207, (byte)246, (byte)159, (byte)200}, 0) ;
-            p248.target_system = (byte)(byte)185;
-            p248.message_type = (ushort)(ushort)19139;
+            p248.target_component = (byte)(byte)223;
+            p248.target_network = (byte)(byte)142;
+            p248.message_type = (ushort)(ushort)38882;
+            p248.target_system = (byte)(byte)182;
+            p248.payload_SET(new byte[] {(byte)125, (byte)192, (byte)129, (byte)146, (byte)223, (byte)27, (byte)25, (byte)52, (byte)252, (byte)101, (byte)225, (byte)98, (byte)161, (byte)254, (byte)126, (byte)55, (byte)202, (byte)47, (byte)80, (byte)12, (byte)91, (byte)30, (byte)176, (byte)95, (byte)133, (byte)23, (byte)70, (byte)232, (byte)10, (byte)90, (byte)116, (byte)123, (byte)132, (byte)149, (byte)193, (byte)160, (byte)98, (byte)231, (byte)220, (byte)221, (byte)11, (byte)226, (byte)157, (byte)174, (byte)59, (byte)241, (byte)93, (byte)96, (byte)73, (byte)2, (byte)245, (byte)39, (byte)9, (byte)79, (byte)41, (byte)179, (byte)213, (byte)132, (byte)245, (byte)254, (byte)247, (byte)198, (byte)114, (byte)87, (byte)94, (byte)13, (byte)247, (byte)11, (byte)164, (byte)39, (byte)248, (byte)160, (byte)120, (byte)242, (byte)83, (byte)123, (byte)165, (byte)78, (byte)14, (byte)81, (byte)84, (byte)48, (byte)189, (byte)0, (byte)218, (byte)218, (byte)35, (byte)85, (byte)88, (byte)218, (byte)27, (byte)182, (byte)52, (byte)201, (byte)199, (byte)64, (byte)162, (byte)88, (byte)21, (byte)53, (byte)25, (byte)164, (byte)114, (byte)56, (byte)236, (byte)1, (byte)186, (byte)46, (byte)242, (byte)233, (byte)157, (byte)211, (byte)57, (byte)222, (byte)140, (byte)145, (byte)137, (byte)245, (byte)67, (byte)134, (byte)162, (byte)70, (byte)41, (byte)156, (byte)65, (byte)255, (byte)197, (byte)41, (byte)146, (byte)24, (byte)129, (byte)31, (byte)127, (byte)59, (byte)197, (byte)222, (byte)194, (byte)227, (byte)80, (byte)168, (byte)97, (byte)81, (byte)227, (byte)3, (byte)226, (byte)197, (byte)237, (byte)173, (byte)155, (byte)68, (byte)205, (byte)149, (byte)57, (byte)2, (byte)34, (byte)29, (byte)141, (byte)112, (byte)66, (byte)141, (byte)90, (byte)27, (byte)237, (byte)91, (byte)231, (byte)135, (byte)33, (byte)208, (byte)202, (byte)51, (byte)230, (byte)99, (byte)77, (byte)238, (byte)4, (byte)127, (byte)171, (byte)144, (byte)139, (byte)184, (byte)131, (byte)33, (byte)33, (byte)11, (byte)179, (byte)39, (byte)31, (byte)149, (byte)181, (byte)125, (byte)233, (byte)81, (byte)131, (byte)86, (byte)163, (byte)231, (byte)246, (byte)253, (byte)224, (byte)138, (byte)132, (byte)86, (byte)44, (byte)255, (byte)189, (byte)232, (byte)154, (byte)238, (byte)45, (byte)117, (byte)16, (byte)37, (byte)170, (byte)45, (byte)122, (byte)245, (byte)80, (byte)106, (byte)141, (byte)135, (byte)227, (byte)177, (byte)90, (byte)87, (byte)120, (byte)192, (byte)5, (byte)142, (byte)194, (byte)182, (byte)180, (byte)202, (byte)182, (byte)215, (byte)161, (byte)233, (byte)190, (byte)47, (byte)159, (byte)204, (byte)163, (byte)201, (byte)16, (byte)185, (byte)147, (byte)126, (byte)59, (byte)217, (byte)110}, 0) ;
             CommunicationChannel.instance.send(p248);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnMEMORY_VECTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.type == (byte)(byte)174);
-                Debug.Assert(pack.value.SequenceEqual(new sbyte[] {(sbyte)76, (sbyte)53, (sbyte)16, (sbyte)19, (sbyte)16, (sbyte)58, (sbyte)1, (sbyte)95, (sbyte) - 15, (sbyte) - 89, (sbyte)77, (sbyte)127, (sbyte)12, (sbyte) - 116, (sbyte) - 52, (sbyte)72, (sbyte)51, (sbyte) - 90, (sbyte) - 67, (sbyte) - 1, (sbyte) - 57, (sbyte)115, (sbyte) - 59, (sbyte)112, (sbyte)1, (sbyte) - 31, (sbyte)92, (sbyte)96, (sbyte) - 52, (sbyte) - 27, (sbyte)103, (sbyte) - 25}));
-                Debug.Assert(pack.ver == (byte)(byte)146);
-                Debug.Assert(pack.address == (ushort)(ushort)15587);
+                Debug.Assert(pack.ver == (byte)(byte)11);
+                Debug.Assert(pack.value.SequenceEqual(new sbyte[] {(sbyte)74, (sbyte) - 98, (sbyte) - 45, (sbyte)109, (sbyte)70, (sbyte) - 49, (sbyte) - 54, (sbyte) - 106, (sbyte)110, (sbyte) - 125, (sbyte)118, (sbyte)9, (sbyte)46, (sbyte)29, (sbyte) - 57, (sbyte) - 112, (sbyte)84, (sbyte)24, (sbyte)2, (sbyte)42, (sbyte)21, (sbyte)56, (sbyte) - 61, (sbyte) - 98, (sbyte) - 55, (sbyte) - 85, (sbyte)57, (sbyte)96, (sbyte) - 64, (sbyte)90, (sbyte)103, (sbyte) - 7}));
+                Debug.Assert(pack.type == (byte)(byte)253);
+                Debug.Assert(pack.address == (ushort)(ushort)3601);
             };
             GroundControl.MEMORY_VECT p249 = CommunicationChannel.new_MEMORY_VECT();
             PH.setPack(p249);
-            p249.ver = (byte)(byte)146;
-            p249.address = (ushort)(ushort)15587;
-            p249.type = (byte)(byte)174;
-            p249.value_SET(new sbyte[] {(sbyte)76, (sbyte)53, (sbyte)16, (sbyte)19, (sbyte)16, (sbyte)58, (sbyte)1, (sbyte)95, (sbyte) - 15, (sbyte) - 89, (sbyte)77, (sbyte)127, (sbyte)12, (sbyte) - 116, (sbyte) - 52, (sbyte)72, (sbyte)51, (sbyte) - 90, (sbyte) - 67, (sbyte) - 1, (sbyte) - 57, (sbyte)115, (sbyte) - 59, (sbyte)112, (sbyte)1, (sbyte) - 31, (sbyte)92, (sbyte)96, (sbyte) - 52, (sbyte) - 27, (sbyte)103, (sbyte) - 25}, 0) ;
+            p249.type = (byte)(byte)253;
+            p249.address = (ushort)(ushort)3601;
+            p249.value_SET(new sbyte[] {(sbyte)74, (sbyte) - 98, (sbyte) - 45, (sbyte)109, (sbyte)70, (sbyte) - 49, (sbyte) - 54, (sbyte) - 106, (sbyte)110, (sbyte) - 125, (sbyte)118, (sbyte)9, (sbyte)46, (sbyte)29, (sbyte) - 57, (sbyte) - 112, (sbyte)84, (sbyte)24, (sbyte)2, (sbyte)42, (sbyte)21, (sbyte)56, (sbyte) - 61, (sbyte) - 98, (sbyte) - 55, (sbyte) - 85, (sbyte)57, (sbyte)96, (sbyte) - 64, (sbyte)90, (sbyte)103, (sbyte) - 7}, 0) ;
+            p249.ver = (byte)(byte)11;
             CommunicationChannel.instance.send(p249);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnDEBUG_VECTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.z == (float)2.1092162E38F);
-                Debug.Assert(pack.name_LEN(ph) == 8);
-                Debug.Assert(pack.name_TRY(ph).Equals("yYrbMKtl"));
-                Debug.Assert(pack.y == (float) -2.7124315E38F);
-                Debug.Assert(pack.time_usec == (ulong)8669094410807349403L);
-                Debug.Assert(pack.x == (float) -2.1090516E38F);
+                Debug.Assert(pack.x == (float) -3.1792308E38F);
+                Debug.Assert(pack.name_LEN(ph) == 6);
+                Debug.Assert(pack.name_TRY(ph).Equals("wOkrkP"));
+                Debug.Assert(pack.z == (float)1.8343995E38F);
+                Debug.Assert(pack.y == (float)1.7531322E38F);
+                Debug.Assert(pack.time_usec == (ulong)4429674496160241022L);
             };
             GroundControl.DEBUG_VECT p250 = CommunicationChannel.new_DEBUG_VECT();
             PH.setPack(p250);
-            p250.y = (float) -2.7124315E38F;
-            p250.name_SET("yYrbMKtl", PH) ;
-            p250.time_usec = (ulong)8669094410807349403L;
-            p250.z = (float)2.1092162E38F;
-            p250.x = (float) -2.1090516E38F;
+            p250.time_usec = (ulong)4429674496160241022L;
+            p250.name_SET("wOkrkP", PH) ;
+            p250.x = (float) -3.1792308E38F;
+            p250.y = (float)1.7531322E38F;
+            p250.z = (float)1.8343995E38F;
             CommunicationChannel.instance.send(p250);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnNAMED_VALUE_FLOATReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.name_LEN(ph) == 3);
-                Debug.Assert(pack.name_TRY(ph).Equals("qrd"));
-                Debug.Assert(pack.value == (float)1.3422888E38F);
-                Debug.Assert(pack.time_boot_ms == (uint)2559123283U);
+                Debug.Assert(pack.value == (float)6.3348156E37F);
+                Debug.Assert(pack.name_LEN(ph) == 8);
+                Debug.Assert(pack.name_TRY(ph).Equals("zrvetdkq"));
+                Debug.Assert(pack.time_boot_ms == (uint)2911196496U);
             };
             GroundControl.NAMED_VALUE_FLOAT p251 = CommunicationChannel.new_NAMED_VALUE_FLOAT();
             PH.setPack(p251);
-            p251.name_SET("qrd", PH) ;
-            p251.time_boot_ms = (uint)2559123283U;
-            p251.value = (float)1.3422888E38F;
+            p251.value = (float)6.3348156E37F;
+            p251.time_boot_ms = (uint)2911196496U;
+            p251.name_SET("zrvetdkq", PH) ;
             CommunicationChannel.instance.send(p251);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnNAMED_VALUE_INTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.name_LEN(ph) == 9);
-                Debug.Assert(pack.name_TRY(ph).Equals("eswZuzbtf"));
-                Debug.Assert(pack.value == (int) -823826621);
-                Debug.Assert(pack.time_boot_ms == (uint)3483015888U);
+                Debug.Assert(pack.value == (int)487160372);
+                Debug.Assert(pack.name_LEN(ph) == 4);
+                Debug.Assert(pack.name_TRY(ph).Equals("jocf"));
+                Debug.Assert(pack.time_boot_ms == (uint)969976904U);
             };
             GroundControl.NAMED_VALUE_INT p252 = CommunicationChannel.new_NAMED_VALUE_INT();
             PH.setPack(p252);
-            p252.value = (int) -823826621;
-            p252.name_SET("eswZuzbtf", PH) ;
-            p252.time_boot_ms = (uint)3483015888U;
+            p252.name_SET("jocf", PH) ;
+            p252.value = (int)487160372;
+            p252.time_boot_ms = (uint)969976904U;
             CommunicationChannel.instance.send(p252);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnSTATUSTEXTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.text_LEN(ph) == 43);
-                Debug.Assert(pack.text_TRY(ph).Equals("lgcrylithlqxReminSdfisydcgVdmiguymaXPrmyowb"));
-                Debug.Assert(pack.severity == (MAV_SEVERITY)MAV_SEVERITY.MAV_SEVERITY_ERROR);
+                Debug.Assert(pack.severity == MAV_SEVERITY.MAV_SEVERITY_ALERT);
+                Debug.Assert(pack.text_LEN(ph) == 22);
+                Debug.Assert(pack.text_TRY(ph).Equals("tjplamznMhrUbvqqwejcnp"));
             };
             GroundControl.STATUSTEXT p253 = CommunicationChannel.new_STATUSTEXT();
             PH.setPack(p253);
-            p253.text_SET("lgcrylithlqxReminSdfisydcgVdmiguymaXPrmyowb", PH) ;
-            p253.severity = (MAV_SEVERITY)MAV_SEVERITY.MAV_SEVERITY_ERROR;
+            p253.text_SET("tjplamznMhrUbvqqwejcnp", PH) ;
+            p253.severity = MAV_SEVERITY.MAV_SEVERITY_ALERT;
             CommunicationChannel.instance.send(p253);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnDEBUGReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.value == (float)9.699238E37F);
-                Debug.Assert(pack.ind == (byte)(byte)89);
-                Debug.Assert(pack.time_boot_ms == (uint)189448498U);
+                Debug.Assert(pack.ind == (byte)(byte)8);
+                Debug.Assert(pack.time_boot_ms == (uint)1583262333U);
+                Debug.Assert(pack.value == (float)1.334681E38F);
             };
             GroundControl.DEBUG p254 = CommunicationChannel.new_DEBUG();
             PH.setPack(p254);
-            p254.time_boot_ms = (uint)189448498U;
-            p254.value = (float)9.699238E37F;
-            p254.ind = (byte)(byte)89;
+            p254.ind = (byte)(byte)8;
+            p254.time_boot_ms = (uint)1583262333U;
+            p254.value = (float)1.334681E38F;
             CommunicationChannel.instance.send(p254);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnSETUP_SIGNINGReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_system == (byte)(byte)73);
-                Debug.Assert(pack.target_component == (byte)(byte)26);
-                Debug.Assert(pack.secret_key.SequenceEqual(new byte[] {(byte)156, (byte)76, (byte)197, (byte)89, (byte)216, (byte)15, (byte)120, (byte)27, (byte)160, (byte)17, (byte)120, (byte)43, (byte)16, (byte)67, (byte)118, (byte)172, (byte)243, (byte)133, (byte)149, (byte)192, (byte)159, (byte)203, (byte)79, (byte)105, (byte)182, (byte)129, (byte)208, (byte)65, (byte)2, (byte)124, (byte)66, (byte)216}));
-                Debug.Assert(pack.initial_timestamp == (ulong)5434692606567634334L);
+                Debug.Assert(pack.secret_key.SequenceEqual(new byte[] {(byte)155, (byte)46, (byte)65, (byte)145, (byte)38, (byte)237, (byte)65, (byte)87, (byte)212, (byte)7, (byte)66, (byte)243, (byte)150, (byte)226, (byte)191, (byte)163, (byte)22, (byte)11, (byte)208, (byte)136, (byte)189, (byte)89, (byte)72, (byte)14, (byte)118, (byte)183, (byte)143, (byte)133, (byte)107, (byte)38, (byte)0, (byte)233}));
+                Debug.Assert(pack.initial_timestamp == (ulong)3078716536030209316L);
+                Debug.Assert(pack.target_component == (byte)(byte)167);
+                Debug.Assert(pack.target_system == (byte)(byte)182);
             };
             GroundControl.SETUP_SIGNING p256 = CommunicationChannel.new_SETUP_SIGNING();
             PH.setPack(p256);
-            p256.target_component = (byte)(byte)26;
-            p256.target_system = (byte)(byte)73;
-            p256.initial_timestamp = (ulong)5434692606567634334L;
-            p256.secret_key_SET(new byte[] {(byte)156, (byte)76, (byte)197, (byte)89, (byte)216, (byte)15, (byte)120, (byte)27, (byte)160, (byte)17, (byte)120, (byte)43, (byte)16, (byte)67, (byte)118, (byte)172, (byte)243, (byte)133, (byte)149, (byte)192, (byte)159, (byte)203, (byte)79, (byte)105, (byte)182, (byte)129, (byte)208, (byte)65, (byte)2, (byte)124, (byte)66, (byte)216}, 0) ;
+            p256.secret_key_SET(new byte[] {(byte)155, (byte)46, (byte)65, (byte)145, (byte)38, (byte)237, (byte)65, (byte)87, (byte)212, (byte)7, (byte)66, (byte)243, (byte)150, (byte)226, (byte)191, (byte)163, (byte)22, (byte)11, (byte)208, (byte)136, (byte)189, (byte)89, (byte)72, (byte)14, (byte)118, (byte)183, (byte)143, (byte)133, (byte)107, (byte)38, (byte)0, (byte)233}, 0) ;
+            p256.target_system = (byte)(byte)182;
+            p256.initial_timestamp = (ulong)3078716536030209316L;
+            p256.target_component = (byte)(byte)167;
             CommunicationChannel.instance.send(p256);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnBUTTON_CHANGEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.time_boot_ms == (uint)4013790750U);
-                Debug.Assert(pack.state == (byte)(byte)9);
-                Debug.Assert(pack.last_change_ms == (uint)1649016565U);
+                Debug.Assert(pack.last_change_ms == (uint)2017955568U);
+                Debug.Assert(pack.state == (byte)(byte)131);
+                Debug.Assert(pack.time_boot_ms == (uint)2430680151U);
             };
             GroundControl.BUTTON_CHANGE p257 = CommunicationChannel.new_BUTTON_CHANGE();
             PH.setPack(p257);
-            p257.time_boot_ms = (uint)4013790750U;
-            p257.state = (byte)(byte)9;
-            p257.last_change_ms = (uint)1649016565U;
+            p257.last_change_ms = (uint)2017955568U;
+            p257.time_boot_ms = (uint)2430680151U;
+            p257.state = (byte)(byte)131;
             CommunicationChannel.instance.send(p257);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnPLAY_TUNEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_component == (byte)(byte)68);
-                Debug.Assert(pack.target_system == (byte)(byte)230);
-                Debug.Assert(pack.tune_LEN(ph) == 30);
-                Debug.Assert(pack.tune_TRY(ph).Equals("qqmptwZstgerEUrlwflzvxeuyqXnmh"));
+                Debug.Assert(pack.tune_LEN(ph) == 21);
+                Debug.Assert(pack.tune_TRY(ph).Equals("oasTxymusgskbleYqpgyj"));
+                Debug.Assert(pack.target_system == (byte)(byte)28);
+                Debug.Assert(pack.target_component == (byte)(byte)47);
             };
             GroundControl.PLAY_TUNE p258 = CommunicationChannel.new_PLAY_TUNE();
             PH.setPack(p258);
-            p258.target_system = (byte)(byte)230;
-            p258.target_component = (byte)(byte)68;
-            p258.tune_SET("qqmptwZstgerEUrlwflzvxeuyqXnmh", PH) ;
+            p258.target_system = (byte)(byte)28;
+            p258.tune_SET("oasTxymusgskbleYqpgyj", PH) ;
+            p258.target_component = (byte)(byte)47;
             CommunicationChannel.instance.send(p258);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnCAMERA_INFORMATIONReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.vendor_name.SequenceEqual(new byte[] {(byte)161, (byte)113, (byte)15, (byte)159, (byte)131, (byte)6, (byte)180, (byte)116, (byte)152, (byte)199, (byte)217, (byte)5, (byte)148, (byte)217, (byte)122, (byte)171, (byte)95, (byte)63, (byte)209, (byte)155, (byte)28, (byte)182, (byte)99, (byte)108, (byte)76, (byte)235, (byte)252, (byte)91, (byte)212, (byte)161, (byte)38, (byte)75}));
-                Debug.Assert(pack.focal_length == (float) -2.3817086E38F);
-                Debug.Assert(pack.firmware_version == (uint)1288260004U);
-                Debug.Assert(pack.lens_id == (byte)(byte)228);
-                Debug.Assert(pack.sensor_size_v == (float)2.5125677E38F);
-                Debug.Assert(pack.model_name.SequenceEqual(new byte[] {(byte)231, (byte)180, (byte)131, (byte)224, (byte)117, (byte)88, (byte)165, (byte)140, (byte)247, (byte)74, (byte)76, (byte)136, (byte)32, (byte)107, (byte)165, (byte)37, (byte)125, (byte)86, (byte)149, (byte)49, (byte)79, (byte)82, (byte)151, (byte)185, (byte)167, (byte)136, (byte)142, (byte)172, (byte)29, (byte)48, (byte)195, (byte)31}));
-                Debug.Assert(pack.sensor_size_h == (float)9.255849E37F);
-                Debug.Assert(pack.resolution_h == (ushort)(ushort)48875);
-                Debug.Assert(pack.cam_definition_version == (ushort)(ushort)10912);
-                Debug.Assert(pack.cam_definition_uri_LEN(ph) == 109);
-                Debug.Assert(pack.cam_definition_uri_TRY(ph).Equals("paghknzidZvzlmuqdbbqrpknzsxezvwwKngafVxcezZfuvybGtccgNwrBusHrgjglmublqdmzrpgyioRhnvadblAforaitmzfdlqznkmzkffa"));
-                Debug.Assert(pack.flags == (CAMERA_CAP_FLAGS)CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_HAS_MODES);
-                Debug.Assert(pack.time_boot_ms == (uint)397752200U);
-                Debug.Assert(pack.resolution_v == (ushort)(ushort)32992);
+                Debug.Assert(pack.model_name.SequenceEqual(new byte[] {(byte)100, (byte)6, (byte)107, (byte)84, (byte)140, (byte)246, (byte)106, (byte)69, (byte)90, (byte)115, (byte)113, (byte)252, (byte)75, (byte)242, (byte)235, (byte)43, (byte)176, (byte)109, (byte)187, (byte)193, (byte)72, (byte)213, (byte)151, (byte)245, (byte)148, (byte)136, (byte)129, (byte)173, (byte)118, (byte)30, (byte)246, (byte)156}));
+                Debug.Assert(pack.flags == (CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_HAS_IMAGE_SURVEY_MODE |
+                                            CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAPTURE_VIDEO));
+                Debug.Assert(pack.lens_id == (byte)(byte)164);
+                Debug.Assert(pack.sensor_size_h == (float) -9.452525E37F);
+                Debug.Assert(pack.cam_definition_version == (ushort)(ushort)43745);
+                Debug.Assert(pack.resolution_h == (ushort)(ushort)21401);
+                Debug.Assert(pack.sensor_size_v == (float)3.0255382E38F);
+                Debug.Assert(pack.time_boot_ms == (uint)733189830U);
+                Debug.Assert(pack.vendor_name.SequenceEqual(new byte[] {(byte)228, (byte)122, (byte)214, (byte)129, (byte)235, (byte)107, (byte)70, (byte)55, (byte)190, (byte)178, (byte)15, (byte)216, (byte)53, (byte)93, (byte)59, (byte)205, (byte)113, (byte)118, (byte)221, (byte)102, (byte)206, (byte)0, (byte)133, (byte)212, (byte)61, (byte)7, (byte)33, (byte)27, (byte)63, (byte)178, (byte)133, (byte)0}));
+                Debug.Assert(pack.cam_definition_uri_LEN(ph) == 62);
+                Debug.Assert(pack.cam_definition_uri_TRY(ph).Equals("yYpfozeuuuazltgoUdwCuLIZdjddayhufydnuweozuiLltyvklZlxZzyuitmlt"));
+                Debug.Assert(pack.focal_length == (float)2.1796212E38F);
+                Debug.Assert(pack.resolution_v == (ushort)(ushort)49086);
+                Debug.Assert(pack.firmware_version == (uint)2789097899U);
             };
             GroundControl.CAMERA_INFORMATION p259 = CommunicationChannel.new_CAMERA_INFORMATION();
             PH.setPack(p259);
-            p259.cam_definition_version = (ushort)(ushort)10912;
-            p259.resolution_v = (ushort)(ushort)32992;
-            p259.time_boot_ms = (uint)397752200U;
-            p259.resolution_h = (ushort)(ushort)48875;
-            p259.sensor_size_v = (float)2.5125677E38F;
-            p259.lens_id = (byte)(byte)228;
-            p259.sensor_size_h = (float)9.255849E37F;
-            p259.flags = (CAMERA_CAP_FLAGS)CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_HAS_MODES;
-            p259.focal_length = (float) -2.3817086E38F;
-            p259.cam_definition_uri_SET("paghknzidZvzlmuqdbbqrpknzsxezvwwKngafVxcezZfuvybGtccgNwrBusHrgjglmublqdmzrpgyioRhnvadblAforaitmzfdlqznkmzkffa", PH) ;
-            p259.model_name_SET(new byte[] {(byte)231, (byte)180, (byte)131, (byte)224, (byte)117, (byte)88, (byte)165, (byte)140, (byte)247, (byte)74, (byte)76, (byte)136, (byte)32, (byte)107, (byte)165, (byte)37, (byte)125, (byte)86, (byte)149, (byte)49, (byte)79, (byte)82, (byte)151, (byte)185, (byte)167, (byte)136, (byte)142, (byte)172, (byte)29, (byte)48, (byte)195, (byte)31}, 0) ;
-            p259.vendor_name_SET(new byte[] {(byte)161, (byte)113, (byte)15, (byte)159, (byte)131, (byte)6, (byte)180, (byte)116, (byte)152, (byte)199, (byte)217, (byte)5, (byte)148, (byte)217, (byte)122, (byte)171, (byte)95, (byte)63, (byte)209, (byte)155, (byte)28, (byte)182, (byte)99, (byte)108, (byte)76, (byte)235, (byte)252, (byte)91, (byte)212, (byte)161, (byte)38, (byte)75}, 0) ;
-            p259.firmware_version = (uint)1288260004U;
+            p259.flags = (CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_HAS_IMAGE_SURVEY_MODE |
+                          CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAPTURE_VIDEO);
+            p259.vendor_name_SET(new byte[] {(byte)228, (byte)122, (byte)214, (byte)129, (byte)235, (byte)107, (byte)70, (byte)55, (byte)190, (byte)178, (byte)15, (byte)216, (byte)53, (byte)93, (byte)59, (byte)205, (byte)113, (byte)118, (byte)221, (byte)102, (byte)206, (byte)0, (byte)133, (byte)212, (byte)61, (byte)7, (byte)33, (byte)27, (byte)63, (byte)178, (byte)133, (byte)0}, 0) ;
+            p259.resolution_v = (ushort)(ushort)49086;
+            p259.model_name_SET(new byte[] {(byte)100, (byte)6, (byte)107, (byte)84, (byte)140, (byte)246, (byte)106, (byte)69, (byte)90, (byte)115, (byte)113, (byte)252, (byte)75, (byte)242, (byte)235, (byte)43, (byte)176, (byte)109, (byte)187, (byte)193, (byte)72, (byte)213, (byte)151, (byte)245, (byte)148, (byte)136, (byte)129, (byte)173, (byte)118, (byte)30, (byte)246, (byte)156}, 0) ;
+            p259.resolution_h = (ushort)(ushort)21401;
+            p259.sensor_size_v = (float)3.0255382E38F;
+            p259.cam_definition_version = (ushort)(ushort)43745;
+            p259.time_boot_ms = (uint)733189830U;
+            p259.focal_length = (float)2.1796212E38F;
+            p259.lens_id = (byte)(byte)164;
+            p259.sensor_size_h = (float) -9.452525E37F;
+            p259.firmware_version = (uint)2789097899U;
+            p259.cam_definition_uri_SET("yYpfozeuuuazltgoUdwCuLIZdjddayhufydnuweozuiLltyvklZlxZzyuitmlt", PH) ;
             CommunicationChannel.instance.send(p259);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnCAMERA_SETTINGSReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.time_boot_ms == (uint)2836285296U);
-                Debug.Assert(pack.mode_id == (CAMERA_MODE)CAMERA_MODE.CAMERA_MODE_VIDEO);
+                Debug.Assert(pack.mode_id == CAMERA_MODE.CAMERA_MODE_IMAGE);
+                Debug.Assert(pack.time_boot_ms == (uint)3251194782U);
             };
             GroundControl.CAMERA_SETTINGS p260 = CommunicationChannel.new_CAMERA_SETTINGS();
             PH.setPack(p260);
-            p260.time_boot_ms = (uint)2836285296U;
-            p260.mode_id = (CAMERA_MODE)CAMERA_MODE.CAMERA_MODE_VIDEO;
+            p260.mode_id = CAMERA_MODE.CAMERA_MODE_IMAGE;
+            p260.time_boot_ms = (uint)3251194782U;
             CommunicationChannel.instance.send(p260);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnSTORAGE_INFORMATIONReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.total_capacity == (float)1.1991522E38F);
-                Debug.Assert(pack.used_capacity == (float)1.2922737E38F);
-                Debug.Assert(pack.storage_count == (byte)(byte)124);
-                Debug.Assert(pack.write_speed == (float) -2.5716382E38F);
-                Debug.Assert(pack.status == (byte)(byte)206);
-                Debug.Assert(pack.read_speed == (float) -1.8877228E38F);
-                Debug.Assert(pack.available_capacity == (float) -2.3440326E38F);
-                Debug.Assert(pack.time_boot_ms == (uint)3834076391U);
-                Debug.Assert(pack.storage_id == (byte)(byte)90);
+                Debug.Assert(pack.read_speed == (float) -6.3370726E37F);
+                Debug.Assert(pack.available_capacity == (float)2.416962E38F);
+                Debug.Assert(pack.status == (byte)(byte)53);
+                Debug.Assert(pack.total_capacity == (float)1.301951E38F);
+                Debug.Assert(pack.storage_id == (byte)(byte)153);
+                Debug.Assert(pack.used_capacity == (float)1.645594E38F);
+                Debug.Assert(pack.write_speed == (float) -2.7631597E38F);
+                Debug.Assert(pack.storage_count == (byte)(byte)16);
+                Debug.Assert(pack.time_boot_ms == (uint)2366497382U);
             };
             GroundControl.STORAGE_INFORMATION p261 = CommunicationChannel.new_STORAGE_INFORMATION();
             PH.setPack(p261);
-            p261.time_boot_ms = (uint)3834076391U;
-            p261.write_speed = (float) -2.5716382E38F;
-            p261.available_capacity = (float) -2.3440326E38F;
-            p261.total_capacity = (float)1.1991522E38F;
-            p261.storage_count = (byte)(byte)124;
-            p261.read_speed = (float) -1.8877228E38F;
-            p261.storage_id = (byte)(byte)90;
-            p261.status = (byte)(byte)206;
-            p261.used_capacity = (float)1.2922737E38F;
+            p261.write_speed = (float) -2.7631597E38F;
+            p261.status = (byte)(byte)53;
+            p261.available_capacity = (float)2.416962E38F;
+            p261.storage_count = (byte)(byte)16;
+            p261.read_speed = (float) -6.3370726E37F;
+            p261.time_boot_ms = (uint)2366497382U;
+            p261.used_capacity = (float)1.645594E38F;
+            p261.storage_id = (byte)(byte)153;
+            p261.total_capacity = (float)1.301951E38F;
             CommunicationChannel.instance.send(p261);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnCAMERA_CAPTURE_STATUSReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.time_boot_ms == (uint)1561349464U);
-                Debug.Assert(pack.video_status == (byte)(byte)86);
-                Debug.Assert(pack.available_capacity == (float) -2.2825063E38F);
-                Debug.Assert(pack.image_interval == (float)9.17401E37F);
-                Debug.Assert(pack.image_status == (byte)(byte)212);
-                Debug.Assert(pack.recording_time_ms == (uint)2441146324U);
+                Debug.Assert(pack.recording_time_ms == (uint)1460108878U);
+                Debug.Assert(pack.image_interval == (float) -3.0128E37F);
+                Debug.Assert(pack.video_status == (byte)(byte)31);
+                Debug.Assert(pack.time_boot_ms == (uint)4209992153U);
+                Debug.Assert(pack.image_status == (byte)(byte)241);
+                Debug.Assert(pack.available_capacity == (float) -1.6928275E38F);
             };
             GroundControl.CAMERA_CAPTURE_STATUS p262 = CommunicationChannel.new_CAMERA_CAPTURE_STATUS();
             PH.setPack(p262);
-            p262.video_status = (byte)(byte)86;
-            p262.image_status = (byte)(byte)212;
-            p262.time_boot_ms = (uint)1561349464U;
-            p262.recording_time_ms = (uint)2441146324U;
-            p262.image_interval = (float)9.17401E37F;
-            p262.available_capacity = (float) -2.2825063E38F;
+            p262.time_boot_ms = (uint)4209992153U;
+            p262.available_capacity = (float) -1.6928275E38F;
+            p262.image_status = (byte)(byte)241;
+            p262.image_interval = (float) -3.0128E37F;
+            p262.video_status = (byte)(byte)31;
+            p262.recording_time_ms = (uint)1460108878U;
             CommunicationChannel.instance.send(p262);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnCAMERA_IMAGE_CAPTUREDReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.image_index == (int) -453319356);
-                Debug.Assert(pack.camera_id == (byte)(byte)191);
-                Debug.Assert(pack.alt == (int) -1713062222);
-                Debug.Assert(pack.relative_alt == (int) -2081817031);
-                Debug.Assert(pack.q.SequenceEqual(new float[] {-4.5058073E36F, -2.383909E38F, 2.4889764E38F, -1.6448005E38F}));
-                Debug.Assert(pack.time_utc == (ulong)8621721062850583207L);
-                Debug.Assert(pack.lat == (int) -2045475602);
-                Debug.Assert(pack.time_boot_ms == (uint)180750054U);
-                Debug.Assert(pack.lon == (int)742769062);
-                Debug.Assert(pack.capture_result == (sbyte)(sbyte)2);
-                Debug.Assert(pack.file_url_LEN(ph) == 86);
-                Debug.Assert(pack.file_url_TRY(ph).Equals("veElwsohLqujyzvplbuifkajfzkcnnuybkkyblqqceMpwztpozvrvtywvsofoigkfhcieyjvSdzapifwhsrfir"));
+                Debug.Assert(pack.image_index == (int) -2002824896);
+                Debug.Assert(pack.lat == (int)2047086203);
+                Debug.Assert(pack.q.SequenceEqual(new float[] {4.8684735E37F, 2.0676138E38F, -1.293116E38F, -1.6665734E38F}));
+                Debug.Assert(pack.capture_result == (sbyte)(sbyte) - 27);
+                Debug.Assert(pack.camera_id == (byte)(byte)187);
+                Debug.Assert(pack.time_utc == (ulong)7598029513847180728L);
+                Debug.Assert(pack.alt == (int) -14957471);
+                Debug.Assert(pack.file_url_LEN(ph) == 117);
+                Debug.Assert(pack.file_url_TRY(ph).Equals("lsrbwfYlneniqtuigwasWyydtoGtkcqpudutxocwuncniovzpvmoWreofuorrysxqwqNxjhprnblgwnkipvfvosgyzyrwrvnakjttviHejpwijaxtwpfp"));
+                Debug.Assert(pack.relative_alt == (int)1495701867);
+                Debug.Assert(pack.lon == (int) -1344756747);
+                Debug.Assert(pack.time_boot_ms == (uint)4079462160U);
             };
             GroundControl.CAMERA_IMAGE_CAPTURED p263 = CommunicationChannel.new_CAMERA_IMAGE_CAPTURED();
             PH.setPack(p263);
-            p263.file_url_SET("veElwsohLqujyzvplbuifkajfzkcnnuybkkyblqqceMpwztpozvrvtywvsofoigkfhcieyjvSdzapifwhsrfir", PH) ;
-            p263.q_SET(new float[] {-4.5058073E36F, -2.383909E38F, 2.4889764E38F, -1.6448005E38F}, 0) ;
-            p263.lat = (int) -2045475602;
-            p263.capture_result = (sbyte)(sbyte)2;
-            p263.lon = (int)742769062;
-            p263.relative_alt = (int) -2081817031;
-            p263.alt = (int) -1713062222;
-            p263.camera_id = (byte)(byte)191;
-            p263.image_index = (int) -453319356;
-            p263.time_boot_ms = (uint)180750054U;
-            p263.time_utc = (ulong)8621721062850583207L;
+            p263.time_boot_ms = (uint)4079462160U;
+            p263.image_index = (int) -2002824896;
+            p263.relative_alt = (int)1495701867;
+            p263.capture_result = (sbyte)(sbyte) - 27;
+            p263.q_SET(new float[] {4.8684735E37F, 2.0676138E38F, -1.293116E38F, -1.6665734E38F}, 0) ;
+            p263.alt = (int) -14957471;
+            p263.time_utc = (ulong)7598029513847180728L;
+            p263.lat = (int)2047086203;
+            p263.camera_id = (byte)(byte)187;
+            p263.file_url_SET("lsrbwfYlneniqtuigwasWyydtoGtkcqpudutxocwuncniovzpvmoWreofuorrysxqwqNxjhprnblgwnkipvfvosgyzyrwrvnakjttviHejpwijaxtwpfp", PH) ;
+            p263.lon = (int) -1344756747;
             CommunicationChannel.instance.send(p263);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnFLIGHT_INFORMATIONReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.flight_uuid == (ulong)3091479458102120761L);
-                Debug.Assert(pack.time_boot_ms == (uint)273590841U);
-                Debug.Assert(pack.arming_time_utc == (ulong)7488597907357646048L);
-                Debug.Assert(pack.takeoff_time_utc == (ulong)6596373392294179484L);
+                Debug.Assert(pack.arming_time_utc == (ulong)1090105357534768095L);
+                Debug.Assert(pack.flight_uuid == (ulong)4947361389883716061L);
+                Debug.Assert(pack.time_boot_ms == (uint)2107496092U);
+                Debug.Assert(pack.takeoff_time_utc == (ulong)1786947796474828232L);
             };
             GroundControl.FLIGHT_INFORMATION p264 = CommunicationChannel.new_FLIGHT_INFORMATION();
             PH.setPack(p264);
-            p264.takeoff_time_utc = (ulong)6596373392294179484L;
-            p264.time_boot_ms = (uint)273590841U;
-            p264.arming_time_utc = (ulong)7488597907357646048L;
-            p264.flight_uuid = (ulong)3091479458102120761L;
+            p264.arming_time_utc = (ulong)1090105357534768095L;
+            p264.takeoff_time_utc = (ulong)1786947796474828232L;
+            p264.flight_uuid = (ulong)4947361389883716061L;
+            p264.time_boot_ms = (uint)2107496092U;
             CommunicationChannel.instance.send(p264);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnMOUNT_ORIENTATIONReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.roll == (float)1.4012133E38F);
-                Debug.Assert(pack.time_boot_ms == (uint)1205863771U);
-                Debug.Assert(pack.pitch == (float)1.5422359E38F);
-                Debug.Assert(pack.yaw == (float) -2.4059887E37F);
+                Debug.Assert(pack.yaw == (float)3.055335E37F);
+                Debug.Assert(pack.pitch == (float) -2.7524749E38F);
+                Debug.Assert(pack.roll == (float) -2.0461952E38F);
+                Debug.Assert(pack.time_boot_ms == (uint)3249836241U);
             };
             GroundControl.MOUNT_ORIENTATION p265 = CommunicationChannel.new_MOUNT_ORIENTATION();
             PH.setPack(p265);
-            p265.roll = (float)1.4012133E38F;
-            p265.time_boot_ms = (uint)1205863771U;
-            p265.yaw = (float) -2.4059887E37F;
-            p265.pitch = (float)1.5422359E38F;
+            p265.time_boot_ms = (uint)3249836241U;
+            p265.yaw = (float)3.055335E37F;
+            p265.roll = (float) -2.0461952E38F;
+            p265.pitch = (float) -2.7524749E38F;
             CommunicationChannel.instance.send(p265);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnLOGGING_DATAReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.sequence == (ushort)(ushort)26050);
-                Debug.Assert(pack.target_component == (byte)(byte)43);
-                Debug.Assert(pack.first_message_offset == (byte)(byte)15);
-                Debug.Assert(pack.length == (byte)(byte)179);
-                Debug.Assert(pack.target_system == (byte)(byte)157);
-                Debug.Assert(pack.data_.SequenceEqual(new byte[] {(byte)42, (byte)191, (byte)164, (byte)57, (byte)137, (byte)148, (byte)150, (byte)17, (byte)45, (byte)1, (byte)213, (byte)234, (byte)123, (byte)212, (byte)153, (byte)121, (byte)165, (byte)162, (byte)211, (byte)141, (byte)148, (byte)175, (byte)137, (byte)10, (byte)120, (byte)83, (byte)153, (byte)228, (byte)8, (byte)85, (byte)118, (byte)130, (byte)169, (byte)109, (byte)66, (byte)141, (byte)44, (byte)220, (byte)113, (byte)146, (byte)62, (byte)247, (byte)226, (byte)5, (byte)140, (byte)18, (byte)146, (byte)214, (byte)88, (byte)151, (byte)218, (byte)98, (byte)244, (byte)191, (byte)5, (byte)133, (byte)71, (byte)228, (byte)83, (byte)167, (byte)25, (byte)194, (byte)7, (byte)199, (byte)45, (byte)253, (byte)223, (byte)46, (byte)2, (byte)86, (byte)100, (byte)58, (byte)144, (byte)196, (byte)199, (byte)42, (byte)45, (byte)76, (byte)212, (byte)247, (byte)81, (byte)250, (byte)189, (byte)156, (byte)104, (byte)120, (byte)14, (byte)50, (byte)57, (byte)163, (byte)68, (byte)244, (byte)127, (byte)234, (byte)139, (byte)54, (byte)126, (byte)202, (byte)41, (byte)206, (byte)132, (byte)82, (byte)115, (byte)183, (byte)241, (byte)73, (byte)93, (byte)231, (byte)13, (byte)128, (byte)116, (byte)66, (byte)24, (byte)105, (byte)120, (byte)105, (byte)127, (byte)7, (byte)131, (byte)3, (byte)118, (byte)198, (byte)110, (byte)51, (byte)178, (byte)6, (byte)65, (byte)104, (byte)213, (byte)189, (byte)107, (byte)158, (byte)4, (byte)11, (byte)61, (byte)213, (byte)39, (byte)42, (byte)51, (byte)127, (byte)222, (byte)138, (byte)41, (byte)169, (byte)157, (byte)178, (byte)187, (byte)240, (byte)31, (byte)218, (byte)209, (byte)92, (byte)248, (byte)38, (byte)84, (byte)198, (byte)91, (byte)61, (byte)107, (byte)78, (byte)67, (byte)120, (byte)4, (byte)115, (byte)133, (byte)41, (byte)15, (byte)247, (byte)219, (byte)176, (byte)32, (byte)162, (byte)150, (byte)225, (byte)251, (byte)21, (byte)240, (byte)163, (byte)89, (byte)221, (byte)94, (byte)106, (byte)238, (byte)18, (byte)0, (byte)218, (byte)195, (byte)181, (byte)106, (byte)119, (byte)42, (byte)168, (byte)10, (byte)7, (byte)149, (byte)50, (byte)207, (byte)179, (byte)205, (byte)243, (byte)79, (byte)55, (byte)29, (byte)11, (byte)187, (byte)197, (byte)30, (byte)19, (byte)104, (byte)233, (byte)167, (byte)110, (byte)1, (byte)159, (byte)150, (byte)221, (byte)240, (byte)121, (byte)172, (byte)21, (byte)40, (byte)164, (byte)169, (byte)56, (byte)39, (byte)61, (byte)157, (byte)65, (byte)179, (byte)127, (byte)25, (byte)204, (byte)186, (byte)12, (byte)170, (byte)68, (byte)220, (byte)247, (byte)142, (byte)47, (byte)207, (byte)17, (byte)36, (byte)176, (byte)180, (byte)53, (byte)214, (byte)44, (byte)210}));
+                Debug.Assert(pack.target_component == (byte)(byte)207);
+                Debug.Assert(pack.target_system == (byte)(byte)127);
+                Debug.Assert(pack.first_message_offset == (byte)(byte)234);
+                Debug.Assert(pack.sequence == (ushort)(ushort)39338);
+                Debug.Assert(pack.data_.SequenceEqual(new byte[] {(byte)134, (byte)251, (byte)228, (byte)130, (byte)196, (byte)136, (byte)145, (byte)63, (byte)8, (byte)15, (byte)68, (byte)125, (byte)215, (byte)64, (byte)10, (byte)58, (byte)193, (byte)164, (byte)174, (byte)188, (byte)65, (byte)161, (byte)2, (byte)235, (byte)119, (byte)82, (byte)50, (byte)118, (byte)171, (byte)201, (byte)6, (byte)44, (byte)202, (byte)184, (byte)211, (byte)126, (byte)91, (byte)216, (byte)235, (byte)37, (byte)114, (byte)197, (byte)108, (byte)214, (byte)36, (byte)98, (byte)122, (byte)208, (byte)53, (byte)113, (byte)32, (byte)21, (byte)211, (byte)105, (byte)151, (byte)207, (byte)81, (byte)21, (byte)85, (byte)101, (byte)91, (byte)159, (byte)216, (byte)64, (byte)132, (byte)2, (byte)85, (byte)177, (byte)16, (byte)30, (byte)214, (byte)251, (byte)176, (byte)223, (byte)242, (byte)41, (byte)98, (byte)50, (byte)198, (byte)215, (byte)167, (byte)24, (byte)76, (byte)191, (byte)84, (byte)9, (byte)154, (byte)138, (byte)181, (byte)130, (byte)151, (byte)57, (byte)163, (byte)154, (byte)36, (byte)245, (byte)29, (byte)173, (byte)206, (byte)200, (byte)131, (byte)237, (byte)194, (byte)72, (byte)27, (byte)178, (byte)25, (byte)209, (byte)192, (byte)10, (byte)112, (byte)103, (byte)110, (byte)226, (byte)191, (byte)89, (byte)239, (byte)242, (byte)10, (byte)55, (byte)75, (byte)10, (byte)251, (byte)41, (byte)46, (byte)7, (byte)10, (byte)170, (byte)49, (byte)91, (byte)146, (byte)72, (byte)23, (byte)126, (byte)88, (byte)81, (byte)16, (byte)67, (byte)195, (byte)66, (byte)242, (byte)60, (byte)52, (byte)158, (byte)63, (byte)51, (byte)188, (byte)167, (byte)81, (byte)103, (byte)33, (byte)158, (byte)151, (byte)243, (byte)214, (byte)251, (byte)114, (byte)54, (byte)98, (byte)214, (byte)25, (byte)79, (byte)163, (byte)53, (byte)67, (byte)51, (byte)19, (byte)44, (byte)229, (byte)70, (byte)116, (byte)83, (byte)32, (byte)157, (byte)203, (byte)221, (byte)51, (byte)115, (byte)130, (byte)102, (byte)1, (byte)159, (byte)12, (byte)219, (byte)218, (byte)186, (byte)25, (byte)42, (byte)236, (byte)42, (byte)239, (byte)5, (byte)67, (byte)216, (byte)111, (byte)4, (byte)88, (byte)122, (byte)4, (byte)109, (byte)74, (byte)22, (byte)33, (byte)242, (byte)157, (byte)160, (byte)182, (byte)235, (byte)45, (byte)34, (byte)247, (byte)225, (byte)188, (byte)174, (byte)220, (byte)37, (byte)122, (byte)60, (byte)60, (byte)38, (byte)206, (byte)156, (byte)147, (byte)46, (byte)69, (byte)24, (byte)98, (byte)39, (byte)117, (byte)110, (byte)159, (byte)26, (byte)197, (byte)120, (byte)61, (byte)130, (byte)222, (byte)150, (byte)153, (byte)86, (byte)128, (byte)135, (byte)24, (byte)181, (byte)237, (byte)101, (byte)17, (byte)198, (byte)174}));
+                Debug.Assert(pack.length == (byte)(byte)213);
             };
             GroundControl.LOGGING_DATA p266 = CommunicationChannel.new_LOGGING_DATA();
             PH.setPack(p266);
-            p266.data__SET(new byte[] {(byte)42, (byte)191, (byte)164, (byte)57, (byte)137, (byte)148, (byte)150, (byte)17, (byte)45, (byte)1, (byte)213, (byte)234, (byte)123, (byte)212, (byte)153, (byte)121, (byte)165, (byte)162, (byte)211, (byte)141, (byte)148, (byte)175, (byte)137, (byte)10, (byte)120, (byte)83, (byte)153, (byte)228, (byte)8, (byte)85, (byte)118, (byte)130, (byte)169, (byte)109, (byte)66, (byte)141, (byte)44, (byte)220, (byte)113, (byte)146, (byte)62, (byte)247, (byte)226, (byte)5, (byte)140, (byte)18, (byte)146, (byte)214, (byte)88, (byte)151, (byte)218, (byte)98, (byte)244, (byte)191, (byte)5, (byte)133, (byte)71, (byte)228, (byte)83, (byte)167, (byte)25, (byte)194, (byte)7, (byte)199, (byte)45, (byte)253, (byte)223, (byte)46, (byte)2, (byte)86, (byte)100, (byte)58, (byte)144, (byte)196, (byte)199, (byte)42, (byte)45, (byte)76, (byte)212, (byte)247, (byte)81, (byte)250, (byte)189, (byte)156, (byte)104, (byte)120, (byte)14, (byte)50, (byte)57, (byte)163, (byte)68, (byte)244, (byte)127, (byte)234, (byte)139, (byte)54, (byte)126, (byte)202, (byte)41, (byte)206, (byte)132, (byte)82, (byte)115, (byte)183, (byte)241, (byte)73, (byte)93, (byte)231, (byte)13, (byte)128, (byte)116, (byte)66, (byte)24, (byte)105, (byte)120, (byte)105, (byte)127, (byte)7, (byte)131, (byte)3, (byte)118, (byte)198, (byte)110, (byte)51, (byte)178, (byte)6, (byte)65, (byte)104, (byte)213, (byte)189, (byte)107, (byte)158, (byte)4, (byte)11, (byte)61, (byte)213, (byte)39, (byte)42, (byte)51, (byte)127, (byte)222, (byte)138, (byte)41, (byte)169, (byte)157, (byte)178, (byte)187, (byte)240, (byte)31, (byte)218, (byte)209, (byte)92, (byte)248, (byte)38, (byte)84, (byte)198, (byte)91, (byte)61, (byte)107, (byte)78, (byte)67, (byte)120, (byte)4, (byte)115, (byte)133, (byte)41, (byte)15, (byte)247, (byte)219, (byte)176, (byte)32, (byte)162, (byte)150, (byte)225, (byte)251, (byte)21, (byte)240, (byte)163, (byte)89, (byte)221, (byte)94, (byte)106, (byte)238, (byte)18, (byte)0, (byte)218, (byte)195, (byte)181, (byte)106, (byte)119, (byte)42, (byte)168, (byte)10, (byte)7, (byte)149, (byte)50, (byte)207, (byte)179, (byte)205, (byte)243, (byte)79, (byte)55, (byte)29, (byte)11, (byte)187, (byte)197, (byte)30, (byte)19, (byte)104, (byte)233, (byte)167, (byte)110, (byte)1, (byte)159, (byte)150, (byte)221, (byte)240, (byte)121, (byte)172, (byte)21, (byte)40, (byte)164, (byte)169, (byte)56, (byte)39, (byte)61, (byte)157, (byte)65, (byte)179, (byte)127, (byte)25, (byte)204, (byte)186, (byte)12, (byte)170, (byte)68, (byte)220, (byte)247, (byte)142, (byte)47, (byte)207, (byte)17, (byte)36, (byte)176, (byte)180, (byte)53, (byte)214, (byte)44, (byte)210}, 0) ;
-            p266.length = (byte)(byte)179;
-            p266.target_component = (byte)(byte)43;
-            p266.sequence = (ushort)(ushort)26050;
-            p266.first_message_offset = (byte)(byte)15;
-            p266.target_system = (byte)(byte)157;
+            p266.length = (byte)(byte)213;
+            p266.target_component = (byte)(byte)207;
+            p266.sequence = (ushort)(ushort)39338;
+            p266.target_system = (byte)(byte)127;
+            p266.data__SET(new byte[] {(byte)134, (byte)251, (byte)228, (byte)130, (byte)196, (byte)136, (byte)145, (byte)63, (byte)8, (byte)15, (byte)68, (byte)125, (byte)215, (byte)64, (byte)10, (byte)58, (byte)193, (byte)164, (byte)174, (byte)188, (byte)65, (byte)161, (byte)2, (byte)235, (byte)119, (byte)82, (byte)50, (byte)118, (byte)171, (byte)201, (byte)6, (byte)44, (byte)202, (byte)184, (byte)211, (byte)126, (byte)91, (byte)216, (byte)235, (byte)37, (byte)114, (byte)197, (byte)108, (byte)214, (byte)36, (byte)98, (byte)122, (byte)208, (byte)53, (byte)113, (byte)32, (byte)21, (byte)211, (byte)105, (byte)151, (byte)207, (byte)81, (byte)21, (byte)85, (byte)101, (byte)91, (byte)159, (byte)216, (byte)64, (byte)132, (byte)2, (byte)85, (byte)177, (byte)16, (byte)30, (byte)214, (byte)251, (byte)176, (byte)223, (byte)242, (byte)41, (byte)98, (byte)50, (byte)198, (byte)215, (byte)167, (byte)24, (byte)76, (byte)191, (byte)84, (byte)9, (byte)154, (byte)138, (byte)181, (byte)130, (byte)151, (byte)57, (byte)163, (byte)154, (byte)36, (byte)245, (byte)29, (byte)173, (byte)206, (byte)200, (byte)131, (byte)237, (byte)194, (byte)72, (byte)27, (byte)178, (byte)25, (byte)209, (byte)192, (byte)10, (byte)112, (byte)103, (byte)110, (byte)226, (byte)191, (byte)89, (byte)239, (byte)242, (byte)10, (byte)55, (byte)75, (byte)10, (byte)251, (byte)41, (byte)46, (byte)7, (byte)10, (byte)170, (byte)49, (byte)91, (byte)146, (byte)72, (byte)23, (byte)126, (byte)88, (byte)81, (byte)16, (byte)67, (byte)195, (byte)66, (byte)242, (byte)60, (byte)52, (byte)158, (byte)63, (byte)51, (byte)188, (byte)167, (byte)81, (byte)103, (byte)33, (byte)158, (byte)151, (byte)243, (byte)214, (byte)251, (byte)114, (byte)54, (byte)98, (byte)214, (byte)25, (byte)79, (byte)163, (byte)53, (byte)67, (byte)51, (byte)19, (byte)44, (byte)229, (byte)70, (byte)116, (byte)83, (byte)32, (byte)157, (byte)203, (byte)221, (byte)51, (byte)115, (byte)130, (byte)102, (byte)1, (byte)159, (byte)12, (byte)219, (byte)218, (byte)186, (byte)25, (byte)42, (byte)236, (byte)42, (byte)239, (byte)5, (byte)67, (byte)216, (byte)111, (byte)4, (byte)88, (byte)122, (byte)4, (byte)109, (byte)74, (byte)22, (byte)33, (byte)242, (byte)157, (byte)160, (byte)182, (byte)235, (byte)45, (byte)34, (byte)247, (byte)225, (byte)188, (byte)174, (byte)220, (byte)37, (byte)122, (byte)60, (byte)60, (byte)38, (byte)206, (byte)156, (byte)147, (byte)46, (byte)69, (byte)24, (byte)98, (byte)39, (byte)117, (byte)110, (byte)159, (byte)26, (byte)197, (byte)120, (byte)61, (byte)130, (byte)222, (byte)150, (byte)153, (byte)86, (byte)128, (byte)135, (byte)24, (byte)181, (byte)237, (byte)101, (byte)17, (byte)198, (byte)174}, 0) ;
+            p266.first_message_offset = (byte)(byte)234;
             CommunicationChannel.instance.send(p266);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnLOGGING_DATA_ACKEDReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_system == (byte)(byte)14);
-                Debug.Assert(pack.length == (byte)(byte)226);
-                Debug.Assert(pack.data_.SequenceEqual(new byte[] {(byte)221, (byte)6, (byte)22, (byte)43, (byte)222, (byte)218, (byte)182, (byte)71, (byte)1, (byte)175, (byte)52, (byte)120, (byte)174, (byte)249, (byte)159, (byte)81, (byte)187, (byte)27, (byte)86, (byte)192, (byte)143, (byte)40, (byte)138, (byte)144, (byte)103, (byte)109, (byte)160, (byte)224, (byte)50, (byte)56, (byte)128, (byte)239, (byte)72, (byte)162, (byte)34, (byte)226, (byte)55, (byte)82, (byte)72, (byte)204, (byte)50, (byte)233, (byte)219, (byte)91, (byte)100, (byte)199, (byte)119, (byte)55, (byte)159, (byte)56, (byte)56, (byte)16, (byte)21, (byte)155, (byte)17, (byte)98, (byte)193, (byte)200, (byte)94, (byte)176, (byte)122, (byte)210, (byte)171, (byte)178, (byte)23, (byte)57, (byte)68, (byte)188, (byte)77, (byte)196, (byte)238, (byte)96, (byte)110, (byte)17, (byte)43, (byte)6, (byte)60, (byte)241, (byte)81, (byte)166, (byte)75, (byte)127, (byte)86, (byte)243, (byte)194, (byte)128, (byte)238, (byte)200, (byte)164, (byte)124, (byte)175, (byte)10, (byte)172, (byte)221, (byte)214, (byte)214, (byte)119, (byte)44, (byte)115, (byte)71, (byte)141, (byte)197, (byte)9, (byte)201, (byte)253, (byte)208, (byte)52, (byte)156, (byte)192, (byte)97, (byte)71, (byte)231, (byte)83, (byte)225, (byte)235, (byte)79, (byte)114, (byte)40, (byte)156, (byte)7, (byte)179, (byte)67, (byte)194, (byte)163, (byte)225, (byte)74, (byte)98, (byte)55, (byte)1, (byte)148, (byte)143, (byte)87, (byte)115, (byte)12, (byte)123, (byte)166, (byte)23, (byte)128, (byte)250, (byte)103, (byte)30, (byte)179, (byte)110, (byte)82, (byte)197, (byte)48, (byte)131, (byte)57, (byte)133, (byte)161, (byte)170, (byte)176, (byte)225, (byte)152, (byte)86, (byte)7, (byte)42, (byte)61, (byte)197, (byte)98, (byte)152, (byte)123, (byte)124, (byte)180, (byte)238, (byte)170, (byte)211, (byte)67, (byte)195, (byte)86, (byte)130, (byte)210, (byte)26, (byte)113, (byte)109, (byte)211, (byte)84, (byte)19, (byte)72, (byte)212, (byte)156, (byte)214, (byte)86, (byte)27, (byte)53, (byte)128, (byte)131, (byte)219, (byte)10, (byte)237, (byte)170, (byte)198, (byte)42, (byte)254, (byte)255, (byte)164, (byte)4, (byte)56, (byte)132, (byte)250, (byte)150, (byte)27, (byte)45, (byte)25, (byte)156, (byte)131, (byte)19, (byte)249, (byte)253, (byte)141, (byte)187, (byte)244, (byte)182, (byte)123, (byte)78, (byte)105, (byte)144, (byte)127, (byte)36, (byte)36, (byte)111, (byte)98, (byte)236, (byte)163, (byte)222, (byte)13, (byte)211, (byte)226, (byte)244, (byte)235, (byte)145, (byte)0, (byte)214, (byte)19, (byte)129, (byte)249, (byte)48, (byte)59, (byte)130, (byte)161, (byte)56, (byte)241, (byte)235, (byte)34, (byte)210, (byte)76, (byte)214, (byte)221, (byte)241}));
-                Debug.Assert(pack.sequence == (ushort)(ushort)32390);
-                Debug.Assert(pack.first_message_offset == (byte)(byte)82);
-                Debug.Assert(pack.target_component == (byte)(byte)12);
+                Debug.Assert(pack.target_component == (byte)(byte)245);
+                Debug.Assert(pack.first_message_offset == (byte)(byte)113);
+                Debug.Assert(pack.data_.SequenceEqual(new byte[] {(byte)68, (byte)178, (byte)143, (byte)15, (byte)71, (byte)164, (byte)22, (byte)215, (byte)133, (byte)7, (byte)13, (byte)11, (byte)139, (byte)29, (byte)147, (byte)108, (byte)75, (byte)57, (byte)142, (byte)55, (byte)184, (byte)72, (byte)188, (byte)252, (byte)25, (byte)244, (byte)201, (byte)20, (byte)96, (byte)83, (byte)221, (byte)13, (byte)250, (byte)16, (byte)102, (byte)204, (byte)112, (byte)241, (byte)14, (byte)203, (byte)100, (byte)239, (byte)204, (byte)112, (byte)85, (byte)20, (byte)126, (byte)32, (byte)218, (byte)243, (byte)34, (byte)69, (byte)26, (byte)185, (byte)225, (byte)239, (byte)134, (byte)107, (byte)125, (byte)86, (byte)78, (byte)52, (byte)79, (byte)26, (byte)1, (byte)190, (byte)7, (byte)63, (byte)209, (byte)17, (byte)13, (byte)36, (byte)80, (byte)80, (byte)69, (byte)131, (byte)43, (byte)77, (byte)35, (byte)71, (byte)135, (byte)206, (byte)240, (byte)247, (byte)123, (byte)77, (byte)149, (byte)131, (byte)122, (byte)94, (byte)74, (byte)94, (byte)88, (byte)154, (byte)28, (byte)14, (byte)217, (byte)98, (byte)113, (byte)6, (byte)10, (byte)194, (byte)1, (byte)47, (byte)145, (byte)114, (byte)171, (byte)122, (byte)62, (byte)18, (byte)68, (byte)124, (byte)237, (byte)241, (byte)75, (byte)158, (byte)223, (byte)243, (byte)109, (byte)244, (byte)95, (byte)139, (byte)3, (byte)101, (byte)2, (byte)23, (byte)23, (byte)65, (byte)94, (byte)184, (byte)38, (byte)225, (byte)110, (byte)251, (byte)58, (byte)171, (byte)233, (byte)127, (byte)87, (byte)98, (byte)155, (byte)149, (byte)140, (byte)67, (byte)195, (byte)130, (byte)79, (byte)35, (byte)245, (byte)95, (byte)46, (byte)250, (byte)182, (byte)254, (byte)134, (byte)243, (byte)202, (byte)54, (byte)2, (byte)17, (byte)22, (byte)191, (byte)42, (byte)58, (byte)208, (byte)88, (byte)1, (byte)82, (byte)198, (byte)97, (byte)60, (byte)205, (byte)178, (byte)90, (byte)221, (byte)161, (byte)250, (byte)163, (byte)207, (byte)168, (byte)200, (byte)118, (byte)174, (byte)120, (byte)80, (byte)254, (byte)98, (byte)129, (byte)216, (byte)11, (byte)101, (byte)119, (byte)38, (byte)41, (byte)184, (byte)193, (byte)148, (byte)170, (byte)179, (byte)51, (byte)50, (byte)223, (byte)112, (byte)154, (byte)118, (byte)239, (byte)27, (byte)56, (byte)70, (byte)62, (byte)167, (byte)15, (byte)187, (byte)147, (byte)226, (byte)119, (byte)183, (byte)46, (byte)245, (byte)204, (byte)200, (byte)234, (byte)70, (byte)52, (byte)72, (byte)44, (byte)221, (byte)4, (byte)244, (byte)131, (byte)58, (byte)152, (byte)233, (byte)32, (byte)174, (byte)225, (byte)225, (byte)2, (byte)1, (byte)194, (byte)56, (byte)226, (byte)22, (byte)55, (byte)164, (byte)132, (byte)135, (byte)139, (byte)36}));
+                Debug.Assert(pack.target_system == (byte)(byte)163);
+                Debug.Assert(pack.length == (byte)(byte)241);
+                Debug.Assert(pack.sequence == (ushort)(ushort)17642);
             };
             GroundControl.LOGGING_DATA_ACKED p267 = CommunicationChannel.new_LOGGING_DATA_ACKED();
             PH.setPack(p267);
-            p267.target_system = (byte)(byte)14;
-            p267.first_message_offset = (byte)(byte)82;
-            p267.sequence = (ushort)(ushort)32390;
-            p267.length = (byte)(byte)226;
-            p267.target_component = (byte)(byte)12;
-            p267.data__SET(new byte[] {(byte)221, (byte)6, (byte)22, (byte)43, (byte)222, (byte)218, (byte)182, (byte)71, (byte)1, (byte)175, (byte)52, (byte)120, (byte)174, (byte)249, (byte)159, (byte)81, (byte)187, (byte)27, (byte)86, (byte)192, (byte)143, (byte)40, (byte)138, (byte)144, (byte)103, (byte)109, (byte)160, (byte)224, (byte)50, (byte)56, (byte)128, (byte)239, (byte)72, (byte)162, (byte)34, (byte)226, (byte)55, (byte)82, (byte)72, (byte)204, (byte)50, (byte)233, (byte)219, (byte)91, (byte)100, (byte)199, (byte)119, (byte)55, (byte)159, (byte)56, (byte)56, (byte)16, (byte)21, (byte)155, (byte)17, (byte)98, (byte)193, (byte)200, (byte)94, (byte)176, (byte)122, (byte)210, (byte)171, (byte)178, (byte)23, (byte)57, (byte)68, (byte)188, (byte)77, (byte)196, (byte)238, (byte)96, (byte)110, (byte)17, (byte)43, (byte)6, (byte)60, (byte)241, (byte)81, (byte)166, (byte)75, (byte)127, (byte)86, (byte)243, (byte)194, (byte)128, (byte)238, (byte)200, (byte)164, (byte)124, (byte)175, (byte)10, (byte)172, (byte)221, (byte)214, (byte)214, (byte)119, (byte)44, (byte)115, (byte)71, (byte)141, (byte)197, (byte)9, (byte)201, (byte)253, (byte)208, (byte)52, (byte)156, (byte)192, (byte)97, (byte)71, (byte)231, (byte)83, (byte)225, (byte)235, (byte)79, (byte)114, (byte)40, (byte)156, (byte)7, (byte)179, (byte)67, (byte)194, (byte)163, (byte)225, (byte)74, (byte)98, (byte)55, (byte)1, (byte)148, (byte)143, (byte)87, (byte)115, (byte)12, (byte)123, (byte)166, (byte)23, (byte)128, (byte)250, (byte)103, (byte)30, (byte)179, (byte)110, (byte)82, (byte)197, (byte)48, (byte)131, (byte)57, (byte)133, (byte)161, (byte)170, (byte)176, (byte)225, (byte)152, (byte)86, (byte)7, (byte)42, (byte)61, (byte)197, (byte)98, (byte)152, (byte)123, (byte)124, (byte)180, (byte)238, (byte)170, (byte)211, (byte)67, (byte)195, (byte)86, (byte)130, (byte)210, (byte)26, (byte)113, (byte)109, (byte)211, (byte)84, (byte)19, (byte)72, (byte)212, (byte)156, (byte)214, (byte)86, (byte)27, (byte)53, (byte)128, (byte)131, (byte)219, (byte)10, (byte)237, (byte)170, (byte)198, (byte)42, (byte)254, (byte)255, (byte)164, (byte)4, (byte)56, (byte)132, (byte)250, (byte)150, (byte)27, (byte)45, (byte)25, (byte)156, (byte)131, (byte)19, (byte)249, (byte)253, (byte)141, (byte)187, (byte)244, (byte)182, (byte)123, (byte)78, (byte)105, (byte)144, (byte)127, (byte)36, (byte)36, (byte)111, (byte)98, (byte)236, (byte)163, (byte)222, (byte)13, (byte)211, (byte)226, (byte)244, (byte)235, (byte)145, (byte)0, (byte)214, (byte)19, (byte)129, (byte)249, (byte)48, (byte)59, (byte)130, (byte)161, (byte)56, (byte)241, (byte)235, (byte)34, (byte)210, (byte)76, (byte)214, (byte)221, (byte)241}, 0) ;
+            p267.first_message_offset = (byte)(byte)113;
+            p267.data__SET(new byte[] {(byte)68, (byte)178, (byte)143, (byte)15, (byte)71, (byte)164, (byte)22, (byte)215, (byte)133, (byte)7, (byte)13, (byte)11, (byte)139, (byte)29, (byte)147, (byte)108, (byte)75, (byte)57, (byte)142, (byte)55, (byte)184, (byte)72, (byte)188, (byte)252, (byte)25, (byte)244, (byte)201, (byte)20, (byte)96, (byte)83, (byte)221, (byte)13, (byte)250, (byte)16, (byte)102, (byte)204, (byte)112, (byte)241, (byte)14, (byte)203, (byte)100, (byte)239, (byte)204, (byte)112, (byte)85, (byte)20, (byte)126, (byte)32, (byte)218, (byte)243, (byte)34, (byte)69, (byte)26, (byte)185, (byte)225, (byte)239, (byte)134, (byte)107, (byte)125, (byte)86, (byte)78, (byte)52, (byte)79, (byte)26, (byte)1, (byte)190, (byte)7, (byte)63, (byte)209, (byte)17, (byte)13, (byte)36, (byte)80, (byte)80, (byte)69, (byte)131, (byte)43, (byte)77, (byte)35, (byte)71, (byte)135, (byte)206, (byte)240, (byte)247, (byte)123, (byte)77, (byte)149, (byte)131, (byte)122, (byte)94, (byte)74, (byte)94, (byte)88, (byte)154, (byte)28, (byte)14, (byte)217, (byte)98, (byte)113, (byte)6, (byte)10, (byte)194, (byte)1, (byte)47, (byte)145, (byte)114, (byte)171, (byte)122, (byte)62, (byte)18, (byte)68, (byte)124, (byte)237, (byte)241, (byte)75, (byte)158, (byte)223, (byte)243, (byte)109, (byte)244, (byte)95, (byte)139, (byte)3, (byte)101, (byte)2, (byte)23, (byte)23, (byte)65, (byte)94, (byte)184, (byte)38, (byte)225, (byte)110, (byte)251, (byte)58, (byte)171, (byte)233, (byte)127, (byte)87, (byte)98, (byte)155, (byte)149, (byte)140, (byte)67, (byte)195, (byte)130, (byte)79, (byte)35, (byte)245, (byte)95, (byte)46, (byte)250, (byte)182, (byte)254, (byte)134, (byte)243, (byte)202, (byte)54, (byte)2, (byte)17, (byte)22, (byte)191, (byte)42, (byte)58, (byte)208, (byte)88, (byte)1, (byte)82, (byte)198, (byte)97, (byte)60, (byte)205, (byte)178, (byte)90, (byte)221, (byte)161, (byte)250, (byte)163, (byte)207, (byte)168, (byte)200, (byte)118, (byte)174, (byte)120, (byte)80, (byte)254, (byte)98, (byte)129, (byte)216, (byte)11, (byte)101, (byte)119, (byte)38, (byte)41, (byte)184, (byte)193, (byte)148, (byte)170, (byte)179, (byte)51, (byte)50, (byte)223, (byte)112, (byte)154, (byte)118, (byte)239, (byte)27, (byte)56, (byte)70, (byte)62, (byte)167, (byte)15, (byte)187, (byte)147, (byte)226, (byte)119, (byte)183, (byte)46, (byte)245, (byte)204, (byte)200, (byte)234, (byte)70, (byte)52, (byte)72, (byte)44, (byte)221, (byte)4, (byte)244, (byte)131, (byte)58, (byte)152, (byte)233, (byte)32, (byte)174, (byte)225, (byte)225, (byte)2, (byte)1, (byte)194, (byte)56, (byte)226, (byte)22, (byte)55, (byte)164, (byte)132, (byte)135, (byte)139, (byte)36}, 0) ;
+            p267.target_component = (byte)(byte)245;
+            p267.length = (byte)(byte)241;
+            p267.sequence = (ushort)(ushort)17642;
+            p267.target_system = (byte)(byte)163;
             CommunicationChannel.instance.send(p267);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnLOGGING_ACKReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_component == (byte)(byte)213);
-                Debug.Assert(pack.target_system == (byte)(byte)199);
-                Debug.Assert(pack.sequence == (ushort)(ushort)32558);
+                Debug.Assert(pack.target_component == (byte)(byte)171);
+                Debug.Assert(pack.sequence == (ushort)(ushort)63889);
+                Debug.Assert(pack.target_system == (byte)(byte)206);
             };
             GroundControl.LOGGING_ACK p268 = CommunicationChannel.new_LOGGING_ACK();
             PH.setPack(p268);
-            p268.sequence = (ushort)(ushort)32558;
-            p268.target_component = (byte)(byte)213;
-            p268.target_system = (byte)(byte)199;
+            p268.target_component = (byte)(byte)171;
+            p268.target_system = (byte)(byte)206;
+            p268.sequence = (ushort)(ushort)63889;
             CommunicationChannel.instance.send(p268);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnVIDEO_STREAM_INFORMATIONReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.resolution_v == (ushort)(ushort)33166);
-                Debug.Assert(pack.resolution_h == (ushort)(ushort)669);
-                Debug.Assert(pack.rotation == (ushort)(ushort)7482);
-                Debug.Assert(pack.bitrate == (uint)839981699U);
-                Debug.Assert(pack.status == (byte)(byte)105);
-                Debug.Assert(pack.framerate == (float)1.4403903E38F);
-                Debug.Assert(pack.camera_id == (byte)(byte)241);
-                Debug.Assert(pack.uri_LEN(ph) == 216);
-                Debug.Assert(pack.uri_TRY(ph).Equals("NmrhdcrflBbuLcfboEkfaqcdcecLmtyburtgndqZovcwLthysshnyuzkwWqaixyfjMdxxbzxzgatvbXsiwbiqBtveyihotclzteispqgqrfrdnlhlguabntlqgsuppwvitkrcbicyuokyyBopalyjkpugrCgossqlpblevyknmGuNvQrXvgzwhwcuqCvcQxksptkjejvmpgLndbpyjHfgxst"));
+                Debug.Assert(pack.uri_LEN(ph) == 154);
+                Debug.Assert(pack.uri_TRY(ph).Equals("cojOxsxvTkjwdrgkpenauQrsgqquucjxkigYxzIvpbtapnmasmappmsmlrnfrpkazwnqfzlgCIoftusfouhfwwhytnzjlzbjyeukIotonlcjbpdhnzxefcjpoLPbzbngfrlehcgcwugwvybvlxujbljdnn"));
+                Debug.Assert(pack.camera_id == (byte)(byte)199);
+                Debug.Assert(pack.resolution_h == (ushort)(ushort)64164);
+                Debug.Assert(pack.bitrate == (uint)3172447982U);
+                Debug.Assert(pack.resolution_v == (ushort)(ushort)58948);
+                Debug.Assert(pack.framerate == (float)2.8068906E38F);
+                Debug.Assert(pack.rotation == (ushort)(ushort)16808);
+                Debug.Assert(pack.status == (byte)(byte)102);
             };
             GroundControl.VIDEO_STREAM_INFORMATION p269 = CommunicationChannel.new_VIDEO_STREAM_INFORMATION();
             PH.setPack(p269);
-            p269.resolution_h = (ushort)(ushort)669;
-            p269.bitrate = (uint)839981699U;
-            p269.rotation = (ushort)(ushort)7482;
-            p269.uri_SET("NmrhdcrflBbuLcfboEkfaqcdcecLmtyburtgndqZovcwLthysshnyuzkwWqaixyfjMdxxbzxzgatvbXsiwbiqBtveyihotclzteispqgqrfrdnlhlguabntlqgsuppwvitkrcbicyuokyyBopalyjkpugrCgossqlpblevyknmGuNvQrXvgzwhwcuqCvcQxksptkjejvmpgLndbpyjHfgxst", PH) ;
-            p269.resolution_v = (ushort)(ushort)33166;
-            p269.framerate = (float)1.4403903E38F;
-            p269.status = (byte)(byte)105;
-            p269.camera_id = (byte)(byte)241;
+            p269.bitrate = (uint)3172447982U;
+            p269.rotation = (ushort)(ushort)16808;
+            p269.uri_SET("cojOxsxvTkjwdrgkpenauQrsgqquucjxkigYxzIvpbtapnmasmappmsmlrnfrpkazwnqfzlgCIoftusfouhfwwhytnzjlzbjyeukIotonlcjbpdhnzxefcjpoLPbzbngfrlehcgcwugwvybvlxujbljdnn", PH) ;
+            p269.resolution_h = (ushort)(ushort)64164;
+            p269.camera_id = (byte)(byte)199;
+            p269.framerate = (float)2.8068906E38F;
+            p269.resolution_v = (ushort)(ushort)58948;
+            p269.status = (byte)(byte)102;
             CommunicationChannel.instance.send(p269);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnSET_VIDEO_STREAM_SETTINGSReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.framerate == (float) -2.6094515E38F);
-                Debug.Assert(pack.camera_id == (byte)(byte)98);
-                Debug.Assert(pack.rotation == (ushort)(ushort)11943);
-                Debug.Assert(pack.target_system == (byte)(byte)249);
-                Debug.Assert(pack.bitrate == (uint)3777765498U);
-                Debug.Assert(pack.uri_LEN(ph) == 71);
-                Debug.Assert(pack.uri_TRY(ph).Equals("aqlsttjtonjqrzDrTiaxvAaawowOdvrMjpfbaxjghmqasycepvqvfNnjjbkgyysodGjnpyc"));
-                Debug.Assert(pack.resolution_h == (ushort)(ushort)45949);
-                Debug.Assert(pack.resolution_v == (ushort)(ushort)10493);
-                Debug.Assert(pack.target_component == (byte)(byte)181);
+                Debug.Assert(pack.bitrate == (uint)3918851095U);
+                Debug.Assert(pack.uri_LEN(ph) == 158);
+                Debug.Assert(pack.uri_TRY(ph).Equals("ataecgqkdozpysyqjkygcxseoSjceaqlfczoglqxfepwfnabPXjdcmmunRykdukJsoixkvlrVegjuflckkGfzzsrpdcsxnexxrwbuxufFsacwzynjsngwopxWaMrmbwytvlzzsjgwynmammnqbnjiyqLswiqdd"));
+                Debug.Assert(pack.framerate == (float) -1.753882E38F);
+                Debug.Assert(pack.target_system == (byte)(byte)238);
+                Debug.Assert(pack.camera_id == (byte)(byte)187);
+                Debug.Assert(pack.resolution_h == (ushort)(ushort)24644);
+                Debug.Assert(pack.resolution_v == (ushort)(ushort)38805);
+                Debug.Assert(pack.rotation == (ushort)(ushort)33764);
+                Debug.Assert(pack.target_component == (byte)(byte)158);
             };
             GroundControl.SET_VIDEO_STREAM_SETTINGS p270 = CommunicationChannel.new_SET_VIDEO_STREAM_SETTINGS();
             PH.setPack(p270);
-            p270.framerate = (float) -2.6094515E38F;
-            p270.target_system = (byte)(byte)249;
-            p270.bitrate = (uint)3777765498U;
-            p270.camera_id = (byte)(byte)98;
-            p270.resolution_v = (ushort)(ushort)10493;
-            p270.rotation = (ushort)(ushort)11943;
-            p270.target_component = (byte)(byte)181;
-            p270.uri_SET("aqlsttjtonjqrzDrTiaxvAaawowOdvrMjpfbaxjghmqasycepvqvfNnjjbkgyysodGjnpyc", PH) ;
-            p270.resolution_h = (ushort)(ushort)45949;
+            p270.camera_id = (byte)(byte)187;
+            p270.resolution_h = (ushort)(ushort)24644;
+            p270.bitrate = (uint)3918851095U;
+            p270.target_system = (byte)(byte)238;
+            p270.framerate = (float) -1.753882E38F;
+            p270.resolution_v = (ushort)(ushort)38805;
+            p270.uri_SET("ataecgqkdozpysyqjkygcxseoSjceaqlfczoglqxfepwfnabPXjdcmmunRykdukJsoixkvlrVegjuflckkGfzzsrpdcsxnexxrwbuxufFsacwzynjsngwopxWaMrmbwytvlzzsjgwynmammnqbnjiyqLswiqdd", PH) ;
+            p270.rotation = (ushort)(ushort)33764;
+            p270.target_component = (byte)(byte)158;
             CommunicationChannel.instance.send(p270);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnWIFI_CONFIG_APReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.ssid_LEN(ph) == 16);
-                Debug.Assert(pack.ssid_TRY(ph).Equals("QqfkMbadBOvjWoic"));
-                Debug.Assert(pack.password_LEN(ph) == 56);
-                Debug.Assert(pack.password_TRY(ph).Equals("SmleejwpfrtvivxjhvtiApuknmyxvlcsftpyjgollcfnNnxtkcsghihd"));
+                Debug.Assert(pack.password_LEN(ph) == 47);
+                Debug.Assert(pack.password_TRY(ph).Equals("nyzizcmrvxcummnXiowwygyfijzxiLxtrfXhgrdpgtxxcnb"));
+                Debug.Assert(pack.ssid_LEN(ph) == 14);
+                Debug.Assert(pack.ssid_TRY(ph).Equals("dhqXJafeIfjpqq"));
             };
             GroundControl.WIFI_CONFIG_AP p299 = CommunicationChannel.new_WIFI_CONFIG_AP();
             PH.setPack(p299);
-            p299.ssid_SET("QqfkMbadBOvjWoic", PH) ;
-            p299.password_SET("SmleejwpfrtvivxjhvtiApuknmyxvlcsftpyjgollcfnNnxtkcsghihd", PH) ;
+            p299.password_SET("nyzizcmrvxcummnXiowwygyfijzxiLxtrfXhgrdpgtxxcnb", PH) ;
+            p299.ssid_SET("dhqXJafeIfjpqq", PH) ;
             CommunicationChannel.instance.send(p299);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnPROTOCOL_VERSIONReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.version == (ushort)(ushort)22593);
-                Debug.Assert(pack.min_version == (ushort)(ushort)11133);
-                Debug.Assert(pack.spec_version_hash.SequenceEqual(new byte[] {(byte)242, (byte)124, (byte)119, (byte)43, (byte)126, (byte)68, (byte)147, (byte)144}));
-                Debug.Assert(pack.max_version == (ushort)(ushort)26550);
-                Debug.Assert(pack.library_version_hash.SequenceEqual(new byte[] {(byte)162, (byte)52, (byte)94, (byte)25, (byte)102, (byte)196, (byte)27, (byte)34}));
+                Debug.Assert(pack.min_version == (ushort)(ushort)44109);
+                Debug.Assert(pack.version == (ushort)(ushort)59068);
+                Debug.Assert(pack.max_version == (ushort)(ushort)48939);
+                Debug.Assert(pack.spec_version_hash.SequenceEqual(new byte[] {(byte)207, (byte)3, (byte)189, (byte)198, (byte)95, (byte)114, (byte)57, (byte)232}));
+                Debug.Assert(pack.library_version_hash.SequenceEqual(new byte[] {(byte)206, (byte)134, (byte)137, (byte)93, (byte)56, (byte)101, (byte)131, (byte)158}));
             };
             GroundControl.PROTOCOL_VERSION p300 = CommunicationChannel.new_PROTOCOL_VERSION();
             PH.setPack(p300);
-            p300.spec_version_hash_SET(new byte[] {(byte)242, (byte)124, (byte)119, (byte)43, (byte)126, (byte)68, (byte)147, (byte)144}, 0) ;
-            p300.max_version = (ushort)(ushort)26550;
-            p300.library_version_hash_SET(new byte[] {(byte)162, (byte)52, (byte)94, (byte)25, (byte)102, (byte)196, (byte)27, (byte)34}, 0) ;
-            p300.version = (ushort)(ushort)22593;
-            p300.min_version = (ushort)(ushort)11133;
+            p300.min_version = (ushort)(ushort)44109;
+            p300.max_version = (ushort)(ushort)48939;
+            p300.spec_version_hash_SET(new byte[] {(byte)207, (byte)3, (byte)189, (byte)198, (byte)95, (byte)114, (byte)57, (byte)232}, 0) ;
+            p300.version = (ushort)(ushort)59068;
+            p300.library_version_hash_SET(new byte[] {(byte)206, (byte)134, (byte)137, (byte)93, (byte)56, (byte)101, (byte)131, (byte)158}, 0) ;
             CommunicationChannel.instance.send(p300);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnUAVCAN_NODE_STATUSReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.uptime_sec == (uint)2231041893U);
-                Debug.Assert(pack.time_usec == (ulong)7280722621124084994L);
-                Debug.Assert(pack.sub_mode == (byte)(byte)14);
-                Debug.Assert(pack.vendor_specific_status_code == (ushort)(ushort)54910);
-                Debug.Assert(pack.health == (UAVCAN_NODE_HEALTH)UAVCAN_NODE_HEALTH.UAVCAN_NODE_HEALTH_CRITICAL);
-                Debug.Assert(pack.mode == (UAVCAN_NODE_MODE)UAVCAN_NODE_MODE.UAVCAN_NODE_MODE_MAINTENANCE);
+                Debug.Assert(pack.uptime_sec == (uint)1184122442U);
+                Debug.Assert(pack.sub_mode == (byte)(byte)254);
+                Debug.Assert(pack.vendor_specific_status_code == (ushort)(ushort)20916);
+                Debug.Assert(pack.health == UAVCAN_NODE_HEALTH.UAVCAN_NODE_HEALTH_OK);
+                Debug.Assert(pack.time_usec == (ulong)9031866236886879758L);
+                Debug.Assert(pack.mode == UAVCAN_NODE_MODE.UAVCAN_NODE_MODE_OFFLINE);
             };
             GroundControl.UAVCAN_NODE_STATUS p310 = CommunicationChannel.new_UAVCAN_NODE_STATUS();
             PH.setPack(p310);
-            p310.health = (UAVCAN_NODE_HEALTH)UAVCAN_NODE_HEALTH.UAVCAN_NODE_HEALTH_CRITICAL;
-            p310.uptime_sec = (uint)2231041893U;
-            p310.sub_mode = (byte)(byte)14;
-            p310.vendor_specific_status_code = (ushort)(ushort)54910;
-            p310.mode = (UAVCAN_NODE_MODE)UAVCAN_NODE_MODE.UAVCAN_NODE_MODE_MAINTENANCE;
-            p310.time_usec = (ulong)7280722621124084994L;
+            p310.sub_mode = (byte)(byte)254;
+            p310.mode = UAVCAN_NODE_MODE.UAVCAN_NODE_MODE_OFFLINE;
+            p310.vendor_specific_status_code = (ushort)(ushort)20916;
+            p310.health = UAVCAN_NODE_HEALTH.UAVCAN_NODE_HEALTH_OK;
+            p310.time_usec = (ulong)9031866236886879758L;
+            p310.uptime_sec = (uint)1184122442U;
             CommunicationChannel.instance.send(p310);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnUAVCAN_NODE_INFOReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.hw_version_minor == (byte)(byte)219);
-                Debug.Assert(pack.uptime_sec == (uint)3990499818U);
-                Debug.Assert(pack.sw_version_major == (byte)(byte)164);
-                Debug.Assert(pack.time_usec == (ulong)3851240043637539839L);
-                Debug.Assert(pack.hw_version_major == (byte)(byte)231);
-                Debug.Assert(pack.sw_vcs_commit == (uint)3616647060U);
-                Debug.Assert(pack.sw_version_minor == (byte)(byte)70);
-                Debug.Assert(pack.name_LEN(ph) == 54);
-                Debug.Assert(pack.name_TRY(ph).Equals("mvYfoOhnwlcosnntitsjgllTngcgdgPbqxjuztwrpvklnhaxbtzxCw"));
-                Debug.Assert(pack.hw_unique_id.SequenceEqual(new byte[] {(byte)131, (byte)204, (byte)81, (byte)188, (byte)245, (byte)119, (byte)48, (byte)121, (byte)233, (byte)192, (byte)168, (byte)10, (byte)212, (byte)68, (byte)236, (byte)84}));
+                Debug.Assert(pack.hw_unique_id.SequenceEqual(new byte[] {(byte)246, (byte)53, (byte)225, (byte)40, (byte)251, (byte)160, (byte)92, (byte)197, (byte)199, (byte)208, (byte)46, (byte)35, (byte)1, (byte)140, (byte)194, (byte)234}));
+                Debug.Assert(pack.sw_vcs_commit == (uint)3825657200U);
+                Debug.Assert(pack.sw_version_minor == (byte)(byte)149);
+                Debug.Assert(pack.sw_version_major == (byte)(byte)243);
+                Debug.Assert(pack.time_usec == (ulong)6598830111451457952L);
+                Debug.Assert(pack.name_LEN(ph) == 40);
+                Debug.Assert(pack.name_TRY(ph).Equals("ltfaeozwyyokthgumcoIgugvujbozhlpzmqdwtzR"));
+                Debug.Assert(pack.uptime_sec == (uint)333496369U);
+                Debug.Assert(pack.hw_version_major == (byte)(byte)59);
+                Debug.Assert(pack.hw_version_minor == (byte)(byte)150);
             };
             GroundControl.UAVCAN_NODE_INFO p311 = CommunicationChannel.new_UAVCAN_NODE_INFO();
             PH.setPack(p311);
-            p311.hw_version_minor = (byte)(byte)219;
-            p311.sw_vcs_commit = (uint)3616647060U;
-            p311.sw_version_major = (byte)(byte)164;
-            p311.time_usec = (ulong)3851240043637539839L;
-            p311.name_SET("mvYfoOhnwlcosnntitsjgllTngcgdgPbqxjuztwrpvklnhaxbtzxCw", PH) ;
-            p311.hw_unique_id_SET(new byte[] {(byte)131, (byte)204, (byte)81, (byte)188, (byte)245, (byte)119, (byte)48, (byte)121, (byte)233, (byte)192, (byte)168, (byte)10, (byte)212, (byte)68, (byte)236, (byte)84}, 0) ;
-            p311.uptime_sec = (uint)3990499818U;
-            p311.hw_version_major = (byte)(byte)231;
-            p311.sw_version_minor = (byte)(byte)70;
+            p311.name_SET("ltfaeozwyyokthgumcoIgugvujbozhlpzmqdwtzR", PH) ;
+            p311.hw_unique_id_SET(new byte[] {(byte)246, (byte)53, (byte)225, (byte)40, (byte)251, (byte)160, (byte)92, (byte)197, (byte)199, (byte)208, (byte)46, (byte)35, (byte)1, (byte)140, (byte)194, (byte)234}, 0) ;
+            p311.hw_version_major = (byte)(byte)59;
+            p311.uptime_sec = (uint)333496369U;
+            p311.hw_version_minor = (byte)(byte)150;
+            p311.time_usec = (ulong)6598830111451457952L;
+            p311.sw_version_minor = (byte)(byte)149;
+            p311.sw_version_major = (byte)(byte)243;
+            p311.sw_vcs_commit = (uint)3825657200U;
             CommunicationChannel.instance.send(p311);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnPARAM_EXT_REQUEST_READReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_system == (byte)(byte)252);
-                Debug.Assert(pack.target_component == (byte)(byte)73);
-                Debug.Assert(pack.param_id_LEN(ph) == 14);
-                Debug.Assert(pack.param_id_TRY(ph).Equals("hkWncwBauivwov"));
-                Debug.Assert(pack.param_index == (short)(short) -957);
+                Debug.Assert(pack.target_component == (byte)(byte)117);
+                Debug.Assert(pack.param_index == (short)(short) -22508);
+                Debug.Assert(pack.param_id_LEN(ph) == 11);
+                Debug.Assert(pack.param_id_TRY(ph).Equals("rnpwsjLzQml"));
+                Debug.Assert(pack.target_system == (byte)(byte)193);
             };
             GroundControl.PARAM_EXT_REQUEST_READ p320 = CommunicationChannel.new_PARAM_EXT_REQUEST_READ();
             PH.setPack(p320);
-            p320.param_index = (short)(short) -957;
-            p320.param_id_SET("hkWncwBauivwov", PH) ;
-            p320.target_component = (byte)(byte)73;
-            p320.target_system = (byte)(byte)252;
+            p320.target_system = (byte)(byte)193;
+            p320.param_id_SET("rnpwsjLzQml", PH) ;
+            p320.target_component = (byte)(byte)117;
+            p320.param_index = (short)(short) -22508;
             CommunicationChannel.instance.send(p320);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnPARAM_EXT_REQUEST_LISTReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_system == (byte)(byte)182);
-                Debug.Assert(pack.target_component == (byte)(byte)209);
+                Debug.Assert(pack.target_system == (byte)(byte)148);
+                Debug.Assert(pack.target_component == (byte)(byte)207);
             };
             GroundControl.PARAM_EXT_REQUEST_LIST p321 = CommunicationChannel.new_PARAM_EXT_REQUEST_LIST();
             PH.setPack(p321);
-            p321.target_component = (byte)(byte)209;
-            p321.target_system = (byte)(byte)182;
+            p321.target_component = (byte)(byte)207;
+            p321.target_system = (byte)(byte)148;
             CommunicationChannel.instance.send(p321);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnPARAM_EXT_VALUEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.param_id_LEN(ph) == 2);
-                Debug.Assert(pack.param_id_TRY(ph).Equals("za"));
-                Debug.Assert(pack.param_type == (MAV_PARAM_EXT_TYPE)MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_INT8);
-                Debug.Assert(pack.param_value_LEN(ph) == 119);
-                Debug.Assert(pack.param_value_TRY(ph).Equals("tpmeybdUdvfbzsurktQfwwgyhszUwmfwflidoepbfwpliosxbbfsbspuagjqvujuyiljockfwgbcojrqmpwtshHlUNwpjavxyynpgsfusPcsmxbkQvrpknf"));
-                Debug.Assert(pack.param_index == (ushort)(ushort)14068);
-                Debug.Assert(pack.param_count == (ushort)(ushort)7485);
+                Debug.Assert(pack.param_value_LEN(ph) == 35);
+                Debug.Assert(pack.param_value_TRY(ph).Equals("sgkaqkecwxiapiwdiokmdynpqrflbmlxTOu"));
+                Debug.Assert(pack.param_id_LEN(ph) == 15);
+                Debug.Assert(pack.param_id_TRY(ph).Equals("fWiuptjmeanaloj"));
+                Debug.Assert(pack.param_index == (ushort)(ushort)25319);
+                Debug.Assert(pack.param_count == (ushort)(ushort)17239);
+                Debug.Assert(pack.param_type == MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_REAL32);
             };
             GroundControl.PARAM_EXT_VALUE p322 = CommunicationChannel.new_PARAM_EXT_VALUE();
             PH.setPack(p322);
-            p322.param_index = (ushort)(ushort)14068;
-            p322.param_value_SET("tpmeybdUdvfbzsurktQfwwgyhszUwmfwflidoepbfwpliosxbbfsbspuagjqvujuyiljockfwgbcojrqmpwtshHlUNwpjavxyynpgsfusPcsmxbkQvrpknf", PH) ;
-            p322.param_id_SET("za", PH) ;
-            p322.param_type = (MAV_PARAM_EXT_TYPE)MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_INT8;
-            p322.param_count = (ushort)(ushort)7485;
+            p322.param_id_SET("fWiuptjmeanaloj", PH) ;
+            p322.param_index = (ushort)(ushort)25319;
+            p322.param_count = (ushort)(ushort)17239;
+            p322.param_value_SET("sgkaqkecwxiapiwdiokmdynpqrflbmlxTOu", PH) ;
+            p322.param_type = MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_REAL32;
             CommunicationChannel.instance.send(p322);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnPARAM_EXT_SETReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.target_component == (byte)(byte)150);
-                Debug.Assert(pack.param_type == (MAV_PARAM_EXT_TYPE)MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_REAL32);
-                Debug.Assert(pack.target_system == (byte)(byte)71);
-                Debug.Assert(pack.param_value_LEN(ph) == 76);
-                Debug.Assert(pack.param_value_TRY(ph).Equals("yjDuvvvdhlfXaevkpddeulrHfmISlnwyyhTkkpjcKqflfkpqysDPwkronNknboqbreoubbrosojr"));
-                Debug.Assert(pack.param_id_LEN(ph) == 10);
-                Debug.Assert(pack.param_id_TRY(ph).Equals("Feeamzrjgr"));
+                Debug.Assert(pack.param_id_LEN(ph) == 15);
+                Debug.Assert(pack.param_id_TRY(ph).Equals("yfpypuyzrncjihu"));
+                Debug.Assert(pack.param_value_LEN(ph) == 97);
+                Debug.Assert(pack.param_value_TRY(ph).Equals("NwioksmppmiWptdetsgdtIybsfDcFlbdxcqsgqvmQidvkJndpwqrugirtZaCnhzuuymjaxqmrSkclekqKxoocwtsybhtviGlx"));
+                Debug.Assert(pack.target_system == (byte)(byte)0);
+                Debug.Assert(pack.target_component == (byte)(byte)155);
+                Debug.Assert(pack.param_type == MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_UINT8);
             };
             GroundControl.PARAM_EXT_SET p323 = CommunicationChannel.new_PARAM_EXT_SET();
             PH.setPack(p323);
-            p323.param_value_SET("yjDuvvvdhlfXaevkpddeulrHfmISlnwyyhTkkpjcKqflfkpqysDPwkronNknboqbreoubbrosojr", PH) ;
-            p323.target_component = (byte)(byte)150;
-            p323.param_type = (MAV_PARAM_EXT_TYPE)MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_REAL32;
-            p323.param_id_SET("Feeamzrjgr", PH) ;
-            p323.target_system = (byte)(byte)71;
+            p323.param_type = MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_UINT8;
+            p323.target_component = (byte)(byte)155;
+            p323.param_id_SET("yfpypuyzrncjihu", PH) ;
+            p323.param_value_SET("NwioksmppmiWptdetsgdtIybsfDcFlbdxcqsgqvmQidvkJndpwqrugirtZaCnhzuuymjaxqmrSkclekqKxoocwtsybhtviGlx", PH) ;
+            p323.target_system = (byte)(byte)0;
             CommunicationChannel.instance.send(p323);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnPARAM_EXT_ACKReceive += (src, ph, pack) =>
             {
+                Debug.Assert(pack.param_value_LEN(ph) == 17);
+                Debug.Assert(pack.param_value_TRY(ph).Equals("aeguajhjpvhuwBkgd"));
                 Debug.Assert(pack.param_id_LEN(ph) == 12);
-                Debug.Assert(pack.param_id_TRY(ph).Equals("haCiakzxrmqp"));
-                Debug.Assert(pack.param_result == (PARAM_ACK)PARAM_ACK.PARAM_ACK_VALUE_UNSUPPORTED);
-                Debug.Assert(pack.param_type == (MAV_PARAM_EXT_TYPE)MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_REAL32);
-                Debug.Assert(pack.param_value_LEN(ph) == 74);
-                Debug.Assert(pack.param_value_TRY(ph).Equals("ymcnbieivlftsoYtWvXvjbgawqpflmcaAfLyWpaaddqkWpubpcgsvZmnzOomshubdZjaBqVakf"));
+                Debug.Assert(pack.param_id_TRY(ph).Equals("pDduftPdkdou"));
+                Debug.Assert(pack.param_type == MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_UINT16);
+                Debug.Assert(pack.param_result == PARAM_ACK.PARAM_ACK_IN_PROGRESS);
             };
             GroundControl.PARAM_EXT_ACK p324 = CommunicationChannel.new_PARAM_EXT_ACK();
             PH.setPack(p324);
-            p324.param_value_SET("ymcnbieivlftsoYtWvXvjbgawqpflmcaAfLyWpaaddqkWpubpcgsvZmnzOomshubdZjaBqVakf", PH) ;
-            p324.param_id_SET("haCiakzxrmqp", PH) ;
-            p324.param_result = (PARAM_ACK)PARAM_ACK.PARAM_ACK_VALUE_UNSUPPORTED;
-            p324.param_type = (MAV_PARAM_EXT_TYPE)MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_REAL32;
+            p324.param_type = MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_UINT16;
+            p324.param_result = PARAM_ACK.PARAM_ACK_IN_PROGRESS;
+            p324.param_id_SET("pDduftPdkdou", PH) ;
+            p324.param_value_SET("aeguajhjpvhuwBkgd", PH) ;
             CommunicationChannel.instance.send(p324);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
             ADV_TEST_CH.OnOBSTACLE_DISTANCEReceive += (src, ph, pack) =>
             {
-                Debug.Assert(pack.sensor_type == (MAV_DISTANCE_SENSOR)MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_RADAR);
-                Debug.Assert(pack.max_distance == (ushort)(ushort)56714);
-                Debug.Assert(pack.min_distance == (ushort)(ushort)32577);
-                Debug.Assert(pack.time_usec == (ulong)9203577475784985756L);
-                Debug.Assert(pack.increment == (byte)(byte)195);
-                Debug.Assert(pack.distances.SequenceEqual(new ushort[] {(ushort)53504, (ushort)61638, (ushort)49071, (ushort)56288, (ushort)37693, (ushort)12362, (ushort)46304, (ushort)57499, (ushort)25733, (ushort)28375, (ushort)32533, (ushort)59446, (ushort)51466, (ushort)39026, (ushort)22771, (ushort)26584, (ushort)20237, (ushort)24559, (ushort)10130, (ushort)14279, (ushort)27077, (ushort)17175, (ushort)48667, (ushort)54578, (ushort)50509, (ushort)62778, (ushort)59892, (ushort)57424, (ushort)59952, (ushort)28786, (ushort)8084, (ushort)17077, (ushort)57297, (ushort)41171, (ushort)4292, (ushort)25910, (ushort)22641, (ushort)26036, (ushort)4011, (ushort)38838, (ushort)26519, (ushort)6111, (ushort)41645, (ushort)19262, (ushort)31355, (ushort)27615, (ushort)27690, (ushort)64735, (ushort)52559, (ushort)14683, (ushort)60137, (ushort)44015, (ushort)7539, (ushort)46119, (ushort)23054, (ushort)65211, (ushort)28187, (ushort)43129, (ushort)33075, (ushort)54853, (ushort)30533, (ushort)39621, (ushort)9106, (ushort)16146, (ushort)15550, (ushort)59899, (ushort)23880, (ushort)51588, (ushort)19690, (ushort)48098, (ushort)36658, (ushort)38246}));
+                Debug.Assert(pack.increment == (byte)(byte)157);
+                Debug.Assert(pack.distances.SequenceEqual(new ushort[] {(ushort)39221, (ushort)11904, (ushort)3285, (ushort)34195, (ushort)42962, (ushort)11683, (ushort)53900, (ushort)22614, (ushort)38123, (ushort)57855, (ushort)57975, (ushort)47113, (ushort)14195, (ushort)31110, (ushort)49874, (ushort)26890, (ushort)23293, (ushort)29943, (ushort)30540, (ushort)58182, (ushort)11377, (ushort)4390, (ushort)8647, (ushort)25336, (ushort)58291, (ushort)62256, (ushort)30150, (ushort)29831, (ushort)18809, (ushort)23619, (ushort)998, (ushort)61274, (ushort)33953, (ushort)49336, (ushort)54672, (ushort)50243, (ushort)54627, (ushort)63014, (ushort)14336, (ushort)16407, (ushort)48585, (ushort)14269, (ushort)16811, (ushort)33765, (ushort)30879, (ushort)9549, (ushort)9118, (ushort)5623, (ushort)14325, (ushort)21816, (ushort)31305, (ushort)42756, (ushort)11559, (ushort)24036, (ushort)6069, (ushort)59495, (ushort)48362, (ushort)48786, (ushort)33257, (ushort)2969, (ushort)54308, (ushort)36726, (ushort)57184, (ushort)8492, (ushort)58950, (ushort)32599, (ushort)3238, (ushort)25282, (ushort)46468, (ushort)17409, (ushort)26839, (ushort)39972}));
+                Debug.Assert(pack.min_distance == (ushort)(ushort)15851);
+                Debug.Assert(pack.time_usec == (ulong)5045970276593130059L);
+                Debug.Assert(pack.sensor_type == MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_ULTRASOUND);
+                Debug.Assert(pack.max_distance == (ushort)(ushort)2822);
             };
             GroundControl.OBSTACLE_DISTANCE p330 = CommunicationChannel.new_OBSTACLE_DISTANCE();
             PH.setPack(p330);
-            p330.distances_SET(new ushort[] {(ushort)53504, (ushort)61638, (ushort)49071, (ushort)56288, (ushort)37693, (ushort)12362, (ushort)46304, (ushort)57499, (ushort)25733, (ushort)28375, (ushort)32533, (ushort)59446, (ushort)51466, (ushort)39026, (ushort)22771, (ushort)26584, (ushort)20237, (ushort)24559, (ushort)10130, (ushort)14279, (ushort)27077, (ushort)17175, (ushort)48667, (ushort)54578, (ushort)50509, (ushort)62778, (ushort)59892, (ushort)57424, (ushort)59952, (ushort)28786, (ushort)8084, (ushort)17077, (ushort)57297, (ushort)41171, (ushort)4292, (ushort)25910, (ushort)22641, (ushort)26036, (ushort)4011, (ushort)38838, (ushort)26519, (ushort)6111, (ushort)41645, (ushort)19262, (ushort)31355, (ushort)27615, (ushort)27690, (ushort)64735, (ushort)52559, (ushort)14683, (ushort)60137, (ushort)44015, (ushort)7539, (ushort)46119, (ushort)23054, (ushort)65211, (ushort)28187, (ushort)43129, (ushort)33075, (ushort)54853, (ushort)30533, (ushort)39621, (ushort)9106, (ushort)16146, (ushort)15550, (ushort)59899, (ushort)23880, (ushort)51588, (ushort)19690, (ushort)48098, (ushort)36658, (ushort)38246}, 0) ;
-            p330.max_distance = (ushort)(ushort)56714;
-            p330.time_usec = (ulong)9203577475784985756L;
-            p330.min_distance = (ushort)(ushort)32577;
-            p330.sensor_type = (MAV_DISTANCE_SENSOR)MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_RADAR;
-            p330.increment = (byte)(byte)195;
+            p330.max_distance = (ushort)(ushort)2822;
+            p330.distances_SET(new ushort[] {(ushort)39221, (ushort)11904, (ushort)3285, (ushort)34195, (ushort)42962, (ushort)11683, (ushort)53900, (ushort)22614, (ushort)38123, (ushort)57855, (ushort)57975, (ushort)47113, (ushort)14195, (ushort)31110, (ushort)49874, (ushort)26890, (ushort)23293, (ushort)29943, (ushort)30540, (ushort)58182, (ushort)11377, (ushort)4390, (ushort)8647, (ushort)25336, (ushort)58291, (ushort)62256, (ushort)30150, (ushort)29831, (ushort)18809, (ushort)23619, (ushort)998, (ushort)61274, (ushort)33953, (ushort)49336, (ushort)54672, (ushort)50243, (ushort)54627, (ushort)63014, (ushort)14336, (ushort)16407, (ushort)48585, (ushort)14269, (ushort)16811, (ushort)33765, (ushort)30879, (ushort)9549, (ushort)9118, (ushort)5623, (ushort)14325, (ushort)21816, (ushort)31305, (ushort)42756, (ushort)11559, (ushort)24036, (ushort)6069, (ushort)59495, (ushort)48362, (ushort)48786, (ushort)33257, (ushort)2969, (ushort)54308, (ushort)36726, (ushort)57184, (ushort)8492, (ushort)58950, (ushort)32599, (ushort)3238, (ushort)25282, (ushort)46468, (ushort)17409, (ushort)26839, (ushort)39972}, 0) ;
+            p330.min_distance = (ushort)(ushort)15851;
+            p330.increment = (byte)(byte)157;
+            p330.time_usec = (ulong)5045970276593130059L;
+            p330.sensor_type = MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_ULTRASOUND;
             CommunicationChannel.instance.send(p330);//put test pack to the  channel send buffer
             TestChannelAdvanced.transmission(CommunicationChannel.instance, ADV_TEST_CH);
         }
