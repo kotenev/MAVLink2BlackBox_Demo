@@ -1104,7 +1104,7 @@ typedef  enum
     e_MAV_MODE_MAV_MODE_AUTO_ARMED = 220
 } e_MAV_MODE;
 
-inline static e_MAV_MODE _en__K(UMAX id)
+inline static e_MAV_MODE _en__a(UMAX id)
 {
     switch(id)
     {
@@ -1134,7 +1134,7 @@ inline static e_MAV_MODE _en__K(UMAX id)
     }
     return -1;
 }
-inline static UMAX _id__K(e_MAV_MODE en)
+inline static UMAX _id__a(e_MAV_MODE en)
 {
     switch(en)
     {
@@ -1208,23 +1208,7 @@ typedef  enum
     e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL = 255 //Only used in MISSION_CLEAR_ALL to clear all mission types.
 } e_MAV_MISSION_TYPE;
 
-inline static e_MAV_MISSION_TYPE _en__U(UMAX id)
-{
-    switch(id)
-    {
-        case 0:
-            return e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_MISSION;
-        case 1:
-            return e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_FENCE;
-        case 2:
-            return e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY;
-        case 3:
-            return e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
-    return -1;
-}
-inline static UMAX _id__U(e_MAV_MISSION_TYPE en)
+inline static UMAX _id__j(e_MAV_MISSION_TYPE en)
 {
     switch(en)
     {
@@ -2436,271 +2420,7 @@ typedef  enum
     e_MAV_CMD_MAV_CMD_USER_5 = 31014
 } e_MAV_CMD;
 
-inline static e_MAV_CMD _en__X(UMAX id)
-{
-    switch(id)
-    {
-        case 0:
-            return e_MAV_CMD_MAV_CMD_PREFLIGHT_STORAGE_ADVANCED;
-        case 1:
-            return e_MAV_CMD_MAV_CMD_NAV_WAYPOINT;
-        case 2:
-            return e_MAV_CMD_MAV_CMD_NAV_LOITER_UNLIM;
-        case 3:
-            return e_MAV_CMD_MAV_CMD_NAV_LOITER_TURNS;
-        case 4:
-            return e_MAV_CMD_MAV_CMD_NAV_LOITER_TIME;
-        case 5:
-            return e_MAV_CMD_MAV_CMD_NAV_RETURN_TO_LAUNCH;
-        case 6:
-            return e_MAV_CMD_MAV_CMD_NAV_LAND;
-        case 7:
-            return e_MAV_CMD_MAV_CMD_NAV_TAKEOFF;
-        case 8:
-            return e_MAV_CMD_MAV_CMD_NAV_LAND_LOCAL;
-        case 9:
-            return e_MAV_CMD_MAV_CMD_NAV_TAKEOFF_LOCAL;
-        case 10:
-            return e_MAV_CMD_MAV_CMD_NAV_FOLLOW;
-        case 11:
-            return e_MAV_CMD_MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
-        case 12:
-            return e_MAV_CMD_MAV_CMD_NAV_LOITER_TO_ALT;
-        case 13:
-            return e_MAV_CMD_MAV_CMD_DO_FOLLOW;
-        case 14:
-            return e_MAV_CMD_MAV_CMD_DO_FOLLOW_REPOSITION;
-        case 15:
-            return e_MAV_CMD_MAV_CMD_NAV_ROI;
-        case 16:
-            return e_MAV_CMD_MAV_CMD_NAV_PATHPLANNING;
-        case 17:
-            return e_MAV_CMD_MAV_CMD_NAV_SPLINE_WAYPOINT;
-        case 18:
-            return e_MAV_CMD_MAV_CMD_NAV_VTOL_TAKEOFF;
-        case 19:
-            return e_MAV_CMD_MAV_CMD_NAV_VTOL_LAND;
-        case 20:
-            return e_MAV_CMD_MAV_CMD_NAV_GUIDED_ENABLE;
-        case 21:
-            return e_MAV_CMD_MAV_CMD_NAV_DELAY;
-        case 22:
-            return e_MAV_CMD_MAV_CMD_NAV_PAYLOAD_PLACE;
-        case 23:
-            return e_MAV_CMD_MAV_CMD_NAV_LAST;
-        case 24:
-            return e_MAV_CMD_MAV_CMD_CONDITION_DELAY;
-        case 25:
-            return e_MAV_CMD_MAV_CMD_CONDITION_CHANGE_ALT;
-        case 26:
-            return e_MAV_CMD_MAV_CMD_CONDITION_DISTANCE;
-        case 27:
-            return e_MAV_CMD_MAV_CMD_CONDITION_YAW;
-        case 28:
-            return e_MAV_CMD_MAV_CMD_CONDITION_LAST;
-        case 29:
-            return e_MAV_CMD_MAV_CMD_DO_SET_MODE;
-        case 30:
-            return e_MAV_CMD_MAV_CMD_DO_JUMP;
-        case 31:
-            return e_MAV_CMD_MAV_CMD_DO_CHANGE_SPEED;
-        case 32:
-            return e_MAV_CMD_MAV_CMD_DO_SET_HOME;
-        case 33:
-            return e_MAV_CMD_MAV_CMD_DO_SET_PARAMETER;
-        case 34:
-            return e_MAV_CMD_MAV_CMD_DO_SET_RELAY;
-        case 35:
-            return e_MAV_CMD_MAV_CMD_DO_REPEAT_RELAY;
-        case 36:
-            return e_MAV_CMD_MAV_CMD_DO_SET_SERVO;
-        case 37:
-            return e_MAV_CMD_MAV_CMD_DO_REPEAT_SERVO;
-        case 38:
-            return e_MAV_CMD_MAV_CMD_DO_FLIGHTTERMINATION;
-        case 39:
-            return e_MAV_CMD_MAV_CMD_DO_CHANGE_ALTITUDE;
-        case 40:
-            return e_MAV_CMD_MAV_CMD_DO_LAND_START;
-        case 41:
-            return e_MAV_CMD_MAV_CMD_DO_RALLY_LAND;
-        case 42:
-            return e_MAV_CMD_MAV_CMD_DO_GO_AROUND;
-        case 43:
-            return e_MAV_CMD_MAV_CMD_DO_REPOSITION;
-        case 44:
-            return e_MAV_CMD_MAV_CMD_DO_PAUSE_CONTINUE;
-        case 45:
-            return e_MAV_CMD_MAV_CMD_DO_SET_REVERSE;
-        case 46:
-            return e_MAV_CMD_MAV_CMD_DO_CONTROL_VIDEO;
-        case 47:
-            return e_MAV_CMD_MAV_CMD_DO_SET_ROI;
-        case 48:
-            return e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONFIGURE;
-        case 49:
-            return e_MAV_CMD_MAV_CMD_DO_DIGICAM_CONTROL;
-        case 50:
-            return e_MAV_CMD_MAV_CMD_DO_MOUNT_CONFIGURE;
-        case 51:
-            return e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL;
-        case 52:
-            return e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_DIST;
-        case 53:
-            return e_MAV_CMD_MAV_CMD_DO_FENCE_ENABLE;
-        case 54:
-            return e_MAV_CMD_MAV_CMD_DO_PARACHUTE;
-        case 55:
-            return e_MAV_CMD_MAV_CMD_DO_MOTOR_TEST;
-        case 56:
-            return e_MAV_CMD_MAV_CMD_DO_INVERTED_FLIGHT;
-        case 57:
-            return e_MAV_CMD_MAV_CMD_NAV_SET_YAW_SPEED;
-        case 58:
-            return e_MAV_CMD_MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL;
-        case 59:
-            return e_MAV_CMD_MAV_CMD_DO_MOUNT_CONTROL_QUAT;
-        case 60:
-            return e_MAV_CMD_MAV_CMD_DO_GUIDED_MASTER;
-        case 61:
-            return e_MAV_CMD_MAV_CMD_DO_GUIDED_LIMITS;
-        case 62:
-            return e_MAV_CMD_MAV_CMD_DO_ENGINE_CONTROL;
-        case 63:
-            return e_MAV_CMD_MAV_CMD_DO_LAST;
-        case 64:
-            return e_MAV_CMD_MAV_CMD_PREFLIGHT_CALIBRATION;
-        case 65:
-            return e_MAV_CMD_MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS;
-        case 66:
-            return e_MAV_CMD_MAV_CMD_PREFLIGHT_UAVCAN;
-        case 67:
-            return e_MAV_CMD_MAV_CMD_PREFLIGHT_STORAGE;
-        case 68:
-            return e_MAV_CMD_MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN;
-        case 69:
-            return e_MAV_CMD_MAV_CMD_OVERRIDE_GOTO;
-        case 70:
-            return e_MAV_CMD_MAV_CMD_MISSION_START;
-        case 71:
-            return e_MAV_CMD_MAV_CMD_COMPONENT_ARM_DISARM;
-        case 72:
-            return e_MAV_CMD_MAV_CMD_GET_HOME_POSITION;
-        case 73:
-            return e_MAV_CMD_MAV_CMD_START_RX_PAIR;
-        case 74:
-            return e_MAV_CMD_MAV_CMD_GET_MESSAGE_INTERVAL;
-        case 75:
-            return e_MAV_CMD_MAV_CMD_SET_MESSAGE_INTERVAL;
-        case 76:
-            return e_MAV_CMD_MAV_CMD_REQUEST_PROTOCOL_VERSION;
-        case 77:
-            return e_MAV_CMD_MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES;
-        case 78:
-            return e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_INFORMATION;
-        case 79:
-            return e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_SETTINGS;
-        case 80:
-            return e_MAV_CMD_MAV_CMD_REQUEST_STORAGE_INFORMATION;
-        case 81:
-            return e_MAV_CMD_MAV_CMD_STORAGE_FORMAT;
-        case 82:
-            return e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS;
-        case 83:
-            return e_MAV_CMD_MAV_CMD_REQUEST_FLIGHT_INFORMATION;
-        case 84:
-            return e_MAV_CMD_MAV_CMD_RESET_CAMERA_SETTINGS;
-        case 85:
-            return e_MAV_CMD_MAV_CMD_SET_CAMERA_MODE;
-        case 86:
-            return e_MAV_CMD_MAV_CMD_IMAGE_START_CAPTURE;
-        case 87:
-            return e_MAV_CMD_MAV_CMD_IMAGE_STOP_CAPTURE;
-        case 88:
-            return e_MAV_CMD_MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE;
-        case 89:
-            return e_MAV_CMD_MAV_CMD_DO_TRIGGER_CONTROL;
-        case 90:
-            return e_MAV_CMD_MAV_CMD_VIDEO_START_CAPTURE;
-        case 91:
-            return e_MAV_CMD_MAV_CMD_VIDEO_STOP_CAPTURE;
-        case 92:
-            return e_MAV_CMD_MAV_CMD_VIDEO_START_STREAMING;
-        case 93:
-            return e_MAV_CMD_MAV_CMD_VIDEO_STOP_STREAMING;
-        case 94:
-            return e_MAV_CMD_MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION;
-        case 95:
-            return e_MAV_CMD_MAV_CMD_LOGGING_START;
-        case 96:
-            return e_MAV_CMD_MAV_CMD_LOGGING_STOP;
-        case 97:
-            return e_MAV_CMD_MAV_CMD_AIRFRAME_CONFIGURATION;
-        case 98:
-            return e_MAV_CMD_MAV_CMD_PANORAMA_CREATE;
-        case 99:
-            return e_MAV_CMD_MAV_CMD_DO_VTOL_TRANSITION;
-        case 100:
-            return e_MAV_CMD_MAV_CMD_ARM_AUTHORIZATION_REQUEST;
-        case 101:
-            return e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_STANDARD;
-        case 102:
-            return e_MAV_CMD_MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE;
-        case 103:
-            return e_MAV_CMD_MAV_CMD_CONDITION_GATE;
-        case 104:
-            return e_MAV_CMD_MAV_CMD_NAV_FENCE_RETURN_POINT;
-        case 105:
-            return e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION;
-        case 106:
-            return e_MAV_CMD_MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION;
-        case 107:
-            return e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION;
-        case 108:
-            return e_MAV_CMD_MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION;
-        case 109:
-            return e_MAV_CMD_MAV_CMD_NAV_RALLY_POINT;
-        case 110:
-            return e_MAV_CMD_MAV_CMD_UAVCAN_GET_NODE_INFO;
-        case 111:
-            return e_MAV_CMD_MAV_CMD_PAYLOAD_PREPARE_DEPLOY;
-        case 112:
-            return e_MAV_CMD_MAV_CMD_PAYLOAD_CONTROL_DEPLOY;
-        case 113:
-            return e_MAV_CMD_MAV_CMD_WAYPOINT_USER_1;
-        case 114:
-            return e_MAV_CMD_MAV_CMD_WAYPOINT_USER_2;
-        case 115:
-            return e_MAV_CMD_MAV_CMD_WAYPOINT_USER_3;
-        case 116:
-            return e_MAV_CMD_MAV_CMD_WAYPOINT_USER_4;
-        case 117:
-            return e_MAV_CMD_MAV_CMD_WAYPOINT_USER_5;
-        case 118:
-            return e_MAV_CMD_MAV_CMD_SPATIAL_USER_1;
-        case 119:
-            return e_MAV_CMD_MAV_CMD_SPATIAL_USER_2;
-        case 120:
-            return e_MAV_CMD_MAV_CMD_SPATIAL_USER_3;
-        case 121:
-            return e_MAV_CMD_MAV_CMD_SPATIAL_USER_4;
-        case 122:
-            return e_MAV_CMD_MAV_CMD_SPATIAL_USER_5;
-        case 123:
-            return e_MAV_CMD_MAV_CMD_USER_1;
-        case 124:
-            return e_MAV_CMD_MAV_CMD_USER_2;
-        case 125:
-            return e_MAV_CMD_MAV_CMD_USER_3;
-        case 126:
-            return e_MAV_CMD_MAV_CMD_USER_4;
-        case 127:
-            return e_MAV_CMD_MAV_CMD_USER_5;
-        default: ;//assert(false);//("Unknown enum ID " + id);
-    }
-    return -1;
-}
-inline static UMAX _id__X(e_MAV_CMD en)
+inline static UMAX _id__c(e_MAV_CMD en)
 {
     switch(en)
     {
@@ -3681,7 +3401,7 @@ INLINER void p11_target_system_SET(uint8_t  src, Pack * dst)//The system setting
 INLINER void p11_base_mode_SET(e_MAV_MODE  src, Pack * dst)//The new base mode
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__K(src);
+    UMAX id = _id__a(src);
     set_bits(id, 4, data, 40);
 }
 INLINER void p20_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -4461,7 +4181,7 @@ INLINER void p37_end_index_SET(int16_t  src, Pack * dst)//End index, -1 by defau
 INLINER void p37_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__U(src);
+    UMAX id = _id__j(src);
     set_bits(id, 3, data, 48);
 }
 INLINER void p38_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -4487,7 +4207,7 @@ INLINER void p38_end_index_SET(int16_t  src, Pack * dst)//End index, equal or gr
 INLINER void p38_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__U(src);
+    UMAX id = _id__j(src);
     set_bits(id, 3, data, 48);
 }
 INLINER void p39_seq_SET(uint16_t  src, Pack * dst)//Sequence
@@ -4558,13 +4278,13 @@ INLINER void p39_frame_SET(e_MAV_FRAME  src, Pack * dst)//The coordinate system 
 INLINER void p39_command_SET(e_MAV_CMD  src, Pack * dst)//The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__X(src);
+    UMAX id = _id__c(src);
     set_bits(id, 8, data, 276);
 }
 INLINER void p39_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__U(src);
+    UMAX id = _id__j(src);
     set_bits(id, 3, data, 284);
 }
 INLINER void p40_seq_SET(uint16_t  src, Pack * dst)//Sequence
@@ -4585,7 +4305,7 @@ INLINER void p40_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p40_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__U(src);
+    UMAX id = _id__j(src);
     set_bits(id, 3, data, 32);
 }
 INLINER void p41_seq_SET(uint16_t  src, Pack * dst)//Sequence
@@ -4621,7 +4341,7 @@ INLINER void p43_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p43_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__U(src);
+    UMAX id = _id__j(src);
     set_bits(id, 3, data, 16);
 }
 INLINER void p44_count_SET(uint16_t  src, Pack * dst)//Number of mission items in the sequence
@@ -4642,7 +4362,7 @@ INLINER void p44_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p44_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__U(src);
+    UMAX id = _id__j(src);
     set_bits(id, 3, data, 32);
 }
 INLINER void p45_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -4658,7 +4378,7 @@ INLINER void p45_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p45_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__U(src);
+    UMAX id = _id__j(src);
     set_bits(id, 3, data, 16);
 }
 INLINER void p46_seq_SET(uint16_t  src, Pack * dst)//Sequence
@@ -4684,7 +4404,7 @@ INLINER void p47_type_SET(e_MAV_MISSION_RESULT  src, Pack * dst)//See MAV_MISSIO
 INLINER void p47_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__U(src);
+    UMAX id = _id__j(src);
     set_bits(id, 3, data, 20);
 }
 INLINER void p48_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -4820,7 +4540,7 @@ INLINER void p51_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p51_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__U(src);
+    UMAX id = _id__j(src);
     set_bits(id, 3, data, 32);
 }
 INLINER void p54_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -5413,13 +5133,13 @@ INLINER void p73_frame_SET(e_MAV_FRAME  src, Pack * dst)//The coordinate system 
 INLINER void p73_command_SET(e_MAV_CMD  src, Pack * dst)//The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__X(src);
+    UMAX id = _id__c(src);
     set_bits(id, 8, data, 276);
 }
 INLINER void p73_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__U(src);
+    UMAX id = _id__j(src);
     set_bits(id, 3, data, 284);
 }
 INLINER void p74_throttle_SET(uint16_t  src, Pack * dst)//Current throttle setting in integer percent, 0 to 100
@@ -5515,7 +5235,7 @@ INLINER void p75_frame_SET(e_MAV_FRAME  src, Pack * dst)//The coordinate system 
 INLINER void p75_command_SET(e_MAV_CMD  src, Pack * dst)//The scheduled action for the mission item. see MAV_CMD in common.xml MAVLink specs
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__X(src);
+    UMAX id = _id__c(src);
     set_bits(id, 8, data, 260);
 }
 INLINER void p76_target_system_SET(uint8_t  src, Pack * dst)//System which should execute the command
@@ -5571,13 +5291,13 @@ INLINER void p76_param7_SET(float  src, Pack * dst)//Parameter 7, as defined by 
 INLINER void p76_command_SET(e_MAV_CMD  src, Pack * dst)//Command ID, as defined by MAV_CMD enum.
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__X(src);
+    UMAX id = _id__c(src);
     set_bits(id, 8, data, 248);
 }
 INLINER void p77_command_SET(e_MAV_CMD  src, Pack * dst)//Command ID, as defined by MAV_CMD enum.
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__X(src);
+    UMAX id = _id__c(src);
     set_bits(id, 8, data, 0);
 }
 INLINER void p77_result_SET(e_MAV_RESULT  src, Pack * dst)//See MAV_RESULT enum
@@ -6418,12 +6138,12 @@ INLINER void p91_nav_mode_SET(uint8_t  src, Pack * dst)//Navigation mode (MAV_NA
 INLINER e_MAV_MODE p91_mode_GET(Pack * src)//System mode (MAV_MODE)
 {
     uint8_t * data = src->data;
-    return  _en__K(get_bits(data, 328, 4));
+    return  _en__a(get_bits(data, 328, 4));
 }
 INLINER void p91_mode_SET(e_MAV_MODE  src, Pack * dst)//System mode (MAV_MODE)
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__K(src);
+    UMAX id = _id__a(src);
     set_bits(id, 4, data, 328);
 }
 INLINER uint16_t p92_chan1_raw_GET(Pack * src)//RC channel 1 value, in microseconds
@@ -6606,12 +6326,12 @@ INLINER void p93_controls_SET(float*  src, int32_t pos, Pack * dst) //Control ou
 INLINER e_MAV_MODE p93_mode_GET(Pack * src)//System mode (MAV_MODE), includes arming state.
 {
     uint8_t * data = src->data;
-    return  _en__K(get_bits(data, 640, 4));
+    return  _en__a(get_bits(data, 640, 4));
 }
 INLINER void p93_mode_SET(e_MAV_MODE  src, Pack * dst)//System mode (MAV_MODE), includes arming state.
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__K(src);
+    UMAX id = _id__a(src);
     set_bits(id, 4, data, 640);
 }
 INLINER uint64_t p100_time_usec_GET(Pack * src)//Timestamp (UNIX)

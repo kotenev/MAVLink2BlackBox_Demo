@@ -337,7 +337,7 @@ namespace org.noname
             public int passkey_LEN(Inside ph)
             {
                 return (ph.field_bit !=  24 && !try_visit_field(ph, 24)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-            } static readonly Meta meta5 = new Meta(5, 0, 0, 0, 4, 24, 0, _K);
+            } static readonly Meta meta5 = new Meta(5, 0, 0, 0, 4, 24, 0, _o);
         }/**
 *Accept / deny control of this MAV*/
         public class CHANGE_OPERATOR_CONTROL_ACK : Pack
@@ -382,7 +382,7 @@ namespace org.noname
             public int key_LEN(Inside ph)
             {
                 return (ph.field_bit !=  0 && !try_visit_field(ph, 0)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-            } static readonly Meta meta7 = new Meta(7, 0, 0, 0, 1, 0, 0, _U);
+            } static readonly Meta meta7 = new Meta(7, 0, 0, 0, 1, 0, 0, _v);
         }/**
 *THIS INTERFACE IS DEPRECATED. USE COMMAND_LONG with MAV_CMD_DO_SET_MODE INSTEAD. Set the system mode,
 *	as defined by enum MAV_MODE. There is no target component id as the mode is by definition for the overall
@@ -403,7 +403,7 @@ namespace org.noname
 
             public MAV_MODE base_mode //The new base mode
             {
-                get {  return  en__o(BitUtils.get_bits(data, 40, 4));}
+                get {  return  en__Q(BitUtils.get_bits(data, 40, 4));}
             }
             static readonly Meta meta11 = new Meta(11, 0, 1, 0, 6, 44);
         }/**
@@ -451,7 +451,7 @@ namespace org.noname
             public int param_id_LEN(Inside ph)
             {
                 return (ph.field_bit !=  32 && !try_visit_field(ph, 32)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-            } static readonly Meta meta20 = new Meta(20, 0, 0, 0, 5, 32, 0, _B);
+            } static readonly Meta meta20 = new Meta(20, 0, 0, 0, 5, 32, 0, _c);
         }/**
 *Request all parameters of this component. After this request, all parameters are emitted.*/
         public class PARAM_REQUEST_LIST : Pack
@@ -517,7 +517,7 @@ namespace org.noname
             public int param_id_LEN(Inside ph)
             {
                 return (ph.field_bit !=  68 && !try_visit_field(ph, 68)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-            } static readonly Meta meta22 = new Meta(22, 2, 0, 0, 10, 68, 0, _c);
+            } static readonly Meta meta22 = new Meta(22, 2, 0, 0, 10, 68, 0, _l);
         }/**
 *Set a parameter value TEMPORARILY to RAM. It will be reset to default on system reboot. Send the ACTION
 *	MAV_ACTION_STORAGE_WRITE to PERMANENTLY write the RAM contents to EEPROM. IMPORTANT: The receiving component
@@ -569,7 +569,7 @@ namespace org.noname
             public int param_id_LEN(Inside ph)
             {
                 return (ph.field_bit !=  52 && !try_visit_field(ph, 52)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-            } static readonly Meta meta23 = new Meta(23, 0, 0, 0, 8, 52, 0, _L);
+            } static readonly Meta meta23 = new Meta(23, 0, 0, 0, 8, 52, 0, _k);
         }/**
 *The global position, as returned by the Global Positioning System (GPS). This is
 *	NOT the global position estimate of the system, but rather a RAW sensor value. See message GLOBAL_POSITION for the global position estimate. Coordinate frame is right-handed, Z-axis up (GPS frame).*/
@@ -657,7 +657,7 @@ namespace org.noname
                 if(ph.field_bit !=  240 && !try_visit_field(ph, 240)) return 0;
                 return (uint)((uint) BitUtils.get_bytes(data,  ph.BYTE, 4));
             }
-            static readonly Meta meta24 = new Meta(24, 4, 0, 1, 31, 236, 0, _Ee, _Ze, _Oe, _we, _se);
+            static readonly Meta meta24 = new Meta(24, 4, 0, 1, 31, 236, 0, _Bn, _gn, _On, _dn, _jn);
         }/**
 *The positioning status, as reported by GPS. This message is intended to display status information about
 *	each satellite visible to the receiver. See message GLOBAL_POSITION for the global position estimate.
@@ -1312,7 +1312,7 @@ namespace org.noname
                 if(ph.field_bit !=  175 && !try_visit_field(ph, 175)) return 0;
                 return (ushort)((ushort) BitUtils.get_bytes(data,  ph.BYTE, 2));
             }
-            static readonly Meta meta36 = new Meta(36, 8, 1, 0, 22, 168, 0, _CH, _EH, _ZH, _OH, _wH, _sH, _lH, _mH);
+            static readonly Meta meta36 = new Meta(36, 8, 1, 0, 22, 168, 0, _aA, _BA, _gA, _OA, _dA, _jA, _tA, _JA);
         }/**
 *Request a partial list of mission items from the system/component. http:qgroundcontrol.org/mavlink/waypoint_protocol.
 *	If start and end index are the same, just send one waypoint*/
@@ -1342,7 +1342,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get {  return  en__U(BitUtils.get_bits(data, 48, 3));}
+                get {  return  en__v(BitUtils.get_bits(data, 48, 3));}
             }
             static readonly Meta meta37 = new Meta(37, 0, 0, 0, 7, 51);
         }/**
@@ -1375,7 +1375,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get {  return  en__U(BitUtils.get_bits(data, 48, 3));}
+                get {  return  en__v(BitUtils.get_bits(data, 48, 3));}
             }
             static readonly Meta meta38 = new Meta(38, 0, 0, 0, 7, 51);
         }/**
@@ -1452,12 +1452,12 @@ namespace org.noname
 
             public MAV_CMD command //The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
             {
-                get {  return  en__V(BitUtils.get_bits(data, 276, 7));}
+                get {  return  en__x(BitUtils.get_bits(data, 276, 7));}
             }
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get {  return  en__U(BitUtils.get_bits(data, 283, 3));}
+                get {  return  en__v(BitUtils.get_bits(data, 283, 3));}
             }
             static readonly Meta meta39 = new Meta(39, 1, 0, 0, 36, 286);
         }/**
@@ -1484,7 +1484,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get {  return  en__U(BitUtils.get_bits(data, 32, 3));}
+                get {  return  en__v(BitUtils.get_bits(data, 32, 3));}
             }
             static readonly Meta meta40 = new Meta(40, 1, 0, 0, 5, 35);
         }/**
@@ -1539,7 +1539,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get {  return  en__U(BitUtils.get_bits(data, 16, 3));}
+                get {  return  en__v(BitUtils.get_bits(data, 16, 3));}
             }
             static readonly Meta meta43 = new Meta(43, 0, 0, 0, 3, 19);
         }/**
@@ -1566,7 +1566,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get {  return  en__U(BitUtils.get_bits(data, 32, 3));}
+                get {  return  en__v(BitUtils.get_bits(data, 32, 3));}
             }
             static readonly Meta meta44 = new Meta(44, 1, 0, 0, 5, 35);
         }/**
@@ -1587,7 +1587,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get {  return  en__U(BitUtils.get_bits(data, 16, 3));}
+                get {  return  en__v(BitUtils.get_bits(data, 16, 3));}
             }
             static readonly Meta meta45 = new Meta(45, 0, 0, 0, 3, 19);
         }/**
@@ -1626,7 +1626,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get {  return  en__U(BitUtils.get_bits(data, 20, 3));}
+                get {  return  en__v(BitUtils.get_bits(data, 20, 3));}
             }
             static readonly Meta meta47 = new Meta(47, 0, 0, 0, 3, 23);
         }/**
@@ -1661,7 +1661,7 @@ namespace org.noname
                 if(ph.field_bit !=  104 && !try_visit_field(ph, 104)) return 0;
                 return (BitUtils.get_bytes(data,  ph.BYTE, 8));
             }
-            static readonly Meta meta48 = new Meta(48, 0, 0, 0, 14, 104, 0, _hn);
+            static readonly Meta meta48 = new Meta(48, 0, 0, 0, 14, 104, 0, _rP);
         }/**
 *Once the MAV sets a new GPS-Local correspondence, this message announces the origin (0,0,0) positio*/
         public class GPS_GLOBAL_ORIGIN : Pack
@@ -1687,7 +1687,7 @@ namespace org.noname
                 if(ph.field_bit !=  96 && !try_visit_field(ph, 96)) return 0;
                 return (BitUtils.get_bytes(data,  ph.BYTE, 8));
             }
-            static readonly Meta meta49 = new Meta(49, 0, 0, 0, 13, 96, 0, _jn);
+            static readonly Meta meta49 = new Meta(49, 0, 0, 0, 13, 96, 0, _WP);
         }/**
 *Bind a RC channel to a parameter. The parameter should change accoding to the RC channel value.*/
         public class PARAM_MAP_RC : Pack
@@ -1767,7 +1767,7 @@ namespace org.noname
             public int param_id_LEN(Inside ph)
             {
                 return (ph.field_bit !=  168 && !try_visit_field(ph, 168)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-            } static readonly Meta meta50 = new Meta(50, 0, 0, 0, 22, 168, 0, _kn);
+            } static readonly Meta meta50 = new Meta(50, 0, 0, 0, 22, 168, 0, _KP);
         }/**
 *Request the information of the mission item with the sequence number seq. The response of the system to
 *	this message should be a MISSION_ITEM_INT message. http:qgroundcontrol.org/mavlink/waypoint_protoco*/
@@ -1792,7 +1792,7 @@ namespace org.noname
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get {  return  en__U(BitUtils.get_bits(data, 32, 3));}
+                get {  return  en__v(BitUtils.get_bits(data, 32, 3));}
             }
             static readonly Meta meta51 = new Meta(51, 1, 0, 0, 5, 35);
         }/**
@@ -2493,12 +2493,12 @@ namespace org.noname
 
             public MAV_CMD command //The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
             {
-                get {  return  en__V(BitUtils.get_bits(data, 276, 7));}
+                get {  return  en__x(BitUtils.get_bits(data, 276, 7));}
             }
 
             public MAV_MISSION_TYPE mission_type //Mission type, see MAV_MISSION_TYPE
             {
-                get {  return  en__U(BitUtils.get_bits(data, 283, 3));}
+                get {  return  en__v(BitUtils.get_bits(data, 283, 3));}
             }
             static readonly Meta meta73 = new Meta(73, 1, 0, 0, 36, 286);
         }/**
@@ -2615,10 +2615,10 @@ namespace org.noname
 
             public MAV_CMD command //The scheduled action for the mission item. see MAV_CMD in common.xml MAVLink specs
             {
-                get {  return  en__V(BitUtils.get_bits(data, 260, 7));}
+                get {  return  en__x(BitUtils.get_bits(data, 260, 7));}
                 set
                 {
-                    ulong id = id__V(value);
+                    ulong id = id__x(value);
                     BitUtils.set_bits(id, 7, data, 260);
                 }
             }
@@ -2691,10 +2691,10 @@ namespace org.noname
 
             public MAV_CMD command //Command ID, as defined by MAV_CMD enum.
             {
-                get {  return  en__V(BitUtils.get_bits(data, 248, 7));}
+                get {  return  en__x(BitUtils.get_bits(data, 248, 7));}
                 set
                 {
-                    ulong id = id__V(value);
+                    ulong id = id__x(value);
                     BitUtils.set_bits(id, 7, data, 248);
                 }
             }
@@ -2707,10 +2707,10 @@ namespace org.noname
             internal COMMAND_ACK(int bytes) : base(meta77, bytes) { }
             public MAV_CMD command //Command ID, as defined by MAV_CMD enum.
             {
-                get {  return  en__V(BitUtils.get_bits(data, 0, 7));}
+                get {  return  en__x(BitUtils.get_bits(data, 0, 7));}
                 set
                 {
-                    ulong id = id__V(value);
+                    ulong id = id__x(value);
                     BitUtils.set_bits(id, 7, data, 0);
                 }
             }
@@ -2768,7 +2768,7 @@ namespace org.noname
             {
                 if(ph.field_bit != 13)insert_field(ph, 13, 0);
                 BitUtils.set_bytes((ulong)(src), 1, data,  ph.BYTE);
-            } static readonly Meta meta77 = new Meta(77, 0, 0, 0, 3, 10, 0, _ro, _ko, _Ro, _yo);
+            } static readonly Meta meta77 = new Meta(77, 0, 0, 0, 3, 10, 0, _DQ, _KQ, _IQ, _XQ);
         }/**
 *Setpoint in roll, pitch, yaw and thrust from the operator*/
         public class MANUAL_SETPOINT : Pack, CommunicationChannel.Sendable
@@ -3510,10 +3510,10 @@ namespace org.noname
 
             public MAV_MODE mode //System mode (MAV_MODE)
             {
-                get {  return  en__o(BitUtils.get_bits(data, 328, 4));}
+                get {  return  en__Q(BitUtils.get_bits(data, 328, 4));}
                 set
                 {
-                    ulong id = id__o(value);
+                    ulong id = id__Q(value);
                     BitUtils.set_bits(id, 4, data, 328);
                 }
             }
@@ -3647,10 +3647,10 @@ namespace org.noname
 
             public MAV_MODE mode //System mode (MAV_MODE), includes arming state.
             {
-                get {  return  en__o(BitUtils.get_bits(data, 640, 4));}
+                get {  return  en__Q(BitUtils.get_bits(data, 640, 4));}
                 set
                 {
-                    ulong id = id__o(value);
+                    ulong id = id__Q(value);
                     BitUtils.set_bits(id, 4, data, 640);
                 }
             }
@@ -3726,7 +3726,7 @@ namespace org.noname
             {
                 if(ph.field_bit != 209)insert_field(ph, 209, 0);
                 BitUtils.set_bytes(BitUtils.FloatToInt32Bits(src), 4, data, ph.BYTE);
-            } static readonly Meta meta100 = new Meta(100, 0, 0, 1, 27, 208, 0, _sE, _lE);
+            } static readonly Meta meta100 = new Meta(100, 0, 0, 1, 27, 208, 0, _jB, _tB);
         } public class GLOBAL_VISION_POSITION_ESTIMATE : Pack, CommunicationChannel.Sendable
         {
             internal GLOBAL_VISION_POSITION_ESTIMATE() : base(meta101, 0) { }
@@ -6405,7 +6405,7 @@ namespace org.noname
                 if(ph.field_bit != 433)insert_field(ph, 433, 0);
                 for(int BYTE =  ph.BYTE, src_max = pos + 18; pos < src_max; pos++, BYTE += 1)
                     BitUtils.set_bytes((ulong)(src[pos]), 1, data,  BYTE);
-            } static readonly Meta meta148 = new Meta(148, 2, 4, 1, 56, 433, 0, _Ih);
+            } static readonly Meta meta148 = new Meta(148, 2, 4, 1, 56, 433, 0, _Cr);
         }/**
 *The location of a landing area captured from a downward facing camera*/
         public class LANDING_TARGET : Pack, CommunicationChannel.Sendable
@@ -6480,7 +6480,7 @@ namespace org.noname
             {
                 if(ph.field_bit != 242)insert_field(ph, 242, 0);
                 BitUtils.set_bytes((ulong)(src), 1, data,  ph.BYTE);
-            } static readonly Meta meta149 = new Meta(149, 0, 0, 1, 31, 238, 0, _sh, _lh, _mh, _hh, _ph);
+            } static readonly Meta meta149 = new Meta(149, 0, 0, 1, 31, 238, 0, _jr, _tr, _Jr, _rr, _Rr);
         }/**
 *Estimator status message including flags, innovation test ratios and estimated accuracies. The flags message
 *	is an integer bitmask containing information on which EKF outputs are valid. See the ESTIMATOR_STATUS_FLAGS
@@ -6986,7 +6986,7 @@ namespace org.noname
             {
                 if(ph.field_bit != 416)insert_field(ph, 416, 0);
                 BitUtils.set_bytes((ulong)(src), 8, data,  ph.BYTE);
-            } static readonly Meta meta242 = new Meta(242, 0, 0, 0, 53, 416, 0, _LN);
+            } static readonly Meta meta242 = new Meta(242, 0, 0, 0, 53, 416, 0, _kZ);
         }/**
 *The position the system will return to and land on. The position is set automatically by the system during
 *	the takeoff in case it was not explicitely set by the operator before or after. The global and local
@@ -7082,7 +7082,7 @@ namespace org.noname
             {
                 if(ph.field_bit != 424)insert_field(ph, 424, 0);
                 BitUtils.set_bytes((ulong)(src), 8, data,  ph.BYTE);
-            } static readonly Meta meta243 = new Meta(243, 0, 0, 0, 54, 424, 0, _Cp);
+            } static readonly Meta meta243 = new Meta(243, 0, 0, 0, 54, 424, 0, _aR);
         }/**
 *This interface replaces DATA_STREAM*/
         public class MESSAGE_INTERVAL : Pack, CommunicationChannel.Sendable
@@ -7187,7 +7187,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta246 = new Meta(246, 3, 1, 0, 28, 213, 0, _tp);
+            } static readonly Meta meta246 = new Meta(246, 3, 1, 0, 28, 213, 0, _TR);
         }/**
 *Information about a potential collision*/
         public class COLLISION : Pack, CommunicationChannel.Sendable
@@ -7344,7 +7344,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta250 = new Meta(250, 0, 0, 1, 21, 160, 0, _xp);
+            } static readonly Meta meta250 = new Meta(250, 0, 0, 1, 21, 160, 0, _SR);
         }/**
 *Send a key-value pair as float. The use of this message is discouraged for normal packets, but a quite
 *	efficient way for testing new messages and getting experimental debug output*/
@@ -7368,7 +7368,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta251 = new Meta(251, 0, 1, 0, 9, 64, 0, _Lp);
+            } static readonly Meta meta251 = new Meta(251, 0, 1, 0, 9, 64, 0, _kR);
         }/**
 *Send a key-value pair as integer. The use of this message is discouraged for normal packets, but a quite
 *	efficient way for testing new messages and getting experimental debug output*/
@@ -7392,7 +7392,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta252 = new Meta(252, 0, 1, 0, 9, 64, 0, _VA);
+            } static readonly Meta meta252 = new Meta(252, 0, 1, 0, 9, 64, 0, _xz);
         }/**
 *Status text message. These messages are printed in yellow in the COMM console of QGroundControl. WARNING:
 *	They consume quite some bandwidth, so use only for important status and error messages. If implemented
@@ -7412,7 +7412,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta253 = new Meta(253, 0, 0, 0, 2, 3, 0, _HA);
+            } static readonly Meta meta253 = new Meta(253, 0, 0, 0, 2, 3, 0, _Az);
         }/**
 *Send a debug value. The index is used to discriminate between values. These values show up in the plot
 *	of QGroundControl as DEBUG N*/
@@ -7510,7 +7510,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta258 = new Meta(258, 0, 0, 0, 3, 16, 0, _mA);
+            } static readonly Meta meta258 = new Meta(258, 0, 0, 0, 3, 16, 0, _Jz);
         }/**
 *WIP: Information about a camera*/
         public class CAMERA_INFORMATION : Pack, CommunicationChannel.Sendable
@@ -7593,7 +7593,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta259 = new Meta(259, 3, 2, 0, 93, 734, 0, _QA);
+            } static readonly Meta meta259 = new Meta(259, 3, 2, 0, 93, 734, 0, _pz);
         }/**
 *WIP: Settings of a camera, can be requested using MAV_CMD_REQUEST_CAMERA_SETTINGS.*/
         public class CAMERA_SETTINGS : Pack, CommunicationChannel.Sendable
@@ -7767,7 +7767,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta263 = new Meta(263, 0, 1, 1, 51, 402, 2, _Ij);
+            } static readonly Meta meta263 = new Meta(263, 0, 1, 1, 51, 402, 2, _CW);
         }/**
 *WIP: Information about flight since last arming*/
         public class FLIGHT_INFORMATION : Pack, CommunicationChannel.Sendable
@@ -7976,7 +7976,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta269 = new Meta(269, 3, 1, 0, 17, 130, 2, _Pj);
+            } static readonly Meta meta269 = new Meta(269, 3, 1, 0, 17, 130, 2, _HW);
         }/**
 *WIP: Message that sets video stream settings*/
         public class SET_VIDEO_STREAM_SETTINGS : Pack, CommunicationChannel.Sendable
@@ -8029,7 +8029,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta270 = new Meta(270, 3, 1, 0, 18, 138, 2, _uj);
+            } static readonly Meta meta270 = new Meta(270, 3, 1, 0, 18, 138, 2, _NW);
         }/**
 *Configure AP SSID and Password.*/
         public class WIFI_CONFIG_AP : Pack, CommunicationChannel.Sendable
@@ -8049,7 +8049,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta299 = new Meta(299, 0, 0, 0, 1, 2, 2, _Jj, _fj);
+            } static readonly Meta meta299 = new Meta(299, 0, 0, 0, 1, 2, 2, _MW, _mW);
         }/**
 *WIP: Version and capability of protocol version. This message is the response to REQUEST_PROTOCOL_VERSION
 *	and is used as part of the handshaking to establish which MAVLink version should be used on the network.
@@ -8218,7 +8218,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta311 = new Meta(311, 0, 2, 1, 37, 288, 0, _Ct);
+            } static readonly Meta meta311 = new Meta(311, 0, 2, 1, 37, 288, 0, _aT);
         }/**
 *Request to read the value of a parameter with the either the param_id string id or param_index.*/
         public class PARAM_EXT_REQUEST_READ : Pack, CommunicationChannel.Sendable
@@ -8254,7 +8254,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta320 = new Meta(320, 0, 0, 0, 5, 32, 0, _Nt);
+            } static readonly Meta meta320 = new Meta(320, 0, 0, 0, 5, 32, 0, _ZT);
         }/**
 *Request all parameters of this component. After this request, all parameters are emitted.*/
         public class PARAM_EXT_REQUEST_LIST : Pack, CommunicationChannel.Sendable
@@ -8315,7 +8315,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta322 = new Meta(322, 2, 0, 0, 5, 38, 2, _tt, _rt);
+            } static readonly Meta meta322 = new Meta(322, 2, 0, 0, 5, 38, 2, _TT, _DT);
         }/**
 *Set a parameter value. In order to deal with message loss (and retransmission of PARAM_EXT_SET), when
 *	setting a parameter value and the new value is the same as the current value, you will immediately get
@@ -8361,7 +8361,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta323 = new Meta(323, 0, 0, 0, 3, 22, 2, _Qt, _Ft);
+            } static readonly Meta meta323 = new Meta(323, 0, 0, 0, 3, 22, 2, _pT, _yT);
         }/**
 *Response from a PARAM_EXT_SET message.*/
         public class PARAM_EXT_ACK : Pack, CommunicationChannel.Sendable
@@ -8399,7 +8399,7 @@ namespace org.noname
                         ! try_visit_item(ph, 0)) insert_item(ph, 0, items);
                 for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                     BitUtils.set_bytes((ushort)(src[pos]), 2, data,  BYTE);
-            } static readonly Meta meta324 = new Meta(324, 0, 0, 0, 1, 8, 2, _Ut, _St);
+            } static readonly Meta meta324 = new Meta(324, 0, 0, 0, 1, 8, 2, _vT, _bT);
         }/**
 *Obstacle distances in front of the sensor, starting from the left in increment degrees to the right*/
         public class OBSTACLE_DISTANCE : Pack, CommunicationChannel.Sendable
@@ -10428,7 +10428,7 @@ namespace org.noname
             MAV_MODE_AUTO_ARMED = 220
         }
 
-        internal static MAV_MODE en__o(ulong id)
+        internal static MAV_MODE en__Q(ulong id)
         {
             switch(id)
             {
@@ -10457,7 +10457,7 @@ namespace org.noname
             }
             throw  new ArgumentException("Unknown enum ID ");
         }
-        internal static uint id__o(MAV_MODE en)
+        internal static uint id__Q(MAV_MODE en)
         {
             switch(en)
             {
@@ -10535,7 +10535,7 @@ namespace org.noname
             MAV_MISSION_TYPE_ALL = 255 //Only used in MISSION_CLEAR_ALL to clear all mission types.
         }
 
-        internal static MAV_MISSION_TYPE en__U(ulong id)
+        internal static MAV_MISSION_TYPE en__v(ulong id)
         {
             switch(id)
             {
@@ -10550,23 +10550,6 @@ namespace org.noname
             }
             throw  new ArgumentException("Unknown enum ID ");
         }
-        internal static uint id__U(MAV_MISSION_TYPE en)
-        {
-            switch(en)
-            {
-                case MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION:
-                    return 0;
-                case MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE:
-                    return 1;
-                case MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY:
-                    return 2;
-                case MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL:
-                    return 3;
-                default:
-                    throw  new ArgumentException("Unknown enum " + en);
-            }
-        }
-
         /**
         *Commands to be executed by the MAV. They can be executed on user request, or as part of a mission script.
         *	If the action is used in a mission, the parameter mapping to the waypoint/mission message is as follows:
@@ -11753,7 +11736,7 @@ namespace org.noname
             MAV_CMD_USER_5 = 31014
         }
 
-        internal static MAV_CMD en__V(ulong id)
+        internal static MAV_CMD en__x(ulong id)
         {
             switch(id)
             {
@@ -12014,7 +11997,7 @@ namespace org.noname
             }
             throw  new ArgumentException("Unknown enum ID ");
         }
-        internal static uint id__V(MAV_CMD en)
+        internal static uint id__x(MAV_CMD en)
         {
             switch(en)
             {
@@ -12725,61 +12708,61 @@ namespace org.noname
             PARAM_ACK_IN_PROGRESS = 3
         }
 
-        static readonly Field _K = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _U = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
-        static readonly Field _B = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _o = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _v = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
         static readonly Field _c = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _L = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Ee = new Field(0, false, 1, 4, 1, 0, 0, 0);
-        static readonly Field _Ze = new Field(0, true, 1, 4, 1, 0, 0, 0);
-        static readonly Field _Oe = new Field(0, true, 1, 4, 1, 0, 0, 0);
-        static readonly Field _we = new Field(0, true, 1, 4, 1, 0, 0, 0);
-        static readonly Field _se = new Field(0, true, 1, 4, 1, 0, 0, 0);
-        static readonly Field _CH = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _EH = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _ZH = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _OH = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _wH = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _sH = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _lH = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _mH = new Field(0, true, 1, 2, 1, 0, 0, 0);
-        static readonly Field _hn = new Field(0, true, 1, 8, 1, 0, 0, 0);
-        static readonly Field _jn = new Field(0, true, 1, 8, 1, 0, 0, 0);
-        static readonly Field _kn = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _ro = new Field(0, false, 1, 1, 1, 0, 0, 0);
-        static readonly Field _ko = new Field(0, false, 1, 4, 1, 0, 0, 0);
-        static readonly Field _Ro = new Field(0, false, 1, 1, 1, 0, 0, 0);
-        static readonly Field _yo = new Field(0, false, 1, 1, 1, 0, 0, 0);
-        static readonly Field _sE = new Field(0, false, 1, 4, 1, 0, 0, 0);
-        static readonly Field _lE = new Field(0, false, 1, 4, 1, 0, 0, 0);
-        static readonly Field _Ih = new Field(0, false, 18, 1, 1, 0, 0, 0);
-        static readonly Field _sh = new Field(0, false, 1, 4, 1, 0, 0, 0);
-        static readonly Field _lh = new Field(0, false, 1, 4, 1, 0, 0, 0);
-        static readonly Field _mh = new Field(0, false, 1, 4, 1, 0, 0, 0);
-        static readonly Field _hh = new Field(0, false, 4, 4, 1, 0, 0, 0);
-        static readonly Field _ph = new Field(0, false, 1, 1, 1, 0, 0, 0);
-        static readonly Field _LN = new Field(0, true, 1, 8, 1, 0, 0, 0);
-        static readonly Field _Cp = new Field(0, true, 1, 8, 1, 0, 0, 0);
-        static readonly Field _tp = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-        static readonly Field _xp = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Lp = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-        static readonly Field _VA = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-        static readonly Field _HA = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
-        static readonly Field _mA = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _QA = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Ij = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Pj = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-        static readonly Field _uj = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Jj = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
-        static readonly Field _fj = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Ct = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Nt = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _tt = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _rt = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Qt = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Ft = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-        static readonly Field _Ut = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-        static readonly Field _St = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+        static readonly Field _l = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _k = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _Bn = new Field(0, false, 1, 4, 1, 0, 0, 0);
+        static readonly Field _gn = new Field(0, true, 1, 4, 1, 0, 0, 0);
+        static readonly Field _On = new Field(0, true, 1, 4, 1, 0, 0, 0);
+        static readonly Field _dn = new Field(0, true, 1, 4, 1, 0, 0, 0);
+        static readonly Field _jn = new Field(0, true, 1, 4, 1, 0, 0, 0);
+        static readonly Field _aA = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _BA = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _gA = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _OA = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _dA = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _jA = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _tA = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _JA = new Field(0, true, 1, 2, 1, 0, 0, 0);
+        static readonly Field _rP = new Field(0, true, 1, 8, 1, 0, 0, 0);
+        static readonly Field _WP = new Field(0, true, 1, 8, 1, 0, 0, 0);
+        static readonly Field _KP = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _DQ = new Field(0, false, 1, 1, 1, 0, 0, 0);
+        static readonly Field _KQ = new Field(0, false, 1, 4, 1, 0, 0, 0);
+        static readonly Field _IQ = new Field(0, false, 1, 1, 1, 0, 0, 0);
+        static readonly Field _XQ = new Field(0, false, 1, 1, 1, 0, 0, 0);
+        static readonly Field _jB = new Field(0, false, 1, 4, 1, 0, 0, 0);
+        static readonly Field _tB = new Field(0, false, 1, 4, 1, 0, 0, 0);
+        static readonly Field _Cr = new Field(0, false, 18, 1, 1, 0, 0, 0);
+        static readonly Field _jr = new Field(0, false, 1, 4, 1, 0, 0, 0);
+        static readonly Field _tr = new Field(0, false, 1, 4, 1, 0, 0, 0);
+        static readonly Field _Jr = new Field(0, false, 1, 4, 1, 0, 0, 0);
+        static readonly Field _rr = new Field(0, false, 4, 4, 1, 0, 0, 0);
+        static readonly Field _Rr = new Field(0, false, 1, 1, 1, 0, 0, 0);
+        static readonly Field _kZ = new Field(0, true, 1, 8, 1, 0, 0, 0);
+        static readonly Field _aR = new Field(0, true, 1, 8, 1, 0, 0, 0);
+        static readonly Field _TR = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+        static readonly Field _SR = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+        static readonly Field _kR = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+        static readonly Field _xz = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+        static readonly Field _Az = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
+        static readonly Field _Jz = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _pz = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+        static readonly Field _CW = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+        static readonly Field _HW = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+        static readonly Field _NW = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+        static readonly Field _MW = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
+        static readonly Field _mW = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
+        static readonly Field _aT = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
+        static readonly Field _ZT = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _TT = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _DT = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+        static readonly Field _pT = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _yT = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+        static readonly Field _vT = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+        static readonly Field _bT = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
 
     }
 }

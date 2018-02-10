@@ -286,7 +286,7 @@ public class GroundControl extends Host
         public int key_LEN(Bounds.Inside ph)
         {
             return (ph.field_bit !=  0 && !try_visit_field(ph, 0)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-        } static final Meta meta = new Meta(7, 0, 0, 0, 1, 0, 0, _o);
+        } static final Meta meta = new Meta(7, 0, 0, 0, 1, 0, 0, _H);
     }/**
 *THIS INTERFACE IS DEPRECATED. USE COMMAND_LONG with MAV_CMD_DO_SET_MODE INSTEAD. Set the system mode,
 *	as defined by enum MAV_MODE. There is no target component id as the mode is by definition for the overall
@@ -301,7 +301,7 @@ public class GroundControl extends Host
         public char target_system_GET()//The system setting the mode
         {  return (char)((char) get_bytes(data,  4, 1)); }
         public @MAV_MODE int base_mode_GET()//The new base mode
-        {  return  en__t((int)get_bits(data, 40, 4)); }
+        {  return  en__J((int)get_bits(data, 40, 4)); }
         static final Meta meta = new Meta(11, 0, 1, 0, 6, 44);
     }/**
 *value[float]. This allows to send a parameter to any other component (such as the GCS) without the need
@@ -341,7 +341,7 @@ public class GroundControl extends Host
         public int param_id_LEN(Bounds.Inside ph)
         {
             return (ph.field_bit !=  32 && !try_visit_field(ph, 32)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-        } static final Meta meta = new Meta(20, 0, 0, 0, 5, 32, 0, _a);
+        } static final Meta meta = new Meta(20, 0, 0, 0, 5, 32, 0, _Y);
     }/**
 *Request all parameters of this component. After this request, all parameters are emitted.*/
     public static class PARAM_REQUEST_LIST extends Pack
@@ -393,7 +393,7 @@ public class GroundControl extends Host
         public int param_id_LEN(Bounds.Inside ph)
         {
             return (ph.field_bit !=  68 && !try_visit_field(ph, 68)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-        } static final Meta meta = new Meta(22, 2, 0, 0, 10, 68, 0, _b);
+        } static final Meta meta = new Meta(22, 2, 0, 0, 10, 68, 0, _P);
     }/**
 *Set a parameter value TEMPORARILY to RAM. It will be reset to default on system reboot. Send the ACTION
 *	MAV_ACTION_STORAGE_WRITE to PERMANENTLY write the RAM contents to EEPROM. IMPORTANT: The receiving component
@@ -435,7 +435,7 @@ public class GroundControl extends Host
         public int param_id_LEN(Bounds.Inside ph)
         {
             return (ph.field_bit !=  52 && !try_visit_field(ph, 52)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-        } static final Meta meta = new Meta(23, 0, 0, 0, 8, 52, 0, _w);
+        } static final Meta meta = new Meta(23, 0, 0, 0, 8, 52, 0, _Z);
     }/**
 *The global position, as returned by the Global Positioning System (GPS). This is
 *	NOT the global position estimate of the system, but rather a RAW sensor value. See message GLOBAL_POSITION for the global position estimate. Coordinate frame is right-handed, Z-axis up (GPS frame).*/
@@ -495,7 +495,7 @@ public class GroundControl extends Host
             if(ph.field_bit !=  240 && !try_visit_field(ph, 240)) return 0;
             return (get_bytes(data,  ph.BYTE, 4));
         }
-        static final Meta meta = new Meta(24, 4, 0, 1, 31, 236, 0, _Uc, _Wc, _Bc, _rc, _Ic);
+        static final Meta meta = new Meta(24, 4, 0, 1, 31, 236, 0, _Ad, _kd, _ud, _ad, _Nd);
     }/**
 *The positioning status, as reported by GPS. This message is intended to display status information about
 *	each satellite visible to the receiver. See message GLOBAL_POSITION for the global position estimate.
@@ -875,7 +875,7 @@ public class GroundControl extends Host
             if(ph.field_bit !=  175 && !try_visit_field(ph, 175)) return 0;
             return (char)((char) get_bytes(data,  ph.BYTE, 2));
         }
-        static final Meta meta = new Meta(36, 8, 1, 0, 22, 168, 0, _Ng, _Ug, _Wg, _Bg, _rg, _Ig, _Tg, _jg);
+        static final Meta meta = new Meta(36, 8, 1, 0, 22, 168, 0, _rn, _An, _kn, _un, _an, _Nn, _In, _tn);
     }/**
 *Request a partial list of mission items from the system/component. http:qgroundcontrol.org/mavlink/waypoint_protocol.
 *	If start and end index are the same, just send one waypoint*/
@@ -893,7 +893,7 @@ public class GroundControl extends Host
         public short end_index_GET()//End index, -1 by default (-1: send list to end). Else a valid index of the list
         {  return (short)((short) get_bytes(data,  4, 2)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__o((int)get_bits(data, 48, 3)); }
+        {  return  en__H((int)get_bits(data, 48, 3)); }
         static final Meta meta = new Meta(37, 0, 0, 0, 7, 51);
     }/**
 *This message is sent to the MAV to write a partial list. If start index == end index, only one item will
@@ -913,7 +913,7 @@ public class GroundControl extends Host
         public short end_index_GET()//End index, equal or greater than start index.
         {  return (short)((short) get_bytes(data,  4, 2)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__o((int)get_bits(data, 48, 3)); }
+        {  return  en__H((int)get_bits(data, 48, 3)); }
         static final Meta meta = new Meta(38, 0, 0, 0, 7, 51);
     }/**
 *Message encoding a mission item. This message is emitted to announce
@@ -950,9 +950,9 @@ public class GroundControl extends Host
         public @MAV_FRAME int frame_GET()//The coordinate system of the waypoint. see MAV_FRAME in mavlink_types.h
         {  return  0 + (int)get_bits(data, 272, 4); }
         public @MAV_CMD int command_GET()//The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
-        {  return  en__e((int)get_bits(data, 276, 7)); }
+        {  return  en__D((int)get_bits(data, 276, 7)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__o((int)get_bits(data, 283, 3)); }
+        {  return  en__H((int)get_bits(data, 283, 3)); }
         static final Meta meta = new Meta(39, 1, 0, 0, 36, 286);
     }/**
 *Request the information of the mission item with the sequence number seq. The response of the system to
@@ -969,7 +969,7 @@ public class GroundControl extends Host
         public char target_component_GET()//Component ID
         {  return (char)((char) get_bytes(data,  3, 1)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__o((int)get_bits(data, 32, 3)); }
+        {  return  en__H((int)get_bits(data, 32, 3)); }
         static final Meta meta = new Meta(40, 1, 0, 0, 5, 35);
     }/**
 *Set the mission item with sequence number seq as current item. This means that the MAV will continue to
@@ -1009,7 +1009,7 @@ public class GroundControl extends Host
         public char target_component_GET()//Component ID
         {  return (char)((char) get_bytes(data,  1, 1)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__o((int)get_bits(data, 16, 3)); }
+        {  return  en__H((int)get_bits(data, 16, 3)); }
         static final Meta meta = new Meta(43, 0, 0, 0, 3, 19);
     }/**
 *This message is emitted as response to MISSION_REQUEST_LIST by the MAV and to initiate a write transaction.
@@ -1026,7 +1026,7 @@ public class GroundControl extends Host
         public char target_component_GET()//Component ID
         {  return (char)((char) get_bytes(data,  3, 1)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__o((int)get_bits(data, 32, 3)); }
+        {  return  en__H((int)get_bits(data, 32, 3)); }
         static final Meta meta = new Meta(44, 1, 0, 0, 5, 35);
     }/**
 *Delete all mission items at once.*/
@@ -1040,7 +1040,7 @@ public class GroundControl extends Host
         public char target_component_GET()//Component ID
         {  return (char)((char) get_bytes(data,  1, 1)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__o((int)get_bits(data, 16, 3)); }
+        {  return  en__H((int)get_bits(data, 16, 3)); }
         static final Meta meta = new Meta(45, 0, 0, 0, 3, 19);
     }/**
 *A certain mission item has been reached. The system will either hold this position (or circle on the orbit)
@@ -1068,7 +1068,7 @@ public class GroundControl extends Host
         public @MAV_MISSION_RESULT int type_GET()//See MAV_MISSION_RESULT enum
         {  return  0 + (int)get_bits(data, 16, 4); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__o((int)get_bits(data, 20, 3)); }
+        {  return  en__H((int)get_bits(data, 20, 3)); }
         static final Meta meta = new Meta(47, 0, 0, 0, 3, 23);
     }/**
 *As local waypoints exist, the global waypoint reference allows to transform between the local coordinate
@@ -1092,7 +1092,7 @@ public class GroundControl extends Host
             if(ph.field_bit !=  104 && !try_visit_field(ph, 104)) return 0;
             return (get_bytes(data,  ph.BYTE, 8));
         }
-        static final Meta meta = new Meta(48, 0, 0, 0, 14, 104, 0, _Fz);
+        static final Meta meta = new Meta(48, 0, 0, 0, 14, 104, 0, _ve);
     }/**
 *Once the MAV sets a new GPS-Local correspondence, this message announces the origin (0,0,0) positio*/
     public static class GPS_GLOBAL_ORIGIN extends Pack
@@ -1111,7 +1111,7 @@ public class GroundControl extends Host
             if(ph.field_bit !=  96 && !try_visit_field(ph, 96)) return 0;
             return (get_bytes(data,  ph.BYTE, 8));
         }
-        static final Meta meta = new Meta(49, 0, 0, 0, 13, 96, 0, _Mz);
+        static final Meta meta = new Meta(49, 0, 0, 0, 13, 96, 0, _Ee);
     }/**
 *Bind a RC channel to a parameter. The parameter should change accoding to the RC channel value.*/
     public static class PARAM_MAP_RC extends Pack
@@ -1169,7 +1169,7 @@ public class GroundControl extends Host
         public int param_id_LEN(Bounds.Inside ph)
         {
             return (ph.field_bit !=  168 && !try_visit_field(ph, 168)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-        } static final Meta meta = new Meta(50, 0, 0, 0, 22, 168, 0, _qz);
+        } static final Meta meta = new Meta(50, 0, 0, 0, 22, 168, 0, _me);
     }/**
 *Request the information of the mission item with the sequence number seq. The response of the system to
 *	this message should be a MISSION_ITEM_INT message. http:qgroundcontrol.org/mavlink/waypoint_protoco*/
@@ -1185,7 +1185,7 @@ public class GroundControl extends Host
         public char target_component_GET()//Component ID
         {  return (char)((char) get_bytes(data,  3, 1)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__o((int)get_bits(data, 32, 3)); }
+        {  return  en__H((int)get_bits(data, 32, 3)); }
         static final Meta meta = new Meta(51, 1, 0, 0, 5, 35);
     }/**
 *Set a safety zone (volume), which is defined by two corners of a cube. This message can be used to tell
@@ -1573,9 +1573,9 @@ public class GroundControl extends Host
         public @MAV_FRAME int frame_GET()//The coordinate system of the waypoint. see MAV_FRAME in mavlink_types.h
         {  return  0 + (int)get_bits(data, 272, 4); }
         public @MAV_CMD int command_GET()//The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
-        {  return  en__e((int)get_bits(data, 276, 7)); }
+        {  return  en__D((int)get_bits(data, 276, 7)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__o((int)get_bits(data, 283, 3)); }
+        {  return  en__H((int)get_bits(data, 283, 3)); }
         static final Meta meta = new Meta(73, 1, 0, 0, 36, 286);
     }/**
 *Metrics typically displayed on a HUD for fixed wing aircraft*/
@@ -1651,10 +1651,10 @@ public class GroundControl extends Host
         public void frame_SET(@MAV_FRAME int  src) //The coordinate system of the COMMAND. see MAV_FRAME in mavlink_types.h
         {  set_bits(- 0 +   src, 4, data, 256); }
         public @MAV_CMD int command_GET()//The scheduled action for the mission item. see MAV_CMD in common.xml MAVLink specs
-        {  return  en__e((int)get_bits(data, 260, 7)); }
+        {  return  en__D((int)get_bits(data, 260, 7)); }
         public void command_SET(@MAV_CMD int  src) //The scheduled action for the mission item. see MAV_CMD in common.xml MAVLink specs
         {
-            long id = id__e(src);
+            long id = id__D(src);
             set_bits(id, 7, data, 260);
         }
         static final Meta meta = new Meta(75, 0, 0, 0, 34, 267);
@@ -1706,10 +1706,10 @@ public class GroundControl extends Host
         public void param7_SET(float  src) //Parameter 7, as defined by MAV_CMD enum.
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 27); }
         public @MAV_CMD int command_GET()//Command ID, as defined by MAV_CMD enum.
-        {  return  en__e((int)get_bits(data, 248, 7)); }
+        {  return  en__D((int)get_bits(data, 248, 7)); }
         public void command_SET(@MAV_CMD int  src) //Command ID, as defined by MAV_CMD enum.
         {
-            long id = id__e(src);
+            long id = id__D(src);
             set_bits(id, 7, data, 248);
         }
         static final Meta meta = new Meta(76, 0, 0, 0, 32, 255);
@@ -1721,10 +1721,10 @@ public class GroundControl extends Host
         COMMAND_ACK() { super(meta, 0); }
         COMMAND_ACK(int bytes) { super(meta, bytes); }
         public @MAV_CMD int command_GET()//Command ID, as defined by MAV_CMD enum.
-        {  return  en__e((int)get_bits(data, 0, 7)); }
+        {  return  en__D((int)get_bits(data, 0, 7)); }
         public void command_SET(@MAV_CMD int  src) //Command ID, as defined by MAV_CMD enum.
         {
-            long id = id__e(src);
+            long id = id__D(src);
             set_bits(id, 7, data, 0);
         }
         public @MAV_RESULT int result_GET()//See MAV_RESULT enum
@@ -1779,7 +1779,7 @@ public class GroundControl extends Host
         {
             if(ph.field_bit != 13)insert_field(ph, 13, 0);
             set_bytes((char)(src) & -1L, 1, data,  ph.BYTE);
-        } static final Meta meta = new Meta(77, 0, 0, 0, 3, 10, 0, _st, _qt, _Gt, _Pt);
+        } static final Meta meta = new Meta(77, 0, 0, 0, 3, 10, 0, _fJ, _mJ, _iJ, _UJ);
     }/**
 *Setpoint in roll, pitch, yaw and thrust from the operator*/
     public static class MANUAL_SETPOINT extends Pack  implements CommunicationChannel.Sendable
@@ -2368,10 +2368,10 @@ public class GroundControl extends Host
         public void nav_mode_SET(char  src) //Navigation mode (MAV_NAV_MODE)
         {  set_bytes((char)(src) & -1L, 1, data,  40); }
         public @MAV_MODE int mode_GET()//System mode (MAV_MODE)
-        {  return  en__t((int)get_bits(data, 328, 4)); }
+        {  return  en__J((int)get_bits(data, 328, 4)); }
         public void mode_SET(@MAV_MODE int  src) //System mode (MAV_MODE)
         {
-            long id = id__t(src);
+            long id = id__J(src);
             set_bits(id, 4, data, 328);
         }
         static final Meta meta = new Meta(91, 0, 0, 1, 42, 332);
@@ -2469,10 +2469,10 @@ public class GroundControl extends Host
                 set_bytes(Float.floatToIntBits(src[pos]) & -1L, 4, data, BYTE);
         }
         public @MAV_MODE int mode_GET()//System mode (MAV_MODE), includes arming state.
-        {  return  en__t((int)get_bits(data, 640, 4)); }
+        {  return  en__J((int)get_bits(data, 640, 4)); }
         public void mode_SET(@MAV_MODE int  src) //System mode (MAV_MODE), includes arming state.
         {
-            long id = id__t(src);
+            long id = id__J(src);
             set_bits(id, 4, data, 640);
         }
         static final Meta meta = new Meta(93, 0, 0, 2, 81, 644);
@@ -2533,7 +2533,7 @@ public class GroundControl extends Host
         {
             if(ph.field_bit != 209)insert_field(ph, 209, 0);
             set_bytes(Float.floatToIntBits(src) & -1L, 4, data, ph.BYTE);
-        } static final Meta meta = new Meta(100, 0, 0, 1, 27, 208, 0, _IU, _TU);
+        } static final Meta meta = new Meta(100, 0, 0, 1, 27, 208, 0, _NA, _IA);
     } public static class GLOBAL_VISION_POSITION_ESTIMATE extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -4477,7 +4477,7 @@ public class GroundControl extends Host
             if(ph.field_bit != 433)insert_field(ph, 433, 0);
             for(int BYTE =  ph.BYTE, src_max = pos + 18; pos < src_max; pos++, BYTE += 1)
                 set_bytes((char)(src[pos]) & -1L, 1, data,  BYTE);
-        } static final Meta meta = new Meta(148, 2, 4, 1, 56, 433, 0, _KF);
+        } static final Meta meta = new Meta(148, 2, 4, 1, 56, 433, 0, _Mv);
     }/**
 *The location of a landing area captured from a downward facing camera*/
     public static class LANDING_TARGET extends Pack  implements CommunicationChannel.Sendable
@@ -4526,7 +4526,7 @@ public class GroundControl extends Host
         {
             if(ph.field_bit != 242)insert_field(ph, 242, 0);
             set_bytes((char)(src) & -1L, 1, data,  ph.BYTE);
-        } static final Meta meta = new Meta(149, 0, 0, 1, 31, 238, 0, _IF, _TF, _jF, _FF, _EF);
+        } static final Meta meta = new Meta(149, 0, 0, 1, 31, 238, 0, _Nv, _Iv, _tv, _vv, _zv);
     }/**
 *Estimator status message including flags, innovation test ratios and estimated accuracies. The flags message
 *	is an integer bitmask containing information on which EKF outputs are valid. See the ESTIMATOR_STATUS_FLAGS
@@ -4789,7 +4789,7 @@ public class GroundControl extends Host
         {
             if(ph.field_bit != 416)insert_field(ph, 416, 0);
             set_bytes((src) & -1L, 8, data,  ph.BYTE);
-        } static final Meta meta = new Meta(242, 0, 0, 0, 53, 416, 0, _wH);
+        } static final Meta meta = new Meta(242, 0, 0, 0, 53, 416, 0, _Zp);
     }/**
 *The position the system will return to and land on. The position is set automatically by the system during
 *	the takeoff in case it was not explicitely set by the operator before or after. The global and local
@@ -4848,7 +4848,7 @@ public class GroundControl extends Host
         {
             if(ph.field_bit != 424)insert_field(ph, 424, 0);
             set_bytes((src) & -1L, 8, data,  ph.BYTE);
-        } static final Meta meta = new Meta(243, 0, 0, 0, 54, 424, 0, _NE);
+        } static final Meta meta = new Meta(243, 0, 0, 0, 54, 424, 0, _rz);
     }/**
 *This interface replaces DATA_STREAM*/
     public static class MESSAGE_INTERVAL extends Pack  implements CommunicationChannel.Sendable
@@ -4908,7 +4908,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(246, 3, 1, 0, 28, 213, 0, _OE);
+        } static final Meta meta = new Meta(246, 3, 1, 0, 28, 213, 0, _sz);
     }/**
 *Information about a potential collision*/
     public static class COLLISION extends Pack  implements CommunicationChannel.Sendable
@@ -5000,7 +5000,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(250, 0, 0, 1, 21, 160, 0, _dE);
+        } static final Meta meta = new Meta(250, 0, 0, 1, 21, 160, 0, _cz);
     }/**
 *Send a key-value pair as float. The use of this message is discouraged for normal packets, but a quite
 *	efficient way for testing new messages and getting experimental debug output*/
@@ -5019,7 +5019,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(251, 0, 1, 0, 9, 64, 0, _wE);
+        } static final Meta meta = new Meta(251, 0, 1, 0, 9, 64, 0, _Zz);
     }/**
 *Send a key-value pair as integer. The use of this message is discouraged for normal packets, but a quite
 *	efficient way for testing new messages and getting experimental debug output*/
@@ -5038,7 +5038,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(252, 0, 1, 0, 9, 64, 0, _eL);
+        } static final Meta meta = new Meta(252, 0, 1, 0, 9, 64, 0, _Dj);
     }/**
 *Status text message. These messages are printed in yellow in the COMM console of QGroundControl. WARNING:
 *	They consume quite some bandwidth, so use only for important status and error messages. If implemented
@@ -5056,7 +5056,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(253, 0, 0, 0, 2, 3, 0, _gL);
+        } static final Meta meta = new Meta(253, 0, 0, 0, 2, 3, 0, _nj);
     }/**
 *Send a debug value. The index is used to discriminate between values. These values show up in the plot
 *	of QGroundControl as DEBUG N*/
@@ -5120,7 +5120,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(258, 0, 0, 0, 3, 16, 0, _jL);
+        } static final Meta meta = new Meta(258, 0, 0, 0, 3, 16, 0, _tj);
     }/**
 *WIP: Information about a camera*/
     public static class CAMERA_INFORMATION extends Pack  implements CommunicationChannel.Sendable
@@ -5164,7 +5164,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(259, 3, 2, 0, 93, 734, 0, _XL);
+        } static final Meta meta = new Meta(259, 3, 2, 0, 93, 734, 0, _Gj);
     }/**
 *WIP: Settings of a camera, can be requested using MAV_CMD_REQUEST_CAMERA_SETTINGS.*/
     public static class CAMERA_SETTINGS extends Pack  implements CommunicationChannel.Sendable
@@ -5259,7 +5259,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(263, 0, 1, 1, 51, 402, 2, _KM);
+        } static final Meta meta = new Meta(263, 0, 1, 1, 51, 402, 2, _ME);
     }/**
 *WIP: Information about flight since last arming*/
     public static class FLIGHT_INFORMATION extends Pack  implements CommunicationChannel.Sendable
@@ -5380,7 +5380,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(269, 3, 1, 0, 17, 130, 2, _kM);
+        } static final Meta meta = new Meta(269, 3, 1, 0, 17, 130, 2, _xE);
     }/**
 *WIP: Message that sets video stream settings*/
     public static class SET_VIDEO_STREAM_SETTINGS extends Pack  implements CommunicationChannel.Sendable
@@ -5410,7 +5410,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(270, 3, 1, 0, 18, 138, 2, _ZM);
+        } static final Meta meta = new Meta(270, 3, 1, 0, 18, 138, 2, _bE);
     }/**
 *Configure AP SSID and Password.*/
     public static class WIFI_CONFIG_AP extends Pack  implements CommunicationChannel.Sendable
@@ -5431,7 +5431,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(299, 0, 0, 0, 1, 2, 2, _vM, _AM);
+        } static final Meta meta = new Meta(299, 0, 0, 0, 1, 2, 2, _SE, _BE);
     }/**
 *WIP: Version and capability of protocol version. This message is the response to REQUEST_PROTOCOL_VERSION
 *	and is used as part of the handshaking to establish which MAVLink version should be used on the network.
@@ -5539,7 +5539,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(311, 0, 2, 1, 37, 288, 0, _NO);
+        } static final Meta meta = new Meta(311, 0, 2, 1, 37, 288, 0, _rs);
     }/**
 *Request to read the value of a parameter with the either the param_id string id or param_index.*/
     public static class PARAM_EXT_REQUEST_READ extends Pack  implements CommunicationChannel.Sendable
@@ -5567,7 +5567,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(320, 0, 0, 0, 5, 32, 0, _HO);
+        } static final Meta meta = new Meta(320, 0, 0, 0, 5, 32, 0, _ps);
     }/**
 *Request all parameters of this component. After this request, all parameters are emitted.*/
     public static class PARAM_EXT_REQUEST_LIST extends Pack  implements CommunicationChannel.Sendable
@@ -5615,7 +5615,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(322, 2, 0, 0, 5, 38, 2, _OO, _sO);
+        } static final Meta meta = new Meta(322, 2, 0, 0, 5, 38, 2, _ss, _fs);
     }/**
 *Set a parameter value. In order to deal with message loss (and retransmission of PARAM_EXT_SET), when
 *	setting a parameter value and the new value is the same as the current value, you will immediately get
@@ -5653,7 +5653,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(323, 0, 0, 0, 3, 22, 2, _XO, _xO);
+        } static final Meta meta = new Meta(323, 0, 0, 0, 3, 22, 2, _Gs, _Qs);
     }/**
 *Response from a PARAM_EXT_SET message.*/
     public static class PARAM_EXT_ACK extends Pack  implements CommunicationChannel.Sendable
@@ -5686,7 +5686,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(324, 0, 0, 0, 1, 8, 2, _oO, _CO);
+        } static final Meta meta = new Meta(324, 0, 0, 0, 1, 8, 2, _Hs, _Os);
     }/**
 *Obstacle distances in front of the sensor, starting from the left in increment degrees to the right*/
     public static class OBSTACLE_DISTANCE extends Pack  implements CommunicationChannel.Sendable
@@ -7541,7 +7541,7 @@ public class GroundControl extends Host
         MAV_MODE_AUTO_ARMED = 220;
     }
 
-    protected static int en__t(int id)
+    protected static int en__J(int id)
     {
         switch(id)
         {
@@ -7571,7 +7571,7 @@ public class GroundControl extends Host
         assert(false);//("Unknown enum ID " + id);
         return  Integer.MIN_VALUE;
     }
-    protected static int id__t(int en)
+    protected static int id__J(int en)
     {
         switch(en)
         {
@@ -7653,7 +7653,7 @@ public class GroundControl extends Host
         MAV_MISSION_TYPE_ALL = 255;//Only used in MISSION_CLEAR_ALL to clear all mission types.
     }
 
-    protected static int en__o(int id)
+    protected static int en__H(int id)
     {
         switch(id)
         {
@@ -8856,7 +8856,7 @@ public class GroundControl extends Host
         MAV_CMD_USER_5 = 31014;
     }
 
-    protected static int en__e(int id)
+    protected static int en__D(int id)
     {
         switch(id)
         {
@@ -9118,7 +9118,7 @@ public class GroundControl extends Host
         assert(false);//("Unknown enum ID " + id);
         return  Integer.MIN_VALUE;
     }
-    protected static int id__e(int en)
+    protected static int id__D(int en)
     {
         switch(en)
         {
@@ -9861,59 +9861,59 @@ public class GroundControl extends Host
 
 
     private static final Field _h = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _o = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
-    private static final Field _a = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _b = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _w = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _Uc = new Field(0, false, 1, 4, 1, 0, 0, 0);
-    private static final Field _Wc = new Field(0, true, 1, 4, 1, 0, 0, 0);
-    private static final Field _Bc = new Field(0, true, 1, 4, 1, 0, 0, 0);
-    private static final Field _rc = new Field(0, true, 1, 4, 1, 0, 0, 0);
-    private static final Field _Ic = new Field(0, true, 1, 4, 1, 0, 0, 0);
-    private static final Field _Ng = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _Ug = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _Wg = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _Bg = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _rg = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _Ig = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _Tg = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _jg = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _Fz = new Field(0, true, 1, 8, 1, 0, 0, 0);
-    private static final Field _Mz = new Field(0, true, 1, 8, 1, 0, 0, 0);
-    private static final Field _qz = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _st = new Field(0, false, 1, 1, 1, 0, 0, 0);
-    private static final Field _qt = new Field(0, false, 1, 4, 1, 0, 0, 0);
-    private static final Field _Gt = new Field(0, false, 1, 1, 1, 0, 0, 0);
-    private static final Field _Pt = new Field(0, false, 1, 1, 1, 0, 0, 0);
-    private static final Field _IU = new Field(0, false, 1, 4, 1, 0, 0, 0);
-    private static final Field _TU = new Field(0, false, 1, 4, 1, 0, 0, 0);
-    private static final Field _KF = new Field(0, false, 18, 1, 1, 0, 0, 0);
-    private static final Field _IF = new Field(0, false, 1, 4, 1, 0, 0, 0);
-    private static final Field _TF = new Field(0, false, 1, 4, 1, 0, 0, 0);
-    private static final Field _jF = new Field(0, false, 1, 4, 1, 0, 0, 0);
-    private static final Field _FF = new Field(0, false, 4, 4, 1, 0, 0, 0);
-    private static final Field _EF = new Field(0, false, 1, 1, 1, 0, 0, 0);
-    private static final Field _wH = new Field(0, true, 1, 8, 1, 0, 0, 0);
-    private static final Field _NE = new Field(0, true, 1, 8, 1, 0, 0, 0);
-    private static final Field _OE = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-    private static final Field _dE = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-    private static final Field _wE = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-    private static final Field _eL = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-    private static final Field _gL = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
-    private static final Field _jL = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _XL = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-    private static final Field _KM = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-    private static final Field _kM = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-    private static final Field _ZM = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-    private static final Field _vM = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
-    private static final Field _AM = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
-    private static final Field _NO = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
-    private static final Field _HO = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _OO = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _sO = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-    private static final Field _XO = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _xO = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-    private static final Field _oO = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _CO = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+    private static final Field _H = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
+    private static final Field _Y = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _P = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _Z = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _Ad = new Field(0, false, 1, 4, 1, 0, 0, 0);
+    private static final Field _kd = new Field(0, true, 1, 4, 1, 0, 0, 0);
+    private static final Field _ud = new Field(0, true, 1, 4, 1, 0, 0, 0);
+    private static final Field _ad = new Field(0, true, 1, 4, 1, 0, 0, 0);
+    private static final Field _Nd = new Field(0, true, 1, 4, 1, 0, 0, 0);
+    private static final Field _rn = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _An = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _kn = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _un = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _an = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _Nn = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _In = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _tn = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _ve = new Field(0, true, 1, 8, 1, 0, 0, 0);
+    private static final Field _Ee = new Field(0, true, 1, 8, 1, 0, 0, 0);
+    private static final Field _me = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _fJ = new Field(0, false, 1, 1, 1, 0, 0, 0);
+    private static final Field _mJ = new Field(0, false, 1, 4, 1, 0, 0, 0);
+    private static final Field _iJ = new Field(0, false, 1, 1, 1, 0, 0, 0);
+    private static final Field _UJ = new Field(0, false, 1, 1, 1, 0, 0, 0);
+    private static final Field _NA = new Field(0, false, 1, 4, 1, 0, 0, 0);
+    private static final Field _IA = new Field(0, false, 1, 4, 1, 0, 0, 0);
+    private static final Field _Mv = new Field(0, false, 18, 1, 1, 0, 0, 0);
+    private static final Field _Nv = new Field(0, false, 1, 4, 1, 0, 0, 0);
+    private static final Field _Iv = new Field(0, false, 1, 4, 1, 0, 0, 0);
+    private static final Field _tv = new Field(0, false, 1, 4, 1, 0, 0, 0);
+    private static final Field _vv = new Field(0, false, 4, 4, 1, 0, 0, 0);
+    private static final Field _zv = new Field(0, false, 1, 1, 1, 0, 0, 0);
+    private static final Field _Zp = new Field(0, true, 1, 8, 1, 0, 0, 0);
+    private static final Field _rz = new Field(0, true, 1, 8, 1, 0, 0, 0);
+    private static final Field _sz = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+    private static final Field _cz = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+    private static final Field _Zz = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+    private static final Field _Dj = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+    private static final Field _nj = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
+    private static final Field _tj = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _Gj = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+    private static final Field _ME = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+    private static final Field _xE = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+    private static final Field _bE = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+    private static final Field _SE = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
+    private static final Field _BE = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
+    private static final Field _rs = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
+    private static final Field _ps = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _ss = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _fs = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+    private static final Field _Gs = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _Qs = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+    private static final Field _Hs = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _Os = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
 
 }
