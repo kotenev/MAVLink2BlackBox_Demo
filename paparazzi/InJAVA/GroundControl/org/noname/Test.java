@@ -32,12 +32,12 @@ public class Test extends GroundControl
         {  set_bytes((char)(src) & -1L, 2, data,  2); }
         /**
         *Communication drops in percent, (0%: 0, 100%: 10'000), (UART, I2C, SPI, CAN), dropped packets on all links
-        *	(packets that were corrupted on reception on the MAV*/
+        *	 (packets that were corrupted on reception on the MAV*/
         public void drop_rate_comm_SET(char  src)
         {  set_bytes((char)(src) & -1L, 2, data,  4); }
         /**
         *Communication errors (UART, I2C, SPI, CAN), dropped packets on all links (packets that were corrupted
-        *	on reception on the MAV*/
+        *	 on reception on the MAV*/
         public void errors_comm_SET(char  src)
         {  set_bytes((char)(src) & -1L, 2, data,  6); }
         public void errors_count1_SET(char  src) //Autopilot-specific errors
@@ -54,17 +54,17 @@ public class Test extends GroundControl
         {  set_bytes((byte)(src) & -1L, 1, data,  18); }
         /**
         *Bitmask showing which onboard controllers and sensors are present. Value of 0: not present. Value of 1:
-        *	present. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
+        *	 present. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
         public void onboard_control_sensors_present_SET(@MAV_SYS_STATUS_SENSOR int  src)
         {  set_bits(- 1 +   src, 26, data, 152); }
         /**
         *Bitmask showing which onboard controllers and sensors are enabled:  Value of 0: not enabled. Value of
-        *	1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
+        *	 1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
         public void onboard_control_sensors_enabled_SET(@MAV_SYS_STATUS_SENSOR int  src)
         {  set_bits(- 1 +   src, 26, data, 178); }
         /**
         *Bitmask showing which onboard controllers and sensors are operational or have an error:  Value of 0: not
-        *	enabled. Value of 1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
+        *	 enabled. Value of 1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
         public void onboard_control_sensors_health_SET(@MAV_SYS_STATUS_SENSOR int  src)
         {  set_bits(- 1 +   src, 26, data, 204); }
     }
@@ -83,12 +83,12 @@ public class Test extends GroundControl
         {  set_bytes((src) & -1L, 8, data,  4); }
         /**
         *0: request ping from all receiving systems, if greater than 0: message is a ping response and number is
-        *	the system id of the requesting syste*/
+        *	 the system id of the requesting syste*/
         public void target_system_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  12); }
         /**
         *0: request ping from all receiving components, if greater than 0: message is a ping response and number
-        *	is the system id of the requesting syste*/
+        *	 is the system id of the requesting syste*/
         public void target_component_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  13); }
     }
@@ -100,17 +100,17 @@ public class Test extends GroundControl
         {  set_bytes((char)(src) & -1L, 1, data,  1); }
         /**
         *0: key as plaintext, 1-255: future, different hashing/encryption variants. The GCS should in general use
-        *	the safest mode possible initially and then gradually move down the encryption level if it gets a NACK
-        *	message indicating an encryption mismatch*/
+        *	 the safest mode possible initially and then gradually move down the encryption level if it gets a NACK
+        *	 message indicating an encryption mismatch*/
         public void version_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  2); }
         /**
         *Password / Key, depending on version plaintext or encrypted. 25 or less characters, NULL terminated. The
-        *	characters may involve A-Z, a-z, 0-9, and "!?,.-*/
+        *	 characters may involve A-Z, a-z, 0-9, and "!?,.-*/
         public void passkey_SET(String src, Bounds.Inside ph)
         {passkey_SET(src.toCharArray(), 0, src.length(), ph);}/**
 *Password / Key, depending on version plaintext or encrypted. 25 or less characters, NULL terminated. The
-*	characters may involve A-Z, a-z, 0-9, and "!?,.-*/
+*	 characters may involve A-Z, a-z, 0-9, and "!?,.-*/
         public void passkey_SET(char[]  src, int pos, int items, Bounds.Inside ph)
         {
             if(ph.field_bit != 24 && insert_field(ph, 24, items) || ! try_visit_item(ph, 0))
@@ -127,7 +127,7 @@ public class Test extends GroundControl
         {  set_bytes((char)(src) & -1L, 1, data,  1); }
         /**
         *0: ACK, 1: NACK: Wrong passkey, 2: NACK: Unsupported passkey encryption method, 3: NACK: Already under
-        *	contro*/
+        *	 contro*/
         public void ack_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  2); }
     }
@@ -150,7 +150,7 @@ public class Test extends GroundControl
         {  set_bytes((char)(src) & -1L, 1, data,  4); }
         public void base_mode_SET(@MAV_MODE int  src) //The new base mode
         {
-            long id = id__F(src);
+            long id = id__B(src);
             set_bits(id, 4, data, 40);
         }
     }
@@ -164,13 +164,13 @@ public class Test extends GroundControl
         {  set_bytes((short)(src) & -1L, 2, data,  2); }
         /**
         *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-        *	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-        *	storage if the ID is stored as strin*/
+        *	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+        *	 storage if the ID is stored as strin*/
         public void param_id_SET(String src, Bounds.Inside ph)
         {param_id_SET(src.toCharArray(), 0, src.length(), ph);}/**
 *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-*	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-*	storage if the ID is stored as strin*/
+*	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+*	 storage if the ID is stored as strin*/
         public void param_id_SET(char[]  src, int pos, int items, Bounds.Inside ph)
         {
             if(ph.field_bit != 32 && insert_field(ph, 32, items) || ! try_visit_item(ph, 0))
@@ -198,13 +198,13 @@ public class Test extends GroundControl
         {  set_bits(- 1 +   src, 4, data, 64); }
         /**
         *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-        *	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-        *	storage if the ID is stored as strin*/
+        *	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+        *	 storage if the ID is stored as strin*/
         public void param_id_SET(String src, Bounds.Inside ph)
         {param_id_SET(src.toCharArray(), 0, src.length(), ph);}/**
 *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-*	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-*	storage if the ID is stored as strin*/
+*	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+*	 storage if the ID is stored as strin*/
         public void param_id_SET(char[]  src, int pos, int items, Bounds.Inside ph)
         {
             if(ph.field_bit != 68 && insert_field(ph, 68, items) || ! try_visit_item(ph, 0))
@@ -225,13 +225,13 @@ public class Test extends GroundControl
         {  set_bits(- 1 +   src, 4, data, 48); }
         /**
         *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-        *	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-        *	storage if the ID is stored as strin*/
+        *	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+        *	 storage if the ID is stored as strin*/
         public void param_id_SET(String src, Bounds.Inside ph)
         {param_id_SET(src.toCharArray(), 0, src.length(), ph);}/**
 *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-*	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-*	storage if the ID is stored as strin*/
+*	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+*	 storage if the ID is stored as strin*/
         public void param_id_SET(char[]  src, int pos, int items, Bounds.Inside ph)
         {
             if(ph.field_bit != 52 && insert_field(ph, 52, items) || ! try_visit_item(ph, 0))
@@ -250,7 +250,7 @@ public class Test extends GroundControl
         {  set_bytes((char)(src) & -1L, 2, data,  4); }
         /**
         *Course over ground (NOT heading, but direction of movement) in degrees * 100, 0.0..359.99 degrees. If
-        *	unknown, set to: UINT16_MA*/
+        *	 unknown, set to: UINT16_MA*/
         public void cog_SET(char  src)
         {  set_bytes((char)(src) & -1L, 2, data,  6); }
         public void time_usec_SET(long  src) //Timestamp (microseconds since UNIX epoch or microseconds since system boot)
@@ -261,7 +261,7 @@ public class Test extends GroundControl
         {  set_bytes((int)(src) & -1L, 4, data,  20); }
         /**
         *Altitude (AMSL, NOT WGS84), in meters * 1000 (positive for up). Note that virtually all GPS modules provide
-        *	the AMSL altitude in addition to the WGS84 altitude*/
+        *	 the AMSL altitude in addition to the WGS84 altitude*/
         public void alt_SET(int  src)
         {  set_bytes((int)(src) & -1L, 4, data,  24); }
         public void satellites_visible_SET(char  src) //Number of satellites visible. If unknown, set to 255
@@ -455,7 +455,7 @@ public class Test extends GroundControl
         {  set_bytes((int)(src) & -1L, 4, data,  10); }
         /**
         *Altitude in meters, expressed as * 1000 (millimeters), AMSL (not WGS84 - note that virtually all GPS modules
-        *	provide the AMSL as well*/
+        *	 provide the AMSL as well*/
         public void alt_SET(int  src)
         {  set_bytes((int)(src) & -1L, 4, data,  14); }
         public void relative_alt_SET(int  src) //Altitude above ground in meters, expressed as * 1000 (millimeters)
@@ -473,7 +473,7 @@ public class Test extends GroundControl
         {  set_bytes((src) & -1L, 4, data,  0); }
         /**
         *Servo output port (set of 8 outputs = 1 port). Most MAVs will just use one, but this allows for more than
-        *	8 servos*/
+        *	 8 servos*/
         public void port_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  4); }
         public void chan1_scaled_SET(short  src) //RC channel 1 value scaled, (-100%) -10000, (0%) 0, (100%) 10000, (invalid) INT16_MAX.
@@ -517,7 +517,7 @@ public class Test extends GroundControl
         {  set_bytes((src) & -1L, 4, data,  16); }
         /**
         *Servo output port (set of 8 outputs = 1 port). Most MAVs will just use one, but this allows for more than
-        *	8 servos*/
+        *	 8 servos*/
         public void port_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  20); }
         public void rssi_SET(char  src) //Receive signal strength indicator, 0: 0%, 100: 100%, 255: invalid/unknown.
@@ -545,7 +545,7 @@ public class Test extends GroundControl
         {  set_bytes((src) & -1L, 4, data,  16); }
         /**
         *Servo output port (set of 8 outputs = 1 port). Most MAVs will just use one, but this allows to encode
-        *	more than 8 servos*/
+        *	 more than 8 servos*/
         public void port_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  20); }
         public void servo9_raw_SET(char  src, Bounds.Inside ph)//Servo output 9 value, in microseconds
@@ -678,7 +678,7 @@ public class Test extends GroundControl
         {  set_bits(- 0 +   src, 4, data, 272); }
         public void command_SET(@MAV_CMD int  src) //The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
         {
-            long id = id__X(src);
+            long id = id__o(src);
             set_bits(id, 7, data, 276);
         }
         public void mission_type_SET(@MAV_MISSION_TYPE int  src) //Mission type, see MAV_MISSION_TYPE
@@ -912,12 +912,12 @@ public class Test extends GroundControl
         {  set_bytes((char)(src) & -1L, 1, data,  1); }
         /**
         *Parameter index. Send -1 to use the param ID field as identifier (else the param id will be ignored),
-        *	send -2 to disable any existing map for this rc_channel_index*/
+        *	 send -2 to disable any existing map for this rc_channel_index*/
         public void param_index_SET(short  src)
         {  set_bytes((short)(src) & -1L, 2, data,  2); }
         /**
         *Index of parameter RC channel. Not equal to the RC channel id. Typically correpsonds to a potentiometer-knob
-        *	on the RC*/
+        *	 on the RC*/
         public void parameter_rc_channel_index_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  4); }
         public void param_value0_SET(float  src) //Initial parameter value
@@ -926,23 +926,23 @@ public class Test extends GroundControl
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 9); }
         /**
         *Minimum param value. The protocol does not define if this overwrites an onboard minimum value. (Depends
-        *	on implementation*/
+        *	 on implementation*/
         public void param_value_min_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 13); }
         /**
         *Maximum param value. The protocol does not define if this overwrites an onboard maximum value. (Depends
-        *	on implementation*/
+        *	 on implementation*/
         public void param_value_max_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 17); }
         /**
         *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-        *	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-        *	storage if the ID is stored as strin*/
+        *	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+        *	 storage if the ID is stored as strin*/
         public void param_id_SET(String src, Bounds.Inside ph)
         {param_id_SET(src.toCharArray(), 0, src.length(), ph);}/**
 *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-*	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-*	storage if the ID is stored as strin*/
+*	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+*	 storage if the ID is stored as strin*/
         public void param_id_SET(char[]  src, int pos, int items, Bounds.Inside ph)
         {
             if(ph.field_bit != 168 && insert_field(ph, 168, items) || ! try_visit_item(ph, 0))
@@ -1002,7 +1002,7 @@ public class Test extends GroundControl
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 22); }
         /**
         *Coordinate frame, as defined by MAV_FRAME enum in mavlink_types.h. Can be either global, GPS, right-handed
-        *	with Z axis up or local, right handed, Z axis down*/
+        *	 with Z axis up or local, right handed, Z axis down*/
         public void frame_SET(@MAV_FRAME int  src)
         {  set_bits(- 0 +   src, 4, data, 208); }
     }
@@ -1022,7 +1022,7 @@ public class Test extends GroundControl
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 20); }
         /**
         *Coordinate frame, as defined by MAV_FRAME enum in mavlink_types.h. Can be either global, GPS, right-handed
-        *	with Z axis up or local, right handed, Z axis down*/
+        *	 with Z axis up or local, right handed, Z axis down*/
         public void frame_SET(@MAV_FRAME int  src)
         {  set_bits(- 0 +   src, 4, data, 192); }
     }
@@ -1116,7 +1116,7 @@ public class Test extends GroundControl
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 40); }
         /**
         *Covariance matrix upper right triangular (first nine entries are the first ROW, next eight entries are
-        *	the second row, etc.*/
+        *	 the second row, etc.*/
         public void covariance_SET(float[]  src, int pos)
         {
             for(int BYTE =  44, src_max = pos + 45; pos < src_max; pos++, BYTE += 4)
@@ -1167,7 +1167,7 @@ public class Test extends GroundControl
         {  set_bytes((src) & -1L, 4, data,  36); }
         /**
         *Total number of RC channels being received. This can be larger than 18, indicating that more channels
-        *	are available but not given in this message. This value should be 0 when no RC channels are available*/
+        *	 are available but not given in this message. This value should be 0 when no RC channels are available*/
         public void chancount_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  40); }
         public void rssi_SET(char  src) //Receive signal strength indicator, 0: 0%, 100: 100%, 255: invalid/unknown.
@@ -1199,32 +1199,32 @@ public class Test extends GroundControl
     {
         /**
         *A bitfield corresponding to the joystick buttons' current state, 1 for pressed, 0 for released. The lowest
-        *	bit corresponds to Button 1*/
+        *	 bit corresponds to Button 1*/
         public void buttons_SET(char  src)
         {  set_bytes((char)(src) & -1L, 2, data,  0); }
         public void target_SET(char  src) //The system to be controlled.
         {  set_bytes((char)(src) & -1L, 1, data,  2); }
         /**
         *X-axis, normalized to the range [-1000,1000]. A value of INT16_MAX indicates that this axis is invalid.
-        *	Generally corresponds to forward(1000)-backward(-1000) movement on a joystick and the pitch of a vehicle*/
+        *	 Generally corresponds to forward(1000)-backward(-1000) movement on a joystick and the pitch of a vehicle*/
         public void x_SET(short  src)
         {  set_bytes((short)(src) & -1L, 2, data,  3); }
         /**
         *Y-axis, normalized to the range [-1000,1000]. A value of INT16_MAX indicates that this axis is invalid.
-        *	Generally corresponds to left(-1000)-right(1000) movement on a joystick and the roll of a vehicle*/
+        *	 Generally corresponds to left(-1000)-right(1000) movement on a joystick and the roll of a vehicle*/
         public void y_SET(short  src)
         {  set_bytes((short)(src) & -1L, 2, data,  5); }
         /**
         *Z-axis, normalized to the range [-1000,1000]. A value of INT16_MAX indicates that this axis is invalid.
-        *	Generally corresponds to a separate slider movement with maximum being 1000 and minimum being -1000 on
-        *	a joystick and the thrust of a vehicle. Positive values are positive thrust, negative values are negative
-        *	thrust*/
+        *	 Generally corresponds to a separate slider movement with maximum being 1000 and minimum being -1000 on
+        *	 a joystick and the thrust of a vehicle. Positive values are positive thrust, negative values are negative
+        *	 thrust*/
         public void z_SET(short  src)
         {  set_bytes((short)(src) & -1L, 2, data,  7); }
         /**
         *R-axis, normalized to the range [-1000,1000]. A value of INT16_MAX indicates that this axis is invalid.
-        *	Generally corresponds to a twisting of the joystick, with counter-clockwise being 1000 and clockwise
-        *	being -1000, and the yaw of a vehicle*/
+        *	 Generally corresponds to a twisting of the joystick, with counter-clockwise being 1000 and clockwise
+        *	 being -1000, and the yaw of a vehicle*/
         public void r_SET(short  src)
         {  set_bytes((short)(src) & -1L, 2, data,  9); }
     }
@@ -1255,7 +1255,7 @@ public class Test extends GroundControl
     {
         /**
         *Waypoint ID (sequence number). Starts at zero. Increases monotonically for each waypoint, no gaps in the
-        *	sequence (0,1,2,3,4)*/
+        *	 sequence (0,1,2,3,4)*/
         public void seq_SET(char  src)
         {  set_bytes((char)(src) & -1L, 2, data,  0); }
         public void target_system_SET(char  src) //System ID
@@ -1284,7 +1284,7 @@ public class Test extends GroundControl
         {  set_bits(- 0 +   src, 4, data, 272); }
         public void command_SET(@MAV_CMD int  src) //The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
         {
-            long id = id__X(src);
+            long id = id__o(src);
             set_bits(id, 7, data, 276);
         }
         public void mission_type_SET(@MAV_MISSION_TYPE int  src) //Mission type, see MAV_MISSION_TYPE
@@ -1353,7 +1353,7 @@ public class Test extends GroundControl
         {  set_bits(- 0 +   src, 4, data, 256); }
         public void command_SET(@MAV_CMD int  src) //The scheduled action for the mission item. see MAV_CMD in common.xml MAVLink specs
         {
-            long id = id__X(src);
+            long id = id__o(src);
             set_bits(id, 7, data, 260);
         }
     }
@@ -1365,7 +1365,7 @@ public class Test extends GroundControl
         {  return (char)((char) get_bytes(data,  1, 1)); }
         /**
         *The requested unique resource identifier (URI). It is not necessarily a straight domain name (depends
-        *	on the URI type enum*/
+        *	 on the URI type enum*/
         public char[] uri_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 2, dst_max = pos + 120; pos < dst_max ; pos++,  BYTE += 1)
@@ -1374,13 +1374,13 @@ public class Test extends GroundControl
         }
         /**
         *The requested unique resource identifier (URI). It is not necessarily a straight domain name (depends
-        *	on the URI type enum*/
+        *	 on the URI type enum*/
         public char[] uri_GET()
         {return uri_GET(new char[120], 0);} public char transfer_type_GET()//The way the autopilot wants to receive the URI. 0 = MAVLink FTP. 1 = binary stream.
         {  return (char)((char) get_bytes(data,  122, 1)); }
         /**
         *The storage path the autopilot wants the URI to be stored in. Will only be valid if the transfer_type
-        *	has a storage associated (e.g. MAVLink FTP)*/
+        *	 has a storage associated (e.g. MAVLink FTP)*/
         public char[] storage_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 123, dst_max = pos + 120; pos < dst_max ; pos++,  BYTE += 1)
@@ -1389,7 +1389,7 @@ public class Test extends GroundControl
         }
         /**
         *The storage path the autopilot wants the URI to be stored in. Will only be valid if the transfer_type
-        *	has a storage associated (e.g. MAVLink FTP)*/
+        *	 has a storage associated (e.g. MAVLink FTP)*/
         public char[] storage_GET()
         {return storage_GET(new char[120], 0);}
     }
@@ -1511,7 +1511,7 @@ public class Test extends GroundControl
     {
         /**
         *Battery voltage of cells, in millivolts (1 = 1 millivolt). Cells above the valid cell count for this battery
-        *	should have the UINT16_MAX value*/
+        *	 should have the UINT16_MAX value*/
         public char[] voltages_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 0, dst_max = pos + 10; pos < dst_max ; pos++,  BYTE += 2)
@@ -1520,7 +1520,7 @@ public class Test extends GroundControl
         }
         /**
         *Battery voltage of cells, in millivolts (1 = 1 millivolt). Cells above the valid cell count for this battery
-        *	should have the UINT16_MAX value*/
+        *	 should have the UINT16_MAX value*/
         public char[] voltages_GET()
         {return voltages_GET(new char[10], 0);} public char id_GET()//Battery ID
         {  return (char)((char) get_bytes(data,  20, 1)); }
@@ -1532,7 +1532,7 @@ public class Test extends GroundControl
         {  return (int)((int) get_bytes(data,  25, 4)); }
         /**
         *Consumed energy, in HectoJoules (intergrated U*I*dt)  (1 = 100 Joule), -1: autopilot does not provide
-        *	energy consumption estimat*/
+        *	 energy consumption estimat*/
         public int energy_consumed_GET()
         {  return (int)((int) get_bytes(data,  29, 4)); }
         public byte battery_remaining_GET()//Remaining battery energy: (0%: 0, 100%: 100), -1: autopilot does not estimate the remaining battery
@@ -1560,7 +1560,7 @@ public class Test extends GroundControl
         {  return (get_bytes(data,  20, 8)); }
         /**
         *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-        *	should allow to identify the commit using the main version number even for very large code bases*/
+        *	 should allow to identify the commit using the main version number even for very large code bases*/
         public char[] flight_custom_version_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 28, dst_max = pos + 8; pos < dst_max ; pos++,  BYTE += 1)
@@ -1569,11 +1569,11 @@ public class Test extends GroundControl
         }
         /**
         *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-        *	should allow to identify the commit using the main version number even for very large code bases*/
+        *	 should allow to identify the commit using the main version number even for very large code bases*/
         public char[] flight_custom_version_GET()
         {return flight_custom_version_GET(new char[8], 0);}/**
 *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-*	should allow to identify the commit using the main version number even for very large code bases*/
+*	 should allow to identify the commit using the main version number even for very large code bases*/
         public char[] middleware_custom_version_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 36, dst_max = pos + 8; pos < dst_max ; pos++,  BYTE += 1)
@@ -1582,11 +1582,11 @@ public class Test extends GroundControl
         }
         /**
         *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-        *	should allow to identify the commit using the main version number even for very large code bases*/
+        *	 should allow to identify the commit using the main version number even for very large code bases*/
         public char[] middleware_custom_version_GET()
         {return middleware_custom_version_GET(new char[8], 0);}/**
 *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-*	should allow to identify the commit using the main version number even for very large code bases*/
+*	 should allow to identify the commit using the main version number even for very large code bases*/
         public char[] os_custom_version_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 44, dst_max = pos + 8; pos < dst_max ; pos++,  BYTE += 1)
@@ -1595,13 +1595,13 @@ public class Test extends GroundControl
         }
         /**
         *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-        *	should allow to identify the commit using the main version number even for very large code bases*/
+        *	 should allow to identify the commit using the main version number even for very large code bases*/
         public char[] os_custom_version_GET()
         {return os_custom_version_GET(new char[8], 0);} public @MAV_PROTOCOL_CAPABILITY int capabilities_GET()//bitmask of capabilities (see MAV_PROTOCOL_CAPABILITY enum)
         {  return  1 + (int)get_bits(data, 416, 17); }
         /**
         *UID if provided by hardware (supersedes the uid field. If this is non-zero, use this field, otherwise
-        *	use uid*/
+        *	 use uid*/
         public char[]  uid2_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  433 && !try_visit_field(ph, 433)) return null;
@@ -1609,7 +1609,7 @@ public class Test extends GroundControl
         }
         /**
         *UID if provided by hardware (supersedes the uid field. If this is non-zero, use this field, otherwise
-        *	use uid*/
+        *	 use uid*/
         public char[] uid2_GET(Bounds.Inside ph, char[]  dst_ch, int pos)
         {
             for(int BYTE = ph.BYTE, dst_max = pos + 18; pos < dst_max ; pos++,  BYTE += 1)
@@ -1672,7 +1672,7 @@ public class Test extends GroundControl
             return 4;
         }/**
 *Boolean indicating known position (1) or default unkown position (0), for validation of positioning of
-*	the landing targe*/
+*	 the landing targe*/
         public char  position_valid_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  242 && !try_visit_field(ph, 242)) return 0;
@@ -1820,12 +1820,12 @@ public class Test extends GroundControl
     {
         /**
         *LSB: 1 means message is fragmented, next 2 bits are the fragment ID, the remaining 5 bits are used for
-        *	the sequence ID. Messages are only to be flushed to the GPS when the entire message has been reconstructed
-        *	on the autopilot. The fragment ID specifies which order the fragments should be assembled into a buffer,
-        *	while the sequence ID is used to detect a mismatch between different buffers. The buffer is considered
-        *	fully reconstructed when either all 4 fragments are present, or all the fragments before the first fragment
-        *	with a non full payload is received. This management is used to ensure that normal GPS operation doesn't
-        *	corrupt RTCM data, and to recover from a unreliable transport delivery order*/
+        *	 the sequence ID. Messages are only to be flushed to the GPS when the entire message has been reconstructed
+        *	 on the autopilot. The fragment ID specifies which order the fragments should be assembled into a buffer,
+        *	 while the sequence ID is used to detect a mismatch between different buffers. The buffer is considered
+        *	 fully reconstructed when either all 4 fragments are present, or all the fragments before the first fragment
+        *	 with a non full payload is received. This management is used to ensure that normal GPS operation doesn't
+        *	 corrupt RTCM data, and to recover from a unreliable transport delivery order*/
         public char flags_GET()
         {  return (char)((char) get_bytes(data,  0, 1)); }
         public char len_GET()//data length
@@ -1881,7 +1881,7 @@ public class Test extends GroundControl
         {  return (byte)((byte) get_bytes(data,  34, 1)); }
         /**
         *failsafe (each bit represents a failsafe where 0=ok, 1=failsafe active (bit0:RC, bit1:batt, bit2:GPS,
-        *	bit3:GCS, bit4:fence*/
+        *	 bit3:GCS, bit4:fence*/
         public char failsafe_GET()
         {  return (char)((char) get_bytes(data,  35, 1)); }
         public char wp_num_GET()//current waypoint number
@@ -1926,7 +1926,7 @@ public class Test extends GroundControl
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  20, 4))); }
         /**
         *World to surface normal and heading transformation of the takeoff position. Used to indicate the heading
-        *	and slope of the groun*/
+        *	 and slope of the groun*/
         public float[] q_GET(float[]  dst_ch, int pos)
         {
             for(int BYTE = 24, dst_max = pos + 4; pos < dst_max ; pos++,  BYTE += 4)
@@ -1935,27 +1935,27 @@ public class Test extends GroundControl
         }
         /**
         *World to surface normal and heading transformation of the takeoff position. Used to indicate the heading
-        *	and slope of the groun*/
+        *	 and slope of the groun*/
         public float[] q_GET()
         {return q_GET(new float[4], 0);}/**
 *Local X position of the end of the approach vector. Multicopters should set this position based on their
-*	takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
-*	fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
-*	from the threshold / touchdown zone*/
+*	 takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
+*	 fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
+*	 from the threshold / touchdown zone*/
         public float approach_x_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  40, 4))); }
         /**
         *Local Y position of the end of the approach vector. Multicopters should set this position based on their
-        *	takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
-        *	fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
-        *	from the threshold / touchdown zone*/
+        *	 takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
+        *	 fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
+        *	 from the threshold / touchdown zone*/
         public float approach_y_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  44, 4))); }
         /**
         *Local Z position of the end of the approach vector. Multicopters should set this position based on their
-        *	takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
-        *	fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
-        *	from the threshold / touchdown zone*/
+        *	 takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
+        *	 fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
+        *	 from the threshold / touchdown zone*/
         public float approach_z_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  48, 4))); }
         public long  time_usec_TRY(Bounds.Inside ph)//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
@@ -1982,7 +1982,7 @@ public class Test extends GroundControl
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  21, 4))); }
         /**
         *World to surface normal and heading transformation of the takeoff position. Used to indicate the heading
-        *	and slope of the groun*/
+        *	 and slope of the groun*/
         public float[] q_GET(float[]  dst_ch, int pos)
         {
             for(int BYTE = 25, dst_max = pos + 4; pos < dst_max ; pos++,  BYTE += 4)
@@ -1991,27 +1991,27 @@ public class Test extends GroundControl
         }
         /**
         *World to surface normal and heading transformation of the takeoff position. Used to indicate the heading
-        *	and slope of the groun*/
+        *	 and slope of the groun*/
         public float[] q_GET()
         {return q_GET(new float[4], 0);}/**
 *Local X position of the end of the approach vector. Multicopters should set this position based on their
-*	takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
-*	fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
-*	from the threshold / touchdown zone*/
+*	 takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
+*	 fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
+*	 from the threshold / touchdown zone*/
         public float approach_x_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  41, 4))); }
         /**
         *Local Y position of the end of the approach vector. Multicopters should set this position based on their
-        *	takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
-        *	fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
-        *	from the threshold / touchdown zone*/
+        *	 takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
+        *	 fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
+        *	 from the threshold / touchdown zone*/
         public float approach_y_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  45, 4))); }
         /**
         *Local Z position of the end of the approach vector. Multicopters should set this position based on their
-        *	takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
-        *	fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
-        *	from the threshold / touchdown zone*/
+        *	 takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
+        *	 fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
+        *	 from the threshold / touchdown zone*/
         public float approach_z_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  49, 4))); }
         public long  time_usec_TRY(Bounds.Inside ph)//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
@@ -2091,17 +2091,17 @@ public class Test extends GroundControl
         public @MAV_COLLISION_ACTION int action_GET()//Action that is being taken to avoid this collision
         {  return  0 + (int)get_bits(data, 129, 3); }
         public @MAV_COLLISION_THREAT_LEVEL int threat_level_GET()//How concerned the aircraft is about this collision
-        {  return  0 + (int)get_bits(data, 132, 2); }
+        {  return  0 + (int)get_bits(data, 132, 3); }
     }
     public static class V2_EXTENSION extends GroundControl.V2_EXTENSION
     {
         /**
         *A code that identifies the software component that understands this message (analogous to usb device classes
-        *	or mime type strings).  If this code is less than 32768, it is considered a 'registered' protocol extension
-        *	and the corresponding entry should be added to https:github.com/mavlink/mavlink/extension-message-ids.xml.
+        *	 or mime type strings).  If this code is less than 32768, it is considered a 'registered' protocol extension
+        *	 and the corresponding entry should be added to https:github.com/mavlink/mavlink/extension-message-ids.xml.
         *	 Software creators can register blocks of message IDs as needed (useful for GCS specific metadata, etc...).
-        *	Message_types greater than 32767 are considered local experiments and should not be checked in to any
-        *	widely distributed codebase*/
+        *	 Message_types greater than 32767 are considered local experiments and should not be checked in to any
+        *	 widely distributed codebase*/
         public char message_type_GET()
         {  return (char)((char) get_bytes(data,  0, 2)); }
         public char target_network_GET()//Network ID (0 for broadcast)
@@ -2112,9 +2112,9 @@ public class Test extends GroundControl
         {  return (char)((char) get_bytes(data,  4, 1)); }
         /**
         *Variable length payload. The length is defined by the remaining message length when subtracting the header
-        *	and other fields.  The entire content of this block is opaque unless you understand any the encoding
-        *	message_type.  The particular encoding used can be extension specific and might not always be documented
-        *	as part of the mavlink specification*/
+        *	 and other fields.  The entire content of this block is opaque unless you understand any the encoding
+        *	 message_type.  The particular encoding used can be extension specific and might not always be documented
+        *	 as part of the mavlink specification*/
         public char[] payload_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 5, dst_max = pos + 249; pos < dst_max ; pos++,  BYTE += 1)
@@ -2123,9 +2123,9 @@ public class Test extends GroundControl
         }
         /**
         *Variable length payload. The length is defined by the remaining message length when subtracting the header
-        *	and other fields.  The entire content of this block is opaque unless you understand any the encoding
-        *	message_type.  The particular encoding used can be extension specific and might not always be documented
-        *	as part of the mavlink specification*/
+        *	 and other fields.  The entire content of this block is opaque unless you understand any the encoding
+        *	 message_type.  The particular encoding used can be extension specific and might not always be documented
+        *	 as part of the mavlink specification*/
         public char[] payload_GET()
         {return payload_GET(new char[249], 0);}
     }
@@ -2350,7 +2350,7 @@ public class Test extends GroundControl
         public long time_boot_ms_GET()//Timestamp (milliseconds since system boot)
         {  return (get_bytes(data,  0, 4)); }
         public @CAMERA_MODE int mode_id_GET()//Camera mode (CAMERA_MODE)
-        {  return  0 + (int)get_bits(data, 32, 2); }
+        {  return  0 + (int)get_bits(data, 32, 3); }
     }
     public static class STORAGE_INFORMATION extends GroundControl.STORAGE_INFORMATION
     {
@@ -2381,7 +2381,7 @@ public class Test extends GroundControl
         {  return (get_bytes(data,  4, 4)); }
         /**
         *Current status of image capturing (0: idle, 1: capture in progress, 2: interval set but idle, 3: interval
-        *	set and capture in progress*/
+        *	 set and capture in progress*/
         public char image_status_GET()
         {  return (char)((char) get_bytes(data,  8, 1)); }
         public char video_status_GET()//Current status of video capturing (0: idle, 1: capture in progress)
@@ -2468,7 +2468,7 @@ public class Test extends GroundControl
         {  return (char)((char) get_bytes(data,  4, 1)); }
         /**
         *offset into data where first message starts. This can be used for recovery, when a previous message got
-        *	lost (set to 255 if no start exists)*/
+        *	 lost (set to 255 if no start exists)*/
         public char first_message_offset_GET()
         {  return (char)((char) get_bytes(data,  5, 1)); }
         public char[] data__GET(char[]  dst_ch, int pos)  //logged data
@@ -2492,7 +2492,7 @@ public class Test extends GroundControl
         {  return (char)((char) get_bytes(data,  4, 1)); }
         /**
         *offset into data where first message starts. This can be used for recovery, when a previous message got
-        *	lost (set to 255 if no start exists)*/
+        *	 lost (set to 255 if no start exists)*/
         public char first_message_offset_GET()
         {  return (char)((char) get_bytes(data,  5, 1)); }
         public char[] data__GET(char[]  dst_ch, int pos)  //logged data
@@ -2715,8 +2715,8 @@ public class Test extends GroundControl
         {  return (short)((short) get_bytes(data,  2, 2)); }
         /**
         *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-        *	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-        *	ID is stored as strin*/
+        *	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+        *	 ID is stored as strin*/
         public String param_id_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  32 && !try_visit_field(ph, 32)  ||  !try_visit_item(ph, 0)) return null;
@@ -2724,8 +2724,8 @@ public class Test extends GroundControl
         }
         /**
         *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-        *	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-        *	ID is stored as strin*/
+        *	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+        *	 ID is stored as strin*/
         public char[] param_id_GET(Bounds.Inside ph, char[]  dst_ch, int pos)
         {
             for(int BYTE = ph.BYTE, dst_max = pos + ph.items; pos < dst_max ; pos++,  BYTE += 2)
@@ -2754,8 +2754,8 @@ public class Test extends GroundControl
         {  return  1 + (int)get_bits(data, 32, 4); }
         /**
         *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-        *	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-        *	ID is stored as strin*/
+        *	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+        *	 ID is stored as strin*/
         public String param_id_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  38 && !try_visit_field(ph, 38)  ||  !try_visit_item(ph, 0)) return null;
@@ -2763,8 +2763,8 @@ public class Test extends GroundControl
         }
         /**
         *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-        *	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-        *	ID is stored as strin*/
+        *	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+        *	 ID is stored as strin*/
         public char[] param_id_GET(Bounds.Inside ph, char[]  dst_ch, int pos)
         {
             for(int BYTE = ph.BYTE, dst_max = pos + ph.items; pos < dst_max ; pos++,  BYTE += 2)
@@ -2800,8 +2800,8 @@ public class Test extends GroundControl
         {  return  1 + (int)get_bits(data, 16, 4); }
         /**
         *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-        *	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-        *	ID is stored as strin*/
+        *	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+        *	 ID is stored as strin*/
         public String param_id_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  22 && !try_visit_field(ph, 22)  ||  !try_visit_item(ph, 0)) return null;
@@ -2809,8 +2809,8 @@ public class Test extends GroundControl
         }
         /**
         *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-        *	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-        *	ID is stored as strin*/
+        *	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+        *	 ID is stored as strin*/
         public char[] param_id_GET(Bounds.Inside ph, char[]  dst_ch, int pos)
         {
             for(int BYTE = ph.BYTE, dst_max = pos + ph.items; pos < dst_max ; pos++,  BYTE += 2)
@@ -2844,8 +2844,8 @@ public class Test extends GroundControl
         {  return  0 + (int)get_bits(data, 4, 2); }
         /**
         *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-        *	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-        *	ID is stored as strin*/
+        *	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+        *	 ID is stored as strin*/
         public String param_id_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  8 && !try_visit_field(ph, 8)  ||  !try_visit_item(ph, 0)) return null;
@@ -2853,8 +2853,8 @@ public class Test extends GroundControl
         }
         /**
         *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-        *	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-        *	ID is stored as strin*/
+        *	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+        *	 ID is stored as strin*/
         public char[] param_id_GET(Bounds.Inside ph, char[]  dst_ch, int pos)
         {
             for(int BYTE = ph.BYTE, dst_max = pos + ph.items; pos < dst_max ; pos++,  BYTE += 2)
@@ -2884,8 +2884,8 @@ public class Test extends GroundControl
     {
         /**
         *Distance of obstacles in front of the sensor starting on the left side. A value of 0 means that the obstacle
-        *	is right in front of the sensor. A value of max_distance +1 means no obstace is present. A value of UINT16_MAX
-        *	for unknown/not used. In a array element, each unit corresponds to 1cm*/
+        *	 is right in front of the sensor. A value of max_distance +1 means no obstace is present. A value of UINT16_MAX
+        *	 for unknown/not used. In a array element, each unit corresponds to 1cm*/
         public char[] distances_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 0, dst_max = pos + 72; pos < dst_max ; pos++,  BYTE += 2)
@@ -2894,8 +2894,8 @@ public class Test extends GroundControl
         }
         /**
         *Distance of obstacles in front of the sensor starting on the left side. A value of 0 means that the obstacle
-        *	is right in front of the sensor. A value of max_distance +1 means no obstace is present. A value of UINT16_MAX
-        *	for unknown/not used. In a array element, each unit corresponds to 1cm*/
+        *	 is right in front of the sensor. A value of max_distance +1 means no obstace is present. A value of UINT16_MAX
+        *	 for unknown/not used. In a array element, each unit corresponds to 1cm*/
         public char[] distances_GET()
         {return distances_GET(new char[72], 0);} public char min_distance_GET()//Minimum distance the sensor can measure in centimeters
         {  return (char)((char) get_bytes(data,  144, 2)); }
@@ -3430,3679 +3430,3701 @@ public class Test extends GroundControl
         final Bounds.Inside PH = new Bounds.Inside();
         CommunicationChannel.instance.on_HEARTBEAT.add((src, ph, pack) ->
         {
-            assert(pack.base_mode_GET() == (MAV_MODE_FLAG.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED |
-                                            MAV_MODE_FLAG.MAV_MODE_FLAG_SAFETY_ARMED |
-                                            MAV_MODE_FLAG.MAV_MODE_FLAG_TEST_ENABLED));
-            assert(pack.custom_mode_GET() == 3107190397L);
-            assert(pack.system_status_GET() == MAV_STATE.MAV_STATE_CRITICAL);
-            assert(pack.mavlink_version_GET() == (char)43);
-            assert(pack.autopilot_GET() == MAV_AUTOPILOT.MAV_AUTOPILOT_GENERIC);
-            assert(pack.type_GET() == MAV_TYPE.MAV_TYPE_VTOL_RESERVED3);
+            assert(pack.autopilot_GET() == MAV_AUTOPILOT.MAV_AUTOPILOT_UDB);
+            assert(pack.system_status_GET() == MAV_STATE.MAV_STATE_POWEROFF);
+            assert(pack.base_mode_GET() == (MAV_MODE_FLAG.MAV_MODE_FLAG_STABILIZE_ENABLED |
+                                            MAV_MODE_FLAG.MAV_MODE_FLAG_HIL_ENABLED |
+                                            MAV_MODE_FLAG.MAV_MODE_FLAG_AUTO_ENABLED));
+            assert(pack.mavlink_version_GET() == (char)46);
+            assert(pack.type_GET() == MAV_TYPE.MAV_TYPE_TRICOPTER);
+            assert(pack.custom_mode_GET() == 3499390250L);
         });
         HEARTBEAT p0 = new HEARTBEAT();
         PH.setPack(p0);
-        p0.type_SET(MAV_TYPE.MAV_TYPE_VTOL_RESERVED3) ;
-        p0.base_mode_SET((MAV_MODE_FLAG.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED |
-                          MAV_MODE_FLAG.MAV_MODE_FLAG_SAFETY_ARMED |
-                          MAV_MODE_FLAG.MAV_MODE_FLAG_TEST_ENABLED)) ;
-        p0.custom_mode_SET(3107190397L) ;
-        p0.mavlink_version_SET((char)43) ;
-        p0.autopilot_SET(MAV_AUTOPILOT.MAV_AUTOPILOT_GENERIC) ;
-        p0.system_status_SET(MAV_STATE.MAV_STATE_CRITICAL) ;
+        p0.custom_mode_SET(3499390250L) ;
+        p0.autopilot_SET(MAV_AUTOPILOT.MAV_AUTOPILOT_UDB) ;
+        p0.base_mode_SET((MAV_MODE_FLAG.MAV_MODE_FLAG_STABILIZE_ENABLED |
+                          MAV_MODE_FLAG.MAV_MODE_FLAG_HIL_ENABLED |
+                          MAV_MODE_FLAG.MAV_MODE_FLAG_AUTO_ENABLED)) ;
+        p0.mavlink_version_SET((char)46) ;
+        p0.system_status_SET(MAV_STATE.MAV_STATE_POWEROFF) ;
+        p0.type_SET(MAV_TYPE.MAV_TYPE_TRICOPTER) ;
         TestChannel.instance.send(p0);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SYS_STATUS.add((src, ph, pack) ->
         {
-            assert(pack.drop_rate_comm_GET() == (char)47212);
-            assert(pack.errors_count1_GET() == (char)54044);
-            assert(pack.errors_count4_GET() == (char)46088);
-            assert(pack.errors_count2_GET() == (char)63957);
-            assert(pack.load_GET() == (char)13315);
-            assert(pack.onboard_control_sensors_enabled_GET() == (MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG |
-                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL |
-                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO2 |
+            assert(pack.battery_remaining_GET() == (byte) - 124);
+            assert(pack.errors_comm_GET() == (char)27589);
+            assert(pack.voltage_battery_GET() == (char)13403);
+            assert(pack.current_battery_GET() == (short) -22238);
+            assert(pack.errors_count1_GET() == (char)7924);
+            assert(pack.onboard_control_sensors_health_GET() == (MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_GPS |
                     MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_TERRAIN |
-                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_VISION_POSITION |
-                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_GEOFENCE |
-                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION |
-                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_REVERSE_MOTOR |
-                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_LOGGING |
-                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE |
-                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_BATTERY |
-                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW));
-            assert(pack.onboard_control_sensors_health_GET() == (MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG |
                     MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO |
-                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_GEOFENCE |
                     MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_EXTERNAL_GROUND_TRUTH |
-                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_RC_RECEIVER |
                     MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION |
                     MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_AHRS |
                     MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE |
-                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL));
-            assert(pack.errors_comm_GET() == (char)30541);
-            assert(pack.errors_count3_GET() == (char)41091);
-            assert(pack.onboard_control_sensors_present_GET() == (MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_TERRAIN |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_YAW_POSITION |
                     MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_BATTERY |
-                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS));
-            assert(pack.voltage_battery_GET() == (char)13009);
-            assert(pack.battery_remaining_GET() == (byte) - 105);
-            assert(pack.current_battery_GET() == (short)28507);
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE));
+            assert(pack.load_GET() == (char)63690);
+            assert(pack.onboard_control_sensors_present_GET() == (MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO2 |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_TERRAIN |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_LASER_POSITION |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_RC_RECEIVER |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG2 |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_LOGGING |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL));
+            assert(pack.errors_count2_GET() == (char)60323);
+            assert(pack.drop_rate_comm_GET() == (char)28770);
+            assert(pack.errors_count4_GET() == (char)28502);
+            assert(pack.errors_count3_GET() == (char)63940);
+            assert(pack.onboard_control_sensors_enabled_GET() == (MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_EXTERNAL_GROUND_TRUTH |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_LASER_POSITION |
+                    MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO));
         });
         SYS_STATUS p1 = new SYS_STATUS();
         PH.setPack(p1);
-        p1.load_SET((char)13315) ;
-        p1.onboard_control_sensors_health_SET((MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG |
+        p1.errors_count4_SET((char)28502) ;
+        p1.drop_rate_comm_SET((char)28770) ;
+        p1.load_SET((char)63690) ;
+        p1.errors_count1_SET((char)7924) ;
+        p1.onboard_control_sensors_health_SET((MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_GPS |
+                                               MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_TERRAIN |
                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO |
-                                               MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_GEOFENCE |
                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_EXTERNAL_GROUND_TRUTH |
-                                               MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_RC_RECEIVER |
                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL |
+                                               MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION |
                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_AHRS |
                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE |
-                                               MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL)) ;
-        p1.voltage_battery_SET((char)13009) ;
-        p1.errors_count3_SET((char)41091) ;
-        p1.current_battery_SET((short)28507) ;
-        p1.errors_count4_SET((char)46088) ;
-        p1.onboard_control_sensors_enabled_SET((MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG |
-                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_ACCEL |
+                                               MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL |
+                                               MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_YAW_POSITION |
+                                               MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_BATTERY |
+                                               MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW |
+                                               MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL |
+                                               MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE)) ;
+        p1.onboard_control_sensors_enabled_SET((MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_EXTERNAL_GROUND_TRUTH |
+                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS |
+                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_LASER_POSITION |
+                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO)) ;
+        p1.errors_count2_SET((char)60323) ;
+        p1.battery_remaining_SET((byte) - 124) ;
+        p1.current_battery_SET((short) -22238) ;
+        p1.voltage_battery_SET((char)13403) ;
+        p1.onboard_control_sensors_present_SET((MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG |
                                                 MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO2 |
                                                 MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_TERRAIN |
-                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_VISION_POSITION |
-                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_GEOFENCE |
+                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_LASER_POSITION |
+                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS |
+                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_GYRO |
+                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_RC_RECEIVER |
+                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_XY_POSITION_CONTROL |
+                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_3D_MAG2 |
                                                 MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION |
-                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_REVERSE_MOTOR |
                                                 MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_LOGGING |
-                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE |
-                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_BATTERY |
-                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW)) ;
-        p1.errors_comm_SET((char)30541) ;
-        p1.errors_count1_SET((char)54044) ;
-        p1.battery_remaining_SET((byte) - 105) ;
-        p1.errors_count2_SET((char)63957) ;
-        p1.drop_rate_comm_SET((char)47212) ;
-        p1.onboard_control_sensors_present_SET((MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_TERRAIN |
-                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_BATTERY |
-                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_MOTOR_OUTPUTS)) ;
+                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_Z_ALTITUDE_CONTROL |
+                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_OPTICAL_FLOW |
+                                                MAV_SYS_STATUS_SENSOR.MAV_SYS_STATUS_SENSOR_ANGULAR_RATE_CONTROL)) ;
+        p1.errors_comm_SET((char)27589) ;
+        p1.errors_count3_SET((char)63940) ;
         TestChannel.instance.send(p1);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SYSTEM_TIME.add((src, ph, pack) ->
         {
-            assert(pack.time_unix_usec_GET() == 3151535185726868401L);
-            assert(pack.time_boot_ms_GET() == 1855725181L);
+            assert(pack.time_boot_ms_GET() == 3096169679L);
+            assert(pack.time_unix_usec_GET() == 5865507860733226928L);
         });
         SYSTEM_TIME p2 = new SYSTEM_TIME();
         PH.setPack(p2);
-        p2.time_unix_usec_SET(3151535185726868401L) ;
-        p2.time_boot_ms_SET(1855725181L) ;
+        p2.time_unix_usec_SET(5865507860733226928L) ;
+        p2.time_boot_ms_SET(3096169679L) ;
         TestChannel.instance.send(p2);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_POSITION_TARGET_LOCAL_NED.add((src, ph, pack) ->
         {
-            assert(pack.time_boot_ms_GET() == 2935622285L);
-            assert(pack.afz_GET() == -2.440276E38F);
-            assert(pack.afx_GET() == -8.463267E37F);
-            assert(pack.afy_GET() == 1.1861774E38F);
-            assert(pack.z_GET() == -1.4016263E38F);
-            assert(pack.vy_GET() == -1.6710747E38F);
-            assert(pack.yaw_GET() == 1.889637E38F);
-            assert(pack.type_mask_GET() == (char)9902);
-            assert(pack.vz_GET() == -2.9953146E38F);
-            assert(pack.coordinate_frame_GET() == MAV_FRAME.MAV_FRAME_GLOBAL_RELATIVE_ALT_INT);
-            assert(pack.y_GET() == -3.167221E38F);
-            assert(pack.yaw_rate_GET() == 1.0701991E38F);
-            assert(pack.vx_GET() == -1.4012108E38F);
-            assert(pack.x_GET() == -6.465735E37F);
+            assert(pack.afy_GET() == -6.57621E37F);
+            assert(pack.z_GET() == -1.4467833E38F);
+            assert(pack.coordinate_frame_GET() == MAV_FRAME.MAV_FRAME_MISSION);
+            assert(pack.yaw_rate_GET() == 1.195035E38F);
+            assert(pack.time_boot_ms_GET() == 486532609L);
+            assert(pack.x_GET() == -1.0904125E38F);
+            assert(pack.afx_GET() == 1.9165325E38F);
+            assert(pack.vx_GET() == 3.0359376E38F);
+            assert(pack.vy_GET() == 5.3016657E37F);
+            assert(pack.y_GET() == -7.578446E37F);
+            assert(pack.yaw_GET() == 1.2702147E38F);
+            assert(pack.afz_GET() == -1.9892202E38F);
+            assert(pack.vz_GET() == 1.9147887E38F);
+            assert(pack.type_mask_GET() == (char)49223);
         });
         GroundControl.POSITION_TARGET_LOCAL_NED p3 = CommunicationChannel.new_POSITION_TARGET_LOCAL_NED();
         PH.setPack(p3);
-        p3.x_SET(-6.465735E37F) ;
-        p3.afz_SET(-2.440276E38F) ;
-        p3.vx_SET(-1.4012108E38F) ;
-        p3.y_SET(-3.167221E38F) ;
-        p3.z_SET(-1.4016263E38F) ;
-        p3.yaw_rate_SET(1.0701991E38F) ;
-        p3.afy_SET(1.1861774E38F) ;
-        p3.type_mask_SET((char)9902) ;
-        p3.coordinate_frame_SET(MAV_FRAME.MAV_FRAME_GLOBAL_RELATIVE_ALT_INT) ;
-        p3.afx_SET(-8.463267E37F) ;
-        p3.vy_SET(-1.6710747E38F) ;
-        p3.yaw_SET(1.889637E38F) ;
-        p3.vz_SET(-2.9953146E38F) ;
-        p3.time_boot_ms_SET(2935622285L) ;
+        p3.yaw_rate_SET(1.195035E38F) ;
+        p3.coordinate_frame_SET(MAV_FRAME.MAV_FRAME_MISSION) ;
+        p3.vz_SET(1.9147887E38F) ;
+        p3.afx_SET(1.9165325E38F) ;
+        p3.vy_SET(5.3016657E37F) ;
+        p3.y_SET(-7.578446E37F) ;
+        p3.afz_SET(-1.9892202E38F) ;
+        p3.time_boot_ms_SET(486532609L) ;
+        p3.afy_SET(-6.57621E37F) ;
+        p3.vx_SET(3.0359376E38F) ;
+        p3.x_SET(-1.0904125E38F) ;
+        p3.type_mask_SET((char)49223) ;
+        p3.yaw_SET(1.2702147E38F) ;
+        p3.z_SET(-1.4467833E38F) ;
         CommunicationChannel.instance.send(p3);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_PING.add((src, ph, pack) ->
         {
-            assert(pack.time_usec_GET() == 8932107693125927315L);
-            assert(pack.target_component_GET() == (char)37);
-            assert(pack.seq_GET() == 417608054L);
-            assert(pack.target_system_GET() == (char)216);
+            assert(pack.seq_GET() == 3011233231L);
+            assert(pack.target_component_GET() == (char)242);
+            assert(pack.target_system_GET() == (char)234);
+            assert(pack.time_usec_GET() == 6684718216810295159L);
         });
         PING p4 = new PING();
         PH.setPack(p4);
-        p4.seq_SET(417608054L) ;
-        p4.target_component_SET((char)37) ;
-        p4.target_system_SET((char)216) ;
-        p4.time_usec_SET(8932107693125927315L) ;
+        p4.time_usec_SET(6684718216810295159L) ;
+        p4.target_system_SET((char)234) ;
+        p4.seq_SET(3011233231L) ;
+        p4.target_component_SET((char)242) ;
         TestChannel.instance.send(p4);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_CHANGE_OPERATOR_CONTROL.add((src, ph, pack) ->
         {
-            assert(pack.control_request_GET() == (char)202);
-            assert(pack.passkey_LEN(ph) == 10);
-            assert(pack.passkey_TRY(ph).equals("ayymwfqGzn"));
-            assert(pack.version_GET() == (char)86);
-            assert(pack.target_system_GET() == (char)2);
+            assert(pack.version_GET() == (char)45);
+            assert(pack.control_request_GET() == (char)181);
+            assert(pack.target_system_GET() == (char)198);
+            assert(pack.passkey_LEN(ph) == 4);
+            assert(pack.passkey_TRY(ph).equals("mecz"));
         });
         CHANGE_OPERATOR_CONTROL p5 = new CHANGE_OPERATOR_CONTROL();
         PH.setPack(p5);
-        p5.passkey_SET("ayymwfqGzn", PH) ;
-        p5.control_request_SET((char)202) ;
-        p5.target_system_SET((char)2) ;
-        p5.version_SET((char)86) ;
+        p5.target_system_SET((char)198) ;
+        p5.control_request_SET((char)181) ;
+        p5.passkey_SET("mecz", PH) ;
+        p5.version_SET((char)45) ;
         TestChannel.instance.send(p5);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_CHANGE_OPERATOR_CONTROL_ACK.add((src, ph, pack) ->
         {
-            assert(pack.gcs_system_id_GET() == (char)236);
-            assert(pack.ack_GET() == (char)28);
-            assert(pack.control_request_GET() == (char)200);
+            assert(pack.ack_GET() == (char)112);
+            assert(pack.control_request_GET() == (char)251);
+            assert(pack.gcs_system_id_GET() == (char)45);
         });
         CHANGE_OPERATOR_CONTROL_ACK p6 = new CHANGE_OPERATOR_CONTROL_ACK();
         PH.setPack(p6);
-        p6.ack_SET((char)28) ;
-        p6.control_request_SET((char)200) ;
-        p6.gcs_system_id_SET((char)236) ;
+        p6.ack_SET((char)112) ;
+        p6.gcs_system_id_SET((char)45) ;
+        p6.control_request_SET((char)251) ;
         TestChannel.instance.send(p6);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_AUTH_KEY.add((src, ph, pack) ->
         {
-            assert(pack.key_LEN(ph) == 7);
-            assert(pack.key_TRY(ph).equals("cCtecvx"));
+            assert(pack.key_LEN(ph) == 17);
+            assert(pack.key_TRY(ph).equals("swrvscAwUgekgaarv"));
         });
         AUTH_KEY p7 = new AUTH_KEY();
         PH.setPack(p7);
-        p7.key_SET("cCtecvx", PH) ;
+        p7.key_SET("swrvscAwUgekgaarv", PH) ;
         TestChannel.instance.send(p7);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SET_MODE.add((src, ph, pack) ->
         {
             assert(pack.base_mode_GET() == MAV_MODE.MAV_MODE_GUIDED_ARMED);
-            assert(pack.target_system_GET() == (char)3);
-            assert(pack.custom_mode_GET() == 771484200L);
+            assert(pack.target_system_GET() == (char)47);
+            assert(pack.custom_mode_GET() == 3322499830L);
         });
         SET_MODE p11 = new SET_MODE();
         PH.setPack(p11);
+        p11.custom_mode_SET(3322499830L) ;
         p11.base_mode_SET(MAV_MODE.MAV_MODE_GUIDED_ARMED) ;
-        p11.custom_mode_SET(771484200L) ;
-        p11.target_system_SET((char)3) ;
+        p11.target_system_SET((char)47) ;
         TestChannel.instance.send(p11);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_PARAM_REQUEST_READ.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)197);
-            assert(pack.target_component_GET() == (char)141);
-            assert(pack.param_index_GET() == (short)12666);
-            assert(pack.param_id_LEN(ph) == 16);
-            assert(pack.param_id_TRY(ph).equals("nyvfshbyjdrqwvpX"));
+            assert(pack.target_component_GET() == (char)81);
+            assert(pack.param_id_LEN(ph) == 5);
+            assert(pack.param_id_TRY(ph).equals("hmaoa"));
+            assert(pack.target_system_GET() == (char)69);
+            assert(pack.param_index_GET() == (short) -23283);
         });
         PARAM_REQUEST_READ p20 = new PARAM_REQUEST_READ();
         PH.setPack(p20);
-        p20.target_component_SET((char)141) ;
-        p20.param_id_SET("nyvfshbyjdrqwvpX", PH) ;
-        p20.param_index_SET((short)12666) ;
-        p20.target_system_SET((char)197) ;
+        p20.param_id_SET("hmaoa", PH) ;
+        p20.target_system_SET((char)69) ;
+        p20.param_index_SET((short) -23283) ;
+        p20.target_component_SET((char)81) ;
         TestChannel.instance.send(p20);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_PARAM_REQUEST_LIST.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)59);
-            assert(pack.target_component_GET() == (char)43);
+            assert(pack.target_component_GET() == (char)169);
+            assert(pack.target_system_GET() == (char)98);
         });
         PARAM_REQUEST_LIST p21 = new PARAM_REQUEST_LIST();
         PH.setPack(p21);
-        p21.target_component_SET((char)43) ;
-        p21.target_system_SET((char)59) ;
+        p21.target_component_SET((char)169) ;
+        p21.target_system_SET((char)98) ;
         TestChannel.instance.send(p21);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_PARAM_VALUE.add((src, ph, pack) ->
         {
-            assert(pack.param_index_GET() == (char)18523);
-            assert(pack.param_count_GET() == (char)1853);
-            assert(pack.param_type_GET() == MAV_PARAM_TYPE.MAV_PARAM_TYPE_INT64);
-            assert(pack.param_value_GET() == 3.7314606E37F);
-            assert(pack.param_id_LEN(ph) == 5);
-            assert(pack.param_id_TRY(ph).equals("ponra"));
+            assert(pack.param_id_LEN(ph) == 3);
+            assert(pack.param_id_TRY(ph).equals("Tcf"));
+            assert(pack.param_type_GET() == MAV_PARAM_TYPE.MAV_PARAM_TYPE_UINT8);
+            assert(pack.param_value_GET() == 1.334357E38F);
+            assert(pack.param_index_GET() == (char)60999);
+            assert(pack.param_count_GET() == (char)574);
         });
         PARAM_VALUE p22 = new PARAM_VALUE();
         PH.setPack(p22);
-        p22.param_index_SET((char)18523) ;
-        p22.param_id_SET("ponra", PH) ;
-        p22.param_value_SET(3.7314606E37F) ;
-        p22.param_count_SET((char)1853) ;
-        p22.param_type_SET(MAV_PARAM_TYPE.MAV_PARAM_TYPE_INT64) ;
+        p22.param_value_SET(1.334357E38F) ;
+        p22.param_type_SET(MAV_PARAM_TYPE.MAV_PARAM_TYPE_UINT8) ;
+        p22.param_index_SET((char)60999) ;
+        p22.param_id_SET("Tcf", PH) ;
+        p22.param_count_SET((char)574) ;
         TestChannel.instance.send(p22);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_PARAM_SET.add((src, ph, pack) ->
         {
-            assert(pack.param_type_GET() == MAV_PARAM_TYPE.MAV_PARAM_TYPE_REAL64);
-            assert(pack.target_component_GET() == (char)215);
-            assert(pack.param_value_GET() == -2.4565065E38F);
-            assert(pack.param_id_LEN(ph) == 12);
-            assert(pack.param_id_TRY(ph).equals("YaygjtqvbLsm"));
-            assert(pack.target_system_GET() == (char)2);
+            assert(pack.param_id_LEN(ph) == 14);
+            assert(pack.param_id_TRY(ph).equals("prhvqoWbssnyhh"));
+            assert(pack.target_system_GET() == (char)203);
+            assert(pack.target_component_GET() == (char)56);
+            assert(pack.param_value_GET() == 1.1114417E38F);
+            assert(pack.param_type_GET() == MAV_PARAM_TYPE.MAV_PARAM_TYPE_UINT32);
         });
         PARAM_SET p23 = new PARAM_SET();
         PH.setPack(p23);
-        p23.target_component_SET((char)215) ;
-        p23.param_id_SET("YaygjtqvbLsm", PH) ;
-        p23.target_system_SET((char)2) ;
-        p23.param_type_SET(MAV_PARAM_TYPE.MAV_PARAM_TYPE_REAL64) ;
-        p23.param_value_SET(-2.4565065E38F) ;
+        p23.param_id_SET("prhvqoWbssnyhh", PH) ;
+        p23.param_value_SET(1.1114417E38F) ;
+        p23.target_system_SET((char)203) ;
+        p23.param_type_SET(MAV_PARAM_TYPE.MAV_PARAM_TYPE_UINT32) ;
+        p23.target_component_SET((char)56) ;
         TestChannel.instance.send(p23);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_GPS_RAW_INT.add((src, ph, pack) ->
         {
-            assert(pack.lon_GET() == -1947582586);
-            assert(pack.alt_ellipsoid_TRY(ph) == 1014502915);
-            assert(pack.fix_type_GET() == GPS_FIX_TYPE.GPS_FIX_TYPE_RTK_FIXED);
-            assert(pack.eph_GET() == (char)8324);
-            assert(pack.v_acc_TRY(ph) == 1700248293L);
-            assert(pack.hdg_acc_TRY(ph) == 475217226L);
-            assert(pack.vel_acc_TRY(ph) == 3139011636L);
-            assert(pack.lat_GET() == 1439853790);
-            assert(pack.satellites_visible_GET() == (char)126);
-            assert(pack.time_usec_GET() == 3794049624361806678L);
-            assert(pack.h_acc_TRY(ph) == 3808753593L);
-            assert(pack.vel_GET() == (char)7567);
-            assert(pack.epv_GET() == (char)55870);
-            assert(pack.cog_GET() == (char)49678);
-            assert(pack.alt_GET() == -1661580838);
+            assert(pack.vel_GET() == (char)1224);
+            assert(pack.vel_acc_TRY(ph) == 3736415624L);
+            assert(pack.lon_GET() == 151689524);
+            assert(pack.alt_ellipsoid_TRY(ph) == 1558309038);
+            assert(pack.time_usec_GET() == 5827786149069749932L);
+            assert(pack.v_acc_TRY(ph) == 45176095L);
+            assert(pack.fix_type_GET() == GPS_FIX_TYPE.GPS_FIX_TYPE_3D_FIX);
+            assert(pack.hdg_acc_TRY(ph) == 83438394L);
+            assert(pack.cog_GET() == (char)4456);
+            assert(pack.lat_GET() == 644272550);
+            assert(pack.satellites_visible_GET() == (char)10);
+            assert(pack.eph_GET() == (char)44955);
+            assert(pack.h_acc_TRY(ph) == 4005694485L);
+            assert(pack.alt_GET() == -39321364);
+            assert(pack.epv_GET() == (char)36756);
         });
         GPS_RAW_INT p24 = new GPS_RAW_INT();
         PH.setPack(p24);
-        p24.lat_SET(1439853790) ;
-        p24.alt_ellipsoid_SET(1014502915, PH) ;
-        p24.hdg_acc_SET(475217226L, PH) ;
-        p24.eph_SET((char)8324) ;
-        p24.time_usec_SET(3794049624361806678L) ;
-        p24.satellites_visible_SET((char)126) ;
-        p24.epv_SET((char)55870) ;
-        p24.alt_SET(-1661580838) ;
-        p24.h_acc_SET(3808753593L, PH) ;
-        p24.vel_acc_SET(3139011636L, PH) ;
-        p24.fix_type_SET(GPS_FIX_TYPE.GPS_FIX_TYPE_RTK_FIXED) ;
-        p24.vel_SET((char)7567) ;
-        p24.cog_SET((char)49678) ;
-        p24.lon_SET(-1947582586) ;
-        p24.v_acc_SET(1700248293L, PH) ;
+        p24.v_acc_SET(45176095L, PH) ;
+        p24.lat_SET(644272550) ;
+        p24.cog_SET((char)4456) ;
+        p24.fix_type_SET(GPS_FIX_TYPE.GPS_FIX_TYPE_3D_FIX) ;
+        p24.alt_ellipsoid_SET(1558309038, PH) ;
+        p24.alt_SET(-39321364) ;
+        p24.lon_SET(151689524) ;
+        p24.eph_SET((char)44955) ;
+        p24.epv_SET((char)36756) ;
+        p24.vel_SET((char)1224) ;
+        p24.satellites_visible_SET((char)10) ;
+        p24.hdg_acc_SET(83438394L, PH) ;
+        p24.vel_acc_SET(3736415624L, PH) ;
+        p24.h_acc_SET(4005694485L, PH) ;
+        p24.time_usec_SET(5827786149069749932L) ;
         TestChannel.instance.send(p24);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_GPS_STATUS.add((src, ph, pack) ->
         {
-            assert(Arrays.equals(pack.satellite_prn_GET(),  new char[] {(char)196, (char)101, (char)89, (char)0, (char)80, (char)187, (char)207, (char)163, (char)229, (char)90, (char)6, (char)50, (char)188, (char)146, (char)204, (char)164, (char)44, (char)155, (char)77, (char)160}));
-            assert(Arrays.equals(pack.satellite_used_GET(),  new char[] {(char)207, (char)163, (char)142, (char)198, (char)93, (char)85, (char)98, (char)160, (char)87, (char)198, (char)132, (char)89, (char)7, (char)185, (char)106, (char)173, (char)145, (char)245, (char)232, (char)126}));
-            assert(pack.satellites_visible_GET() == (char)222);
-            assert(Arrays.equals(pack.satellite_elevation_GET(),  new char[] {(char)198, (char)211, (char)181, (char)55, (char)159, (char)31, (char)112, (char)164, (char)12, (char)80, (char)163, (char)189, (char)71, (char)252, (char)81, (char)173, (char)3, (char)66, (char)157, (char)191}));
-            assert(Arrays.equals(pack.satellite_snr_GET(),  new char[] {(char)61, (char)126, (char)159, (char)179, (char)226, (char)199, (char)209, (char)18, (char)2, (char)86, (char)241, (char)156, (char)240, (char)227, (char)85, (char)243, (char)154, (char)238, (char)249, (char)127}));
-            assert(Arrays.equals(pack.satellite_azimuth_GET(),  new char[] {(char)67, (char)171, (char)65, (char)40, (char)111, (char)161, (char)69, (char)66, (char)183, (char)228, (char)3, (char)232, (char)170, (char)239, (char)189, (char)36, (char)145, (char)30, (char)198, (char)169}));
+            assert(Arrays.equals(pack.satellite_prn_GET(),  new char[] {(char)231, (char)71, (char)165, (char)199, (char)162, (char)197, (char)197, (char)28, (char)74, (char)62, (char)253, (char)206, (char)33, (char)30, (char)154, (char)187, (char)231, (char)225, (char)242, (char)144}));
+            assert(Arrays.equals(pack.satellite_elevation_GET(),  new char[] {(char)113, (char)34, (char)161, (char)254, (char)121, (char)85, (char)15, (char)24, (char)200, (char)251, (char)52, (char)150, (char)210, (char)34, (char)4, (char)162, (char)139, (char)238, (char)2, (char)200}));
+            assert(pack.satellites_visible_GET() == (char)93);
+            assert(Arrays.equals(pack.satellite_snr_GET(),  new char[] {(char)26, (char)107, (char)35, (char)153, (char)184, (char)47, (char)98, (char)19, (char)149, (char)228, (char)17, (char)139, (char)222, (char)134, (char)55, (char)108, (char)132, (char)5, (char)36, (char)65}));
+            assert(Arrays.equals(pack.satellite_azimuth_GET(),  new char[] {(char)191, (char)152, (char)41, (char)37, (char)84, (char)106, (char)238, (char)85, (char)28, (char)209, (char)236, (char)44, (char)224, (char)178, (char)139, (char)162, (char)249, (char)89, (char)86, (char)152}));
+            assert(Arrays.equals(pack.satellite_used_GET(),  new char[] {(char)101, (char)110, (char)220, (char)125, (char)193, (char)195, (char)96, (char)246, (char)225, (char)142, (char)34, (char)62, (char)169, (char)8, (char)250, (char)85, (char)237, (char)191, (char)168, (char)148}));
         });
         GPS_STATUS p25 = new GPS_STATUS();
         PH.setPack(p25);
-        p25.satellite_used_SET(new char[] {(char)207, (char)163, (char)142, (char)198, (char)93, (char)85, (char)98, (char)160, (char)87, (char)198, (char)132, (char)89, (char)7, (char)185, (char)106, (char)173, (char)145, (char)245, (char)232, (char)126}, 0) ;
-        p25.satellite_prn_SET(new char[] {(char)196, (char)101, (char)89, (char)0, (char)80, (char)187, (char)207, (char)163, (char)229, (char)90, (char)6, (char)50, (char)188, (char)146, (char)204, (char)164, (char)44, (char)155, (char)77, (char)160}, 0) ;
-        p25.satellite_snr_SET(new char[] {(char)61, (char)126, (char)159, (char)179, (char)226, (char)199, (char)209, (char)18, (char)2, (char)86, (char)241, (char)156, (char)240, (char)227, (char)85, (char)243, (char)154, (char)238, (char)249, (char)127}, 0) ;
-        p25.satellites_visible_SET((char)222) ;
-        p25.satellite_azimuth_SET(new char[] {(char)67, (char)171, (char)65, (char)40, (char)111, (char)161, (char)69, (char)66, (char)183, (char)228, (char)3, (char)232, (char)170, (char)239, (char)189, (char)36, (char)145, (char)30, (char)198, (char)169}, 0) ;
-        p25.satellite_elevation_SET(new char[] {(char)198, (char)211, (char)181, (char)55, (char)159, (char)31, (char)112, (char)164, (char)12, (char)80, (char)163, (char)189, (char)71, (char)252, (char)81, (char)173, (char)3, (char)66, (char)157, (char)191}, 0) ;
+        p25.satellite_azimuth_SET(new char[] {(char)191, (char)152, (char)41, (char)37, (char)84, (char)106, (char)238, (char)85, (char)28, (char)209, (char)236, (char)44, (char)224, (char)178, (char)139, (char)162, (char)249, (char)89, (char)86, (char)152}, 0) ;
+        p25.satellite_prn_SET(new char[] {(char)231, (char)71, (char)165, (char)199, (char)162, (char)197, (char)197, (char)28, (char)74, (char)62, (char)253, (char)206, (char)33, (char)30, (char)154, (char)187, (char)231, (char)225, (char)242, (char)144}, 0) ;
+        p25.satellite_snr_SET(new char[] {(char)26, (char)107, (char)35, (char)153, (char)184, (char)47, (char)98, (char)19, (char)149, (char)228, (char)17, (char)139, (char)222, (char)134, (char)55, (char)108, (char)132, (char)5, (char)36, (char)65}, 0) ;
+        p25.satellite_used_SET(new char[] {(char)101, (char)110, (char)220, (char)125, (char)193, (char)195, (char)96, (char)246, (char)225, (char)142, (char)34, (char)62, (char)169, (char)8, (char)250, (char)85, (char)237, (char)191, (char)168, (char)148}, 0) ;
+        p25.satellites_visible_SET((char)93) ;
+        p25.satellite_elevation_SET(new char[] {(char)113, (char)34, (char)161, (char)254, (char)121, (char)85, (char)15, (char)24, (char)200, (char)251, (char)52, (char)150, (char)210, (char)34, (char)4, (char)162, (char)139, (char)238, (char)2, (char)200}, 0) ;
         TestChannel.instance.send(p25);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SCALED_IMU.add((src, ph, pack) ->
         {
-            assert(pack.ymag_GET() == (short) -14411);
-            assert(pack.zacc_GET() == (short) -2909);
-            assert(pack.zgyro_GET() == (short)7335);
-            assert(pack.xgyro_GET() == (short)5483);
-            assert(pack.yacc_GET() == (short)31165);
-            assert(pack.zmag_GET() == (short)19586);
-            assert(pack.xacc_GET() == (short) -23319);
-            assert(pack.time_boot_ms_GET() == 396566199L);
-            assert(pack.xmag_GET() == (short)26309);
-            assert(pack.ygyro_GET() == (short)24634);
+            assert(pack.ymag_GET() == (short) -19866);
+            assert(pack.time_boot_ms_GET() == 2964483342L);
+            assert(pack.yacc_GET() == (short)26605);
+            assert(pack.xgyro_GET() == (short)16281);
+            assert(pack.ygyro_GET() == (short) -9237);
+            assert(pack.zmag_GET() == (short) -22571);
+            assert(pack.xmag_GET() == (short)31532);
+            assert(pack.xacc_GET() == (short) -28005);
+            assert(pack.zgyro_GET() == (short) -29811);
+            assert(pack.zacc_GET() == (short)6397);
         });
         SCALED_IMU p26 = new SCALED_IMU();
         PH.setPack(p26);
-        p26.zmag_SET((short)19586) ;
-        p26.xacc_SET((short) -23319) ;
-        p26.zacc_SET((short) -2909) ;
-        p26.xmag_SET((short)26309) ;
-        p26.ymag_SET((short) -14411) ;
-        p26.ygyro_SET((short)24634) ;
-        p26.time_boot_ms_SET(396566199L) ;
-        p26.zgyro_SET((short)7335) ;
-        p26.yacc_SET((short)31165) ;
-        p26.xgyro_SET((short)5483) ;
+        p26.yacc_SET((short)26605) ;
+        p26.zacc_SET((short)6397) ;
+        p26.xgyro_SET((short)16281) ;
+        p26.ymag_SET((short) -19866) ;
+        p26.xacc_SET((short) -28005) ;
+        p26.xmag_SET((short)31532) ;
+        p26.time_boot_ms_SET(2964483342L) ;
+        p26.zgyro_SET((short) -29811) ;
+        p26.zmag_SET((short) -22571) ;
+        p26.ygyro_SET((short) -9237) ;
         TestChannel.instance.send(p26);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_RAW_IMU.add((src, ph, pack) ->
         {
-            assert(pack.zmag_GET() == (short)21343);
-            assert(pack.xgyro_GET() == (short)23315);
-            assert(pack.zacc_GET() == (short) -20149);
-            assert(pack.ygyro_GET() == (short)8785);
-            assert(pack.yacc_GET() == (short) -12243);
-            assert(pack.ymag_GET() == (short) -24158);
-            assert(pack.xacc_GET() == (short) -1840);
-            assert(pack.time_usec_GET() == 3505623114699652728L);
-            assert(pack.xmag_GET() == (short)9917);
-            assert(pack.zgyro_GET() == (short) -18358);
+            assert(pack.ygyro_GET() == (short)3986);
+            assert(pack.yacc_GET() == (short) -2029);
+            assert(pack.xgyro_GET() == (short)10489);
+            assert(pack.time_usec_GET() == 1605791494817142278L);
+            assert(pack.xmag_GET() == (short)8086);
+            assert(pack.zmag_GET() == (short)25431);
+            assert(pack.zacc_GET() == (short) -28242);
+            assert(pack.xacc_GET() == (short)21385);
+            assert(pack.ymag_GET() == (short)26539);
+            assert(pack.zgyro_GET() == (short)29316);
         });
         RAW_IMU p27 = new RAW_IMU();
         PH.setPack(p27);
-        p27.xacc_SET((short) -1840) ;
-        p27.zgyro_SET((short) -18358) ;
-        p27.ymag_SET((short) -24158) ;
-        p27.ygyro_SET((short)8785) ;
-        p27.zacc_SET((short) -20149) ;
-        p27.yacc_SET((short) -12243) ;
-        p27.zmag_SET((short)21343) ;
-        p27.xmag_SET((short)9917) ;
-        p27.xgyro_SET((short)23315) ;
-        p27.time_usec_SET(3505623114699652728L) ;
+        p27.zgyro_SET((short)29316) ;
+        p27.xmag_SET((short)8086) ;
+        p27.zmag_SET((short)25431) ;
+        p27.xacc_SET((short)21385) ;
+        p27.xgyro_SET((short)10489) ;
+        p27.yacc_SET((short) -2029) ;
+        p27.zacc_SET((short) -28242) ;
+        p27.time_usec_SET(1605791494817142278L) ;
+        p27.ymag_SET((short)26539) ;
+        p27.ygyro_SET((short)3986) ;
         TestChannel.instance.send(p27);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_RAW_PRESSURE.add((src, ph, pack) ->
         {
-            assert(pack.press_abs_GET() == (short) -29964);
-            assert(pack.time_usec_GET() == 8735357165278937282L);
-            assert(pack.temperature_GET() == (short)11665);
-            assert(pack.press_diff2_GET() == (short) -5565);
-            assert(pack.press_diff1_GET() == (short)27620);
+            assert(pack.press_diff2_GET() == (short) -15480);
+            assert(pack.temperature_GET() == (short) -3310);
+            assert(pack.press_diff1_GET() == (short)28481);
+            assert(pack.time_usec_GET() == 2907649856014186475L);
+            assert(pack.press_abs_GET() == (short)20834);
         });
         RAW_PRESSURE p28 = new RAW_PRESSURE();
         PH.setPack(p28);
-        p28.press_abs_SET((short) -29964) ;
-        p28.press_diff1_SET((short)27620) ;
-        p28.temperature_SET((short)11665) ;
-        p28.press_diff2_SET((short) -5565) ;
-        p28.time_usec_SET(8735357165278937282L) ;
+        p28.time_usec_SET(2907649856014186475L) ;
+        p28.temperature_SET((short) -3310) ;
+        p28.press_abs_SET((short)20834) ;
+        p28.press_diff1_SET((short)28481) ;
+        p28.press_diff2_SET((short) -15480) ;
         TestChannel.instance.send(p28);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SCALED_PRESSURE.add((src, ph, pack) ->
         {
-            assert(pack.temperature_GET() == (short) -29894);
-            assert(pack.press_diff_GET() == 4.948969E37F);
-            assert(pack.time_boot_ms_GET() == 4169552520L);
-            assert(pack.press_abs_GET() == 8.85008E37F);
+            assert(pack.time_boot_ms_GET() == 4214895705L);
+            assert(pack.press_abs_GET() == -2.4185642E38F);
+            assert(pack.press_diff_GET() == -1.5175881E38F);
+            assert(pack.temperature_GET() == (short) -11575);
         });
         SCALED_PRESSURE p29 = new SCALED_PRESSURE();
         PH.setPack(p29);
-        p29.press_abs_SET(8.85008E37F) ;
-        p29.press_diff_SET(4.948969E37F) ;
-        p29.time_boot_ms_SET(4169552520L) ;
-        p29.temperature_SET((short) -29894) ;
+        p29.temperature_SET((short) -11575) ;
+        p29.press_diff_SET(-1.5175881E38F) ;
+        p29.press_abs_SET(-2.4185642E38F) ;
+        p29.time_boot_ms_SET(4214895705L) ;
         TestChannel.instance.send(p29);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_ATTITUDE.add((src, ph, pack) ->
         {
-            assert(pack.time_boot_ms_GET() == 3451084641L);
-            assert(pack.pitchspeed_GET() == 2.6677324E38F);
-            assert(pack.yaw_GET() == 2.1603417E38F);
-            assert(pack.roll_GET() == 2.1890405E38F);
-            assert(pack.pitch_GET() == 1.5881976E38F);
-            assert(pack.rollspeed_GET() == 2.9256157E38F);
-            assert(pack.yawspeed_GET() == 3.1100081E38F);
+            assert(pack.pitch_GET() == -2.949125E38F);
+            assert(pack.yaw_GET() == 3.2137285E38F);
+            assert(pack.roll_GET() == -1.0859401E38F);
+            assert(pack.pitchspeed_GET() == 3.0829674E38F);
+            assert(pack.time_boot_ms_GET() == 2739398455L);
+            assert(pack.yawspeed_GET() == -2.1538227E38F);
+            assert(pack.rollspeed_GET() == -2.5657828E38F);
         });
         ATTITUDE p30 = new ATTITUDE();
         PH.setPack(p30);
-        p30.pitchspeed_SET(2.6677324E38F) ;
-        p30.pitch_SET(1.5881976E38F) ;
-        p30.yawspeed_SET(3.1100081E38F) ;
-        p30.roll_SET(2.1890405E38F) ;
-        p30.time_boot_ms_SET(3451084641L) ;
-        p30.rollspeed_SET(2.9256157E38F) ;
-        p30.yaw_SET(2.1603417E38F) ;
+        p30.roll_SET(-1.0859401E38F) ;
+        p30.yaw_SET(3.2137285E38F) ;
+        p30.pitch_SET(-2.949125E38F) ;
+        p30.time_boot_ms_SET(2739398455L) ;
+        p30.yawspeed_SET(-2.1538227E38F) ;
+        p30.rollspeed_SET(-2.5657828E38F) ;
+        p30.pitchspeed_SET(3.0829674E38F) ;
         TestChannel.instance.send(p30);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_ATTITUDE_QUATERNION.add((src, ph, pack) ->
         {
-            assert(pack.time_boot_ms_GET() == 1812387925L);
-            assert(pack.q1_GET() == -2.1179476E38F);
-            assert(pack.rollspeed_GET() == -3.3591642E38F);
-            assert(pack.q4_GET() == 2.761711E38F);
-            assert(pack.q3_GET() == 6.960719E37F);
-            assert(pack.q2_GET() == 3.0293923E38F);
-            assert(pack.yawspeed_GET() == -3.3892132E38F);
-            assert(pack.pitchspeed_GET() == -3.2775755E38F);
+            assert(pack.rollspeed_GET() == 2.6729318E38F);
+            assert(pack.q4_GET() == 1.9432166E37F);
+            assert(pack.q1_GET() == -2.4751841E38F);
+            assert(pack.q2_GET() == -1.917535E38F);
+            assert(pack.time_boot_ms_GET() == 472338167L);
+            assert(pack.pitchspeed_GET() == -1.0013521E38F);
+            assert(pack.q3_GET() == 3.396373E38F);
+            assert(pack.yawspeed_GET() == -2.1103373E38F);
         });
         ATTITUDE_QUATERNION p31 = new ATTITUDE_QUATERNION();
         PH.setPack(p31);
-        p31.q1_SET(-2.1179476E38F) ;
-        p31.rollspeed_SET(-3.3591642E38F) ;
-        p31.time_boot_ms_SET(1812387925L) ;
-        p31.pitchspeed_SET(-3.2775755E38F) ;
-        p31.yawspeed_SET(-3.3892132E38F) ;
-        p31.q3_SET(6.960719E37F) ;
-        p31.q4_SET(2.761711E38F) ;
-        p31.q2_SET(3.0293923E38F) ;
+        p31.yawspeed_SET(-2.1103373E38F) ;
+        p31.pitchspeed_SET(-1.0013521E38F) ;
+        p31.q2_SET(-1.917535E38F) ;
+        p31.q4_SET(1.9432166E37F) ;
+        p31.time_boot_ms_SET(472338167L) ;
+        p31.q1_SET(-2.4751841E38F) ;
+        p31.rollspeed_SET(2.6729318E38F) ;
+        p31.q3_SET(3.396373E38F) ;
         TestChannel.instance.send(p31);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_LOCAL_POSITION_NED.add((src, ph, pack) ->
         {
-            assert(pack.vx_GET() == -3.1850678E36F);
-            assert(pack.z_GET() == 2.8866647E38F);
-            assert(pack.vy_GET() == 3.248205E37F);
-            assert(pack.y_GET() == -2.3086621E38F);
-            assert(pack.time_boot_ms_GET() == 3967749769L);
-            assert(pack.x_GET() == -1.7139642E38F);
-            assert(pack.vz_GET() == 5.2196913E37F);
+            assert(pack.vx_GET() == -1.3301743E37F);
+            assert(pack.time_boot_ms_GET() == 3273375645L);
+            assert(pack.z_GET() == 1.8826084E38F);
+            assert(pack.vz_GET() == 1.4389895E38F);
+            assert(pack.y_GET() == -3.650769E37F);
+            assert(pack.x_GET() == -2.4230523E38F);
+            assert(pack.vy_GET() == -1.8174893E38F);
         });
         LOCAL_POSITION_NED p32 = new LOCAL_POSITION_NED();
         PH.setPack(p32);
-        p32.time_boot_ms_SET(3967749769L) ;
-        p32.vx_SET(-3.1850678E36F) ;
-        p32.x_SET(-1.7139642E38F) ;
-        p32.vz_SET(5.2196913E37F) ;
-        p32.y_SET(-2.3086621E38F) ;
-        p32.z_SET(2.8866647E38F) ;
-        p32.vy_SET(3.248205E37F) ;
+        p32.vz_SET(1.4389895E38F) ;
+        p32.time_boot_ms_SET(3273375645L) ;
+        p32.vx_SET(-1.3301743E37F) ;
+        p32.vy_SET(-1.8174893E38F) ;
+        p32.z_SET(1.8826084E38F) ;
+        p32.x_SET(-2.4230523E38F) ;
+        p32.y_SET(-3.650769E37F) ;
         TestChannel.instance.send(p32);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_GLOBAL_POSITION_INT.add((src, ph, pack) ->
         {
-            assert(pack.vx_GET() == (short) -14158);
-            assert(pack.lon_GET() == 310784849);
-            assert(pack.vy_GET() == (short) -8313);
-            assert(pack.vz_GET() == (short)16836);
-            assert(pack.relative_alt_GET() == -672982254);
-            assert(pack.alt_GET() == 710331690);
-            assert(pack.hdg_GET() == (char)39567);
-            assert(pack.time_boot_ms_GET() == 1052604816L);
-            assert(pack.lat_GET() == 612526748);
+            assert(pack.lat_GET() == -1908812394);
+            assert(pack.vx_GET() == (short) -12427);
+            assert(pack.alt_GET() == -1554614181);
+            assert(pack.time_boot_ms_GET() == 2711375506L);
+            assert(pack.hdg_GET() == (char)50576);
+            assert(pack.lon_GET() == -560803550);
+            assert(pack.vz_GET() == (short) -18904);
+            assert(pack.vy_GET() == (short) -15670);
+            assert(pack.relative_alt_GET() == -1602387701);
         });
         GLOBAL_POSITION_INT p33 = new GLOBAL_POSITION_INT();
         PH.setPack(p33);
-        p33.relative_alt_SET(-672982254) ;
-        p33.time_boot_ms_SET(1052604816L) ;
-        p33.vx_SET((short) -14158) ;
-        p33.hdg_SET((char)39567) ;
-        p33.vz_SET((short)16836) ;
-        p33.lat_SET(612526748) ;
-        p33.lon_SET(310784849) ;
-        p33.vy_SET((short) -8313) ;
-        p33.alt_SET(710331690) ;
+        p33.relative_alt_SET(-1602387701) ;
+        p33.vz_SET((short) -18904) ;
+        p33.time_boot_ms_SET(2711375506L) ;
+        p33.vx_SET((short) -12427) ;
+        p33.hdg_SET((char)50576) ;
+        p33.alt_SET(-1554614181) ;
+        p33.lon_SET(-560803550) ;
+        p33.lat_SET(-1908812394) ;
+        p33.vy_SET((short) -15670) ;
         TestChannel.instance.send(p33);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_RC_CHANNELS_SCALED.add((src, ph, pack) ->
         {
-            assert(pack.chan1_scaled_GET() == (short)29000);
-            assert(pack.chan5_scaled_GET() == (short) -588);
-            assert(pack.chan6_scaled_GET() == (short)12903);
-            assert(pack.rssi_GET() == (char)157);
-            assert(pack.time_boot_ms_GET() == 3457804516L);
-            assert(pack.chan7_scaled_GET() == (short) -31802);
-            assert(pack.chan2_scaled_GET() == (short) -26209);
-            assert(pack.chan8_scaled_GET() == (short) -17401);
-            assert(pack.chan3_scaled_GET() == (short) -25864);
-            assert(pack.chan4_scaled_GET() == (short)26475);
-            assert(pack.port_GET() == (char)220);
+            assert(pack.chan6_scaled_GET() == (short) -28830);
+            assert(pack.chan7_scaled_GET() == (short) -17752);
+            assert(pack.time_boot_ms_GET() == 269946968L);
+            assert(pack.rssi_GET() == (char)97);
+            assert(pack.chan5_scaled_GET() == (short)5302);
+            assert(pack.chan1_scaled_GET() == (short)30999);
+            assert(pack.port_GET() == (char)191);
+            assert(pack.chan3_scaled_GET() == (short)24577);
+            assert(pack.chan2_scaled_GET() == (short) -22184);
+            assert(pack.chan4_scaled_GET() == (short) -14147);
+            assert(pack.chan8_scaled_GET() == (short)22178);
         });
         RC_CHANNELS_SCALED p34 = new RC_CHANNELS_SCALED();
         PH.setPack(p34);
-        p34.chan8_scaled_SET((short) -17401) ;
-        p34.rssi_SET((char)157) ;
-        p34.chan3_scaled_SET((short) -25864) ;
-        p34.chan1_scaled_SET((short)29000) ;
-        p34.chan4_scaled_SET((short)26475) ;
-        p34.chan2_scaled_SET((short) -26209) ;
-        p34.port_SET((char)220) ;
-        p34.chan5_scaled_SET((short) -588) ;
-        p34.chan6_scaled_SET((short)12903) ;
-        p34.chan7_scaled_SET((short) -31802) ;
-        p34.time_boot_ms_SET(3457804516L) ;
+        p34.chan4_scaled_SET((short) -14147) ;
+        p34.chan1_scaled_SET((short)30999) ;
+        p34.time_boot_ms_SET(269946968L) ;
+        p34.chan3_scaled_SET((short)24577) ;
+        p34.chan6_scaled_SET((short) -28830) ;
+        p34.chan2_scaled_SET((short) -22184) ;
+        p34.chan5_scaled_SET((short)5302) ;
+        p34.chan8_scaled_SET((short)22178) ;
+        p34.rssi_SET((char)97) ;
+        p34.port_SET((char)191) ;
+        p34.chan7_scaled_SET((short) -17752) ;
         TestChannel.instance.send(p34);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_RC_CHANNELS_RAW.add((src, ph, pack) ->
         {
-            assert(pack.chan1_raw_GET() == (char)17128);
-            assert(pack.time_boot_ms_GET() == 3969517058L);
-            assert(pack.chan4_raw_GET() == (char)11071);
-            assert(pack.port_GET() == (char)95);
-            assert(pack.chan5_raw_GET() == (char)16786);
-            assert(pack.chan8_raw_GET() == (char)39385);
-            assert(pack.chan2_raw_GET() == (char)59122);
-            assert(pack.rssi_GET() == (char)110);
-            assert(pack.chan7_raw_GET() == (char)14485);
-            assert(pack.chan6_raw_GET() == (char)12256);
-            assert(pack.chan3_raw_GET() == (char)21310);
+            assert(pack.rssi_GET() == (char)122);
+            assert(pack.chan1_raw_GET() == (char)31030);
+            assert(pack.chan4_raw_GET() == (char)19742);
+            assert(pack.chan8_raw_GET() == (char)28991);
+            assert(pack.port_GET() == (char)179);
+            assert(pack.chan3_raw_GET() == (char)52881);
+            assert(pack.chan7_raw_GET() == (char)13314);
+            assert(pack.chan2_raw_GET() == (char)13450);
+            assert(pack.chan5_raw_GET() == (char)60578);
+            assert(pack.time_boot_ms_GET() == 1089933017L);
+            assert(pack.chan6_raw_GET() == (char)62577);
         });
         RC_CHANNELS_RAW p35 = new RC_CHANNELS_RAW();
         PH.setPack(p35);
-        p35.chan2_raw_SET((char)59122) ;
-        p35.rssi_SET((char)110) ;
-        p35.chan8_raw_SET((char)39385) ;
-        p35.chan4_raw_SET((char)11071) ;
-        p35.chan7_raw_SET((char)14485) ;
-        p35.chan3_raw_SET((char)21310) ;
-        p35.chan1_raw_SET((char)17128) ;
-        p35.time_boot_ms_SET(3969517058L) ;
-        p35.chan5_raw_SET((char)16786) ;
-        p35.chan6_raw_SET((char)12256) ;
-        p35.port_SET((char)95) ;
+        p35.chan1_raw_SET((char)31030) ;
+        p35.chan3_raw_SET((char)52881) ;
+        p35.chan2_raw_SET((char)13450) ;
+        p35.rssi_SET((char)122) ;
+        p35.time_boot_ms_SET(1089933017L) ;
+        p35.port_SET((char)179) ;
+        p35.chan8_raw_SET((char)28991) ;
+        p35.chan5_raw_SET((char)60578) ;
+        p35.chan6_raw_SET((char)62577) ;
+        p35.chan7_raw_SET((char)13314) ;
+        p35.chan4_raw_SET((char)19742) ;
         TestChannel.instance.send(p35);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SERVO_OUTPUT_RAW.add((src, ph, pack) ->
         {
-            assert(pack.port_GET() == (char)165);
-            assert(pack.servo13_raw_TRY(ph) == (char)29400);
-            assert(pack.servo8_raw_GET() == (char)56836);
-            assert(pack.servo15_raw_TRY(ph) == (char)15589);
-            assert(pack.servo11_raw_TRY(ph) == (char)1060);
-            assert(pack.servo10_raw_TRY(ph) == (char)29899);
-            assert(pack.time_usec_GET() == 888875561L);
-            assert(pack.servo9_raw_TRY(ph) == (char)51240);
-            assert(pack.servo16_raw_TRY(ph) == (char)4005);
-            assert(pack.servo5_raw_GET() == (char)1452);
-            assert(pack.servo1_raw_GET() == (char)28060);
-            assert(pack.servo4_raw_GET() == (char)15501);
-            assert(pack.servo7_raw_GET() == (char)18544);
-            assert(pack.servo3_raw_GET() == (char)25295);
-            assert(pack.servo6_raw_GET() == (char)40190);
-            assert(pack.servo12_raw_TRY(ph) == (char)10297);
-            assert(pack.servo2_raw_GET() == (char)42170);
-            assert(pack.servo14_raw_TRY(ph) == (char)20911);
+            assert(pack.servo4_raw_GET() == (char)25065);
+            assert(pack.servo10_raw_TRY(ph) == (char)20162);
+            assert(pack.servo6_raw_GET() == (char)27404);
+            assert(pack.servo11_raw_TRY(ph) == (char)3699);
+            assert(pack.servo2_raw_GET() == (char)44222);
+            assert(pack.servo3_raw_GET() == (char)61676);
+            assert(pack.port_GET() == (char)138);
+            assert(pack.servo8_raw_GET() == (char)56660);
+            assert(pack.time_usec_GET() == 3674142415L);
+            assert(pack.servo14_raw_TRY(ph) == (char)17094);
+            assert(pack.servo15_raw_TRY(ph) == (char)2843);
+            assert(pack.servo16_raw_TRY(ph) == (char)9360);
+            assert(pack.servo13_raw_TRY(ph) == (char)4311);
+            assert(pack.servo12_raw_TRY(ph) == (char)13899);
+            assert(pack.servo7_raw_GET() == (char)58707);
+            assert(pack.servo5_raw_GET() == (char)25265);
+            assert(pack.servo9_raw_TRY(ph) == (char)38054);
+            assert(pack.servo1_raw_GET() == (char)56616);
         });
         SERVO_OUTPUT_RAW p36 = new SERVO_OUTPUT_RAW();
         PH.setPack(p36);
-        p36.port_SET((char)165) ;
-        p36.time_usec_SET(888875561L) ;
-        p36.servo4_raw_SET((char)15501) ;
-        p36.servo9_raw_SET((char)51240, PH) ;
-        p36.servo8_raw_SET((char)56836) ;
-        p36.servo14_raw_SET((char)20911, PH) ;
-        p36.servo1_raw_SET((char)28060) ;
-        p36.servo12_raw_SET((char)10297, PH) ;
-        p36.servo3_raw_SET((char)25295) ;
-        p36.servo16_raw_SET((char)4005, PH) ;
-        p36.servo15_raw_SET((char)15589, PH) ;
-        p36.servo2_raw_SET((char)42170) ;
-        p36.servo6_raw_SET((char)40190) ;
-        p36.servo11_raw_SET((char)1060, PH) ;
-        p36.servo13_raw_SET((char)29400, PH) ;
-        p36.servo5_raw_SET((char)1452) ;
-        p36.servo10_raw_SET((char)29899, PH) ;
-        p36.servo7_raw_SET((char)18544) ;
+        p36.port_SET((char)138) ;
+        p36.servo3_raw_SET((char)61676) ;
+        p36.servo1_raw_SET((char)56616) ;
+        p36.servo2_raw_SET((char)44222) ;
+        p36.servo9_raw_SET((char)38054, PH) ;
+        p36.servo15_raw_SET((char)2843, PH) ;
+        p36.servo13_raw_SET((char)4311, PH) ;
+        p36.servo12_raw_SET((char)13899, PH) ;
+        p36.servo8_raw_SET((char)56660) ;
+        p36.time_usec_SET(3674142415L) ;
+        p36.servo6_raw_SET((char)27404) ;
+        p36.servo16_raw_SET((char)9360, PH) ;
+        p36.servo4_raw_SET((char)25065) ;
+        p36.servo11_raw_SET((char)3699, PH) ;
+        p36.servo10_raw_SET((char)20162, PH) ;
+        p36.servo5_raw_SET((char)25265) ;
+        p36.servo14_raw_SET((char)17094, PH) ;
+        p36.servo7_raw_SET((char)58707) ;
         TestChannel.instance.send(p36);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MISSION_REQUEST_PARTIAL_LIST.add((src, ph, pack) ->
         {
+            assert(pack.target_system_GET() == (char)221);
+            assert(pack.end_index_GET() == (short)20766);
+            assert(pack.target_component_GET() == (char)172);
             assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE);
-            assert(pack.end_index_GET() == (short)17374);
-            assert(pack.target_component_GET() == (char)250);
-            assert(pack.start_index_GET() == (short) -7062);
-            assert(pack.target_system_GET() == (char)80);
+            assert(pack.start_index_GET() == (short)12038);
         });
         MISSION_REQUEST_PARTIAL_LIST p37 = new MISSION_REQUEST_PARTIAL_LIST();
         PH.setPack(p37);
-        p37.target_component_SET((char)250) ;
-        p37.start_index_SET((short) -7062) ;
-        p37.end_index_SET((short)17374) ;
-        p37.target_system_SET((char)80) ;
+        p37.target_system_SET((char)221) ;
+        p37.end_index_SET((short)20766) ;
+        p37.target_component_SET((char)172) ;
+        p37.start_index_SET((short)12038) ;
         p37.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE) ;
         TestChannel.instance.send(p37);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MISSION_WRITE_PARTIAL_LIST.add((src, ph, pack) ->
         {
-            assert(pack.end_index_GET() == (short) -27963);
-            assert(pack.start_index_GET() == (short)2547);
-            assert(pack.target_system_GET() == (char)215);
+            assert(pack.start_index_GET() == (short)19138);
+            assert(pack.target_system_GET() == (char)240);
+            assert(pack.target_component_GET() == (char)9);
+            assert(pack.end_index_GET() == (short) -5511);
             assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION);
-            assert(pack.target_component_GET() == (char)133);
         });
         MISSION_WRITE_PARTIAL_LIST p38 = new MISSION_WRITE_PARTIAL_LIST();
         PH.setPack(p38);
-        p38.target_system_SET((char)215) ;
-        p38.start_index_SET((short)2547) ;
+        p38.end_index_SET((short) -5511) ;
+        p38.target_system_SET((char)240) ;
         p38.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION) ;
-        p38.target_component_SET((char)133) ;
-        p38.end_index_SET((short) -27963) ;
+        p38.start_index_SET((short)19138) ;
+        p38.target_component_SET((char)9) ;
         TestChannel.instance.send(p38);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MISSION_ITEM.add((src, ph, pack) ->
         {
-            assert(pack.param2_GET() == -3.8166919E37F);
-            assert(pack.target_system_GET() == (char)40);
-            assert(pack.current_GET() == (char)139);
-            assert(pack.z_GET() == -4.0960783E37F);
-            assert(pack.command_GET() == MAV_CMD.MAV_CMD_SPATIAL_USER_2);
-            assert(pack.param3_GET() == -4.158179E36F);
-            assert(pack.x_GET() == 1.8736638E38F);
-            assert(pack.autocontinue_GET() == (char)102);
-            assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL);
-            assert(pack.seq_GET() == (char)3125);
-            assert(pack.target_component_GET() == (char)143);
-            assert(pack.param1_GET() == -1.5658994E38F);
-            assert(pack.y_GET() == -1.9879972E38F);
-            assert(pack.param4_GET() == -4.5377105E37F);
-            assert(pack.frame_GET() == MAV_FRAME.MAV_FRAME_LOCAL_ENU);
+            assert(pack.x_GET() == -1.6041488E38F);
+            assert(pack.target_component_GET() == (char)139);
+            assert(pack.autocontinue_GET() == (char)103);
+            assert(pack.frame_GET() == MAV_FRAME.MAV_FRAME_GLOBAL_TERRAIN_ALT);
+            assert(pack.target_system_GET() == (char)124);
+            assert(pack.current_GET() == (char)141);
+            assert(pack.param4_GET() == 2.4270002E37F);
+            assert(pack.z_GET() == -6.188172E36F);
+            assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION);
+            assert(pack.seq_GET() == (char)42237);
+            assert(pack.param2_GET() == 2.8924028E38F);
+            assert(pack.param3_GET() == -4.4486124E37F);
+            assert(pack.param1_GET() == -2.7312682E38F);
+            assert(pack.command_GET() == MAV_CMD.MAV_CMD_WAYPOINT_USER_1);
+            assert(pack.y_GET() == 3.0994333E38F);
         });
         MISSION_ITEM p39 = new MISSION_ITEM();
         PH.setPack(p39);
-        p39.x_SET(1.8736638E38F) ;
-        p39.param2_SET(-3.8166919E37F) ;
-        p39.z_SET(-4.0960783E37F) ;
-        p39.seq_SET((char)3125) ;
-        p39.command_SET(MAV_CMD.MAV_CMD_SPATIAL_USER_2) ;
-        p39.target_system_SET((char)40) ;
-        p39.target_component_SET((char)143) ;
-        p39.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL) ;
-        p39.autocontinue_SET((char)102) ;
-        p39.frame_SET(MAV_FRAME.MAV_FRAME_LOCAL_ENU) ;
-        p39.current_SET((char)139) ;
-        p39.param3_SET(-4.158179E36F) ;
-        p39.param1_SET(-1.5658994E38F) ;
-        p39.y_SET(-1.9879972E38F) ;
-        p39.param4_SET(-4.5377105E37F) ;
+        p39.seq_SET((char)42237) ;
+        p39.param2_SET(2.8924028E38F) ;
+        p39.autocontinue_SET((char)103) ;
+        p39.target_system_SET((char)124) ;
+        p39.y_SET(3.0994333E38F) ;
+        p39.target_component_SET((char)139) ;
+        p39.command_SET(MAV_CMD.MAV_CMD_WAYPOINT_USER_1) ;
+        p39.x_SET(-1.6041488E38F) ;
+        p39.param4_SET(2.4270002E37F) ;
+        p39.current_SET((char)141) ;
+        p39.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION) ;
+        p39.param1_SET(-2.7312682E38F) ;
+        p39.param3_SET(-4.4486124E37F) ;
+        p39.frame_SET(MAV_FRAME.MAV_FRAME_GLOBAL_TERRAIN_ALT) ;
+        p39.z_SET(-6.188172E36F) ;
         TestChannel.instance.send(p39);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MISSION_REQUEST.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)186);
-            assert(pack.seq_GET() == (char)57606);
-            assert(pack.target_component_GET() == (char)43);
-            assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY);
+            assert(pack.target_component_GET() == (char)49);
+            assert(pack.target_system_GET() == (char)170);
+            assert(pack.seq_GET() == (char)12770);
+            assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL);
         });
         MISSION_REQUEST p40 = new MISSION_REQUEST();
         PH.setPack(p40);
-        p40.seq_SET((char)57606) ;
-        p40.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY) ;
-        p40.target_system_SET((char)186) ;
-        p40.target_component_SET((char)43) ;
+        p40.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL) ;
+        p40.target_component_SET((char)49) ;
+        p40.seq_SET((char)12770) ;
+        p40.target_system_SET((char)170) ;
         TestChannel.instance.send(p40);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MISSION_SET_CURRENT.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)3);
-            assert(pack.target_component_GET() == (char)58);
-            assert(pack.seq_GET() == (char)64963);
+            assert(pack.target_component_GET() == (char)223);
+            assert(pack.seq_GET() == (char)5260);
+            assert(pack.target_system_GET() == (char)254);
         });
         MISSION_SET_CURRENT p41 = new MISSION_SET_CURRENT();
         PH.setPack(p41);
-        p41.seq_SET((char)64963) ;
-        p41.target_system_SET((char)3) ;
-        p41.target_component_SET((char)58) ;
+        p41.seq_SET((char)5260) ;
+        p41.target_component_SET((char)223) ;
+        p41.target_system_SET((char)254) ;
         TestChannel.instance.send(p41);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MISSION_CURRENT.add((src, ph, pack) ->
         {
-            assert(pack.seq_GET() == (char)1657);
+            assert(pack.seq_GET() == (char)46689);
         });
         MISSION_CURRENT p42 = new MISSION_CURRENT();
         PH.setPack(p42);
-        p42.seq_SET((char)1657) ;
+        p42.seq_SET((char)46689) ;
         TestChannel.instance.send(p42);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MISSION_REQUEST_LIST.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)140);
-            assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION);
-            assert(pack.target_component_GET() == (char)210);
+            assert(pack.target_system_GET() == (char)108);
+            assert(pack.target_component_GET() == (char)6);
+            assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY);
         });
         MISSION_REQUEST_LIST p43 = new MISSION_REQUEST_LIST();
         PH.setPack(p43);
-        p43.target_component_SET((char)210) ;
-        p43.target_system_SET((char)140) ;
-        p43.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION) ;
+        p43.target_system_SET((char)108) ;
+        p43.target_component_SET((char)6) ;
+        p43.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY) ;
         TestChannel.instance.send(p43);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MISSION_COUNT.add((src, ph, pack) ->
         {
+            assert(pack.target_component_GET() == (char)108);
+            assert(pack.count_GET() == (char)64808);
+            assert(pack.target_system_GET() == (char)167);
             assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY);
-            assert(pack.count_GET() == (char)47739);
-            assert(pack.target_system_GET() == (char)81);
-            assert(pack.target_component_GET() == (char)14);
         });
         MISSION_COUNT p44 = new MISSION_COUNT();
         PH.setPack(p44);
-        p44.target_system_SET((char)81) ;
-        p44.target_component_SET((char)14) ;
+        p44.target_component_SET((char)108) ;
+        p44.count_SET((char)64808) ;
         p44.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_RALLY) ;
-        p44.count_SET((char)47739) ;
+        p44.target_system_SET((char)167) ;
         TestChannel.instance.send(p44);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MISSION_CLEAR_ALL.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)122);
-            assert(pack.target_component_GET() == (char)254);
-            assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION);
+            assert(pack.target_component_GET() == (char)81);
+            assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE);
+            assert(pack.target_system_GET() == (char)129);
         });
         MISSION_CLEAR_ALL p45 = new MISSION_CLEAR_ALL();
         PH.setPack(p45);
-        p45.target_system_SET((char)122) ;
-        p45.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION) ;
-        p45.target_component_SET((char)254) ;
+        p45.target_component_SET((char)81) ;
+        p45.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE) ;
+        p45.target_system_SET((char)129) ;
         TestChannel.instance.send(p45);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MISSION_ITEM_REACHED.add((src, ph, pack) ->
         {
-            assert(pack.seq_GET() == (char)44721);
+            assert(pack.seq_GET() == (char)4086);
         });
         MISSION_ITEM_REACHED p46 = new MISSION_ITEM_REACHED();
         PH.setPack(p46);
-        p46.seq_SET((char)44721) ;
+        p46.seq_SET((char)4086) ;
         TestChannel.instance.send(p46);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MISSION_ACK.add((src, ph, pack) ->
         {
-            assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE);
-            assert(pack.target_system_GET() == (char)30);
-            assert(pack.type_GET() == MAV_MISSION_RESULT.MAV_MISSION_ERROR);
-            assert(pack.target_component_GET() == (char)76);
+            assert(pack.target_system_GET() == (char)85);
+            assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION);
+            assert(pack.type_GET() == MAV_MISSION_RESULT.MAV_MISSION_UNSUPPORTED);
+            assert(pack.target_component_GET() == (char)80);
         });
         MISSION_ACK p47 = new MISSION_ACK();
         PH.setPack(p47);
-        p47.type_SET(MAV_MISSION_RESULT.MAV_MISSION_ERROR) ;
-        p47.target_system_SET((char)30) ;
-        p47.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE) ;
-        p47.target_component_SET((char)76) ;
+        p47.target_component_SET((char)80) ;
+        p47.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION) ;
+        p47.type_SET(MAV_MISSION_RESULT.MAV_MISSION_UNSUPPORTED) ;
+        p47.target_system_SET((char)85) ;
         TestChannel.instance.send(p47);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SET_GPS_GLOBAL_ORIGIN.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)20);
-            assert(pack.latitude_GET() == 1127001231);
-            assert(pack.time_usec_TRY(ph) == 4728007214872316492L);
-            assert(pack.longitude_GET() == -2025175438);
-            assert(pack.altitude_GET() == -34249623);
+            assert(pack.target_system_GET() == (char)214);
+            assert(pack.latitude_GET() == 534834043);
+            assert(pack.longitude_GET() == -826792877);
+            assert(pack.time_usec_TRY(ph) == 2107541143577738091L);
+            assert(pack.altitude_GET() == -511121678);
         });
         SET_GPS_GLOBAL_ORIGIN p48 = new SET_GPS_GLOBAL_ORIGIN();
         PH.setPack(p48);
-        p48.altitude_SET(-34249623) ;
-        p48.time_usec_SET(4728007214872316492L, PH) ;
-        p48.target_system_SET((char)20) ;
-        p48.longitude_SET(-2025175438) ;
-        p48.latitude_SET(1127001231) ;
+        p48.altitude_SET(-511121678) ;
+        p48.longitude_SET(-826792877) ;
+        p48.target_system_SET((char)214) ;
+        p48.time_usec_SET(2107541143577738091L, PH) ;
+        p48.latitude_SET(534834043) ;
         TestChannel.instance.send(p48);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_GPS_GLOBAL_ORIGIN.add((src, ph, pack) ->
         {
-            assert(pack.time_usec_TRY(ph) == 6229344662625154308L);
-            assert(pack.altitude_GET() == 1235287926);
-            assert(pack.latitude_GET() == 38506018);
-            assert(pack.longitude_GET() == -154785435);
+            assert(pack.time_usec_TRY(ph) == 926356203608399073L);
+            assert(pack.latitude_GET() == -749329307);
+            assert(pack.longitude_GET() == -1588028856);
+            assert(pack.altitude_GET() == 842405504);
         });
         GPS_GLOBAL_ORIGIN p49 = new GPS_GLOBAL_ORIGIN();
         PH.setPack(p49);
-        p49.longitude_SET(-154785435) ;
-        p49.time_usec_SET(6229344662625154308L, PH) ;
-        p49.latitude_SET(38506018) ;
-        p49.altitude_SET(1235287926) ;
+        p49.altitude_SET(842405504) ;
+        p49.time_usec_SET(926356203608399073L, PH) ;
+        p49.longitude_SET(-1588028856) ;
+        p49.latitude_SET(-749329307) ;
         TestChannel.instance.send(p49);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_PARAM_MAP_RC.add((src, ph, pack) ->
         {
-            assert(pack.parameter_rc_channel_index_GET() == (char)54);
-            assert(pack.param_value0_GET() == 1.9509376E38F);
-            assert(pack.param_id_LEN(ph) == 8);
-            assert(pack.param_id_TRY(ph).equals("Caocsuzg"));
-            assert(pack.target_system_GET() == (char)47);
-            assert(pack.param_value_max_GET() == 1.373786E38F);
-            assert(pack.param_value_min_GET() == 2.6278154E37F);
-            assert(pack.target_component_GET() == (char)150);
-            assert(pack.param_index_GET() == (short)10532);
-            assert(pack.scale_GET() == -1.8726735E38F);
+            assert(pack.param_value_min_GET() == -1.0409895E38F);
+            assert(pack.param_index_GET() == (short) -2815);
+            assert(pack.param_id_LEN(ph) == 11);
+            assert(pack.param_id_TRY(ph).equals("hjgrlnrcelb"));
+            assert(pack.target_component_GET() == (char)141);
+            assert(pack.scale_GET() == -8.315332E37F);
+            assert(pack.parameter_rc_channel_index_GET() == (char)16);
+            assert(pack.param_value0_GET() == -3.7675025E37F);
+            assert(pack.target_system_GET() == (char)96);
+            assert(pack.param_value_max_GET() == -2.0931325E38F);
         });
         PARAM_MAP_RC p50 = new PARAM_MAP_RC();
         PH.setPack(p50);
-        p50.target_system_SET((char)47) ;
-        p50.param_index_SET((short)10532) ;
-        p50.scale_SET(-1.8726735E38F) ;
-        p50.param_value0_SET(1.9509376E38F) ;
-        p50.param_value_max_SET(1.373786E38F) ;
-        p50.param_id_SET("Caocsuzg", PH) ;
-        p50.param_value_min_SET(2.6278154E37F) ;
-        p50.parameter_rc_channel_index_SET((char)54) ;
-        p50.target_component_SET((char)150) ;
+        p50.param_value_max_SET(-2.0931325E38F) ;
+        p50.param_id_SET("hjgrlnrcelb", PH) ;
+        p50.param_value_min_SET(-1.0409895E38F) ;
+        p50.param_index_SET((short) -2815) ;
+        p50.parameter_rc_channel_index_SET((char)16) ;
+        p50.target_system_SET((char)96) ;
+        p50.scale_SET(-8.315332E37F) ;
+        p50.param_value0_SET(-3.7675025E37F) ;
+        p50.target_component_SET((char)141) ;
         TestChannel.instance.send(p50);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MISSION_REQUEST_INT.add((src, ph, pack) ->
         {
-            assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION);
-            assert(pack.seq_GET() == (char)25984);
-            assert(pack.target_component_GET() == (char)34);
-            assert(pack.target_system_GET() == (char)33);
+            assert(pack.target_component_GET() == (char)165);
+            assert(pack.seq_GET() == (char)8838);
+            assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL);
+            assert(pack.target_system_GET() == (char)106);
         });
         MISSION_REQUEST_INT p51 = new MISSION_REQUEST_INT();
         PH.setPack(p51);
-        p51.seq_SET((char)25984) ;
-        p51.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION) ;
-        p51.target_system_SET((char)33) ;
-        p51.target_component_SET((char)34) ;
+        p51.target_component_SET((char)165) ;
+        p51.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_ALL) ;
+        p51.seq_SET((char)8838) ;
+        p51.target_system_SET((char)106) ;
         TestChannel.instance.send(p51);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SAFETY_SET_ALLOWED_AREA.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)54);
-            assert(pack.p2x_GET() == -2.5775892E38F);
-            assert(pack.frame_GET() == MAV_FRAME.MAV_FRAME_GLOBAL_TERRAIN_ALT);
-            assert(pack.p1y_GET() == 9.412586E37F);
-            assert(pack.p2z_GET() == 1.4286134E38F);
-            assert(pack.p1z_GET() == 1.4041038E38F);
-            assert(pack.p1x_GET() == 1.780466E36F);
-            assert(pack.target_component_GET() == (char)169);
-            assert(pack.p2y_GET() == 2.4973358E37F);
+            assert(pack.frame_GET() == MAV_FRAME.MAV_FRAME_BODY_OFFSET_NED);
+            assert(pack.p1z_GET() == 1.5941036E38F);
+            assert(pack.p2z_GET() == -1.5693201E38F);
+            assert(pack.p2x_GET() == 9.315126E37F);
+            assert(pack.p1x_GET() == 1.0361094E38F);
+            assert(pack.p1y_GET() == 1.3316113E38F);
+            assert(pack.target_component_GET() == (char)62);
+            assert(pack.p2y_GET() == 2.1788464E38F);
+            assert(pack.target_system_GET() == (char)59);
         });
         SAFETY_SET_ALLOWED_AREA p54 = new SAFETY_SET_ALLOWED_AREA();
         PH.setPack(p54);
-        p54.target_component_SET((char)169) ;
-        p54.frame_SET(MAV_FRAME.MAV_FRAME_GLOBAL_TERRAIN_ALT) ;
-        p54.p2z_SET(1.4286134E38F) ;
-        p54.p2y_SET(2.4973358E37F) ;
-        p54.p2x_SET(-2.5775892E38F) ;
-        p54.p1y_SET(9.412586E37F) ;
-        p54.target_system_SET((char)54) ;
-        p54.p1x_SET(1.780466E36F) ;
-        p54.p1z_SET(1.4041038E38F) ;
+        p54.p2y_SET(2.1788464E38F) ;
+        p54.p1y_SET(1.3316113E38F) ;
+        p54.p2x_SET(9.315126E37F) ;
+        p54.target_system_SET((char)59) ;
+        p54.frame_SET(MAV_FRAME.MAV_FRAME_BODY_OFFSET_NED) ;
+        p54.p2z_SET(-1.5693201E38F) ;
+        p54.p1z_SET(1.5941036E38F) ;
+        p54.target_component_SET((char)62) ;
+        p54.p1x_SET(1.0361094E38F) ;
         TestChannel.instance.send(p54);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SAFETY_ALLOWED_AREA.add((src, ph, pack) ->
         {
-            assert(pack.p2z_GET() == 1.5676821E38F);
-            assert(pack.p2x_GET() == 1.1339279E38F);
-            assert(pack.frame_GET() == MAV_FRAME.MAV_FRAME_GLOBAL_RELATIVE_ALT_INT);
-            assert(pack.p1z_GET() == -6.131187E37F);
-            assert(pack.p1y_GET() == -1.4178933E38F);
-            assert(pack.p2y_GET() == -1.7957897E38F);
-            assert(pack.p1x_GET() == 3.0055034E38F);
+            assert(pack.p1y_GET() == -2.1062885E38F);
+            assert(pack.p1x_GET() == -2.2506086E38F);
+            assert(pack.p2x_GET() == -1.4818649E38F);
+            assert(pack.p2y_GET() == -3.7721578E37F);
+            assert(pack.frame_GET() == MAV_FRAME.MAV_FRAME_LOCAL_NED);
+            assert(pack.p1z_GET() == -6.6738006E37F);
+            assert(pack.p2z_GET() == 1.5703331E38F);
         });
         SAFETY_ALLOWED_AREA p55 = new SAFETY_ALLOWED_AREA();
         PH.setPack(p55);
-        p55.p2z_SET(1.5676821E38F) ;
-        p55.p1y_SET(-1.4178933E38F) ;
-        p55.p2x_SET(1.1339279E38F) ;
-        p55.p1x_SET(3.0055034E38F) ;
-        p55.p1z_SET(-6.131187E37F) ;
-        p55.frame_SET(MAV_FRAME.MAV_FRAME_GLOBAL_RELATIVE_ALT_INT) ;
-        p55.p2y_SET(-1.7957897E38F) ;
+        p55.frame_SET(MAV_FRAME.MAV_FRAME_LOCAL_NED) ;
+        p55.p2x_SET(-1.4818649E38F) ;
+        p55.p2y_SET(-3.7721578E37F) ;
+        p55.p1z_SET(-6.6738006E37F) ;
+        p55.p2z_SET(1.5703331E38F) ;
+        p55.p1y_SET(-2.1062885E38F) ;
+        p55.p1x_SET(-2.2506086E38F) ;
         TestChannel.instance.send(p55);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_ATTITUDE_QUATERNION_COV.add((src, ph, pack) ->
         {
-            assert(Arrays.equals(pack.q_GET(),  new float[] {-3.119786E38F, -6.4997943E37F, -3.0698636E37F, 2.0302063E38F}));
-            assert(pack.rollspeed_GET() == 2.0456832E38F);
-            assert(pack.yawspeed_GET() == -1.3735256E38F);
-            assert(pack.time_usec_GET() == 584394016978810713L);
-            assert(pack.pitchspeed_GET() == -2.85447E36F);
-            assert(Arrays.equals(pack.covariance_GET(),  new float[] {2.804345E38F, 3.3384043E38F, 1.0668847E38F, 1.3085428E38F, 8.2905744E36F, 3.0458912E38F, 2.9594506E38F, -1.943527E38F, -1.4188249E38F}));
+            assert(pack.yawspeed_GET() == 2.926384E38F);
+            assert(pack.pitchspeed_GET() == -2.9216671E38F);
+            assert(pack.rollspeed_GET() == -2.5603165E38F);
+            assert(Arrays.equals(pack.covariance_GET(),  new float[] {2.5150397E38F, -1.0186882E38F, 5.307795E37F, -2.3316845E38F, 1.8272628E38F, -2.4570553E38F, -2.7924383E38F, 2.5337184E37F, 1.9869052E37F}));
+            assert(pack.time_usec_GET() == 3449320184621944669L);
+            assert(Arrays.equals(pack.q_GET(),  new float[] {-8.735964E37F, -5.019274E36F, -1.7111993E38F, -1.8864848E38F}));
         });
         ATTITUDE_QUATERNION_COV p61 = new ATTITUDE_QUATERNION_COV();
         PH.setPack(p61);
-        p61.q_SET(new float[] {-3.119786E38F, -6.4997943E37F, -3.0698636E37F, 2.0302063E38F}, 0) ;
-        p61.yawspeed_SET(-1.3735256E38F) ;
-        p61.time_usec_SET(584394016978810713L) ;
-        p61.rollspeed_SET(2.0456832E38F) ;
-        p61.covariance_SET(new float[] {2.804345E38F, 3.3384043E38F, 1.0668847E38F, 1.3085428E38F, 8.2905744E36F, 3.0458912E38F, 2.9594506E38F, -1.943527E38F, -1.4188249E38F}, 0) ;
-        p61.pitchspeed_SET(-2.85447E36F) ;
+        p61.q_SET(new float[] {-8.735964E37F, -5.019274E36F, -1.7111993E38F, -1.8864848E38F}, 0) ;
+        p61.covariance_SET(new float[] {2.5150397E38F, -1.0186882E38F, 5.307795E37F, -2.3316845E38F, 1.8272628E38F, -2.4570553E38F, -2.7924383E38F, 2.5337184E37F, 1.9869052E37F}, 0) ;
+        p61.time_usec_SET(3449320184621944669L) ;
+        p61.yawspeed_SET(2.926384E38F) ;
+        p61.rollspeed_SET(-2.5603165E38F) ;
+        p61.pitchspeed_SET(-2.9216671E38F) ;
         TestChannel.instance.send(p61);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_NAV_CONTROLLER_OUTPUT.add((src, ph, pack) ->
         {
-            assert(pack.alt_error_GET() == -7.5048987E37F);
-            assert(pack.nav_roll_GET() == 2.249005E38F);
-            assert(pack.target_bearing_GET() == (short)20464);
-            assert(pack.wp_dist_GET() == (char)52789);
-            assert(pack.nav_pitch_GET() == 4.600361E37F);
-            assert(pack.nav_bearing_GET() == (short) -12101);
-            assert(pack.aspd_error_GET() == -1.849148E38F);
-            assert(pack.xtrack_error_GET() == -1.762793E38F);
+            assert(pack.target_bearing_GET() == (short) -20422);
+            assert(pack.nav_bearing_GET() == (short) -31549);
+            assert(pack.alt_error_GET() == 2.1104186E38F);
+            assert(pack.aspd_error_GET() == 3.3166364E38F);
+            assert(pack.xtrack_error_GET() == 2.3654928E38F);
+            assert(pack.nav_pitch_GET() == 9.02598E37F);
+            assert(pack.wp_dist_GET() == (char)31086);
+            assert(pack.nav_roll_GET() == -7.3646205E37F);
         });
         NAV_CONTROLLER_OUTPUT p62 = new NAV_CONTROLLER_OUTPUT();
         PH.setPack(p62);
-        p62.wp_dist_SET((char)52789) ;
-        p62.nav_pitch_SET(4.600361E37F) ;
-        p62.nav_bearing_SET((short) -12101) ;
-        p62.aspd_error_SET(-1.849148E38F) ;
-        p62.target_bearing_SET((short)20464) ;
-        p62.nav_roll_SET(2.249005E38F) ;
-        p62.xtrack_error_SET(-1.762793E38F) ;
-        p62.alt_error_SET(-7.5048987E37F) ;
+        p62.nav_pitch_SET(9.02598E37F) ;
+        p62.alt_error_SET(2.1104186E38F) ;
+        p62.wp_dist_SET((char)31086) ;
+        p62.target_bearing_SET((short) -20422) ;
+        p62.xtrack_error_SET(2.3654928E38F) ;
+        p62.nav_roll_SET(-7.3646205E37F) ;
+        p62.nav_bearing_SET((short) -31549) ;
+        p62.aspd_error_SET(3.3166364E38F) ;
         TestChannel.instance.send(p62);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_GLOBAL_POSITION_INT_COV.add((src, ph, pack) ->
         {
-            assert(Arrays.equals(pack.covariance_GET(),  new float[] {-1.3044527E38F, 2.5721837E37F, -2.7451102E38F, 1.0493493E38F, 2.7623603E38F, 1.3160037E38F, -1.3754068E38F, 3.2011607E38F, 3.2032774E38F, -2.021344E38F, 1.4110548E38F, -2.0518247E38F, 1.5135234E37F, 4.0681463E37F, 6.1593495E37F, -9.297419E37F, -1.6420861E38F, 1.9968531E38F, 3.0120918E38F, 8.735197E37F, -1.1786597E38F, 5.0235934E37F, 3.199865E38F, -1.8489027E38F, 6.621483E37F, -1.0229179E38F, 1.5913172E38F, 1.0161583E38F, -2.1208456E38F, 1.390534E38F, 2.8183088E38F, 1.7137861E38F, 2.7425602E36F, 2.184179E38F, 4.5096275E37F, -1.82802E38F}));
-            assert(pack.alt_GET() == 813951335);
-            assert(pack.time_usec_GET() == 6502958880485153453L);
-            assert(pack.relative_alt_GET() == 1021683073);
-            assert(pack.vy_GET() == -3.3537707E38F);
-            assert(pack.estimator_type_GET() == MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_NAIVE);
-            assert(pack.vz_GET() == -1.9529054E38F);
-            assert(pack.vx_GET() == -1.3113377E38F);
-            assert(pack.lon_GET() == -1297234949);
-            assert(pack.lat_GET() == -1852025840);
+            assert(pack.alt_GET() == 1951567248);
+            assert(pack.relative_alt_GET() == -217251630);
+            assert(pack.vy_GET() == 1.7630748E38F);
+            assert(Arrays.equals(pack.covariance_GET(),  new float[] {-2.6367984E38F, 7.533185E37F, -1.8234584E38F, -5.7089086E37F, -1.2030061E37F, 3.1918897E38F, -3.3906885E37F, -2.9856346E38F, -8.507665E37F, -2.7078177E38F, 1.9042623E38F, 2.0531693E38F, -9.675788E37F, 2.8762524E38F, 1.5990862E38F, -3.525205E37F, 1.6911202E38F, -2.6493754E38F, -5.0112104E37F, -1.5857029E38F, 2.48927E38F, -1.2617466E38F, 2.0411852E38F, 1.7255015E38F, 2.9203674E38F, -2.1968542E37F, 1.5364031E38F, -3.1461147E38F, 1.4402669E38F, -2.4492105E38F, 1.320282E38F, 1.7349334E38F, 2.4083743E38F, 2.0626687E38F, 2.3537876E38F, 1.3099973E38F}));
+            assert(pack.lat_GET() == -812387164);
+            assert(pack.estimator_type_GET() == MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_GPS_INS);
+            assert(pack.vx_GET() == 1.6823944E37F);
+            assert(pack.vz_GET() == 2.5673679E38F);
+            assert(pack.lon_GET() == 1198006681);
+            assert(pack.time_usec_GET() == 672496232252084888L);
         });
         GLOBAL_POSITION_INT_COV p63 = new GLOBAL_POSITION_INT_COV();
         PH.setPack(p63);
-        p63.estimator_type_SET(MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_NAIVE) ;
-        p63.vy_SET(-3.3537707E38F) ;
-        p63.alt_SET(813951335) ;
-        p63.vx_SET(-1.3113377E38F) ;
-        p63.lat_SET(-1852025840) ;
-        p63.time_usec_SET(6502958880485153453L) ;
-        p63.lon_SET(-1297234949) ;
-        p63.relative_alt_SET(1021683073) ;
-        p63.vz_SET(-1.9529054E38F) ;
-        p63.covariance_SET(new float[] {-1.3044527E38F, 2.5721837E37F, -2.7451102E38F, 1.0493493E38F, 2.7623603E38F, 1.3160037E38F, -1.3754068E38F, 3.2011607E38F, 3.2032774E38F, -2.021344E38F, 1.4110548E38F, -2.0518247E38F, 1.5135234E37F, 4.0681463E37F, 6.1593495E37F, -9.297419E37F, -1.6420861E38F, 1.9968531E38F, 3.0120918E38F, 8.735197E37F, -1.1786597E38F, 5.0235934E37F, 3.199865E38F, -1.8489027E38F, 6.621483E37F, -1.0229179E38F, 1.5913172E38F, 1.0161583E38F, -2.1208456E38F, 1.390534E38F, 2.8183088E38F, 1.7137861E38F, 2.7425602E36F, 2.184179E38F, 4.5096275E37F, -1.82802E38F}, 0) ;
+        p63.vy_SET(1.7630748E38F) ;
+        p63.vz_SET(2.5673679E38F) ;
+        p63.alt_SET(1951567248) ;
+        p63.relative_alt_SET(-217251630) ;
+        p63.lon_SET(1198006681) ;
+        p63.time_usec_SET(672496232252084888L) ;
+        p63.estimator_type_SET(MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_GPS_INS) ;
+        p63.vx_SET(1.6823944E37F) ;
+        p63.lat_SET(-812387164) ;
+        p63.covariance_SET(new float[] {-2.6367984E38F, 7.533185E37F, -1.8234584E38F, -5.7089086E37F, -1.2030061E37F, 3.1918897E38F, -3.3906885E37F, -2.9856346E38F, -8.507665E37F, -2.7078177E38F, 1.9042623E38F, 2.0531693E38F, -9.675788E37F, 2.8762524E38F, 1.5990862E38F, -3.525205E37F, 1.6911202E38F, -2.6493754E38F, -5.0112104E37F, -1.5857029E38F, 2.48927E38F, -1.2617466E38F, 2.0411852E38F, 1.7255015E38F, 2.9203674E38F, -2.1968542E37F, 1.5364031E38F, -3.1461147E38F, 1.4402669E38F, -2.4492105E38F, 1.320282E38F, 1.7349334E38F, 2.4083743E38F, 2.0626687E38F, 2.3537876E38F, 1.3099973E38F}, 0) ;
         TestChannel.instance.send(p63);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_LOCAL_POSITION_NED_COV.add((src, ph, pack) ->
         {
-            assert(pack.vy_GET() == 3.1691064E38F);
-            assert(pack.y_GET() == 1.2558012E38F);
-            assert(Arrays.equals(pack.covariance_GET(),  new float[] {1.4451754E38F, 5.3485475E37F, -1.4189175E38F, -2.5697499E38F, -2.7602818E37F, 1.683492E38F, 3.0090549E38F, -1.5197868E38F, -2.6313579E38F, -2.027421E38F, -4.449909E37F, 1.4657306E38F, -9.744543E37F, 9.606473E37F, -2.7103112E38F, 7.027482E37F, 4.4732667E37F, -1.6954358E37F, 2.0412483E38F, -3.0453458E38F, 2.503526E38F, -2.2172858E38F, 3.1510752E38F, 3.0350515E38F, -2.2429228E38F, 5.996268E37F, 2.7129321E38F, 1.0773377E38F, -4.1255428E37F, -8.5006475E36F, -1.9094773E38F, 2.0333596E38F, -3.2633746E38F, -1.201167E37F, 2.6558373E38F, -1.1977617E38F, 2.1195599E38F, -1.7071116E38F, 2.0123282E38F, -2.3475575E38F, -1.6246345E38F, -2.197864E38F, 1.9879465E38F, 1.8969243E38F, -3.3090946E38F}));
-            assert(pack.ay_GET() == 6.0586057E37F);
-            assert(pack.az_GET() == 1.062559E38F);
-            assert(pack.vx_GET() == 1.409642E38F);
-            assert(pack.vz_GET() == 2.3264832E38F);
-            assert(pack.z_GET() == -2.3097565E38F);
-            assert(pack.ax_GET() == 1.1496343E38F);
-            assert(pack.x_GET() == 1.4965565E37F);
-            assert(pack.estimator_type_GET() == MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_NAIVE);
-            assert(pack.time_usec_GET() == 5216244750886687871L);
+            assert(pack.ay_GET() == -6.9156466E37F);
+            assert(pack.estimator_type_GET() == MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_GPS);
+            assert(pack.time_usec_GET() == 2730418579860436113L);
+            assert(pack.z_GET() == -1.3439598E38F);
+            assert(pack.vz_GET() == -2.5741797E38F);
+            assert(pack.az_GET() == -1.6173046E38F);
+            assert(pack.vy_GET() == -3.6763092E37F);
+            assert(pack.vx_GET() == 5.98005E37F);
+            assert(pack.ax_GET() == 7.1969656E37F);
+            assert(Arrays.equals(pack.covariance_GET(),  new float[] {7.8732673E37F, -1.5092073E38F, -9.773057E37F, -1.4137158E37F, -5.0797706E37F, -1.9255913E38F, -1.124865E38F, 3.3576127E37F, 1.4497109E38F, 3.9699932E37F, -6.378134E37F, -3.3573479E38F, -3.014344E38F, 1.5951158E38F, -3.3418963E38F, 1.3619176E38F, -2.364201E38F, -9.821862E37F, 1.8470298E38F, -1.5534494E38F, 3.686974E37F, 3.7808496E37F, -6.1239577E37F, -1.3269702E38F, 2.852472E38F, 1.476602E38F, -3.2432727E38F, 3.3851254E38F, -1.0838695E37F, 2.7751123E38F, 1.9668159E38F, -2.6136288E38F, 6.3869617E37F, 2.3016105E38F, 1.6143963E38F, -9.422406E37F, 2.8497615E38F, -2.0920137E38F, -1.6876861E38F, 1.6321814E37F, -1.6805295E38F, 1.5952123E38F, 2.4939834E37F, 2.5643783E38F, -2.8950483E38F}));
+            assert(pack.y_GET() == -2.0890125E38F);
+            assert(pack.x_GET() == 8.680287E37F);
         });
         LOCAL_POSITION_NED_COV p64 = new LOCAL_POSITION_NED_COV();
         PH.setPack(p64);
-        p64.vy_SET(3.1691064E38F) ;
-        p64.ax_SET(1.1496343E38F) ;
-        p64.az_SET(1.062559E38F) ;
-        p64.vz_SET(2.3264832E38F) ;
-        p64.y_SET(1.2558012E38F) ;
-        p64.estimator_type_SET(MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_NAIVE) ;
-        p64.ay_SET(6.0586057E37F) ;
-        p64.time_usec_SET(5216244750886687871L) ;
-        p64.x_SET(1.4965565E37F) ;
-        p64.z_SET(-2.3097565E38F) ;
-        p64.vx_SET(1.409642E38F) ;
-        p64.covariance_SET(new float[] {1.4451754E38F, 5.3485475E37F, -1.4189175E38F, -2.5697499E38F, -2.7602818E37F, 1.683492E38F, 3.0090549E38F, -1.5197868E38F, -2.6313579E38F, -2.027421E38F, -4.449909E37F, 1.4657306E38F, -9.744543E37F, 9.606473E37F, -2.7103112E38F, 7.027482E37F, 4.4732667E37F, -1.6954358E37F, 2.0412483E38F, -3.0453458E38F, 2.503526E38F, -2.2172858E38F, 3.1510752E38F, 3.0350515E38F, -2.2429228E38F, 5.996268E37F, 2.7129321E38F, 1.0773377E38F, -4.1255428E37F, -8.5006475E36F, -1.9094773E38F, 2.0333596E38F, -3.2633746E38F, -1.201167E37F, 2.6558373E38F, -1.1977617E38F, 2.1195599E38F, -1.7071116E38F, 2.0123282E38F, -2.3475575E38F, -1.6246345E38F, -2.197864E38F, 1.9879465E38F, 1.8969243E38F, -3.3090946E38F}, 0) ;
+        p64.time_usec_SET(2730418579860436113L) ;
+        p64.vx_SET(5.98005E37F) ;
+        p64.vz_SET(-2.5741797E38F) ;
+        p64.ax_SET(7.1969656E37F) ;
+        p64.x_SET(8.680287E37F) ;
+        p64.estimator_type_SET(MAV_ESTIMATOR_TYPE.MAV_ESTIMATOR_TYPE_GPS) ;
+        p64.y_SET(-2.0890125E38F) ;
+        p64.az_SET(-1.6173046E38F) ;
+        p64.ay_SET(-6.9156466E37F) ;
+        p64.vy_SET(-3.6763092E37F) ;
+        p64.covariance_SET(new float[] {7.8732673E37F, -1.5092073E38F, -9.773057E37F, -1.4137158E37F, -5.0797706E37F, -1.9255913E38F, -1.124865E38F, 3.3576127E37F, 1.4497109E38F, 3.9699932E37F, -6.378134E37F, -3.3573479E38F, -3.014344E38F, 1.5951158E38F, -3.3418963E38F, 1.3619176E38F, -2.364201E38F, -9.821862E37F, 1.8470298E38F, -1.5534494E38F, 3.686974E37F, 3.7808496E37F, -6.1239577E37F, -1.3269702E38F, 2.852472E38F, 1.476602E38F, -3.2432727E38F, 3.3851254E38F, -1.0838695E37F, 2.7751123E38F, 1.9668159E38F, -2.6136288E38F, 6.3869617E37F, 2.3016105E38F, 1.6143963E38F, -9.422406E37F, 2.8497615E38F, -2.0920137E38F, -1.6876861E38F, 1.6321814E37F, -1.6805295E38F, 1.5952123E38F, 2.4939834E37F, 2.5643783E38F, -2.8950483E38F}, 0) ;
+        p64.z_SET(-1.3439598E38F) ;
         TestChannel.instance.send(p64);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_RC_CHANNELS.add((src, ph, pack) ->
         {
-            assert(pack.chan4_raw_GET() == (char)44331);
-            assert(pack.chan12_raw_GET() == (char)33828);
-            assert(pack.chan10_raw_GET() == (char)59782);
-            assert(pack.chan7_raw_GET() == (char)58251);
-            assert(pack.chan13_raw_GET() == (char)25660);
-            assert(pack.rssi_GET() == (char)63);
-            assert(pack.chan5_raw_GET() == (char)24544);
-            assert(pack.chancount_GET() == (char)154);
-            assert(pack.chan16_raw_GET() == (char)56302);
-            assert(pack.chan2_raw_GET() == (char)7313);
-            assert(pack.chan9_raw_GET() == (char)44943);
-            assert(pack.time_boot_ms_GET() == 1581338323L);
-            assert(pack.chan1_raw_GET() == (char)43325);
-            assert(pack.chan8_raw_GET() == (char)22220);
-            assert(pack.chan18_raw_GET() == (char)16904);
-            assert(pack.chan15_raw_GET() == (char)53762);
-            assert(pack.chan3_raw_GET() == (char)46683);
-            assert(pack.chan11_raw_GET() == (char)10828);
-            assert(pack.chan17_raw_GET() == (char)36707);
-            assert(pack.chan14_raw_GET() == (char)61061);
-            assert(pack.chan6_raw_GET() == (char)58174);
+            assert(pack.chan15_raw_GET() == (char)206);
+            assert(pack.chan3_raw_GET() == (char)40478);
+            assert(pack.chan4_raw_GET() == (char)19140);
+            assert(pack.chan7_raw_GET() == (char)4181);
+            assert(pack.chan8_raw_GET() == (char)28981);
+            assert(pack.chan17_raw_GET() == (char)20703);
+            assert(pack.chan11_raw_GET() == (char)61232);
+            assert(pack.chan16_raw_GET() == (char)41304);
+            assert(pack.chan5_raw_GET() == (char)36011);
+            assert(pack.chan13_raw_GET() == (char)37287);
+            assert(pack.time_boot_ms_GET() == 4270182094L);
+            assert(pack.chan10_raw_GET() == (char)45533);
+            assert(pack.chan1_raw_GET() == (char)56109);
+            assert(pack.rssi_GET() == (char)150);
+            assert(pack.chancount_GET() == (char)231);
+            assert(pack.chan14_raw_GET() == (char)5851);
+            assert(pack.chan12_raw_GET() == (char)15874);
+            assert(pack.chan9_raw_GET() == (char)56725);
+            assert(pack.chan18_raw_GET() == (char)31932);
+            assert(pack.chan6_raw_GET() == (char)24678);
+            assert(pack.chan2_raw_GET() == (char)10590);
         });
         RC_CHANNELS p65 = new RC_CHANNELS();
         PH.setPack(p65);
-        p65.chan17_raw_SET((char)36707) ;
-        p65.chan13_raw_SET((char)25660) ;
-        p65.chan8_raw_SET((char)22220) ;
-        p65.chan9_raw_SET((char)44943) ;
-        p65.chancount_SET((char)154) ;
-        p65.chan5_raw_SET((char)24544) ;
-        p65.chan14_raw_SET((char)61061) ;
-        p65.chan7_raw_SET((char)58251) ;
-        p65.chan16_raw_SET((char)56302) ;
-        p65.rssi_SET((char)63) ;
-        p65.chan4_raw_SET((char)44331) ;
-        p65.chan10_raw_SET((char)59782) ;
-        p65.time_boot_ms_SET(1581338323L) ;
-        p65.chan3_raw_SET((char)46683) ;
-        p65.chan15_raw_SET((char)53762) ;
-        p65.chan12_raw_SET((char)33828) ;
-        p65.chan11_raw_SET((char)10828) ;
-        p65.chan18_raw_SET((char)16904) ;
-        p65.chan6_raw_SET((char)58174) ;
-        p65.chan1_raw_SET((char)43325) ;
-        p65.chan2_raw_SET((char)7313) ;
+        p65.chan3_raw_SET((char)40478) ;
+        p65.chan14_raw_SET((char)5851) ;
+        p65.chan10_raw_SET((char)45533) ;
+        p65.chan15_raw_SET((char)206) ;
+        p65.chan12_raw_SET((char)15874) ;
+        p65.chan4_raw_SET((char)19140) ;
+        p65.chan13_raw_SET((char)37287) ;
+        p65.chan1_raw_SET((char)56109) ;
+        p65.chan17_raw_SET((char)20703) ;
+        p65.chan2_raw_SET((char)10590) ;
+        p65.rssi_SET((char)150) ;
+        p65.chan6_raw_SET((char)24678) ;
+        p65.chan11_raw_SET((char)61232) ;
+        p65.chan18_raw_SET((char)31932) ;
+        p65.chan9_raw_SET((char)56725) ;
+        p65.chan16_raw_SET((char)41304) ;
+        p65.time_boot_ms_SET(4270182094L) ;
+        p65.chan5_raw_SET((char)36011) ;
+        p65.chan7_raw_SET((char)4181) ;
+        p65.chan8_raw_SET((char)28981) ;
+        p65.chancount_SET((char)231) ;
         TestChannel.instance.send(p65);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_REQUEST_DATA_STREAM.add((src, ph, pack) ->
         {
-            assert(pack.target_component_GET() == (char)54);
-            assert(pack.req_message_rate_GET() == (char)38437);
-            assert(pack.start_stop_GET() == (char)226);
-            assert(pack.req_stream_id_GET() == (char)28);
-            assert(pack.target_system_GET() == (char)128);
+            assert(pack.req_message_rate_GET() == (char)27948);
+            assert(pack.start_stop_GET() == (char)152);
+            assert(pack.target_system_GET() == (char)174);
+            assert(pack.req_stream_id_GET() == (char)70);
+            assert(pack.target_component_GET() == (char)189);
         });
         REQUEST_DATA_STREAM p66 = new REQUEST_DATA_STREAM();
         PH.setPack(p66);
-        p66.target_component_SET((char)54) ;
-        p66.req_stream_id_SET((char)28) ;
-        p66.req_message_rate_SET((char)38437) ;
-        p66.start_stop_SET((char)226) ;
-        p66.target_system_SET((char)128) ;
+        p66.start_stop_SET((char)152) ;
+        p66.req_stream_id_SET((char)70) ;
+        p66.target_component_SET((char)189) ;
+        p66.req_message_rate_SET((char)27948) ;
+        p66.target_system_SET((char)174) ;
         TestChannel.instance.send(p66);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_DATA_STREAM.add((src, ph, pack) ->
         {
-            assert(pack.message_rate_GET() == (char)33941);
-            assert(pack.on_off_GET() == (char)70);
-            assert(pack.stream_id_GET() == (char)49);
+            assert(pack.stream_id_GET() == (char)85);
+            assert(pack.message_rate_GET() == (char)35560);
+            assert(pack.on_off_GET() == (char)116);
         });
         DATA_STREAM p67 = new DATA_STREAM();
         PH.setPack(p67);
-        p67.message_rate_SET((char)33941) ;
-        p67.stream_id_SET((char)49) ;
-        p67.on_off_SET((char)70) ;
+        p67.on_off_SET((char)116) ;
+        p67.message_rate_SET((char)35560) ;
+        p67.stream_id_SET((char)85) ;
         TestChannel.instance.send(p67);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MANUAL_CONTROL.add((src, ph, pack) ->
         {
-            assert(pack.buttons_GET() == (char)48556);
-            assert(pack.z_GET() == (short) -4064);
-            assert(pack.y_GET() == (short)12915);
-            assert(pack.x_GET() == (short)15663);
-            assert(pack.r_GET() == (short)6017);
-            assert(pack.target_GET() == (char)96);
+            assert(pack.target_GET() == (char)77);
+            assert(pack.x_GET() == (short) -25984);
+            assert(pack.buttons_GET() == (char)27463);
+            assert(pack.z_GET() == (short) -2053);
+            assert(pack.r_GET() == (short) -29126);
+            assert(pack.y_GET() == (short) -23100);
         });
         MANUAL_CONTROL p69 = new MANUAL_CONTROL();
         PH.setPack(p69);
-        p69.buttons_SET((char)48556) ;
-        p69.z_SET((short) -4064) ;
-        p69.r_SET((short)6017) ;
-        p69.y_SET((short)12915) ;
-        p69.x_SET((short)15663) ;
-        p69.target_SET((char)96) ;
+        p69.r_SET((short) -29126) ;
+        p69.target_SET((char)77) ;
+        p69.buttons_SET((char)27463) ;
+        p69.x_SET((short) -25984) ;
+        p69.z_SET((short) -2053) ;
+        p69.y_SET((short) -23100) ;
         TestChannel.instance.send(p69);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_RC_CHANNELS_OVERRIDE.add((src, ph, pack) ->
         {
-            assert(pack.chan3_raw_GET() == (char)20739);
-            assert(pack.target_component_GET() == (char)94);
-            assert(pack.chan7_raw_GET() == (char)34156);
-            assert(pack.chan6_raw_GET() == (char)44899);
-            assert(pack.chan5_raw_GET() == (char)16917);
-            assert(pack.target_system_GET() == (char)222);
-            assert(pack.chan2_raw_GET() == (char)1054);
-            assert(pack.chan1_raw_GET() == (char)9186);
-            assert(pack.chan8_raw_GET() == (char)60319);
-            assert(pack.chan4_raw_GET() == (char)42862);
+            assert(pack.chan4_raw_GET() == (char)37297);
+            assert(pack.chan7_raw_GET() == (char)46866);
+            assert(pack.chan5_raw_GET() == (char)27632);
+            assert(pack.chan1_raw_GET() == (char)11822);
+            assert(pack.target_system_GET() == (char)137);
+            assert(pack.chan6_raw_GET() == (char)8128);
+            assert(pack.chan3_raw_GET() == (char)47398);
+            assert(pack.chan8_raw_GET() == (char)28719);
+            assert(pack.chan2_raw_GET() == (char)7942);
+            assert(pack.target_component_GET() == (char)136);
         });
         RC_CHANNELS_OVERRIDE p70 = new RC_CHANNELS_OVERRIDE();
         PH.setPack(p70);
-        p70.chan1_raw_SET((char)9186) ;
-        p70.chan2_raw_SET((char)1054) ;
-        p70.chan5_raw_SET((char)16917) ;
-        p70.chan6_raw_SET((char)44899) ;
-        p70.target_system_SET((char)222) ;
-        p70.chan7_raw_SET((char)34156) ;
-        p70.chan8_raw_SET((char)60319) ;
-        p70.chan4_raw_SET((char)42862) ;
-        p70.target_component_SET((char)94) ;
-        p70.chan3_raw_SET((char)20739) ;
+        p70.chan4_raw_SET((char)37297) ;
+        p70.chan6_raw_SET((char)8128) ;
+        p70.chan2_raw_SET((char)7942) ;
+        p70.chan5_raw_SET((char)27632) ;
+        p70.chan3_raw_SET((char)47398) ;
+        p70.chan7_raw_SET((char)46866) ;
+        p70.chan1_raw_SET((char)11822) ;
+        p70.target_system_SET((char)137) ;
+        p70.target_component_SET((char)136) ;
+        p70.chan8_raw_SET((char)28719) ;
         TestChannel.instance.send(p70);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MISSION_ITEM_INT.add((src, ph, pack) ->
         {
-            assert(pack.param4_GET() == 2.1292086E38F);
+            assert(pack.target_system_GET() == (char)106);
+            assert(pack.param2_GET() == 2.2687439E38F);
+            assert(pack.autocontinue_GET() == (char)110);
+            assert(pack.target_component_GET() == (char)125);
+            assert(pack.seq_GET() == (char)11591);
+            assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE);
+            assert(pack.param4_GET() == -9.925474E37F);
+            assert(pack.z_GET() == 1.4880721E38F);
             assert(pack.frame_GET() == MAV_FRAME.MAV_FRAME_LOCAL_OFFSET_NED);
-            assert(pack.param2_GET() == 1.1663928E37F);
-            assert(pack.y_GET() == -1383387696);
-            assert(pack.autocontinue_GET() == (char)158);
-            assert(pack.mission_type_GET() == MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION);
-            assert(pack.param3_GET() == 1.7372257E38F);
-            assert(pack.z_GET() == 6.370026E37F);
-            assert(pack.param1_GET() == -2.3131052E38F);
-            assert(pack.target_component_GET() == (char)65);
-            assert(pack.command_GET() == MAV_CMD.MAV_CMD_PANORAMA_CREATE);
-            assert(pack.target_system_GET() == (char)69);
-            assert(pack.seq_GET() == (char)47423);
-            assert(pack.current_GET() == (char)19);
-            assert(pack.x_GET() == 980204306);
+            assert(pack.param1_GET() == 1.898306E38F);
+            assert(pack.current_GET() == (char)55);
+            assert(pack.command_GET() == MAV_CMD.MAV_CMD_DO_LAST);
+            assert(pack.x_GET() == -1475820072);
+            assert(pack.param3_GET() == -1.6249659E38F);
+            assert(pack.y_GET() == -608958296);
         });
         MISSION_ITEM_INT p73 = new MISSION_ITEM_INT();
         PH.setPack(p73);
+        p73.command_SET(MAV_CMD.MAV_CMD_DO_LAST) ;
+        p73.param4_SET(-9.925474E37F) ;
+        p73.seq_SET((char)11591) ;
+        p73.param2_SET(2.2687439E38F) ;
+        p73.current_SET((char)55) ;
+        p73.y_SET(-608958296) ;
+        p73.target_component_SET((char)125) ;
+        p73.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_FENCE) ;
+        p73.target_system_SET((char)106) ;
+        p73.z_SET(1.4880721E38F) ;
+        p73.autocontinue_SET((char)110) ;
+        p73.param1_SET(1.898306E38F) ;
+        p73.param3_SET(-1.6249659E38F) ;
         p73.frame_SET(MAV_FRAME.MAV_FRAME_LOCAL_OFFSET_NED) ;
-        p73.param1_SET(-2.3131052E38F) ;
-        p73.target_component_SET((char)65) ;
-        p73.z_SET(6.370026E37F) ;
-        p73.autocontinue_SET((char)158) ;
-        p73.x_SET(980204306) ;
-        p73.command_SET(MAV_CMD.MAV_CMD_PANORAMA_CREATE) ;
-        p73.param2_SET(1.1663928E37F) ;
-        p73.param4_SET(2.1292086E38F) ;
-        p73.mission_type_SET(MAV_MISSION_TYPE.MAV_MISSION_TYPE_MISSION) ;
-        p73.target_system_SET((char)69) ;
-        p73.y_SET(-1383387696) ;
-        p73.seq_SET((char)47423) ;
-        p73.current_SET((char)19) ;
-        p73.param3_SET(1.7372257E38F) ;
+        p73.x_SET(-1475820072) ;
         TestChannel.instance.send(p73);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_VFR_HUD.add((src, ph, pack) ->
         {
-            assert(pack.climb_GET() == 3.3128274E38F);
-            assert(pack.groundspeed_GET() == -3.764543E37F);
-            assert(pack.alt_GET() == 2.7483273E38F);
-            assert(pack.heading_GET() == (short)3790);
-            assert(pack.airspeed_GET() == -1.0794424E38F);
-            assert(pack.throttle_GET() == (char)61509);
+            assert(pack.groundspeed_GET() == -1.9861251E38F);
+            assert(pack.climb_GET() == -3.0148575E38F);
+            assert(pack.airspeed_GET() == -2.518793E38F);
+            assert(pack.heading_GET() == (short) -7830);
+            assert(pack.alt_GET() == -8.012362E37F);
+            assert(pack.throttle_GET() == (char)21);
         });
         VFR_HUD p74 = new VFR_HUD();
         PH.setPack(p74);
-        p74.climb_SET(3.3128274E38F) ;
-        p74.throttle_SET((char)61509) ;
-        p74.alt_SET(2.7483273E38F) ;
-        p74.heading_SET((short)3790) ;
-        p74.groundspeed_SET(-3.764543E37F) ;
-        p74.airspeed_SET(-1.0794424E38F) ;
+        p74.alt_SET(-8.012362E37F) ;
+        p74.heading_SET((short) -7830) ;
+        p74.climb_SET(-3.0148575E38F) ;
+        p74.throttle_SET((char)21) ;
+        p74.airspeed_SET(-2.518793E38F) ;
+        p74.groundspeed_SET(-1.9861251E38F) ;
         TestChannel.instance.send(p74);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_COMMAND_INT.add((src, ph, pack) ->
         {
-            assert(pack.current_GET() == (char)125);
-            assert(pack.frame_GET() == MAV_FRAME.MAV_FRAME_MISSION);
-            assert(pack.y_GET() == 740024100);
-            assert(pack.param4_GET() == -9.941262E37F);
-            assert(pack.param1_GET() == 2.5721823E38F);
-            assert(pack.command_GET() == MAV_CMD.MAV_CMD_WAYPOINT_USER_1);
-            assert(pack.x_GET() == -81063682);
-            assert(pack.autocontinue_GET() == (char)49);
-            assert(pack.param3_GET() == 9.832352E37F);
-            assert(pack.target_system_GET() == (char)179);
-            assert(pack.param2_GET() == -9.100697E37F);
-            assert(pack.z_GET() == -2.3761944E38F);
-            assert(pack.target_component_GET() == (char)22);
+            assert(pack.x_GET() == -603788331);
+            assert(pack.param1_GET() == -1.430898E38F);
+            assert(pack.current_GET() == (char)27);
+            assert(pack.command_GET() == MAV_CMD.MAV_CMD_DO_SET_ROI);
+            assert(pack.param2_GET() == 2.4677068E38F);
+            assert(pack.z_GET() == 2.5464476E38F);
+            assert(pack.param3_GET() == 3.0779632E38F);
+            assert(pack.target_component_GET() == (char)104);
+            assert(pack.frame_GET() == MAV_FRAME.MAV_FRAME_LOCAL_ENU);
+            assert(pack.param4_GET() == -2.2182833E37F);
+            assert(pack.autocontinue_GET() == (char)192);
+            assert(pack.target_system_GET() == (char)149);
+            assert(pack.y_GET() == 1213918907);
         });
         COMMAND_INT p75 = new COMMAND_INT();
         PH.setPack(p75);
-        p75.param4_SET(-9.941262E37F) ;
-        p75.frame_SET(MAV_FRAME.MAV_FRAME_MISSION) ;
-        p75.x_SET(-81063682) ;
-        p75.target_system_SET((char)179) ;
-        p75.param1_SET(2.5721823E38F) ;
-        p75.target_component_SET((char)22) ;
-        p75.autocontinue_SET((char)49) ;
-        p75.current_SET((char)125) ;
-        p75.param3_SET(9.832352E37F) ;
-        p75.param2_SET(-9.100697E37F) ;
-        p75.z_SET(-2.3761944E38F) ;
-        p75.y_SET(740024100) ;
-        p75.command_SET(MAV_CMD.MAV_CMD_WAYPOINT_USER_1) ;
+        p75.command_SET(MAV_CMD.MAV_CMD_DO_SET_ROI) ;
+        p75.x_SET(-603788331) ;
+        p75.autocontinue_SET((char)192) ;
+        p75.param2_SET(2.4677068E38F) ;
+        p75.target_system_SET((char)149) ;
+        p75.current_SET((char)27) ;
+        p75.param4_SET(-2.2182833E37F) ;
+        p75.target_component_SET((char)104) ;
+        p75.param1_SET(-1.430898E38F) ;
+        p75.param3_SET(3.0779632E38F) ;
+        p75.z_SET(2.5464476E38F) ;
+        p75.frame_SET(MAV_FRAME.MAV_FRAME_LOCAL_ENU) ;
+        p75.y_SET(1213918907) ;
         TestChannel.instance.send(p75);//put test pack to the  channel send buffer
         TestChannel.transmission(TestChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_COMMAND_LONG.add((src, ph, pack) ->
         {
-            assert(pack.param2_GET() == -2.2675746E38F);
-            assert(pack.param4_GET() == -1.0633061E38F);
-            assert(pack.target_system_GET() == (char)151);
-            assert(pack.target_component_GET() == (char)2);
-            assert(pack.command_GET() == MAV_CMD.MAV_CMD_WAYPOINT_USER_5);
-            assert(pack.param3_GET() == -1.9984388E38F);
-            assert(pack.param7_GET() == 1.8771046E38F);
-            assert(pack.param6_GET() == 3.4698419E37F);
-            assert(pack.param5_GET() == 2.1128043E37F);
-            assert(pack.param1_GET() == 2.9255504E38F);
-            assert(pack.confirmation_GET() == (char)221);
+            assert(pack.param7_GET() == 3.6116048E37F);
+            assert(pack.param4_GET() == 1.8133614E38F);
+            assert(pack.param6_GET() == 9.615781E37F);
+            assert(pack.param1_GET() == -1.2702385E38F);
+            assert(pack.command_GET() == MAV_CMD.MAV_CMD_NAV_TAKEOFF);
+            assert(pack.confirmation_GET() == (char)161);
+            assert(pack.param2_GET() == -8.063117E37F);
+            assert(pack.target_component_GET() == (char)248);
+            assert(pack.target_system_GET() == (char)0);
+            assert(pack.param5_GET() == -7.0290506E37F);
+            assert(pack.param3_GET() == -2.700495E38F);
         });
         GroundControl.COMMAND_LONG p76 = CommunicationChannel.new_COMMAND_LONG();
         PH.setPack(p76);
-        p76.param3_SET(-1.9984388E38F) ;
-        p76.command_SET(MAV_CMD.MAV_CMD_WAYPOINT_USER_5) ;
-        p76.param2_SET(-2.2675746E38F) ;
-        p76.target_system_SET((char)151) ;
-        p76.param7_SET(1.8771046E38F) ;
-        p76.param5_SET(2.1128043E37F) ;
-        p76.target_component_SET((char)2) ;
-        p76.confirmation_SET((char)221) ;
-        p76.param4_SET(-1.0633061E38F) ;
-        p76.param1_SET(2.9255504E38F) ;
-        p76.param6_SET(3.4698419E37F) ;
+        p76.confirmation_SET((char)161) ;
+        p76.param5_SET(-7.0290506E37F) ;
+        p76.command_SET(MAV_CMD.MAV_CMD_NAV_TAKEOFF) ;
+        p76.target_system_SET((char)0) ;
+        p76.param4_SET(1.8133614E38F) ;
+        p76.param2_SET(-8.063117E37F) ;
+        p76.param7_SET(3.6116048E37F) ;
+        p76.param6_SET(9.615781E37F) ;
+        p76.param3_SET(-2.700495E38F) ;
+        p76.target_component_SET((char)248) ;
+        p76.param1_SET(-1.2702385E38F) ;
         CommunicationChannel.instance.send(p76);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_COMMAND_ACK.add((src, ph, pack) ->
         {
-            assert(pack.command_GET() == MAV_CMD.MAV_CMD_SPATIAL_USER_1);
-            assert(pack.result_param2_TRY(ph) == 720290555);
-            assert(pack.result_GET() == MAV_RESULT.MAV_RESULT_ACCEPTED);
-            assert(pack.progress_TRY(ph) == (char)151);
-            assert(pack.target_system_TRY(ph) == (char)22);
-            assert(pack.target_component_TRY(ph) == (char)90);
+            assert(pack.result_param2_TRY(ph) == -333271849);
+            assert(pack.target_component_TRY(ph) == (char)136);
+            assert(pack.result_GET() == MAV_RESULT.MAV_RESULT_DENIED);
+            assert(pack.target_system_TRY(ph) == (char)172);
+            assert(pack.command_GET() == MAV_CMD.MAV_CMD_DO_ENGINE_CONTROL);
+            assert(pack.progress_TRY(ph) == (char)208);
         });
         GroundControl.COMMAND_ACK p77 = CommunicationChannel.new_COMMAND_ACK();
         PH.setPack(p77);
-        p77.target_component_SET((char)90, PH) ;
-        p77.result_param2_SET(720290555, PH) ;
-        p77.target_system_SET((char)22, PH) ;
-        p77.command_SET(MAV_CMD.MAV_CMD_SPATIAL_USER_1) ;
-        p77.progress_SET((char)151, PH) ;
-        p77.result_SET(MAV_RESULT.MAV_RESULT_ACCEPTED) ;
+        p77.command_SET(MAV_CMD.MAV_CMD_DO_ENGINE_CONTROL) ;
+        p77.result_param2_SET(-333271849, PH) ;
+        p77.result_SET(MAV_RESULT.MAV_RESULT_DENIED) ;
+        p77.target_system_SET((char)172, PH) ;
+        p77.progress_SET((char)208, PH) ;
+        p77.target_component_SET((char)136, PH) ;
         CommunicationChannel.instance.send(p77);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_MANUAL_SETPOINT.add((src, ph, pack) ->
         {
-            assert(pack.time_boot_ms_GET() == 2815795790L);
-            assert(pack.thrust_GET() == -8.893492E37F);
-            assert(pack.roll_GET() == -2.1699842E38F);
-            assert(pack.mode_switch_GET() == (char)49);
-            assert(pack.yaw_GET() == -5.129815E37F);
-            assert(pack.manual_override_switch_GET() == (char)169);
-            assert(pack.pitch_GET() == 2.2657153E38F);
+            assert(pack.yaw_GET() == -4.8794493E37F);
+            assert(pack.manual_override_switch_GET() == (char)137);
+            assert(pack.pitch_GET() == -2.8599792E38F);
+            assert(pack.thrust_GET() == -3.095517E38F);
+            assert(pack.time_boot_ms_GET() == 2832184512L);
+            assert(pack.mode_switch_GET() == (char)170);
+            assert(pack.roll_GET() == -2.1643806E38F);
         });
         GroundControl.MANUAL_SETPOINT p81 = CommunicationChannel.new_MANUAL_SETPOINT();
         PH.setPack(p81);
-        p81.manual_override_switch_SET((char)169) ;
-        p81.pitch_SET(2.2657153E38F) ;
-        p81.mode_switch_SET((char)49) ;
-        p81.thrust_SET(-8.893492E37F) ;
-        p81.time_boot_ms_SET(2815795790L) ;
-        p81.roll_SET(-2.1699842E38F) ;
-        p81.yaw_SET(-5.129815E37F) ;
+        p81.mode_switch_SET((char)170) ;
+        p81.time_boot_ms_SET(2832184512L) ;
+        p81.manual_override_switch_SET((char)137) ;
+        p81.thrust_SET(-3.095517E38F) ;
+        p81.yaw_SET(-4.8794493E37F) ;
+        p81.pitch_SET(-2.8599792E38F) ;
+        p81.roll_SET(-2.1643806E38F) ;
         CommunicationChannel.instance.send(p81);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SET_ATTITUDE_TARGET.add((src, ph, pack) ->
         {
-            assert(pack.body_roll_rate_GET() == 1.0541395E38F);
-            assert(pack.type_mask_GET() == (char)211);
-            assert(pack.body_pitch_rate_GET() == 1.1925752E38F);
-            assert(pack.target_component_GET() == (char)208);
-            assert(pack.target_system_GET() == (char)196);
-            assert(pack.thrust_GET() == 3.9189152E37F);
-            assert(pack.time_boot_ms_GET() == 1987742391L);
-            assert(pack.body_yaw_rate_GET() == 2.7181911E38F);
-            assert(Arrays.equals(pack.q_GET(),  new float[] {-2.711795E38F, 2.771925E38F, 2.5655072E38F, -2.5332348E38F}));
+            assert(pack.type_mask_GET() == (char)200);
+            assert(pack.time_boot_ms_GET() == 2298914820L);
+            assert(pack.body_pitch_rate_GET() == -1.1702259E38F);
+            assert(pack.body_yaw_rate_GET() == 1.084455E38F);
+            assert(pack.thrust_GET() == 2.5280395E38F);
+            assert(pack.body_roll_rate_GET() == 2.6265215E38F);
+            assert(Arrays.equals(pack.q_GET(),  new float[] {-2.4159924E38F, -2.7162361E38F, 1.673057E38F, -3.0592104E38F}));
+            assert(pack.target_component_GET() == (char)127);
+            assert(pack.target_system_GET() == (char)181);
         });
         GroundControl.SET_ATTITUDE_TARGET p82 = CommunicationChannel.new_SET_ATTITUDE_TARGET();
         PH.setPack(p82);
-        p82.time_boot_ms_SET(1987742391L) ;
-        p82.body_roll_rate_SET(1.0541395E38F) ;
-        p82.type_mask_SET((char)211) ;
-        p82.target_component_SET((char)208) ;
-        p82.target_system_SET((char)196) ;
-        p82.body_pitch_rate_SET(1.1925752E38F) ;
-        p82.body_yaw_rate_SET(2.7181911E38F) ;
-        p82.q_SET(new float[] {-2.711795E38F, 2.771925E38F, 2.5655072E38F, -2.5332348E38F}, 0) ;
-        p82.thrust_SET(3.9189152E37F) ;
+        p82.type_mask_SET((char)200) ;
+        p82.body_roll_rate_SET(2.6265215E38F) ;
+        p82.q_SET(new float[] {-2.4159924E38F, -2.7162361E38F, 1.673057E38F, -3.0592104E38F}, 0) ;
+        p82.time_boot_ms_SET(2298914820L) ;
+        p82.target_system_SET((char)181) ;
+        p82.target_component_SET((char)127) ;
+        p82.body_pitch_rate_SET(-1.1702259E38F) ;
+        p82.body_yaw_rate_SET(1.084455E38F) ;
+        p82.thrust_SET(2.5280395E38F) ;
         CommunicationChannel.instance.send(p82);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_ATTITUDE_TARGET.add((src, ph, pack) ->
         {
-            assert(pack.type_mask_GET() == (char)137);
-            assert(pack.thrust_GET() == 3.0746642E37F);
-            assert(Arrays.equals(pack.q_GET(),  new float[] {2.0357162E38F, -1.1061467E37F, 1.9326045E38F, -1.8963037E38F}));
-            assert(pack.body_roll_rate_GET() == 3.925798E36F);
-            assert(pack.body_pitch_rate_GET() == 1.2447991E38F);
-            assert(pack.time_boot_ms_GET() == 3873318805L);
-            assert(pack.body_yaw_rate_GET() == -2.735208E38F);
+            assert(Arrays.equals(pack.q_GET(),  new float[] {-2.2281527E38F, -1.5528769E38F, -2.5826215E38F, 3.2677568E37F}));
+            assert(pack.body_yaw_rate_GET() == 1.9307765E38F);
+            assert(pack.time_boot_ms_GET() == 2354033198L);
+            assert(pack.body_roll_rate_GET() == -2.9260994E38F);
+            assert(pack.thrust_GET() == -3.7129694E37F);
+            assert(pack.type_mask_GET() == (char)141);
+            assert(pack.body_pitch_rate_GET() == 7.9508197E37F);
         });
         GroundControl.ATTITUDE_TARGET p83 = CommunicationChannel.new_ATTITUDE_TARGET();
         PH.setPack(p83);
-        p83.body_roll_rate_SET(3.925798E36F) ;
-        p83.thrust_SET(3.0746642E37F) ;
-        p83.type_mask_SET((char)137) ;
-        p83.body_yaw_rate_SET(-2.735208E38F) ;
-        p83.q_SET(new float[] {2.0357162E38F, -1.1061467E37F, 1.9326045E38F, -1.8963037E38F}, 0) ;
-        p83.body_pitch_rate_SET(1.2447991E38F) ;
-        p83.time_boot_ms_SET(3873318805L) ;
+        p83.type_mask_SET((char)141) ;
+        p83.time_boot_ms_SET(2354033198L) ;
+        p83.body_yaw_rate_SET(1.9307765E38F) ;
+        p83.q_SET(new float[] {-2.2281527E38F, -1.5528769E38F, -2.5826215E38F, 3.2677568E37F}, 0) ;
+        p83.body_roll_rate_SET(-2.9260994E38F) ;
+        p83.thrust_SET(-3.7129694E37F) ;
+        p83.body_pitch_rate_SET(7.9508197E37F) ;
         CommunicationChannel.instance.send(p83);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SET_POSITION_TARGET_LOCAL_NED.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)55);
-            assert(pack.vx_GET() == -1.3457156E38F);
-            assert(pack.x_GET() == -1.6799187E38F);
-            assert(pack.afy_GET() == -3.2699203E38F);
-            assert(pack.yaw_rate_GET() == -2.9077818E38F);
-            assert(pack.target_component_GET() == (char)187);
-            assert(pack.type_mask_GET() == (char)33847);
-            assert(pack.vy_GET() == 2.8843838E38F);
-            assert(pack.afz_GET() == -2.8840032E37F);
-            assert(pack.z_GET() == 2.1440961E38F);
-            assert(pack.y_GET() == -2.2768956E38F);
-            assert(pack.vz_GET() == 2.0889519E38F);
+            assert(pack.yaw_GET() == 3.2932508E38F);
+            assert(pack.x_GET() == 5.2567437E37F);
+            assert(pack.afz_GET() == -2.0589858E38F);
+            assert(pack.afx_GET() == 1.5352062E38F);
+            assert(pack.z_GET() == 1.6609097E38F);
+            assert(pack.target_component_GET() == (char)204);
+            assert(pack.target_system_GET() == (char)207);
+            assert(pack.type_mask_GET() == (char)20933);
+            assert(pack.afy_GET() == 9.511507E37F);
+            assert(pack.vz_GET() == -2.9160637E38F);
             assert(pack.coordinate_frame_GET() == MAV_FRAME.MAV_FRAME_GLOBAL_INT);
-            assert(pack.time_boot_ms_GET() == 955825672L);
-            assert(pack.yaw_GET() == -1.7016086E38F);
-            assert(pack.afx_GET() == -2.8261163E38F);
+            assert(pack.yaw_rate_GET() == -1.3883949E38F);
+            assert(pack.y_GET() == -3.367255E38F);
+            assert(pack.vx_GET() == -2.7126129E38F);
+            assert(pack.time_boot_ms_GET() == 131699878L);
+            assert(pack.vy_GET() == -8.906998E36F);
         });
         GroundControl.SET_POSITION_TARGET_LOCAL_NED p84 = CommunicationChannel.new_SET_POSITION_TARGET_LOCAL_NED();
         PH.setPack(p84);
-        p84.yaw_rate_SET(-2.9077818E38F) ;
-        p84.afx_SET(-2.8261163E38F) ;
-        p84.time_boot_ms_SET(955825672L) ;
-        p84.afy_SET(-3.2699203E38F) ;
-        p84.afz_SET(-2.8840032E37F) ;
-        p84.x_SET(-1.6799187E38F) ;
+        p84.yaw_SET(3.2932508E38F) ;
+        p84.x_SET(5.2567437E37F) ;
+        p84.z_SET(1.6609097E38F) ;
         p84.coordinate_frame_SET(MAV_FRAME.MAV_FRAME_GLOBAL_INT) ;
-        p84.vz_SET(2.0889519E38F) ;
-        p84.vy_SET(2.8843838E38F) ;
-        p84.target_component_SET((char)187) ;
-        p84.type_mask_SET((char)33847) ;
-        p84.vx_SET(-1.3457156E38F) ;
-        p84.y_SET(-2.2768956E38F) ;
-        p84.yaw_SET(-1.7016086E38F) ;
-        p84.z_SET(2.1440961E38F) ;
-        p84.target_system_SET((char)55) ;
+        p84.afy_SET(9.511507E37F) ;
+        p84.afz_SET(-2.0589858E38F) ;
+        p84.vy_SET(-8.906998E36F) ;
+        p84.target_system_SET((char)207) ;
+        p84.time_boot_ms_SET(131699878L) ;
+        p84.yaw_rate_SET(-1.3883949E38F) ;
+        p84.afx_SET(1.5352062E38F) ;
+        p84.type_mask_SET((char)20933) ;
+        p84.target_component_SET((char)204) ;
+        p84.vx_SET(-2.7126129E38F) ;
+        p84.y_SET(-3.367255E38F) ;
+        p84.vz_SET(-2.9160637E38F) ;
         CommunicationChannel.instance.send(p84);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SET_POSITION_TARGET_GLOBAL_INT.add((src, ph, pack) ->
         {
-            assert(pack.vy_GET() == 2.1400088E38F);
-            assert(pack.yaw_rate_GET() == -3.3633843E38F);
-            assert(pack.time_boot_ms_GET() == 115761556L);
-            assert(pack.afx_GET() == -4.1478542E37F);
-            assert(pack.vx_GET() == -4.5527145E36F);
-            assert(pack.target_system_GET() == (char)198);
-            assert(pack.target_component_GET() == (char)180);
-            assert(pack.lon_int_GET() == 1570733804);
-            assert(pack.type_mask_GET() == (char)22817);
-            assert(pack.yaw_GET() == 1.3584447E38F);
-            assert(pack.alt_GET() == 2.0492075E38F);
-            assert(pack.coordinate_frame_GET() == MAV_FRAME.MAV_FRAME_GLOBAL_INT);
-            assert(pack.vz_GET() == -2.6078686E38F);
-            assert(pack.lat_int_GET() == -1528698089);
-            assert(pack.afy_GET() == -6.0711367E37F);
-            assert(pack.afz_GET() == 2.9805068E38F);
+            assert(pack.time_boot_ms_GET() == 3008590644L);
+            assert(pack.lat_int_GET() == 93330543);
+            assert(pack.target_system_GET() == (char)186);
+            assert(pack.afx_GET() == 1.0514015E38F);
+            assert(pack.vx_GET() == -2.5640016E38F);
+            assert(pack.afy_GET() == 2.6607802E38F);
+            assert(pack.vy_GET() == -3.0021009E37F);
+            assert(pack.yaw_rate_GET() == -1.1081189E37F);
+            assert(pack.type_mask_GET() == (char)36071);
+            assert(pack.alt_GET() == -3.2179513E38F);
+            assert(pack.target_component_GET() == (char)204);
+            assert(pack.yaw_GET() == -1.3755258E38F);
+            assert(pack.lon_int_GET() == -2027215610);
+            assert(pack.afz_GET() == -2.8083606E38F);
+            assert(pack.vz_GET() == -1.8714752E38F);
+            assert(pack.coordinate_frame_GET() == MAV_FRAME.MAV_FRAME_GLOBAL);
         });
         GroundControl.SET_POSITION_TARGET_GLOBAL_INT p86 = CommunicationChannel.new_SET_POSITION_TARGET_GLOBAL_INT();
         PH.setPack(p86);
-        p86.lon_int_SET(1570733804) ;
-        p86.time_boot_ms_SET(115761556L) ;
-        p86.afx_SET(-4.1478542E37F) ;
-        p86.vz_SET(-2.6078686E38F) ;
-        p86.coordinate_frame_SET(MAV_FRAME.MAV_FRAME_GLOBAL_INT) ;
-        p86.yaw_rate_SET(-3.3633843E38F) ;
-        p86.target_component_SET((char)180) ;
-        p86.type_mask_SET((char)22817) ;
-        p86.afz_SET(2.9805068E38F) ;
-        p86.yaw_SET(1.3584447E38F) ;
-        p86.vx_SET(-4.5527145E36F) ;
-        p86.alt_SET(2.0492075E38F) ;
-        p86.lat_int_SET(-1528698089) ;
-        p86.target_system_SET((char)198) ;
-        p86.afy_SET(-6.0711367E37F) ;
-        p86.vy_SET(2.1400088E38F) ;
+        p86.type_mask_SET((char)36071) ;
+        p86.target_component_SET((char)204) ;
+        p86.lat_int_SET(93330543) ;
+        p86.afx_SET(1.0514015E38F) ;
+        p86.coordinate_frame_SET(MAV_FRAME.MAV_FRAME_GLOBAL) ;
+        p86.afz_SET(-2.8083606E38F) ;
+        p86.vx_SET(-2.5640016E38F) ;
+        p86.time_boot_ms_SET(3008590644L) ;
+        p86.yaw_SET(-1.3755258E38F) ;
+        p86.afy_SET(2.6607802E38F) ;
+        p86.yaw_rate_SET(-1.1081189E37F) ;
+        p86.vy_SET(-3.0021009E37F) ;
+        p86.vz_SET(-1.8714752E38F) ;
+        p86.target_system_SET((char)186) ;
+        p86.lon_int_SET(-2027215610) ;
+        p86.alt_SET(-3.2179513E38F) ;
         CommunicationChannel.instance.send(p86);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_POSITION_TARGET_GLOBAL_INT.add((src, ph, pack) ->
         {
-            assert(pack.afy_GET() == -1.5471949E38F);
-            assert(pack.vx_GET() == -1.1101542E38F);
-            assert(pack.afz_GET() == -5.957085E37F);
-            assert(pack.lat_int_GET() == -177184748);
-            assert(pack.afx_GET() == -1.9322942E38F);
-            assert(pack.vz_GET() == -2.9354273E38F);
-            assert(pack.vy_GET() == -4.1179356E37F);
-            assert(pack.yaw_GET() == 2.3039775E38F);
-            assert(pack.time_boot_ms_GET() == 2305562605L);
-            assert(pack.lon_int_GET() == -1151014580);
-            assert(pack.alt_GET() == -7.329276E37F);
-            assert(pack.coordinate_frame_GET() == MAV_FRAME.MAV_FRAME_BODY_NED);
-            assert(pack.type_mask_GET() == (char)2079);
-            assert(pack.yaw_rate_GET() == -2.293282E38F);
+            assert(pack.yaw_rate_GET() == -3.2335921E38F);
+            assert(pack.lon_int_GET() == 1157948456);
+            assert(pack.lat_int_GET() == -116289994);
+            assert(pack.afx_GET() == 3.3339718E38F);
+            assert(pack.vy_GET() == 7.5168633E37F);
+            assert(pack.type_mask_GET() == (char)31791);
+            assert(pack.yaw_GET() == 9.774546E37F);
+            assert(pack.time_boot_ms_GET() == 3242209300L);
+            assert(pack.vz_GET() == 9.069543E37F);
+            assert(pack.afz_GET() == -1.1241034E38F);
+            assert(pack.coordinate_frame_GET() == MAV_FRAME.MAV_FRAME_GLOBAL);
+            assert(pack.afy_GET() == 1.1523767E38F);
+            assert(pack.vx_GET() == 1.5278294E38F);
+            assert(pack.alt_GET() == -2.9782094E38F);
         });
         GroundControl.POSITION_TARGET_GLOBAL_INT p87 = CommunicationChannel.new_POSITION_TARGET_GLOBAL_INT();
         PH.setPack(p87);
-        p87.lon_int_SET(-1151014580) ;
-        p87.vy_SET(-4.1179356E37F) ;
-        p87.yaw_rate_SET(-2.293282E38F) ;
-        p87.vz_SET(-2.9354273E38F) ;
-        p87.vx_SET(-1.1101542E38F) ;
-        p87.afy_SET(-1.5471949E38F) ;
-        p87.afx_SET(-1.9322942E38F) ;
-        p87.lat_int_SET(-177184748) ;
-        p87.afz_SET(-5.957085E37F) ;
-        p87.type_mask_SET((char)2079) ;
-        p87.alt_SET(-7.329276E37F) ;
-        p87.time_boot_ms_SET(2305562605L) ;
-        p87.yaw_SET(2.3039775E38F) ;
-        p87.coordinate_frame_SET(MAV_FRAME.MAV_FRAME_BODY_NED) ;
+        p87.time_boot_ms_SET(3242209300L) ;
+        p87.lat_int_SET(-116289994) ;
+        p87.coordinate_frame_SET(MAV_FRAME.MAV_FRAME_GLOBAL) ;
+        p87.yaw_rate_SET(-3.2335921E38F) ;
+        p87.afy_SET(1.1523767E38F) ;
+        p87.afz_SET(-1.1241034E38F) ;
+        p87.lon_int_SET(1157948456) ;
+        p87.afx_SET(3.3339718E38F) ;
+        p87.yaw_SET(9.774546E37F) ;
+        p87.vx_SET(1.5278294E38F) ;
+        p87.type_mask_SET((char)31791) ;
+        p87.vz_SET(9.069543E37F) ;
+        p87.alt_SET(-2.9782094E38F) ;
+        p87.vy_SET(7.5168633E37F) ;
         CommunicationChannel.instance.send(p87);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET.add((src, ph, pack) ->
         {
-            assert(pack.time_boot_ms_GET() == 3009931848L);
-            assert(pack.x_GET() == 1.5347742E38F);
-            assert(pack.yaw_GET() == 2.1156298E38F);
-            assert(pack.pitch_GET() == -9.772337E37F);
-            assert(pack.z_GET() == 3.0589202E38F);
-            assert(pack.y_GET() == 8.883663E37F);
-            assert(pack.roll_GET() == 2.7829306E38F);
+            assert(pack.yaw_GET() == -6.6542423E37F);
+            assert(pack.x_GET() == -3.0416187E38F);
+            assert(pack.z_GET() == -1.4184426E38F);
+            assert(pack.pitch_GET() == 3.330357E36F);
+            assert(pack.time_boot_ms_GET() == 3018583018L);
+            assert(pack.roll_GET() == 2.9842684E38F);
+            assert(pack.y_GET() == -1.8565465E38F);
         });
         GroundControl.LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET p89 = CommunicationChannel.new_LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET();
         PH.setPack(p89);
-        p89.pitch_SET(-9.772337E37F) ;
-        p89.roll_SET(2.7829306E38F) ;
-        p89.yaw_SET(2.1156298E38F) ;
-        p89.x_SET(1.5347742E38F) ;
-        p89.time_boot_ms_SET(3009931848L) ;
-        p89.y_SET(8.883663E37F) ;
-        p89.z_SET(3.0589202E38F) ;
+        p89.pitch_SET(3.330357E36F) ;
+        p89.roll_SET(2.9842684E38F) ;
+        p89.z_SET(-1.4184426E38F) ;
+        p89.time_boot_ms_SET(3018583018L) ;
+        p89.y_SET(-1.8565465E38F) ;
+        p89.yaw_SET(-6.6542423E37F) ;
+        p89.x_SET(-3.0416187E38F) ;
         CommunicationChannel.instance.send(p89);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_HIL_STATE.add((src, ph, pack) ->
         {
-            assert(pack.alt_GET() == 1733015662);
-            assert(pack.vy_GET() == (short)7997);
-            assert(pack.vz_GET() == (short)24183);
-            assert(pack.xacc_GET() == (short) -3574);
-            assert(pack.lon_GET() == -1922496971);
-            assert(pack.zacc_GET() == (short)555);
-            assert(pack.time_usec_GET() == 8214909504196034891L);
-            assert(pack.roll_GET() == 6.1935907E37F);
-            assert(pack.yacc_GET() == (short) -15633);
-            assert(pack.yaw_GET() == 7.331721E37F);
-            assert(pack.rollspeed_GET() == -8.491353E37F);
-            assert(pack.pitch_GET() == -2.31264E38F);
-            assert(pack.yawspeed_GET() == 3.0020398E38F);
-            assert(pack.lat_GET() == 900256309);
-            assert(pack.vx_GET() == (short) -30874);
-            assert(pack.pitchspeed_GET() == 2.2167009E38F);
+            assert(pack.yacc_GET() == (short)13086);
+            assert(pack.rollspeed_GET() == -2.9308076E38F);
+            assert(pack.lat_GET() == 726184928);
+            assert(pack.zacc_GET() == (short)28960);
+            assert(pack.vx_GET() == (short) -16209);
+            assert(pack.alt_GET() == 1007265329);
+            assert(pack.vy_GET() == (short)20050);
+            assert(pack.pitch_GET() == 2.6524877E38F);
+            assert(pack.yaw_GET() == -7.601093E37F);
+            assert(pack.xacc_GET() == (short) -18778);
+            assert(pack.time_usec_GET() == 369553237896127264L);
+            assert(pack.yawspeed_GET() == -1.7471637E38F);
+            assert(pack.roll_GET() == -2.1498517E38F);
+            assert(pack.pitchspeed_GET() == 5.4923655E37F);
+            assert(pack.lon_GET() == -456500923);
+            assert(pack.vz_GET() == (short)24307);
         });
         GroundControl.HIL_STATE p90 = CommunicationChannel.new_HIL_STATE();
         PH.setPack(p90);
-        p90.yacc_SET((short) -15633) ;
-        p90.vz_SET((short)24183) ;
-        p90.vx_SET((short) -30874) ;
-        p90.lat_SET(900256309) ;
-        p90.lon_SET(-1922496971) ;
-        p90.time_usec_SET(8214909504196034891L) ;
-        p90.pitchspeed_SET(2.2167009E38F) ;
-        p90.pitch_SET(-2.31264E38F) ;
-        p90.xacc_SET((short) -3574) ;
-        p90.rollspeed_SET(-8.491353E37F) ;
-        p90.vy_SET((short)7997) ;
-        p90.yaw_SET(7.331721E37F) ;
-        p90.alt_SET(1733015662) ;
-        p90.zacc_SET((short)555) ;
-        p90.yawspeed_SET(3.0020398E38F) ;
-        p90.roll_SET(6.1935907E37F) ;
+        p90.yawspeed_SET(-1.7471637E38F) ;
+        p90.lon_SET(-456500923) ;
+        p90.rollspeed_SET(-2.9308076E38F) ;
+        p90.pitchspeed_SET(5.4923655E37F) ;
+        p90.yaw_SET(-7.601093E37F) ;
+        p90.pitch_SET(2.6524877E38F) ;
+        p90.vz_SET((short)24307) ;
+        p90.xacc_SET((short) -18778) ;
+        p90.zacc_SET((short)28960) ;
+        p90.roll_SET(-2.1498517E38F) ;
+        p90.time_usec_SET(369553237896127264L) ;
+        p90.yacc_SET((short)13086) ;
+        p90.lat_SET(726184928) ;
+        p90.alt_SET(1007265329) ;
+        p90.vx_SET((short) -16209) ;
+        p90.vy_SET((short)20050) ;
         CommunicationChannel.instance.send(p90);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_HIL_CONTROLS.add((src, ph, pack) ->
         {
-            assert(pack.mode_GET() == MAV_MODE.MAV_MODE_GUIDED_ARMED);
-            assert(pack.aux4_GET() == -1.9399583E38F);
-            assert(pack.aux3_GET() == -2.3626176E38F);
-            assert(pack.throttle_GET() == -9.1277815E36F);
-            assert(pack.aux2_GET() == 2.190758E38F);
-            assert(pack.roll_ailerons_GET() == -2.0097256E38F);
-            assert(pack.nav_mode_GET() == (char)118);
-            assert(pack.yaw_rudder_GET() == -7.335486E37F);
-            assert(pack.aux1_GET() == -1.9473914E38F);
-            assert(pack.pitch_elevator_GET() == 9.49703E37F);
-            assert(pack.time_usec_GET() == 6765324872623006914L);
+            assert(pack.throttle_GET() == 2.415857E38F);
+            assert(pack.mode_GET() == MAV_MODE.MAV_MODE_PREFLIGHT);
+            assert(pack.nav_mode_GET() == (char)152);
+            assert(pack.time_usec_GET() == 1998100200890026983L);
+            assert(pack.roll_ailerons_GET() == 3.3796664E38F);
+            assert(pack.pitch_elevator_GET() == 1.181046E38F);
+            assert(pack.aux2_GET() == 4.274556E37F);
+            assert(pack.aux3_GET() == 2.060666E38F);
+            assert(pack.aux1_GET() == -2.293305E38F);
+            assert(pack.yaw_rudder_GET() == -2.4707423E38F);
+            assert(pack.aux4_GET() == 2.8943262E38F);
         });
         GroundControl.HIL_CONTROLS p91 = CommunicationChannel.new_HIL_CONTROLS();
         PH.setPack(p91);
-        p91.time_usec_SET(6765324872623006914L) ;
-        p91.nav_mode_SET((char)118) ;
-        p91.aux3_SET(-2.3626176E38F) ;
-        p91.mode_SET(MAV_MODE.MAV_MODE_GUIDED_ARMED) ;
-        p91.yaw_rudder_SET(-7.335486E37F) ;
-        p91.roll_ailerons_SET(-2.0097256E38F) ;
-        p91.pitch_elevator_SET(9.49703E37F) ;
-        p91.aux4_SET(-1.9399583E38F) ;
-        p91.throttle_SET(-9.1277815E36F) ;
-        p91.aux1_SET(-1.9473914E38F) ;
-        p91.aux2_SET(2.190758E38F) ;
+        p91.throttle_SET(2.415857E38F) ;
+        p91.aux2_SET(4.274556E37F) ;
+        p91.pitch_elevator_SET(1.181046E38F) ;
+        p91.time_usec_SET(1998100200890026983L) ;
+        p91.aux1_SET(-2.293305E38F) ;
+        p91.roll_ailerons_SET(3.3796664E38F) ;
+        p91.aux4_SET(2.8943262E38F) ;
+        p91.mode_SET(MAV_MODE.MAV_MODE_PREFLIGHT) ;
+        p91.yaw_rudder_SET(-2.4707423E38F) ;
+        p91.nav_mode_SET((char)152) ;
+        p91.aux3_SET(2.060666E38F) ;
         CommunicationChannel.instance.send(p91);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_HIL_RC_INPUTS_RAW.add((src, ph, pack) ->
         {
-            assert(pack.chan10_raw_GET() == (char)60240);
-            assert(pack.chan4_raw_GET() == (char)13276);
-            assert(pack.chan9_raw_GET() == (char)3144);
-            assert(pack.rssi_GET() == (char)172);
-            assert(pack.chan7_raw_GET() == (char)20154);
-            assert(pack.time_usec_GET() == 3193251876007990161L);
-            assert(pack.chan1_raw_GET() == (char)32982);
-            assert(pack.chan11_raw_GET() == (char)28664);
-            assert(pack.chan3_raw_GET() == (char)32566);
-            assert(pack.chan12_raw_GET() == (char)41537);
-            assert(pack.chan6_raw_GET() == (char)25537);
-            assert(pack.chan2_raw_GET() == (char)21778);
-            assert(pack.chan8_raw_GET() == (char)49853);
-            assert(pack.chan5_raw_GET() == (char)32523);
+            assert(pack.chan2_raw_GET() == (char)45849);
+            assert(pack.chan7_raw_GET() == (char)13738);
+            assert(pack.chan6_raw_GET() == (char)55502);
+            assert(pack.chan1_raw_GET() == (char)45851);
+            assert(pack.chan5_raw_GET() == (char)17144);
+            assert(pack.chan10_raw_GET() == (char)6875);
+            assert(pack.time_usec_GET() == 5843740097014236687L);
+            assert(pack.chan9_raw_GET() == (char)59729);
+            assert(pack.chan4_raw_GET() == (char)62456);
+            assert(pack.chan8_raw_GET() == (char)22898);
+            assert(pack.chan11_raw_GET() == (char)40767);
+            assert(pack.chan3_raw_GET() == (char)64860);
+            assert(pack.chan12_raw_GET() == (char)16439);
+            assert(pack.rssi_GET() == (char)58);
         });
         GroundControl.HIL_RC_INPUTS_RAW p92 = CommunicationChannel.new_HIL_RC_INPUTS_RAW();
         PH.setPack(p92);
-        p92.chan11_raw_SET((char)28664) ;
-        p92.time_usec_SET(3193251876007990161L) ;
-        p92.chan4_raw_SET((char)13276) ;
-        p92.chan2_raw_SET((char)21778) ;
-        p92.chan9_raw_SET((char)3144) ;
-        p92.chan3_raw_SET((char)32566) ;
-        p92.rssi_SET((char)172) ;
-        p92.chan12_raw_SET((char)41537) ;
-        p92.chan5_raw_SET((char)32523) ;
-        p92.chan7_raw_SET((char)20154) ;
-        p92.chan6_raw_SET((char)25537) ;
-        p92.chan8_raw_SET((char)49853) ;
-        p92.chan1_raw_SET((char)32982) ;
-        p92.chan10_raw_SET((char)60240) ;
+        p92.rssi_SET((char)58) ;
+        p92.chan3_raw_SET((char)64860) ;
+        p92.chan10_raw_SET((char)6875) ;
+        p92.chan9_raw_SET((char)59729) ;
+        p92.chan11_raw_SET((char)40767) ;
+        p92.chan4_raw_SET((char)62456) ;
+        p92.chan6_raw_SET((char)55502) ;
+        p92.chan2_raw_SET((char)45849) ;
+        p92.chan5_raw_SET((char)17144) ;
+        p92.chan12_raw_SET((char)16439) ;
+        p92.time_usec_SET(5843740097014236687L) ;
+        p92.chan7_raw_SET((char)13738) ;
+        p92.chan8_raw_SET((char)22898) ;
+        p92.chan1_raw_SET((char)45851) ;
         CommunicationChannel.instance.send(p92);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_HIL_ACTUATOR_CONTROLS.add((src, ph, pack) ->
         {
-            assert(Arrays.equals(pack.controls_GET(),  new float[] {9.1687076E36F, 1.6249254E38F, -9.980525E37F, 8.623264E37F, -2.8461626E38F, 2.1697091E38F, -1.2541567E38F, -3.1655195E38F, 2.4756633E37F, -1.4857402E38F, 1.1825969E38F, -1.2865671E38F, -1.0117913E38F, 2.203631E38F, -1.5769119E38F, -9.142047E37F}));
-            assert(pack.mode_GET() == MAV_MODE.MAV_MODE_TEST_ARMED);
-            assert(pack.time_usec_GET() == 8728112059250454554L);
-            assert(pack.flags_GET() == 5105925787245393100L);
+            assert(pack.flags_GET() == 839877903242395306L);
+            assert(pack.time_usec_GET() == 1667053576666549594L);
+            assert(Arrays.equals(pack.controls_GET(),  new float[] {1.6878652E38F, -3.304193E38F, 2.9460873E38F, 8.165344E37F, -1.9991941E38F, -8.0673634E37F, 3.299434E37F, -2.1500431E38F, 1.1256598E38F, 3.9009313E37F, -1.1255932E38F, -2.0398084E38F, -2.700621E38F, 2.018239E38F, 2.7675723E38F, -1.3240478E38F}));
+            assert(pack.mode_GET() == MAV_MODE.MAV_MODE_PREFLIGHT);
         });
         GroundControl.HIL_ACTUATOR_CONTROLS p93 = CommunicationChannel.new_HIL_ACTUATOR_CONTROLS();
         PH.setPack(p93);
-        p93.controls_SET(new float[] {9.1687076E36F, 1.6249254E38F, -9.980525E37F, 8.623264E37F, -2.8461626E38F, 2.1697091E38F, -1.2541567E38F, -3.1655195E38F, 2.4756633E37F, -1.4857402E38F, 1.1825969E38F, -1.2865671E38F, -1.0117913E38F, 2.203631E38F, -1.5769119E38F, -9.142047E37F}, 0) ;
-        p93.flags_SET(5105925787245393100L) ;
-        p93.mode_SET(MAV_MODE.MAV_MODE_TEST_ARMED) ;
-        p93.time_usec_SET(8728112059250454554L) ;
+        p93.controls_SET(new float[] {1.6878652E38F, -3.304193E38F, 2.9460873E38F, 8.165344E37F, -1.9991941E38F, -8.0673634E37F, 3.299434E37F, -2.1500431E38F, 1.1256598E38F, 3.9009313E37F, -1.1255932E38F, -2.0398084E38F, -2.700621E38F, 2.018239E38F, 2.7675723E38F, -1.3240478E38F}, 0) ;
+        p93.time_usec_SET(1667053576666549594L) ;
+        p93.mode_SET(MAV_MODE.MAV_MODE_PREFLIGHT) ;
+        p93.flags_SET(839877903242395306L) ;
         CommunicationChannel.instance.send(p93);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_OPTICAL_FLOW.add((src, ph, pack) ->
         {
-            assert(pack.flow_rate_y_TRY(ph) == -1.0695719E38F);
-            assert(pack.flow_comp_m_x_GET() == 2.642533E38F);
-            assert(pack.quality_GET() == (char)71);
-            assert(pack.time_usec_GET() == 9202422133877395226L);
-            assert(pack.flow_comp_m_y_GET() == 2.0008918E38F);
-            assert(pack.flow_y_GET() == (short) -21943);
-            assert(pack.ground_distance_GET() == -3.4185147E37F);
-            assert(pack.flow_rate_x_TRY(ph) == -1.7826504E38F);
-            assert(pack.sensor_id_GET() == (char)219);
-            assert(pack.flow_x_GET() == (short)25375);
+            assert(pack.flow_comp_m_y_GET() == -3.0571098E38F);
+            assert(pack.flow_y_GET() == (short) -2679);
+            assert(pack.flow_x_GET() == (short)28636);
+            assert(pack.quality_GET() == (char)76);
+            assert(pack.time_usec_GET() == 7832637838684372271L);
+            assert(pack.sensor_id_GET() == (char)35);
+            assert(pack.flow_rate_x_TRY(ph) == 6.3344597E37F);
+            assert(pack.ground_distance_GET() == 1.1346631E38F);
+            assert(pack.flow_comp_m_x_GET() == 2.6785331E38F);
+            assert(pack.flow_rate_y_TRY(ph) == 1.6936536E36F);
         });
         GroundControl.OPTICAL_FLOW p100 = CommunicationChannel.new_OPTICAL_FLOW();
         PH.setPack(p100);
-        p100.quality_SET((char)71) ;
-        p100.time_usec_SET(9202422133877395226L) ;
-        p100.ground_distance_SET(-3.4185147E37F) ;
-        p100.flow_rate_x_SET(-1.7826504E38F, PH) ;
-        p100.flow_y_SET((short) -21943) ;
-        p100.sensor_id_SET((char)219) ;
-        p100.flow_comp_m_y_SET(2.0008918E38F) ;
-        p100.flow_x_SET((short)25375) ;
-        p100.flow_rate_y_SET(-1.0695719E38F, PH) ;
-        p100.flow_comp_m_x_SET(2.642533E38F) ;
+        p100.flow_y_SET((short) -2679) ;
+        p100.ground_distance_SET(1.1346631E38F) ;
+        p100.flow_rate_y_SET(1.6936536E36F, PH) ;
+        p100.time_usec_SET(7832637838684372271L) ;
+        p100.flow_comp_m_x_SET(2.6785331E38F) ;
+        p100.flow_x_SET((short)28636) ;
+        p100.quality_SET((char)76) ;
+        p100.sensor_id_SET((char)35) ;
+        p100.flow_rate_x_SET(6.3344597E37F, PH) ;
+        p100.flow_comp_m_y_SET(-3.0571098E38F) ;
         CommunicationChannel.instance.send(p100);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_GLOBAL_VISION_POSITION_ESTIMATE.add((src, ph, pack) ->
         {
-            assert(pack.y_GET() == -2.8944098E38F);
-            assert(pack.x_GET() == 2.8560789E38F);
-            assert(pack.yaw_GET() == -1.5976973E38F);
-            assert(pack.pitch_GET() == 3.3527336E38F);
-            assert(pack.roll_GET() == 5.354551E37F);
-            assert(pack.z_GET() == 2.9925055E38F);
-            assert(pack.usec_GET() == 3524702726395005637L);
+            assert(pack.yaw_GET() == -2.8323797E38F);
+            assert(pack.x_GET() == 1.2363417E38F);
+            assert(pack.roll_GET() == 3.219382E38F);
+            assert(pack.z_GET() == 1.1286453E38F);
+            assert(pack.y_GET() == -1.9360246E38F);
+            assert(pack.usec_GET() == 5966154938955506495L);
+            assert(pack.pitch_GET() == 3.004491E38F);
         });
         GroundControl.GLOBAL_VISION_POSITION_ESTIMATE p101 = CommunicationChannel.new_GLOBAL_VISION_POSITION_ESTIMATE();
         PH.setPack(p101);
-        p101.x_SET(2.8560789E38F) ;
-        p101.roll_SET(5.354551E37F) ;
-        p101.y_SET(-2.8944098E38F) ;
-        p101.usec_SET(3524702726395005637L) ;
-        p101.yaw_SET(-1.5976973E38F) ;
-        p101.z_SET(2.9925055E38F) ;
-        p101.pitch_SET(3.3527336E38F) ;
+        p101.roll_SET(3.219382E38F) ;
+        p101.x_SET(1.2363417E38F) ;
+        p101.yaw_SET(-2.8323797E38F) ;
+        p101.usec_SET(5966154938955506495L) ;
+        p101.z_SET(1.1286453E38F) ;
+        p101.pitch_SET(3.004491E38F) ;
+        p101.y_SET(-1.9360246E38F) ;
         CommunicationChannel.instance.send(p101);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_VISION_POSITION_ESTIMATE.add((src, ph, pack) ->
         {
-            assert(pack.x_GET() == 2.2797266E38F);
-            assert(pack.yaw_GET() == 1.0914321E37F);
-            assert(pack.pitch_GET() == -1.9955928E38F);
-            assert(pack.roll_GET() == 2.5443703E38F);
-            assert(pack.y_GET() == 2.3880748E38F);
-            assert(pack.z_GET() == -2.2342395E38F);
-            assert(pack.usec_GET() == 5211757554916255540L);
+            assert(pack.roll_GET() == 2.7900178E38F);
+            assert(pack.y_GET() == 3.1154887E38F);
+            assert(pack.usec_GET() == 9192247506153848575L);
+            assert(pack.x_GET() == -2.4976303E38F);
+            assert(pack.z_GET() == -7.0957975E37F);
+            assert(pack.pitch_GET() == -1.909783E38F);
+            assert(pack.yaw_GET() == 1.5357737E38F);
         });
         GroundControl.VISION_POSITION_ESTIMATE p102 = CommunicationChannel.new_VISION_POSITION_ESTIMATE();
         PH.setPack(p102);
-        p102.usec_SET(5211757554916255540L) ;
-        p102.y_SET(2.3880748E38F) ;
-        p102.z_SET(-2.2342395E38F) ;
-        p102.roll_SET(2.5443703E38F) ;
-        p102.pitch_SET(-1.9955928E38F) ;
-        p102.x_SET(2.2797266E38F) ;
-        p102.yaw_SET(1.0914321E37F) ;
+        p102.yaw_SET(1.5357737E38F) ;
+        p102.x_SET(-2.4976303E38F) ;
+        p102.z_SET(-7.0957975E37F) ;
+        p102.pitch_SET(-1.909783E38F) ;
+        p102.usec_SET(9192247506153848575L) ;
+        p102.y_SET(3.1154887E38F) ;
+        p102.roll_SET(2.7900178E38F) ;
         CommunicationChannel.instance.send(p102);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_VISION_SPEED_ESTIMATE.add((src, ph, pack) ->
         {
-            assert(pack.z_GET() == 1.4305934E38F);
-            assert(pack.x_GET() == -2.6557655E38F);
-            assert(pack.usec_GET() == 3605291234233379308L);
-            assert(pack.y_GET() == 1.5332963E38F);
+            assert(pack.z_GET() == -1.3738691E38F);
+            assert(pack.usec_GET() == 162055721828084645L);
+            assert(pack.y_GET() == 3.8648154E37F);
+            assert(pack.x_GET() == 2.8555607E38F);
         });
         GroundControl.VISION_SPEED_ESTIMATE p103 = CommunicationChannel.new_VISION_SPEED_ESTIMATE();
         PH.setPack(p103);
-        p103.usec_SET(3605291234233379308L) ;
-        p103.z_SET(1.4305934E38F) ;
-        p103.x_SET(-2.6557655E38F) ;
-        p103.y_SET(1.5332963E38F) ;
+        p103.usec_SET(162055721828084645L) ;
+        p103.z_SET(-1.3738691E38F) ;
+        p103.x_SET(2.8555607E38F) ;
+        p103.y_SET(3.8648154E37F) ;
         CommunicationChannel.instance.send(p103);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_VICON_POSITION_ESTIMATE.add((src, ph, pack) ->
         {
-            assert(pack.y_GET() == -1.7938094E38F);
-            assert(pack.yaw_GET() == -1.0125172E38F);
-            assert(pack.usec_GET() == 8755875737972756862L);
-            assert(pack.x_GET() == 1.4681696E38F);
-            assert(pack.pitch_GET() == 3.011917E38F);
-            assert(pack.roll_GET() == -1.8736663E38F);
-            assert(pack.z_GET() == -1.5566347E38F);
+            assert(pack.roll_GET() == 5.9993466E37F);
+            assert(pack.yaw_GET() == -7.322639E37F);
+            assert(pack.x_GET() == -3.0961295E38F);
+            assert(pack.usec_GET() == 8458906576412012378L);
+            assert(pack.y_GET() == 2.9077045E37F);
+            assert(pack.z_GET() == -1.5247555E38F);
+            assert(pack.pitch_GET() == -8.953922E37F);
         });
         GroundControl.VICON_POSITION_ESTIMATE p104 = CommunicationChannel.new_VICON_POSITION_ESTIMATE();
         PH.setPack(p104);
-        p104.pitch_SET(3.011917E38F) ;
-        p104.usec_SET(8755875737972756862L) ;
-        p104.x_SET(1.4681696E38F) ;
-        p104.y_SET(-1.7938094E38F) ;
-        p104.roll_SET(-1.8736663E38F) ;
-        p104.yaw_SET(-1.0125172E38F) ;
-        p104.z_SET(-1.5566347E38F) ;
+        p104.z_SET(-1.5247555E38F) ;
+        p104.x_SET(-3.0961295E38F) ;
+        p104.roll_SET(5.9993466E37F) ;
+        p104.y_SET(2.9077045E37F) ;
+        p104.yaw_SET(-7.322639E37F) ;
+        p104.usec_SET(8458906576412012378L) ;
+        p104.pitch_SET(-8.953922E37F) ;
         CommunicationChannel.instance.send(p104);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_HIGHRES_IMU.add((src, ph, pack) ->
         {
-            assert(pack.pressure_alt_GET() == 2.1941898E38F);
-            assert(pack.diff_pressure_GET() == 1.2772046E38F);
-            assert(pack.time_usec_GET() == 555536603121528535L);
-            assert(pack.xmag_GET() == 3.3030326E38F);
-            assert(pack.zacc_GET() == -2.7557179E38F);
-            assert(pack.xacc_GET() == 1.6516469E38F);
-            assert(pack.abs_pressure_GET() == 7.9241574E37F);
-            assert(pack.ymag_GET() == 3.4486303E37F);
-            assert(pack.fields_updated_GET() == (char)46365);
-            assert(pack.zgyro_GET() == 9.515304E37F);
-            assert(pack.ygyro_GET() == 3.3499342E38F);
-            assert(pack.zmag_GET() == 2.2844139E38F);
-            assert(pack.temperature_GET() == 1.8253889E38F);
-            assert(pack.xgyro_GET() == 2.3286125E38F);
-            assert(pack.yacc_GET() == -2.490437E38F);
+            assert(pack.diff_pressure_GET() == 2.0629795E38F);
+            assert(pack.temperature_GET() == 2.5745349E38F);
+            assert(pack.zacc_GET() == 1.7281473E38F);
+            assert(pack.pressure_alt_GET() == 3.6743048E37F);
+            assert(pack.xgyro_GET() == 1.6391513E38F);
+            assert(pack.ymag_GET() == -8.152848E37F);
+            assert(pack.ygyro_GET() == -2.2968928E38F);
+            assert(pack.fields_updated_GET() == (char)50456);
+            assert(pack.abs_pressure_GET() == 2.6743823E38F);
+            assert(pack.xacc_GET() == -1.9294151E38F);
+            assert(pack.zgyro_GET() == -1.957903E38F);
+            assert(pack.xmag_GET() == 3.0207163E38F);
+            assert(pack.zmag_GET() == 1.7495858E38F);
+            assert(pack.yacc_GET() == 6.919246E37F);
+            assert(pack.time_usec_GET() == 1117029234714051586L);
         });
         GroundControl.HIGHRES_IMU p105 = CommunicationChannel.new_HIGHRES_IMU();
         PH.setPack(p105);
-        p105.zmag_SET(2.2844139E38F) ;
-        p105.xacc_SET(1.6516469E38F) ;
-        p105.ygyro_SET(3.3499342E38F) ;
-        p105.pressure_alt_SET(2.1941898E38F) ;
-        p105.zgyro_SET(9.515304E37F) ;
-        p105.fields_updated_SET((char)46365) ;
-        p105.yacc_SET(-2.490437E38F) ;
-        p105.time_usec_SET(555536603121528535L) ;
-        p105.ymag_SET(3.4486303E37F) ;
-        p105.zacc_SET(-2.7557179E38F) ;
-        p105.diff_pressure_SET(1.2772046E38F) ;
-        p105.temperature_SET(1.8253889E38F) ;
-        p105.xmag_SET(3.3030326E38F) ;
-        p105.abs_pressure_SET(7.9241574E37F) ;
-        p105.xgyro_SET(2.3286125E38F) ;
+        p105.time_usec_SET(1117029234714051586L) ;
+        p105.xgyro_SET(1.6391513E38F) ;
+        p105.temperature_SET(2.5745349E38F) ;
+        p105.ymag_SET(-8.152848E37F) ;
+        p105.zacc_SET(1.7281473E38F) ;
+        p105.zgyro_SET(-1.957903E38F) ;
+        p105.xmag_SET(3.0207163E38F) ;
+        p105.zmag_SET(1.7495858E38F) ;
+        p105.abs_pressure_SET(2.6743823E38F) ;
+        p105.fields_updated_SET((char)50456) ;
+        p105.yacc_SET(6.919246E37F) ;
+        p105.diff_pressure_SET(2.0629795E38F) ;
+        p105.ygyro_SET(-2.2968928E38F) ;
+        p105.pressure_alt_SET(3.6743048E37F) ;
+        p105.xacc_SET(-1.9294151E38F) ;
         CommunicationChannel.instance.send(p105);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_OPTICAL_FLOW_RAD.add((src, ph, pack) ->
         {
-            assert(pack.integrated_y_GET() == -1.7143068E38F);
-            assert(pack.temperature_GET() == (short)26759);
-            assert(pack.integrated_x_GET() == 2.5074305E38F);
-            assert(pack.integrated_ygyro_GET() == 2.9343036E37F);
-            assert(pack.distance_GET() == 1.1812033E38F);
-            assert(pack.time_usec_GET() == 7568542673307806966L);
-            assert(pack.sensor_id_GET() == (char)188);
-            assert(pack.time_delta_distance_us_GET() == 2087961403L);
-            assert(pack.integrated_xgyro_GET() == -1.58446E38F);
-            assert(pack.integration_time_us_GET() == 742255790L);
-            assert(pack.integrated_zgyro_GET() == -2.9028808E37F);
-            assert(pack.quality_GET() == (char)76);
+            assert(pack.time_usec_GET() == 3020047837188688863L);
+            assert(pack.quality_GET() == (char)103);
+            assert(pack.distance_GET() == -1.3620528E38F);
+            assert(pack.integrated_xgyro_GET() == 1.7730724E38F);
+            assert(pack.time_delta_distance_us_GET() == 3023382215L);
+            assert(pack.integrated_ygyro_GET() == 1.3226862E38F);
+            assert(pack.integrated_zgyro_GET() == 4.746083E37F);
+            assert(pack.sensor_id_GET() == (char)251);
+            assert(pack.integration_time_us_GET() == 3872828945L);
+            assert(pack.integrated_x_GET() == -7.8713116E37F);
+            assert(pack.integrated_y_GET() == -1.2286245E38F);
+            assert(pack.temperature_GET() == (short) -25247);
         });
         GroundControl.OPTICAL_FLOW_RAD p106 = CommunicationChannel.new_OPTICAL_FLOW_RAD();
         PH.setPack(p106);
-        p106.integrated_y_SET(-1.7143068E38F) ;
-        p106.sensor_id_SET((char)188) ;
-        p106.quality_SET((char)76) ;
-        p106.integration_time_us_SET(742255790L) ;
-        p106.integrated_x_SET(2.5074305E38F) ;
-        p106.time_usec_SET(7568542673307806966L) ;
-        p106.integrated_ygyro_SET(2.9343036E37F) ;
-        p106.distance_SET(1.1812033E38F) ;
-        p106.integrated_zgyro_SET(-2.9028808E37F) ;
-        p106.integrated_xgyro_SET(-1.58446E38F) ;
-        p106.time_delta_distance_us_SET(2087961403L) ;
-        p106.temperature_SET((short)26759) ;
+        p106.integrated_zgyro_SET(4.746083E37F) ;
+        p106.integration_time_us_SET(3872828945L) ;
+        p106.quality_SET((char)103) ;
+        p106.temperature_SET((short) -25247) ;
+        p106.integrated_xgyro_SET(1.7730724E38F) ;
+        p106.integrated_ygyro_SET(1.3226862E38F) ;
+        p106.distance_SET(-1.3620528E38F) ;
+        p106.integrated_x_SET(-7.8713116E37F) ;
+        p106.time_delta_distance_us_SET(3023382215L) ;
+        p106.sensor_id_SET((char)251) ;
+        p106.time_usec_SET(3020047837188688863L) ;
+        p106.integrated_y_SET(-1.2286245E38F) ;
         CommunicationChannel.instance.send(p106);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_HIL_SENSOR.add((src, ph, pack) ->
         {
-            assert(pack.fields_updated_GET() == 780058560L);
-            assert(pack.xgyro_GET() == 6.4138415E37F);
-            assert(pack.ygyro_GET() == 2.96947E38F);
-            assert(pack.pressure_alt_GET() == -2.5996684E38F);
-            assert(pack.xmag_GET() == -2.248727E35F);
-            assert(pack.xacc_GET() == -9.004371E37F);
-            assert(pack.abs_pressure_GET() == 3.2070806E38F);
-            assert(pack.zacc_GET() == 5.553476E37F);
-            assert(pack.time_usec_GET() == 8000816367270196073L);
-            assert(pack.ymag_GET() == -2.6600798E38F);
-            assert(pack.yacc_GET() == 9.518738E36F);
-            assert(pack.zmag_GET() == 2.6606536E38F);
-            assert(pack.diff_pressure_GET() == 1.8893776E38F);
-            assert(pack.zgyro_GET() == -3.767707E37F);
-            assert(pack.temperature_GET() == 1.6511441E38F);
+            assert(pack.pressure_alt_GET() == 2.7659814E38F);
+            assert(pack.temperature_GET() == 2.9313532E38F);
+            assert(pack.xmag_GET() == -2.0726396E38F);
+            assert(pack.zacc_GET() == 3.258863E38F);
+            assert(pack.zmag_GET() == -2.5603358E38F);
+            assert(pack.diff_pressure_GET() == -2.9972386E38F);
+            assert(pack.abs_pressure_GET() == -3.1937418E38F);
+            assert(pack.xgyro_GET() == -3.1539407E38F);
+            assert(pack.fields_updated_GET() == 743192093L);
+            assert(pack.yacc_GET() == 8.473716E37F);
+            assert(pack.zgyro_GET() == 2.291729E38F);
+            assert(pack.ymag_GET() == 1.6024586E38F);
+            assert(pack.ygyro_GET() == 6.9711925E37F);
+            assert(pack.xacc_GET() == -2.6583574E38F);
+            assert(pack.time_usec_GET() == 4058170582585916591L);
         });
         GroundControl.HIL_SENSOR p107 = CommunicationChannel.new_HIL_SENSOR();
         PH.setPack(p107);
-        p107.xmag_SET(-2.248727E35F) ;
-        p107.diff_pressure_SET(1.8893776E38F) ;
-        p107.ygyro_SET(2.96947E38F) ;
-        p107.zacc_SET(5.553476E37F) ;
-        p107.pressure_alt_SET(-2.5996684E38F) ;
-        p107.time_usec_SET(8000816367270196073L) ;
-        p107.abs_pressure_SET(3.2070806E38F) ;
-        p107.temperature_SET(1.6511441E38F) ;
-        p107.zmag_SET(2.6606536E38F) ;
-        p107.xgyro_SET(6.4138415E37F) ;
-        p107.xacc_SET(-9.004371E37F) ;
-        p107.zgyro_SET(-3.767707E37F) ;
-        p107.yacc_SET(9.518738E36F) ;
-        p107.fields_updated_SET(780058560L) ;
-        p107.ymag_SET(-2.6600798E38F) ;
+        p107.zgyro_SET(2.291729E38F) ;
+        p107.time_usec_SET(4058170582585916591L) ;
+        p107.abs_pressure_SET(-3.1937418E38F) ;
+        p107.diff_pressure_SET(-2.9972386E38F) ;
+        p107.zmag_SET(-2.5603358E38F) ;
+        p107.zacc_SET(3.258863E38F) ;
+        p107.fields_updated_SET(743192093L) ;
+        p107.yacc_SET(8.473716E37F) ;
+        p107.ymag_SET(1.6024586E38F) ;
+        p107.xgyro_SET(-3.1539407E38F) ;
+        p107.ygyro_SET(6.9711925E37F) ;
+        p107.xacc_SET(-2.6583574E38F) ;
+        p107.pressure_alt_SET(2.7659814E38F) ;
+        p107.xmag_SET(-2.0726396E38F) ;
+        p107.temperature_SET(2.9313532E38F) ;
         CommunicationChannel.instance.send(p107);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SIM_STATE.add((src, ph, pack) ->
         {
-            assert(pack.lat_GET() == -1.5271218E38F);
-            assert(pack.std_dev_horz_GET() == -2.3732946E38F);
-            assert(pack.pitch_GET() == 1.4396465E38F);
-            assert(pack.vn_GET() == 3.8802554E37F);
-            assert(pack.std_dev_vert_GET() == 2.2595587E36F);
-            assert(pack.q2_GET() == -1.0531691E38F);
-            assert(pack.ygyro_GET() == -1.9926147E38F);
-            assert(pack.ve_GET() == -1.3601718E38F);
-            assert(pack.yacc_GET() == -1.7202063E38F);
-            assert(pack.xacc_GET() == 1.4201185E38F);
-            assert(pack.zgyro_GET() == -1.7074479E38F);
-            assert(pack.roll_GET() == 2.4679861E38F);
-            assert(pack.alt_GET() == 2.04302E38F);
-            assert(pack.xgyro_GET() == -3.3364598E38F);
-            assert(pack.lon_GET() == -3.0794606E38F);
-            assert(pack.zacc_GET() == 8.656432E37F);
-            assert(pack.q3_GET() == -4.197407E37F);
-            assert(pack.q1_GET() == -3.203418E38F);
-            assert(pack.yaw_GET() == 2.8301736E38F);
-            assert(pack.vd_GET() == 2.9869385E38F);
-            assert(pack.q4_GET() == -2.245828E38F);
+            assert(pack.xacc_GET() == -1.2117783E38F);
+            assert(pack.q1_GET() == -1.0762095E38F);
+            assert(pack.vd_GET() == 2.4505436E38F);
+            assert(pack.vn_GET() == -2.0489613E37F);
+            assert(pack.xgyro_GET() == 6.383984E36F);
+            assert(pack.zacc_GET() == -3.0502042E38F);
+            assert(pack.roll_GET() == 2.3337715E38F);
+            assert(pack.std_dev_vert_GET() == -1.1386072E38F);
+            assert(pack.ve_GET() == -2.6281995E38F);
+            assert(pack.ygyro_GET() == -1.8393505E38F);
+            assert(pack.lon_GET() == 9.900265E37F);
+            assert(pack.q3_GET() == 4.9751133E37F);
+            assert(pack.yacc_GET() == -3.2011695E38F);
+            assert(pack.std_dev_horz_GET() == 8.548929E37F);
+            assert(pack.q2_GET() == -2.7422355E38F);
+            assert(pack.pitch_GET() == 2.7578195E38F);
+            assert(pack.yaw_GET() == 1.0092684E38F);
+            assert(pack.lat_GET() == 1.1814683E38F);
+            assert(pack.zgyro_GET() == -1.3127339E38F);
+            assert(pack.q4_GET() == -2.066717E38F);
+            assert(pack.alt_GET() == 1.0864499E38F);
         });
         GroundControl.SIM_STATE p108 = CommunicationChannel.new_SIM_STATE();
         PH.setPack(p108);
-        p108.lat_SET(-1.5271218E38F) ;
-        p108.ygyro_SET(-1.9926147E38F) ;
-        p108.yaw_SET(2.8301736E38F) ;
-        p108.pitch_SET(1.4396465E38F) ;
-        p108.std_dev_horz_SET(-2.3732946E38F) ;
-        p108.yacc_SET(-1.7202063E38F) ;
-        p108.q2_SET(-1.0531691E38F) ;
-        p108.lon_SET(-3.0794606E38F) ;
-        p108.xacc_SET(1.4201185E38F) ;
-        p108.zgyro_SET(-1.7074479E38F) ;
-        p108.roll_SET(2.4679861E38F) ;
-        p108.q4_SET(-2.245828E38F) ;
-        p108.zacc_SET(8.656432E37F) ;
-        p108.q1_SET(-3.203418E38F) ;
-        p108.alt_SET(2.04302E38F) ;
-        p108.vd_SET(2.9869385E38F) ;
-        p108.xgyro_SET(-3.3364598E38F) ;
-        p108.ve_SET(-1.3601718E38F) ;
-        p108.vn_SET(3.8802554E37F) ;
-        p108.std_dev_vert_SET(2.2595587E36F) ;
-        p108.q3_SET(-4.197407E37F) ;
+        p108.yacc_SET(-3.2011695E38F) ;
+        p108.lon_SET(9.900265E37F) ;
+        p108.q1_SET(-1.0762095E38F) ;
+        p108.q4_SET(-2.066717E38F) ;
+        p108.roll_SET(2.3337715E38F) ;
+        p108.zgyro_SET(-1.3127339E38F) ;
+        p108.std_dev_vert_SET(-1.1386072E38F) ;
+        p108.yaw_SET(1.0092684E38F) ;
+        p108.pitch_SET(2.7578195E38F) ;
+        p108.xgyro_SET(6.383984E36F) ;
+        p108.vd_SET(2.4505436E38F) ;
+        p108.xacc_SET(-1.2117783E38F) ;
+        p108.alt_SET(1.0864499E38F) ;
+        p108.vn_SET(-2.0489613E37F) ;
+        p108.q2_SET(-2.7422355E38F) ;
+        p108.lat_SET(1.1814683E38F) ;
+        p108.zacc_SET(-3.0502042E38F) ;
+        p108.ve_SET(-2.6281995E38F) ;
+        p108.q3_SET(4.9751133E37F) ;
+        p108.std_dev_horz_SET(8.548929E37F) ;
+        p108.ygyro_SET(-1.8393505E38F) ;
         CommunicationChannel.instance.send(p108);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_RADIO_STATUS.add((src, ph, pack) ->
         {
-            assert(pack.txbuf_GET() == (char)237);
-            assert(pack.noise_GET() == (char)155);
-            assert(pack.remnoise_GET() == (char)158);
-            assert(pack.remrssi_GET() == (char)43);
-            assert(pack.rxerrors_GET() == (char)33329);
-            assert(pack.rssi_GET() == (char)228);
-            assert(pack.fixed__GET() == (char)41257);
+            assert(pack.rssi_GET() == (char)20);
+            assert(pack.remrssi_GET() == (char)159);
+            assert(pack.noise_GET() == (char)69);
+            assert(pack.txbuf_GET() == (char)16);
+            assert(pack.remnoise_GET() == (char)237);
+            assert(pack.fixed__GET() == (char)5862);
+            assert(pack.rxerrors_GET() == (char)58785);
         });
         GroundControl.RADIO_STATUS p109 = CommunicationChannel.new_RADIO_STATUS();
         PH.setPack(p109);
-        p109.remrssi_SET((char)43) ;
-        p109.noise_SET((char)155) ;
-        p109.remnoise_SET((char)158) ;
-        p109.rxerrors_SET((char)33329) ;
-        p109.fixed__SET((char)41257) ;
-        p109.rssi_SET((char)228) ;
-        p109.txbuf_SET((char)237) ;
+        p109.remnoise_SET((char)237) ;
+        p109.remrssi_SET((char)159) ;
+        p109.rxerrors_SET((char)58785) ;
+        p109.txbuf_SET((char)16) ;
+        p109.fixed__SET((char)5862) ;
+        p109.noise_SET((char)69) ;
+        p109.rssi_SET((char)20) ;
         CommunicationChannel.instance.send(p109);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_FILE_TRANSFER_PROTOCOL.add((src, ph, pack) ->
         {
-            assert(pack.target_network_GET() == (char)202);
-            assert(pack.target_component_GET() == (char)159);
-            assert(pack.target_system_GET() == (char)148);
-            assert(Arrays.equals(pack.payload_GET(),  new char[] {(char)190, (char)19, (char)190, (char)189, (char)187, (char)122, (char)230, (char)70, (char)103, (char)63, (char)137, (char)81, (char)207, (char)236, (char)131, (char)241, (char)252, (char)157, (char)251, (char)250, (char)167, (char)12, (char)231, (char)162, (char)200, (char)147, (char)133, (char)180, (char)249, (char)119, (char)231, (char)113, (char)20, (char)189, (char)0, (char)37, (char)109, (char)109, (char)206, (char)229, (char)14, (char)82, (char)80, (char)184, (char)81, (char)30, (char)68, (char)107, (char)79, (char)16, (char)208, (char)219, (char)14, (char)84, (char)20, (char)11, (char)198, (char)56, (char)214, (char)176, (char)239, (char)98, (char)169, (char)196, (char)235, (char)23, (char)185, (char)1, (char)0, (char)45, (char)130, (char)159, (char)58, (char)252, (char)77, (char)246, (char)183, (char)91, (char)220, (char)141, (char)121, (char)158, (char)210, (char)31, (char)2, (char)66, (char)128, (char)203, (char)232, (char)104, (char)139, (char)27, (char)245, (char)84, (char)210, (char)148, (char)19, (char)205, (char)235, (char)64, (char)12, (char)205, (char)231, (char)15, (char)255, (char)119, (char)43, (char)61, (char)253, (char)60, (char)37, (char)187, (char)128, (char)48, (char)185, (char)24, (char)91, (char)35, (char)231, (char)34, (char)178, (char)53, (char)99, (char)41, (char)91, (char)116, (char)156, (char)151, (char)68, (char)232, (char)96, (char)245, (char)133, (char)53, (char)1, (char)135, (char)234, (char)93, (char)163, (char)32, (char)245, (char)190, (char)112, (char)119, (char)162, (char)101, (char)8, (char)98, (char)134, (char)10, (char)203, (char)187, (char)232, (char)54, (char)174, (char)136, (char)185, (char)102, (char)220, (char)205, (char)97, (char)136, (char)164, (char)139, (char)15, (char)102, (char)207, (char)114, (char)250, (char)199, (char)53, (char)14, (char)39, (char)252, (char)21, (char)212, (char)144, (char)112, (char)101, (char)33, (char)248, (char)156, (char)128, (char)46, (char)159, (char)245, (char)44, (char)193, (char)164, (char)69, (char)64, (char)7, (char)55, (char)57, (char)107, (char)209, (char)22, (char)140, (char)168, (char)50, (char)4, (char)144, (char)7, (char)95, (char)135, (char)123, (char)23, (char)123, (char)33, (char)61, (char)125, (char)239, (char)36, (char)241, (char)140, (char)135, (char)181, (char)213, (char)63, (char)104, (char)221, (char)239, (char)17, (char)107, (char)174, (char)27, (char)158, (char)180, (char)198, (char)193, (char)245, (char)114, (char)56, (char)128, (char)27, (char)120, (char)70, (char)161, (char)186, (char)184, (char)27, (char)90, (char)16, (char)226, (char)180, (char)181, (char)238, (char)193, (char)179, (char)125, (char)30}));
+            assert(pack.target_network_GET() == (char)199);
+            assert(pack.target_system_GET() == (char)185);
+            assert(Arrays.equals(pack.payload_GET(),  new char[] {(char)50, (char)106, (char)91, (char)54, (char)159, (char)48, (char)0, (char)83, (char)94, (char)183, (char)126, (char)251, (char)100, (char)6, (char)129, (char)56, (char)5, (char)79, (char)243, (char)179, (char)219, (char)1, (char)17, (char)177, (char)92, (char)141, (char)101, (char)7, (char)16, (char)123, (char)222, (char)33, (char)75, (char)54, (char)177, (char)230, (char)201, (char)236, (char)159, (char)73, (char)87, (char)252, (char)41, (char)62, (char)161, (char)11, (char)64, (char)188, (char)63, (char)37, (char)251, (char)222, (char)132, (char)160, (char)59, (char)111, (char)99, (char)250, (char)90, (char)211, (char)225, (char)114, (char)153, (char)19, (char)82, (char)76, (char)250, (char)218, (char)195, (char)84, (char)228, (char)250, (char)239, (char)215, (char)125, (char)141, (char)23, (char)45, (char)154, (char)157, (char)74, (char)26, (char)255, (char)115, (char)147, (char)86, (char)65, (char)196, (char)16, (char)115, (char)91, (char)67, (char)209, (char)18, (char)244, (char)13, (char)178, (char)179, (char)154, (char)168, (char)185, (char)64, (char)213, (char)137, (char)78, (char)146, (char)134, (char)158, (char)148, (char)24, (char)144, (char)29, (char)138, (char)49, (char)28, (char)24, (char)144, (char)143, (char)121, (char)24, (char)83, (char)186, (char)1, (char)141, (char)91, (char)159, (char)15, (char)36, (char)70, (char)54, (char)246, (char)87, (char)254, (char)31, (char)70, (char)130, (char)5, (char)113, (char)42, (char)164, (char)86, (char)48, (char)16, (char)250, (char)123, (char)145, (char)124, (char)248, (char)194, (char)126, (char)17, (char)182, (char)93, (char)136, (char)117, (char)178, (char)142, (char)208, (char)211, (char)101, (char)161, (char)181, (char)48, (char)8, (char)114, (char)156, (char)56, (char)186, (char)95, (char)203, (char)128, (char)147, (char)152, (char)68, (char)41, (char)88, (char)123, (char)43, (char)80, (char)244, (char)30, (char)136, (char)153, (char)58, (char)162, (char)228, (char)154, (char)126, (char)141, (char)69, (char)151, (char)30, (char)89, (char)41, (char)141, (char)175, (char)221, (char)237, (char)22, (char)113, (char)185, (char)142, (char)211, (char)233, (char)236, (char)95, (char)29, (char)186, (char)186, (char)172, (char)210, (char)174, (char)101, (char)113, (char)121, (char)191, (char)32, (char)143, (char)64, (char)86, (char)246, (char)137, (char)19, (char)137, (char)51, (char)146, (char)94, (char)221, (char)10, (char)23, (char)90, (char)66, (char)92, (char)54, (char)40, (char)43, (char)47, (char)231, (char)87, (char)45, (char)66, (char)86, (char)135, (char)154, (char)126, (char)144, (char)132, (char)21, (char)74, (char)108, (char)85}));
+            assert(pack.target_component_GET() == (char)206);
         });
         GroundControl.FILE_TRANSFER_PROTOCOL p110 = CommunicationChannel.new_FILE_TRANSFER_PROTOCOL();
         PH.setPack(p110);
-        p110.target_network_SET((char)202) ;
-        p110.target_system_SET((char)148) ;
-        p110.target_component_SET((char)159) ;
-        p110.payload_SET(new char[] {(char)190, (char)19, (char)190, (char)189, (char)187, (char)122, (char)230, (char)70, (char)103, (char)63, (char)137, (char)81, (char)207, (char)236, (char)131, (char)241, (char)252, (char)157, (char)251, (char)250, (char)167, (char)12, (char)231, (char)162, (char)200, (char)147, (char)133, (char)180, (char)249, (char)119, (char)231, (char)113, (char)20, (char)189, (char)0, (char)37, (char)109, (char)109, (char)206, (char)229, (char)14, (char)82, (char)80, (char)184, (char)81, (char)30, (char)68, (char)107, (char)79, (char)16, (char)208, (char)219, (char)14, (char)84, (char)20, (char)11, (char)198, (char)56, (char)214, (char)176, (char)239, (char)98, (char)169, (char)196, (char)235, (char)23, (char)185, (char)1, (char)0, (char)45, (char)130, (char)159, (char)58, (char)252, (char)77, (char)246, (char)183, (char)91, (char)220, (char)141, (char)121, (char)158, (char)210, (char)31, (char)2, (char)66, (char)128, (char)203, (char)232, (char)104, (char)139, (char)27, (char)245, (char)84, (char)210, (char)148, (char)19, (char)205, (char)235, (char)64, (char)12, (char)205, (char)231, (char)15, (char)255, (char)119, (char)43, (char)61, (char)253, (char)60, (char)37, (char)187, (char)128, (char)48, (char)185, (char)24, (char)91, (char)35, (char)231, (char)34, (char)178, (char)53, (char)99, (char)41, (char)91, (char)116, (char)156, (char)151, (char)68, (char)232, (char)96, (char)245, (char)133, (char)53, (char)1, (char)135, (char)234, (char)93, (char)163, (char)32, (char)245, (char)190, (char)112, (char)119, (char)162, (char)101, (char)8, (char)98, (char)134, (char)10, (char)203, (char)187, (char)232, (char)54, (char)174, (char)136, (char)185, (char)102, (char)220, (char)205, (char)97, (char)136, (char)164, (char)139, (char)15, (char)102, (char)207, (char)114, (char)250, (char)199, (char)53, (char)14, (char)39, (char)252, (char)21, (char)212, (char)144, (char)112, (char)101, (char)33, (char)248, (char)156, (char)128, (char)46, (char)159, (char)245, (char)44, (char)193, (char)164, (char)69, (char)64, (char)7, (char)55, (char)57, (char)107, (char)209, (char)22, (char)140, (char)168, (char)50, (char)4, (char)144, (char)7, (char)95, (char)135, (char)123, (char)23, (char)123, (char)33, (char)61, (char)125, (char)239, (char)36, (char)241, (char)140, (char)135, (char)181, (char)213, (char)63, (char)104, (char)221, (char)239, (char)17, (char)107, (char)174, (char)27, (char)158, (char)180, (char)198, (char)193, (char)245, (char)114, (char)56, (char)128, (char)27, (char)120, (char)70, (char)161, (char)186, (char)184, (char)27, (char)90, (char)16, (char)226, (char)180, (char)181, (char)238, (char)193, (char)179, (char)125, (char)30}, 0) ;
+        p110.target_system_SET((char)185) ;
+        p110.payload_SET(new char[] {(char)50, (char)106, (char)91, (char)54, (char)159, (char)48, (char)0, (char)83, (char)94, (char)183, (char)126, (char)251, (char)100, (char)6, (char)129, (char)56, (char)5, (char)79, (char)243, (char)179, (char)219, (char)1, (char)17, (char)177, (char)92, (char)141, (char)101, (char)7, (char)16, (char)123, (char)222, (char)33, (char)75, (char)54, (char)177, (char)230, (char)201, (char)236, (char)159, (char)73, (char)87, (char)252, (char)41, (char)62, (char)161, (char)11, (char)64, (char)188, (char)63, (char)37, (char)251, (char)222, (char)132, (char)160, (char)59, (char)111, (char)99, (char)250, (char)90, (char)211, (char)225, (char)114, (char)153, (char)19, (char)82, (char)76, (char)250, (char)218, (char)195, (char)84, (char)228, (char)250, (char)239, (char)215, (char)125, (char)141, (char)23, (char)45, (char)154, (char)157, (char)74, (char)26, (char)255, (char)115, (char)147, (char)86, (char)65, (char)196, (char)16, (char)115, (char)91, (char)67, (char)209, (char)18, (char)244, (char)13, (char)178, (char)179, (char)154, (char)168, (char)185, (char)64, (char)213, (char)137, (char)78, (char)146, (char)134, (char)158, (char)148, (char)24, (char)144, (char)29, (char)138, (char)49, (char)28, (char)24, (char)144, (char)143, (char)121, (char)24, (char)83, (char)186, (char)1, (char)141, (char)91, (char)159, (char)15, (char)36, (char)70, (char)54, (char)246, (char)87, (char)254, (char)31, (char)70, (char)130, (char)5, (char)113, (char)42, (char)164, (char)86, (char)48, (char)16, (char)250, (char)123, (char)145, (char)124, (char)248, (char)194, (char)126, (char)17, (char)182, (char)93, (char)136, (char)117, (char)178, (char)142, (char)208, (char)211, (char)101, (char)161, (char)181, (char)48, (char)8, (char)114, (char)156, (char)56, (char)186, (char)95, (char)203, (char)128, (char)147, (char)152, (char)68, (char)41, (char)88, (char)123, (char)43, (char)80, (char)244, (char)30, (char)136, (char)153, (char)58, (char)162, (char)228, (char)154, (char)126, (char)141, (char)69, (char)151, (char)30, (char)89, (char)41, (char)141, (char)175, (char)221, (char)237, (char)22, (char)113, (char)185, (char)142, (char)211, (char)233, (char)236, (char)95, (char)29, (char)186, (char)186, (char)172, (char)210, (char)174, (char)101, (char)113, (char)121, (char)191, (char)32, (char)143, (char)64, (char)86, (char)246, (char)137, (char)19, (char)137, (char)51, (char)146, (char)94, (char)221, (char)10, (char)23, (char)90, (char)66, (char)92, (char)54, (char)40, (char)43, (char)47, (char)231, (char)87, (char)45, (char)66, (char)86, (char)135, (char)154, (char)126, (char)144, (char)132, (char)21, (char)74, (char)108, (char)85}, 0) ;
+        p110.target_network_SET((char)199) ;
+        p110.target_component_SET((char)206) ;
         CommunicationChannel.instance.send(p110);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_TIMESYNC.add((src, ph, pack) ->
         {
-            assert(pack.tc1_GET() == -2808071378317298162L);
-            assert(pack.ts1_GET() == 1397566783820132797L);
+            assert(pack.ts1_GET() == 2109633802772742322L);
+            assert(pack.tc1_GET() == 2358500994516534368L);
         });
         GroundControl.TIMESYNC p111 = CommunicationChannel.new_TIMESYNC();
         PH.setPack(p111);
-        p111.tc1_SET(-2808071378317298162L) ;
-        p111.ts1_SET(1397566783820132797L) ;
+        p111.ts1_SET(2109633802772742322L) ;
+        p111.tc1_SET(2358500994516534368L) ;
         CommunicationChannel.instance.send(p111);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_CAMERA_TRIGGER.add((src, ph, pack) ->
         {
-            assert(pack.seq_GET() == 1317780653L);
-            assert(pack.time_usec_GET() == 2525427965498549623L);
+            assert(pack.time_usec_GET() == 8417016417794540156L);
+            assert(pack.seq_GET() == 2418841936L);
         });
         GroundControl.CAMERA_TRIGGER p112 = CommunicationChannel.new_CAMERA_TRIGGER();
         PH.setPack(p112);
-        p112.time_usec_SET(2525427965498549623L) ;
-        p112.seq_SET(1317780653L) ;
+        p112.time_usec_SET(8417016417794540156L) ;
+        p112.seq_SET(2418841936L) ;
         CommunicationChannel.instance.send(p112);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_HIL_GPS.add((src, ph, pack) ->
         {
-            assert(pack.lat_GET() == 682055684);
-            assert(pack.lon_GET() == -342375576);
-            assert(pack.satellites_visible_GET() == (char)172);
-            assert(pack.eph_GET() == (char)20817);
-            assert(pack.fix_type_GET() == (char)57);
-            assert(pack.epv_GET() == (char)28099);
-            assert(pack.time_usec_GET() == 7316831151987268822L);
-            assert(pack.vd_GET() == (short)16539);
-            assert(pack.cog_GET() == (char)34033);
-            assert(pack.alt_GET() == 1430916243);
-            assert(pack.ve_GET() == (short) -5392);
-            assert(pack.vel_GET() == (char)62597);
-            assert(pack.vn_GET() == (short) -17337);
+            assert(pack.satellites_visible_GET() == (char)223);
+            assert(pack.cog_GET() == (char)19361);
+            assert(pack.time_usec_GET() == 5790010518372654374L);
+            assert(pack.vn_GET() == (short)21234);
+            assert(pack.alt_GET() == 1976844797);
+            assert(pack.lat_GET() == -1487267616);
+            assert(pack.fix_type_GET() == (char)177);
+            assert(pack.epv_GET() == (char)64355);
+            assert(pack.vd_GET() == (short)25705);
+            assert(pack.lon_GET() == 1643536249);
+            assert(pack.eph_GET() == (char)10373);
+            assert(pack.ve_GET() == (short)16396);
+            assert(pack.vel_GET() == (char)35777);
         });
         GroundControl.HIL_GPS p113 = CommunicationChannel.new_HIL_GPS();
         PH.setPack(p113);
-        p113.lon_SET(-342375576) ;
-        p113.fix_type_SET((char)57) ;
-        p113.ve_SET((short) -5392) ;
-        p113.time_usec_SET(7316831151987268822L) ;
-        p113.vn_SET((short) -17337) ;
-        p113.lat_SET(682055684) ;
-        p113.eph_SET((char)20817) ;
-        p113.satellites_visible_SET((char)172) ;
-        p113.alt_SET(1430916243) ;
-        p113.vel_SET((char)62597) ;
-        p113.cog_SET((char)34033) ;
-        p113.vd_SET((short)16539) ;
-        p113.epv_SET((char)28099) ;
+        p113.eph_SET((char)10373) ;
+        p113.cog_SET((char)19361) ;
+        p113.lat_SET(-1487267616) ;
+        p113.vd_SET((short)25705) ;
+        p113.epv_SET((char)64355) ;
+        p113.ve_SET((short)16396) ;
+        p113.vel_SET((char)35777) ;
+        p113.satellites_visible_SET((char)223) ;
+        p113.vn_SET((short)21234) ;
+        p113.lon_SET(1643536249) ;
+        p113.alt_SET(1976844797) ;
+        p113.time_usec_SET(5790010518372654374L) ;
+        p113.fix_type_SET((char)177) ;
         CommunicationChannel.instance.send(p113);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_HIL_OPTICAL_FLOW.add((src, ph, pack) ->
         {
-            assert(pack.integrated_xgyro_GET() == -3.19912E38F);
-            assert(pack.integration_time_us_GET() == 729887762L);
-            assert(pack.integrated_ygyro_GET() == -1.9295672E38F);
-            assert(pack.integrated_y_GET() == -3.293317E38F);
-            assert(pack.integrated_zgyro_GET() == -3.3960976E38F);
-            assert(pack.time_delta_distance_us_GET() == 2687301593L);
-            assert(pack.time_usec_GET() == 3646957447068446278L);
-            assert(pack.distance_GET() == -8.713121E36F);
-            assert(pack.integrated_x_GET() == -2.3127934E38F);
-            assert(pack.quality_GET() == (char)25);
-            assert(pack.sensor_id_GET() == (char)234);
-            assert(pack.temperature_GET() == (short) -19553);
+            assert(pack.distance_GET() == 2.9190854E38F);
+            assert(pack.temperature_GET() == (short) -30050);
+            assert(pack.time_usec_GET() == 3434038620429356855L);
+            assert(pack.sensor_id_GET() == (char)45);
+            assert(pack.integrated_ygyro_GET() == 2.5156149E38F);
+            assert(pack.integrated_x_GET() == 5.80053E37F);
+            assert(pack.quality_GET() == (char)199);
+            assert(pack.integrated_y_GET() == 2.5193063E38F);
+            assert(pack.integrated_zgyro_GET() == 3.9817113E37F);
+            assert(pack.time_delta_distance_us_GET() == 2769764444L);
+            assert(pack.integrated_xgyro_GET() == -2.349024E38F);
+            assert(pack.integration_time_us_GET() == 734693946L);
         });
         GroundControl.HIL_OPTICAL_FLOW p114 = CommunicationChannel.new_HIL_OPTICAL_FLOW();
         PH.setPack(p114);
-        p114.integrated_y_SET(-3.293317E38F) ;
-        p114.integrated_x_SET(-2.3127934E38F) ;
-        p114.sensor_id_SET((char)234) ;
-        p114.quality_SET((char)25) ;
-        p114.integrated_xgyro_SET(-3.19912E38F) ;
-        p114.time_delta_distance_us_SET(2687301593L) ;
-        p114.time_usec_SET(3646957447068446278L) ;
-        p114.integrated_zgyro_SET(-3.3960976E38F) ;
-        p114.distance_SET(-8.713121E36F) ;
-        p114.integration_time_us_SET(729887762L) ;
-        p114.temperature_SET((short) -19553) ;
-        p114.integrated_ygyro_SET(-1.9295672E38F) ;
+        p114.quality_SET((char)199) ;
+        p114.integrated_zgyro_SET(3.9817113E37F) ;
+        p114.sensor_id_SET((char)45) ;
+        p114.distance_SET(2.9190854E38F) ;
+        p114.integration_time_us_SET(734693946L) ;
+        p114.temperature_SET((short) -30050) ;
+        p114.integrated_y_SET(2.5193063E38F) ;
+        p114.integrated_x_SET(5.80053E37F) ;
+        p114.time_usec_SET(3434038620429356855L) ;
+        p114.time_delta_distance_us_SET(2769764444L) ;
+        p114.integrated_xgyro_SET(-2.349024E38F) ;
+        p114.integrated_ygyro_SET(2.5156149E38F) ;
         CommunicationChannel.instance.send(p114);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_HIL_STATE_QUATERNION.add((src, ph, pack) ->
         {
-            assert(pack.lat_GET() == 233171351);
-            assert(pack.vz_GET() == (short) -7074);
-            assert(pack.lon_GET() == 793923343);
-            assert(pack.true_airspeed_GET() == (char)57232);
-            assert(pack.xacc_GET() == (short) -10148);
-            assert(pack.time_usec_GET() == 6383831274047917978L);
-            assert(pack.pitchspeed_GET() == 2.665634E38F);
-            assert(pack.alt_GET() == 424452368);
-            assert(pack.vy_GET() == (short)17119);
-            assert(pack.ind_airspeed_GET() == (char)3045);
-            assert(Arrays.equals(pack.attitude_quaternion_GET(),  new float[] {-3.0708992E38F, -3.1211793E38F, -1.49942E38F, 5.732021E36F}));
-            assert(pack.rollspeed_GET() == -2.8348678E37F);
-            assert(pack.vx_GET() == (short)5138);
-            assert(pack.yawspeed_GET() == 1.2451276E38F);
-            assert(pack.zacc_GET() == (short) -4807);
-            assert(pack.yacc_GET() == (short)11802);
+            assert(pack.lat_GET() == -769845058);
+            assert(pack.time_usec_GET() == 5961664721094892402L);
+            assert(pack.lon_GET() == -1178800387);
+            assert(pack.yawspeed_GET() == 2.4431562E38F);
+            assert(pack.pitchspeed_GET() == -8.288653E37F);
+            assert(pack.true_airspeed_GET() == (char)57785);
+            assert(pack.vz_GET() == (short)30947);
+            assert(pack.yacc_GET() == (short) -24976);
+            assert(Arrays.equals(pack.attitude_quaternion_GET(),  new float[] {-3.2889088E37F, -2.2113402E38F, -2.5122178E38F, -2.9900933E38F}));
+            assert(pack.alt_GET() == -309011692);
+            assert(pack.rollspeed_GET() == 6.9223463E37F);
+            assert(pack.ind_airspeed_GET() == (char)49374);
+            assert(pack.vy_GET() == (short) -5002);
+            assert(pack.xacc_GET() == (short)19755);
+            assert(pack.zacc_GET() == (short)14048);
+            assert(pack.vx_GET() == (short) -27002);
         });
         GroundControl.HIL_STATE_QUATERNION p115 = CommunicationChannel.new_HIL_STATE_QUATERNION();
         PH.setPack(p115);
-        p115.lat_SET(233171351) ;
-        p115.vz_SET((short) -7074) ;
-        p115.pitchspeed_SET(2.665634E38F) ;
-        p115.xacc_SET((short) -10148) ;
-        p115.attitude_quaternion_SET(new float[] {-3.0708992E38F, -3.1211793E38F, -1.49942E38F, 5.732021E36F}, 0) ;
-        p115.yacc_SET((short)11802) ;
-        p115.time_usec_SET(6383831274047917978L) ;
-        p115.rollspeed_SET(-2.8348678E37F) ;
-        p115.lon_SET(793923343) ;
-        p115.true_airspeed_SET((char)57232) ;
-        p115.ind_airspeed_SET((char)3045) ;
-        p115.alt_SET(424452368) ;
-        p115.vx_SET((short)5138) ;
-        p115.zacc_SET((short) -4807) ;
-        p115.vy_SET((short)17119) ;
-        p115.yawspeed_SET(1.2451276E38F) ;
+        p115.vx_SET((short) -27002) ;
+        p115.lon_SET(-1178800387) ;
+        p115.vy_SET((short) -5002) ;
+        p115.lat_SET(-769845058) ;
+        p115.pitchspeed_SET(-8.288653E37F) ;
+        p115.vz_SET((short)30947) ;
+        p115.yacc_SET((short) -24976) ;
+        p115.true_airspeed_SET((char)57785) ;
+        p115.xacc_SET((short)19755) ;
+        p115.zacc_SET((short)14048) ;
+        p115.rollspeed_SET(6.9223463E37F) ;
+        p115.alt_SET(-309011692) ;
+        p115.ind_airspeed_SET((char)49374) ;
+        p115.attitude_quaternion_SET(new float[] {-3.2889088E37F, -2.2113402E38F, -2.5122178E38F, -2.9900933E38F}, 0) ;
+        p115.time_usec_SET(5961664721094892402L) ;
+        p115.yawspeed_SET(2.4431562E38F) ;
         CommunicationChannel.instance.send(p115);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SCALED_IMU2.add((src, ph, pack) ->
         {
-            assert(pack.ygyro_GET() == (short)2273);
-            assert(pack.yacc_GET() == (short)2320);
-            assert(pack.xmag_GET() == (short)30095);
-            assert(pack.xacc_GET() == (short)28459);
-            assert(pack.xgyro_GET() == (short)8596);
-            assert(pack.ymag_GET() == (short) -22105);
-            assert(pack.zgyro_GET() == (short)21237);
-            assert(pack.zmag_GET() == (short) -26932);
-            assert(pack.zacc_GET() == (short)25744);
-            assert(pack.time_boot_ms_GET() == 1778030204L);
+            assert(pack.ymag_GET() == (short)15991);
+            assert(pack.time_boot_ms_GET() == 1263286298L);
+            assert(pack.ygyro_GET() == (short) -23554);
+            assert(pack.zacc_GET() == (short)238);
+            assert(pack.zgyro_GET() == (short)22984);
+            assert(pack.xgyro_GET() == (short)8893);
+            assert(pack.xmag_GET() == (short)30812);
+            assert(pack.xacc_GET() == (short)24081);
+            assert(pack.zmag_GET() == (short) -31599);
+            assert(pack.yacc_GET() == (short) -29016);
         });
         GroundControl.SCALED_IMU2 p116 = CommunicationChannel.new_SCALED_IMU2();
         PH.setPack(p116);
-        p116.xmag_SET((short)30095) ;
-        p116.zacc_SET((short)25744) ;
-        p116.time_boot_ms_SET(1778030204L) ;
-        p116.xgyro_SET((short)8596) ;
-        p116.zmag_SET((short) -26932) ;
-        p116.ymag_SET((short) -22105) ;
-        p116.ygyro_SET((short)2273) ;
-        p116.zgyro_SET((short)21237) ;
-        p116.yacc_SET((short)2320) ;
-        p116.xacc_SET((short)28459) ;
+        p116.zmag_SET((short) -31599) ;
+        p116.zacc_SET((short)238) ;
+        p116.xgyro_SET((short)8893) ;
+        p116.time_boot_ms_SET(1263286298L) ;
+        p116.xacc_SET((short)24081) ;
+        p116.ymag_SET((short)15991) ;
+        p116.xmag_SET((short)30812) ;
+        p116.ygyro_SET((short) -23554) ;
+        p116.yacc_SET((short) -29016) ;
+        p116.zgyro_SET((short)22984) ;
         CommunicationChannel.instance.send(p116);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_LOG_REQUEST_LIST.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)139);
-            assert(pack.end_GET() == (char)21091);
-            assert(pack.start_GET() == (char)38806);
-            assert(pack.target_component_GET() == (char)10);
+            assert(pack.target_component_GET() == (char)232);
+            assert(pack.end_GET() == (char)2214);
+            assert(pack.target_system_GET() == (char)198);
+            assert(pack.start_GET() == (char)61096);
         });
         GroundControl.LOG_REQUEST_LIST p117 = CommunicationChannel.new_LOG_REQUEST_LIST();
         PH.setPack(p117);
-        p117.target_system_SET((char)139) ;
-        p117.target_component_SET((char)10) ;
-        p117.start_SET((char)38806) ;
-        p117.end_SET((char)21091) ;
+        p117.end_SET((char)2214) ;
+        p117.target_component_SET((char)232) ;
+        p117.target_system_SET((char)198) ;
+        p117.start_SET((char)61096) ;
         CommunicationChannel.instance.send(p117);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_LOG_ENTRY.add((src, ph, pack) ->
         {
-            assert(pack.last_log_num_GET() == (char)17125);
-            assert(pack.id_GET() == (char)37432);
-            assert(pack.size_GET() == 3079178440L);
-            assert(pack.num_logs_GET() == (char)19040);
-            assert(pack.time_utc_GET() == 1855515953L);
+            assert(pack.time_utc_GET() == 1333772601L);
+            assert(pack.size_GET() == 1499774650L);
+            assert(pack.id_GET() == (char)27513);
+            assert(pack.num_logs_GET() == (char)61478);
+            assert(pack.last_log_num_GET() == (char)17473);
         });
         GroundControl.LOG_ENTRY p118 = CommunicationChannel.new_LOG_ENTRY();
         PH.setPack(p118);
-        p118.num_logs_SET((char)19040) ;
-        p118.time_utc_SET(1855515953L) ;
-        p118.size_SET(3079178440L) ;
-        p118.last_log_num_SET((char)17125) ;
-        p118.id_SET((char)37432) ;
+        p118.time_utc_SET(1333772601L) ;
+        p118.num_logs_SET((char)61478) ;
+        p118.size_SET(1499774650L) ;
+        p118.last_log_num_SET((char)17473) ;
+        p118.id_SET((char)27513) ;
         CommunicationChannel.instance.send(p118);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_LOG_REQUEST_DATA.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)24);
-            assert(pack.count_GET() == 623931621L);
-            assert(pack.ofs_GET() == 2791770688L);
-            assert(pack.id_GET() == (char)18127);
-            assert(pack.target_component_GET() == (char)130);
+            assert(pack.count_GET() == 1679010252L);
+            assert(pack.ofs_GET() == 2160184549L);
+            assert(pack.id_GET() == (char)53406);
+            assert(pack.target_component_GET() == (char)225);
+            assert(pack.target_system_GET() == (char)41);
         });
         GroundControl.LOG_REQUEST_DATA p119 = CommunicationChannel.new_LOG_REQUEST_DATA();
         PH.setPack(p119);
-        p119.target_component_SET((char)130) ;
-        p119.target_system_SET((char)24) ;
-        p119.ofs_SET(2791770688L) ;
-        p119.count_SET(623931621L) ;
-        p119.id_SET((char)18127) ;
+        p119.count_SET(1679010252L) ;
+        p119.target_system_SET((char)41) ;
+        p119.id_SET((char)53406) ;
+        p119.ofs_SET(2160184549L) ;
+        p119.target_component_SET((char)225) ;
         CommunicationChannel.instance.send(p119);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_LOG_DATA.add((src, ph, pack) ->
         {
-            assert(Arrays.equals(pack.data__GET(),  new char[] {(char)116, (char)176, (char)209, (char)234, (char)5, (char)110, (char)244, (char)84, (char)112, (char)197, (char)81, (char)80, (char)198, (char)44, (char)204, (char)99, (char)123, (char)25, (char)164, (char)240, (char)20, (char)97, (char)71, (char)207, (char)82, (char)23, (char)74, (char)208, (char)198, (char)232, (char)152, (char)115, (char)173, (char)115, (char)211, (char)41, (char)151, (char)240, (char)146, (char)138, (char)64, (char)193, (char)39, (char)247, (char)56, (char)195, (char)72, (char)172, (char)174, (char)163, (char)74, (char)222, (char)242, (char)41, (char)251, (char)210, (char)9, (char)88, (char)213, (char)232, (char)159, (char)132, (char)115, (char)70, (char)60, (char)121, (char)230, (char)90, (char)132, (char)216, (char)22, (char)73, (char)60, (char)35, (char)127, (char)81, (char)143, (char)219, (char)251, (char)195, (char)230, (char)140, (char)109, (char)146, (char)150, (char)182, (char)187, (char)224, (char)101, (char)232}));
-            assert(pack.id_GET() == (char)49389);
-            assert(pack.count_GET() == (char)133);
-            assert(pack.ofs_GET() == 3399926350L);
+            assert(pack.count_GET() == (char)62);
+            assert(pack.ofs_GET() == 1293406439L);
+            assert(pack.id_GET() == (char)48864);
+            assert(Arrays.equals(pack.data__GET(),  new char[] {(char)113, (char)180, (char)111, (char)140, (char)166, (char)250, (char)86, (char)196, (char)49, (char)162, (char)22, (char)137, (char)18, (char)98, (char)80, (char)1, (char)99, (char)228, (char)8, (char)174, (char)151, (char)45, (char)249, (char)23, (char)85, (char)185, (char)1, (char)93, (char)249, (char)61, (char)204, (char)39, (char)90, (char)124, (char)227, (char)214, (char)191, (char)175, (char)136, (char)11, (char)127, (char)206, (char)205, (char)224, (char)1, (char)135, (char)71, (char)29, (char)49, (char)32, (char)47, (char)106, (char)163, (char)0, (char)11, (char)111, (char)25, (char)101, (char)115, (char)59, (char)48, (char)217, (char)198, (char)47, (char)95, (char)122, (char)4, (char)67, (char)63, (char)106, (char)161, (char)168, (char)1, (char)215, (char)182, (char)190, (char)169, (char)250, (char)244, (char)171, (char)16, (char)149, (char)244, (char)230, (char)33, (char)246, (char)172, (char)230, (char)103, (char)164}));
         });
         GroundControl.LOG_DATA p120 = CommunicationChannel.new_LOG_DATA();
         PH.setPack(p120);
-        p120.ofs_SET(3399926350L) ;
-        p120.data__SET(new char[] {(char)116, (char)176, (char)209, (char)234, (char)5, (char)110, (char)244, (char)84, (char)112, (char)197, (char)81, (char)80, (char)198, (char)44, (char)204, (char)99, (char)123, (char)25, (char)164, (char)240, (char)20, (char)97, (char)71, (char)207, (char)82, (char)23, (char)74, (char)208, (char)198, (char)232, (char)152, (char)115, (char)173, (char)115, (char)211, (char)41, (char)151, (char)240, (char)146, (char)138, (char)64, (char)193, (char)39, (char)247, (char)56, (char)195, (char)72, (char)172, (char)174, (char)163, (char)74, (char)222, (char)242, (char)41, (char)251, (char)210, (char)9, (char)88, (char)213, (char)232, (char)159, (char)132, (char)115, (char)70, (char)60, (char)121, (char)230, (char)90, (char)132, (char)216, (char)22, (char)73, (char)60, (char)35, (char)127, (char)81, (char)143, (char)219, (char)251, (char)195, (char)230, (char)140, (char)109, (char)146, (char)150, (char)182, (char)187, (char)224, (char)101, (char)232}, 0) ;
-        p120.id_SET((char)49389) ;
-        p120.count_SET((char)133) ;
+        p120.count_SET((char)62) ;
+        p120.data__SET(new char[] {(char)113, (char)180, (char)111, (char)140, (char)166, (char)250, (char)86, (char)196, (char)49, (char)162, (char)22, (char)137, (char)18, (char)98, (char)80, (char)1, (char)99, (char)228, (char)8, (char)174, (char)151, (char)45, (char)249, (char)23, (char)85, (char)185, (char)1, (char)93, (char)249, (char)61, (char)204, (char)39, (char)90, (char)124, (char)227, (char)214, (char)191, (char)175, (char)136, (char)11, (char)127, (char)206, (char)205, (char)224, (char)1, (char)135, (char)71, (char)29, (char)49, (char)32, (char)47, (char)106, (char)163, (char)0, (char)11, (char)111, (char)25, (char)101, (char)115, (char)59, (char)48, (char)217, (char)198, (char)47, (char)95, (char)122, (char)4, (char)67, (char)63, (char)106, (char)161, (char)168, (char)1, (char)215, (char)182, (char)190, (char)169, (char)250, (char)244, (char)171, (char)16, (char)149, (char)244, (char)230, (char)33, (char)246, (char)172, (char)230, (char)103, (char)164}, 0) ;
+        p120.id_SET((char)48864) ;
+        p120.ofs_SET(1293406439L) ;
         CommunicationChannel.instance.send(p120);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_LOG_ERASE.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)71);
-            assert(pack.target_component_GET() == (char)157);
+            assert(pack.target_system_GET() == (char)159);
+            assert(pack.target_component_GET() == (char)210);
         });
         GroundControl.LOG_ERASE p121 = CommunicationChannel.new_LOG_ERASE();
         PH.setPack(p121);
-        p121.target_component_SET((char)157) ;
-        p121.target_system_SET((char)71) ;
+        p121.target_component_SET((char)210) ;
+        p121.target_system_SET((char)159) ;
         CommunicationChannel.instance.send(p121);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_LOG_REQUEST_END.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)43);
-            assert(pack.target_component_GET() == (char)124);
+            assert(pack.target_system_GET() == (char)189);
+            assert(pack.target_component_GET() == (char)75);
         });
         GroundControl.LOG_REQUEST_END p122 = CommunicationChannel.new_LOG_REQUEST_END();
         PH.setPack(p122);
-        p122.target_system_SET((char)43) ;
-        p122.target_component_SET((char)124) ;
+        p122.target_system_SET((char)189) ;
+        p122.target_component_SET((char)75) ;
         CommunicationChannel.instance.send(p122);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_GPS_INJECT_DATA.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)133);
-            assert(pack.len_GET() == (char)68);
-            assert(pack.target_component_GET() == (char)244);
-            assert(Arrays.equals(pack.data__GET(),  new char[] {(char)142, (char)239, (char)100, (char)184, (char)230, (char)191, (char)107, (char)62, (char)176, (char)147, (char)89, (char)196, (char)86, (char)74, (char)122, (char)248, (char)169, (char)66, (char)158, (char)167, (char)189, (char)235, (char)59, (char)112, (char)41, (char)232, (char)187, (char)243, (char)71, (char)61, (char)4, (char)179, (char)39, (char)132, (char)189, (char)242, (char)205, (char)148, (char)143, (char)97, (char)11, (char)240, (char)210, (char)55, (char)87, (char)197, (char)161, (char)60, (char)126, (char)80, (char)201, (char)124, (char)103, (char)63, (char)184, (char)84, (char)46, (char)104, (char)27, (char)140, (char)123, (char)181, (char)80, (char)247, (char)106, (char)246, (char)24, (char)7, (char)236, (char)178, (char)138, (char)43, (char)74, (char)113, (char)41, (char)229, (char)91, (char)9, (char)141, (char)15, (char)18, (char)161, (char)127, (char)242, (char)178, (char)60, (char)97, (char)140, (char)96, (char)179, (char)131, (char)132, (char)133, (char)111, (char)242, (char)60, (char)116, (char)154, (char)6, (char)39, (char)109, (char)231, (char)183, (char)164, (char)227, (char)105, (char)196, (char)56, (char)139, (char)174}));
+            assert(pack.target_system_GET() == (char)21);
+            assert(Arrays.equals(pack.data__GET(),  new char[] {(char)118, (char)151, (char)12, (char)93, (char)28, (char)94, (char)55, (char)236, (char)129, (char)125, (char)57, (char)5, (char)8, (char)49, (char)131, (char)53, (char)88, (char)52, (char)235, (char)253, (char)129, (char)231, (char)96, (char)5, (char)25, (char)12, (char)113, (char)29, (char)81, (char)146, (char)224, (char)97, (char)158, (char)111, (char)211, (char)78, (char)21, (char)150, (char)139, (char)206, (char)127, (char)12, (char)218, (char)153, (char)214, (char)230, (char)251, (char)205, (char)180, (char)88, (char)178, (char)239, (char)107, (char)160, (char)156, (char)253, (char)255, (char)242, (char)126, (char)105, (char)239, (char)90, (char)138, (char)229, (char)241, (char)246, (char)250, (char)250, (char)26, (char)151, (char)192, (char)97, (char)15, (char)100, (char)67, (char)191, (char)104, (char)241, (char)174, (char)39, (char)68, (char)90, (char)202, (char)52, (char)152, (char)157, (char)94, (char)51, (char)207, (char)226, (char)90, (char)35, (char)140, (char)202, (char)77, (char)201, (char)212, (char)101, (char)249, (char)186, (char)122, (char)37, (char)224, (char)177, (char)46, (char)247, (char)213, (char)242, (char)232, (char)8}));
+            assert(pack.len_GET() == (char)243);
+            assert(pack.target_component_GET() == (char)200);
         });
         GroundControl.GPS_INJECT_DATA p123 = CommunicationChannel.new_GPS_INJECT_DATA();
         PH.setPack(p123);
-        p123.data__SET(new char[] {(char)142, (char)239, (char)100, (char)184, (char)230, (char)191, (char)107, (char)62, (char)176, (char)147, (char)89, (char)196, (char)86, (char)74, (char)122, (char)248, (char)169, (char)66, (char)158, (char)167, (char)189, (char)235, (char)59, (char)112, (char)41, (char)232, (char)187, (char)243, (char)71, (char)61, (char)4, (char)179, (char)39, (char)132, (char)189, (char)242, (char)205, (char)148, (char)143, (char)97, (char)11, (char)240, (char)210, (char)55, (char)87, (char)197, (char)161, (char)60, (char)126, (char)80, (char)201, (char)124, (char)103, (char)63, (char)184, (char)84, (char)46, (char)104, (char)27, (char)140, (char)123, (char)181, (char)80, (char)247, (char)106, (char)246, (char)24, (char)7, (char)236, (char)178, (char)138, (char)43, (char)74, (char)113, (char)41, (char)229, (char)91, (char)9, (char)141, (char)15, (char)18, (char)161, (char)127, (char)242, (char)178, (char)60, (char)97, (char)140, (char)96, (char)179, (char)131, (char)132, (char)133, (char)111, (char)242, (char)60, (char)116, (char)154, (char)6, (char)39, (char)109, (char)231, (char)183, (char)164, (char)227, (char)105, (char)196, (char)56, (char)139, (char)174}, 0) ;
-        p123.len_SET((char)68) ;
-        p123.target_system_SET((char)133) ;
-        p123.target_component_SET((char)244) ;
+        p123.data__SET(new char[] {(char)118, (char)151, (char)12, (char)93, (char)28, (char)94, (char)55, (char)236, (char)129, (char)125, (char)57, (char)5, (char)8, (char)49, (char)131, (char)53, (char)88, (char)52, (char)235, (char)253, (char)129, (char)231, (char)96, (char)5, (char)25, (char)12, (char)113, (char)29, (char)81, (char)146, (char)224, (char)97, (char)158, (char)111, (char)211, (char)78, (char)21, (char)150, (char)139, (char)206, (char)127, (char)12, (char)218, (char)153, (char)214, (char)230, (char)251, (char)205, (char)180, (char)88, (char)178, (char)239, (char)107, (char)160, (char)156, (char)253, (char)255, (char)242, (char)126, (char)105, (char)239, (char)90, (char)138, (char)229, (char)241, (char)246, (char)250, (char)250, (char)26, (char)151, (char)192, (char)97, (char)15, (char)100, (char)67, (char)191, (char)104, (char)241, (char)174, (char)39, (char)68, (char)90, (char)202, (char)52, (char)152, (char)157, (char)94, (char)51, (char)207, (char)226, (char)90, (char)35, (char)140, (char)202, (char)77, (char)201, (char)212, (char)101, (char)249, (char)186, (char)122, (char)37, (char)224, (char)177, (char)46, (char)247, (char)213, (char)242, (char)232, (char)8}, 0) ;
+        p123.len_SET((char)243) ;
+        p123.target_component_SET((char)200) ;
+        p123.target_system_SET((char)21) ;
         CommunicationChannel.instance.send(p123);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_GPS2_RAW.add((src, ph, pack) ->
         {
-            assert(pack.dgps_numch_GET() == (char)21);
-            assert(pack.eph_GET() == (char)49015);
-            assert(pack.alt_GET() == 2089365460);
-            assert(pack.fix_type_GET() == GPS_FIX_TYPE.GPS_FIX_TYPE_STATIC);
-            assert(pack.vel_GET() == (char)60167);
-            assert(pack.dgps_age_GET() == 3933673652L);
-            assert(pack.epv_GET() == (char)12025);
-            assert(pack.lat_GET() == 478970232);
-            assert(pack.satellites_visible_GET() == (char)223);
-            assert(pack.time_usec_GET() == 8716483026046290781L);
-            assert(pack.lon_GET() == -178538475);
-            assert(pack.cog_GET() == (char)54962);
+            assert(pack.vel_GET() == (char)57009);
+            assert(pack.dgps_age_GET() == 3545215506L);
+            assert(pack.eph_GET() == (char)23427);
+            assert(pack.time_usec_GET() == 7887700064036277879L);
+            assert(pack.satellites_visible_GET() == (char)235);
+            assert(pack.lon_GET() == -330347646);
+            assert(pack.fix_type_GET() == GPS_FIX_TYPE.GPS_FIX_TYPE_RTK_FIXED);
+            assert(pack.lat_GET() == 1595361706);
+            assert(pack.epv_GET() == (char)27943);
+            assert(pack.dgps_numch_GET() == (char)94);
+            assert(pack.alt_GET() == -1845502501);
+            assert(pack.cog_GET() == (char)45428);
         });
         GroundControl.GPS2_RAW p124 = CommunicationChannel.new_GPS2_RAW();
         PH.setPack(p124);
-        p124.fix_type_SET(GPS_FIX_TYPE.GPS_FIX_TYPE_STATIC) ;
-        p124.eph_SET((char)49015) ;
-        p124.dgps_numch_SET((char)21) ;
-        p124.dgps_age_SET(3933673652L) ;
-        p124.cog_SET((char)54962) ;
-        p124.time_usec_SET(8716483026046290781L) ;
-        p124.lon_SET(-178538475) ;
-        p124.lat_SET(478970232) ;
-        p124.epv_SET((char)12025) ;
-        p124.alt_SET(2089365460) ;
-        p124.satellites_visible_SET((char)223) ;
-        p124.vel_SET((char)60167) ;
+        p124.vel_SET((char)57009) ;
+        p124.lon_SET(-330347646) ;
+        p124.dgps_age_SET(3545215506L) ;
+        p124.eph_SET((char)23427) ;
+        p124.fix_type_SET(GPS_FIX_TYPE.GPS_FIX_TYPE_RTK_FIXED) ;
+        p124.alt_SET(-1845502501) ;
+        p124.time_usec_SET(7887700064036277879L) ;
+        p124.cog_SET((char)45428) ;
+        p124.epv_SET((char)27943) ;
+        p124.lat_SET(1595361706) ;
+        p124.dgps_numch_SET((char)94) ;
+        p124.satellites_visible_SET((char)235) ;
         CommunicationChannel.instance.send(p124);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_POWER_STATUS.add((src, ph, pack) ->
         {
-            assert(pack.Vservo_GET() == (char)61170);
-            assert(pack.Vcc_GET() == (char)31890);
-            assert(pack.flags_GET() == (MAV_POWER_STATUS.MAV_POWER_STATUS_PERIPH_HIPOWER_OVERCURRENT |
-                                        MAV_POWER_STATUS.MAV_POWER_STATUS_USB_CONNECTED |
-                                        MAV_POWER_STATUS.MAV_POWER_STATUS_CHANGED |
+            assert(pack.flags_GET() == (MAV_POWER_STATUS.MAV_POWER_STATUS_CHANGED |
                                         MAV_POWER_STATUS.MAV_POWER_STATUS_SERVO_VALID));
+            assert(pack.Vservo_GET() == (char)52646);
+            assert(pack.Vcc_GET() == (char)63339);
         });
         GroundControl.POWER_STATUS p125 = CommunicationChannel.new_POWER_STATUS();
         PH.setPack(p125);
-        p125.Vservo_SET((char)61170) ;
-        p125.Vcc_SET((char)31890) ;
-        p125.flags_SET((MAV_POWER_STATUS.MAV_POWER_STATUS_PERIPH_HIPOWER_OVERCURRENT |
-                        MAV_POWER_STATUS.MAV_POWER_STATUS_USB_CONNECTED |
-                        MAV_POWER_STATUS.MAV_POWER_STATUS_CHANGED |
+        p125.Vcc_SET((char)63339) ;
+        p125.flags_SET((MAV_POWER_STATUS.MAV_POWER_STATUS_CHANGED |
                         MAV_POWER_STATUS.MAV_POWER_STATUS_SERVO_VALID)) ;
+        p125.Vservo_SET((char)52646) ;
         CommunicationChannel.instance.send(p125);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SERIAL_CONTROL.add((src, ph, pack) ->
         {
-            assert(Arrays.equals(pack.data__GET(),  new char[] {(char)12, (char)118, (char)47, (char)103, (char)124, (char)222, (char)13, (char)190, (char)166, (char)209, (char)183, (char)202, (char)3, (char)75, (char)68, (char)15, (char)229, (char)201, (char)221, (char)185, (char)215, (char)252, (char)236, (char)99, (char)248, (char)107, (char)231, (char)71, (char)203, (char)17, (char)98, (char)31, (char)120, (char)212, (char)104, (char)22, (char)143, (char)156, (char)219, (char)165, (char)207, (char)233, (char)135, (char)251, (char)21, (char)142, (char)114, (char)5, (char)188, (char)131, (char)215, (char)201, (char)16, (char)132, (char)45, (char)248, (char)179, (char)73, (char)35, (char)98, (char)233, (char)130, (char)141, (char)12, (char)149, (char)3, (char)173, (char)123, (char)41, (char)120}));
             assert(pack.device_GET() == SERIAL_CONTROL_DEV.SERIAL_CONTROL_DEV_TELEM1);
-            assert(pack.count_GET() == (char)251);
-            assert(pack.flags_GET() == (SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_EXCLUSIVE |
-                                        SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_RESPOND |
-                                        SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_MULTI));
-            assert(pack.baudrate_GET() == 3531012477L);
-            assert(pack.timeout_GET() == (char)60379);
+            assert(pack.timeout_GET() == (char)35123);
+            assert(pack.baudrate_GET() == 373412142L);
+            assert(Arrays.equals(pack.data__GET(),  new char[] {(char)91, (char)251, (char)159, (char)156, (char)45, (char)176, (char)188, (char)215, (char)255, (char)64, (char)245, (char)85, (char)41, (char)29, (char)179, (char)80, (char)133, (char)176, (char)156, (char)54, (char)204, (char)180, (char)107, (char)174, (char)79, (char)71, (char)76, (char)112, (char)102, (char)14, (char)179, (char)57, (char)222, (char)14, (char)108, (char)149, (char)195, (char)89, (char)230, (char)158, (char)148, (char)167, (char)121, (char)157, (char)9, (char)241, (char)220, (char)132, (char)202, (char)138, (char)196, (char)0, (char)18, (char)40, (char)7, (char)107, (char)60, (char)77, (char)37, (char)28, (char)173, (char)74, (char)32, (char)36, (char)171, (char)63, (char)249, (char)55, (char)89, (char)201}));
+            assert(pack.flags_GET() == (SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_MULTI));
+            assert(pack.count_GET() == (char)32);
         });
         GroundControl.SERIAL_CONTROL p126 = CommunicationChannel.new_SERIAL_CONTROL();
         PH.setPack(p126);
-        p126.flags_SET((SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_EXCLUSIVE |
-                        SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_RESPOND |
-                        SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_MULTI)) ;
-        p126.baudrate_SET(3531012477L) ;
+        p126.baudrate_SET(373412142L) ;
+        p126.data__SET(new char[] {(char)91, (char)251, (char)159, (char)156, (char)45, (char)176, (char)188, (char)215, (char)255, (char)64, (char)245, (char)85, (char)41, (char)29, (char)179, (char)80, (char)133, (char)176, (char)156, (char)54, (char)204, (char)180, (char)107, (char)174, (char)79, (char)71, (char)76, (char)112, (char)102, (char)14, (char)179, (char)57, (char)222, (char)14, (char)108, (char)149, (char)195, (char)89, (char)230, (char)158, (char)148, (char)167, (char)121, (char)157, (char)9, (char)241, (char)220, (char)132, (char)202, (char)138, (char)196, (char)0, (char)18, (char)40, (char)7, (char)107, (char)60, (char)77, (char)37, (char)28, (char)173, (char)74, (char)32, (char)36, (char)171, (char)63, (char)249, (char)55, (char)89, (char)201}, 0) ;
+        p126.flags_SET((SERIAL_CONTROL_FLAG.SERIAL_CONTROL_FLAG_MULTI)) ;
+        p126.timeout_SET((char)35123) ;
+        p126.count_SET((char)32) ;
         p126.device_SET(SERIAL_CONTROL_DEV.SERIAL_CONTROL_DEV_TELEM1) ;
-        p126.timeout_SET((char)60379) ;
-        p126.data__SET(new char[] {(char)12, (char)118, (char)47, (char)103, (char)124, (char)222, (char)13, (char)190, (char)166, (char)209, (char)183, (char)202, (char)3, (char)75, (char)68, (char)15, (char)229, (char)201, (char)221, (char)185, (char)215, (char)252, (char)236, (char)99, (char)248, (char)107, (char)231, (char)71, (char)203, (char)17, (char)98, (char)31, (char)120, (char)212, (char)104, (char)22, (char)143, (char)156, (char)219, (char)165, (char)207, (char)233, (char)135, (char)251, (char)21, (char)142, (char)114, (char)5, (char)188, (char)131, (char)215, (char)201, (char)16, (char)132, (char)45, (char)248, (char)179, (char)73, (char)35, (char)98, (char)233, (char)130, (char)141, (char)12, (char)149, (char)3, (char)173, (char)123, (char)41, (char)120}, 0) ;
-        p126.count_SET((char)251) ;
         CommunicationChannel.instance.send(p126);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_GPS_RTK.add((src, ph, pack) ->
         {
-            assert(pack.baseline_a_mm_GET() == 1542243756);
-            assert(pack.iar_num_hypotheses_GET() == 110948425);
-            assert(pack.nsats_GET() == (char)70);
-            assert(pack.baseline_c_mm_GET() == -2014650756);
-            assert(pack.wn_GET() == (char)37365);
-            assert(pack.rtk_rate_GET() == (char)28);
-            assert(pack.rtk_health_GET() == (char)146);
+            assert(pack.rtk_health_GET() == (char)190);
+            assert(pack.rtk_receiver_id_GET() == (char)176);
+            assert(pack.tow_GET() == 1003747306L);
+            assert(pack.baseline_c_mm_GET() == 1424267869);
             assert(pack.baseline_coords_type_GET() == (char)136);
-            assert(pack.tow_GET() == 3504970539L);
-            assert(pack.accuracy_GET() == 3139378457L);
-            assert(pack.time_last_baseline_ms_GET() == 2777246018L);
-            assert(pack.rtk_receiver_id_GET() == (char)24);
-            assert(pack.baseline_b_mm_GET() == -1329008775);
+            assert(pack.time_last_baseline_ms_GET() == 4277678424L);
+            assert(pack.baseline_b_mm_GET() == 2041978762);
+            assert(pack.baseline_a_mm_GET() == -1333327187);
+            assert(pack.nsats_GET() == (char)39);
+            assert(pack.accuracy_GET() == 83783924L);
+            assert(pack.rtk_rate_GET() == (char)196);
+            assert(pack.iar_num_hypotheses_GET() == 207310774);
+            assert(pack.wn_GET() == (char)56907);
         });
         GroundControl.GPS_RTK p127 = CommunicationChannel.new_GPS_RTK();
         PH.setPack(p127);
-        p127.tow_SET(3504970539L) ;
-        p127.accuracy_SET(3139378457L) ;
-        p127.baseline_a_mm_SET(1542243756) ;
-        p127.rtk_health_SET((char)146) ;
-        p127.wn_SET((char)37365) ;
-        p127.iar_num_hypotheses_SET(110948425) ;
-        p127.rtk_receiver_id_SET((char)24) ;
-        p127.nsats_SET((char)70) ;
-        p127.baseline_b_mm_SET(-1329008775) ;
-        p127.time_last_baseline_ms_SET(2777246018L) ;
+        p127.wn_SET((char)56907) ;
+        p127.baseline_c_mm_SET(1424267869) ;
+        p127.rtk_receiver_id_SET((char)176) ;
+        p127.baseline_a_mm_SET(-1333327187) ;
+        p127.iar_num_hypotheses_SET(207310774) ;
+        p127.tow_SET(1003747306L) ;
+        p127.nsats_SET((char)39) ;
+        p127.time_last_baseline_ms_SET(4277678424L) ;
+        p127.rtk_health_SET((char)190) ;
         p127.baseline_coords_type_SET((char)136) ;
-        p127.baseline_c_mm_SET(-2014650756) ;
-        p127.rtk_rate_SET((char)28) ;
+        p127.accuracy_SET(83783924L) ;
+        p127.rtk_rate_SET((char)196) ;
+        p127.baseline_b_mm_SET(2041978762) ;
         CommunicationChannel.instance.send(p127);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_GPS2_RTK.add((src, ph, pack) ->
         {
-            assert(pack.baseline_c_mm_GET() == -460270817);
-            assert(pack.baseline_coords_type_GET() == (char)8);
-            assert(pack.accuracy_GET() == 2341531476L);
-            assert(pack.rtk_health_GET() == (char)195);
-            assert(pack.baseline_b_mm_GET() == 1955965304);
-            assert(pack.wn_GET() == (char)51316);
-            assert(pack.iar_num_hypotheses_GET() == -1692030301);
-            assert(pack.tow_GET() == 1301216005L);
-            assert(pack.rtk_receiver_id_GET() == (char)5);
-            assert(pack.rtk_rate_GET() == (char)139);
-            assert(pack.nsats_GET() == (char)86);
-            assert(pack.baseline_a_mm_GET() == 280944156);
-            assert(pack.time_last_baseline_ms_GET() == 1576841259L);
+            assert(pack.baseline_coords_type_GET() == (char)156);
+            assert(pack.accuracy_GET() == 74788142L);
+            assert(pack.baseline_c_mm_GET() == -467409943);
+            assert(pack.rtk_health_GET() == (char)108);
+            assert(pack.baseline_b_mm_GET() == 1293596308);
+            assert(pack.time_last_baseline_ms_GET() == 1690619844L);
+            assert(pack.baseline_a_mm_GET() == -2084187203);
+            assert(pack.rtk_receiver_id_GET() == (char)12);
+            assert(pack.rtk_rate_GET() == (char)15);
+            assert(pack.nsats_GET() == (char)53);
+            assert(pack.iar_num_hypotheses_GET() == 1591582434);
+            assert(pack.wn_GET() == (char)6574);
+            assert(pack.tow_GET() == 3511589190L);
         });
         GroundControl.GPS2_RTK p128 = CommunicationChannel.new_GPS2_RTK();
         PH.setPack(p128);
-        p128.accuracy_SET(2341531476L) ;
-        p128.baseline_coords_type_SET((char)8) ;
-        p128.time_last_baseline_ms_SET(1576841259L) ;
-        p128.rtk_receiver_id_SET((char)5) ;
-        p128.tow_SET(1301216005L) ;
-        p128.rtk_health_SET((char)195) ;
-        p128.rtk_rate_SET((char)139) ;
-        p128.iar_num_hypotheses_SET(-1692030301) ;
-        p128.wn_SET((char)51316) ;
-        p128.baseline_c_mm_SET(-460270817) ;
-        p128.nsats_SET((char)86) ;
-        p128.baseline_a_mm_SET(280944156) ;
-        p128.baseline_b_mm_SET(1955965304) ;
+        p128.iar_num_hypotheses_SET(1591582434) ;
+        p128.baseline_coords_type_SET((char)156) ;
+        p128.baseline_c_mm_SET(-467409943) ;
+        p128.rtk_health_SET((char)108) ;
+        p128.tow_SET(3511589190L) ;
+        p128.rtk_rate_SET((char)15) ;
+        p128.wn_SET((char)6574) ;
+        p128.baseline_a_mm_SET(-2084187203) ;
+        p128.time_last_baseline_ms_SET(1690619844L) ;
+        p128.rtk_receiver_id_SET((char)12) ;
+        p128.accuracy_SET(74788142L) ;
+        p128.nsats_SET((char)53) ;
+        p128.baseline_b_mm_SET(1293596308) ;
         CommunicationChannel.instance.send(p128);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SCALED_IMU3.add((src, ph, pack) ->
         {
-            assert(pack.ymag_GET() == (short)1561);
-            assert(pack.yacc_GET() == (short)12929);
-            assert(pack.zmag_GET() == (short)22857);
-            assert(pack.xgyro_GET() == (short)14574);
-            assert(pack.xacc_GET() == (short)21854);
-            assert(pack.zacc_GET() == (short) -7074);
-            assert(pack.zgyro_GET() == (short)2950);
-            assert(pack.time_boot_ms_GET() == 2382660312L);
-            assert(pack.ygyro_GET() == (short)17154);
-            assert(pack.xmag_GET() == (short) -27526);
+            assert(pack.ygyro_GET() == (short) -9836);
+            assert(pack.zacc_GET() == (short)31117);
+            assert(pack.zgyro_GET() == (short) -16081);
+            assert(pack.yacc_GET() == (short)14002);
+            assert(pack.time_boot_ms_GET() == 2377377912L);
+            assert(pack.xmag_GET() == (short) -25717);
+            assert(pack.xacc_GET() == (short)22755);
+            assert(pack.xgyro_GET() == (short) -11549);
+            assert(pack.zmag_GET() == (short)14064);
+            assert(pack.ymag_GET() == (short)15612);
         });
         GroundControl.SCALED_IMU3 p129 = CommunicationChannel.new_SCALED_IMU3();
         PH.setPack(p129);
-        p129.xacc_SET((short)21854) ;
-        p129.xgyro_SET((short)14574) ;
-        p129.ygyro_SET((short)17154) ;
-        p129.ymag_SET((short)1561) ;
-        p129.zmag_SET((short)22857) ;
-        p129.zgyro_SET((short)2950) ;
-        p129.time_boot_ms_SET(2382660312L) ;
-        p129.zacc_SET((short) -7074) ;
-        p129.xmag_SET((short) -27526) ;
-        p129.yacc_SET((short)12929) ;
+        p129.yacc_SET((short)14002) ;
+        p129.ymag_SET((short)15612) ;
+        p129.zacc_SET((short)31117) ;
+        p129.xmag_SET((short) -25717) ;
+        p129.zmag_SET((short)14064) ;
+        p129.zgyro_SET((short) -16081) ;
+        p129.xgyro_SET((short) -11549) ;
+        p129.ygyro_SET((short) -9836) ;
+        p129.xacc_SET((short)22755) ;
+        p129.time_boot_ms_SET(2377377912L) ;
         CommunicationChannel.instance.send(p129);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_DATA_TRANSMISSION_HANDSHAKE.add((src, ph, pack) ->
         {
-            assert(pack.height_GET() == (char)64215);
-            assert(pack.jpg_quality_GET() == (char)246);
-            assert(pack.type_GET() == (char)212);
-            assert(pack.size_GET() == 2025543696L);
-            assert(pack.width_GET() == (char)55789);
-            assert(pack.payload_GET() == (char)195);
-            assert(pack.packets_GET() == (char)718);
+            assert(pack.jpg_quality_GET() == (char)92);
+            assert(pack.payload_GET() == (char)143);
+            assert(pack.type_GET() == (char)199);
+            assert(pack.width_GET() == (char)39402);
+            assert(pack.size_GET() == 16137179L);
+            assert(pack.packets_GET() == (char)10508);
+            assert(pack.height_GET() == (char)38942);
         });
         GroundControl.DATA_TRANSMISSION_HANDSHAKE p130 = CommunicationChannel.new_DATA_TRANSMISSION_HANDSHAKE();
         PH.setPack(p130);
-        p130.payload_SET((char)195) ;
-        p130.jpg_quality_SET((char)246) ;
-        p130.width_SET((char)55789) ;
-        p130.type_SET((char)212) ;
-        p130.size_SET(2025543696L) ;
-        p130.packets_SET((char)718) ;
-        p130.height_SET((char)64215) ;
+        p130.jpg_quality_SET((char)92) ;
+        p130.payload_SET((char)143) ;
+        p130.height_SET((char)38942) ;
+        p130.size_SET(16137179L) ;
+        p130.type_SET((char)199) ;
+        p130.width_SET((char)39402) ;
+        p130.packets_SET((char)10508) ;
         CommunicationChannel.instance.send(p130);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_ENCAPSULATED_DATA.add((src, ph, pack) ->
         {
-            assert(Arrays.equals(pack.data__GET(),  new char[] {(char)248, (char)105, (char)212, (char)20, (char)201, (char)1, (char)141, (char)51, (char)103, (char)243, (char)240, (char)133, (char)224, (char)184, (char)53, (char)154, (char)99, (char)8, (char)49, (char)19, (char)171, (char)96, (char)122, (char)63, (char)252, (char)95, (char)158, (char)112, (char)39, (char)67, (char)37, (char)134, (char)154, (char)72, (char)227, (char)53, (char)39, (char)235, (char)87, (char)104, (char)23, (char)157, (char)125, (char)141, (char)187, (char)224, (char)120, (char)48, (char)143, (char)245, (char)141, (char)63, (char)243, (char)186, (char)9, (char)158, (char)36, (char)81, (char)67, (char)157, (char)33, (char)60, (char)205, (char)28, (char)107, (char)36, (char)72, (char)173, (char)124, (char)28, (char)231, (char)252, (char)21, (char)240, (char)166, (char)202, (char)105, (char)9, (char)92, (char)70, (char)11, (char)62, (char)91, (char)249, (char)189, (char)10, (char)138, (char)191, (char)226, (char)3, (char)206, (char)58, (char)225, (char)247, (char)59, (char)52, (char)229, (char)114, (char)133, (char)126, (char)37, (char)103, (char)182, (char)127, (char)125, (char)38, (char)223, (char)156, (char)21, (char)241, (char)191, (char)177, (char)54, (char)70, (char)68, (char)186, (char)239, (char)68, (char)120, (char)33, (char)134, (char)23, (char)75, (char)121, (char)134, (char)179, (char)155, (char)5, (char)174, (char)178, (char)25, (char)86, (char)0, (char)239, (char)184, (char)246, (char)209, (char)197, (char)152, (char)3, (char)251, (char)140, (char)41, (char)186, (char)181, (char)130, (char)133, (char)175, (char)6, (char)254, (char)72, (char)6, (char)77, (char)184, (char)64, (char)238, (char)199, (char)205, (char)70, (char)108, (char)233, (char)225, (char)251, (char)122, (char)119, (char)146, (char)99, (char)29, (char)218, (char)233, (char)22, (char)235, (char)183, (char)4, (char)1, (char)125, (char)13, (char)87, (char)147, (char)163, (char)42, (char)20, (char)84, (char)43, (char)149, (char)190, (char)131, (char)67, (char)203, (char)169, (char)222, (char)30, (char)153, (char)242, (char)145, (char)41, (char)97, (char)103, (char)67, (char)60, (char)120, (char)134, (char)255, (char)149, (char)85, (char)90, (char)246, (char)255, (char)74, (char)53, (char)6, (char)79, (char)161, (char)217, (char)112, (char)234, (char)51, (char)251, (char)49, (char)95, (char)70, (char)85, (char)32, (char)217, (char)114, (char)60, (char)23, (char)84, (char)221, (char)78, (char)132, (char)58, (char)167, (char)119, (char)206, (char)40, (char)22, (char)249, (char)87, (char)238, (char)6, (char)34, (char)100, (char)102, (char)6, (char)221, (char)37, (char)33, (char)241, (char)91, (char)139, (char)101, (char)204}));
-            assert(pack.seqnr_GET() == (char)2321);
+            assert(pack.seqnr_GET() == (char)59047);
+            assert(Arrays.equals(pack.data__GET(),  new char[] {(char)151, (char)117, (char)169, (char)22, (char)98, (char)124, (char)155, (char)102, (char)148, (char)65, (char)96, (char)52, (char)205, (char)190, (char)252, (char)160, (char)49, (char)29, (char)176, (char)210, (char)222, (char)131, (char)91, (char)230, (char)184, (char)74, (char)168, (char)95, (char)230, (char)94, (char)71, (char)34, (char)88, (char)37, (char)25, (char)148, (char)21, (char)38, (char)125, (char)84, (char)49, (char)135, (char)103, (char)182, (char)193, (char)164, (char)193, (char)65, (char)226, (char)40, (char)113, (char)186, (char)235, (char)25, (char)79, (char)98, (char)79, (char)221, (char)221, (char)243, (char)134, (char)80, (char)239, (char)82, (char)45, (char)26, (char)214, (char)202, (char)8, (char)111, (char)28, (char)10, (char)179, (char)198, (char)225, (char)133, (char)153, (char)35, (char)8, (char)80, (char)51, (char)13, (char)212, (char)118, (char)202, (char)70, (char)89, (char)25, (char)81, (char)208, (char)203, (char)46, (char)102, (char)106, (char)23, (char)188, (char)114, (char)79, (char)43, (char)115, (char)198, (char)153, (char)174, (char)134, (char)220, (char)15, (char)186, (char)104, (char)222, (char)155, (char)21, (char)227, (char)110, (char)233, (char)177, (char)96, (char)72, (char)85, (char)213, (char)132, (char)248, (char)176, (char)151, (char)36, (char)130, (char)223, (char)27, (char)102, (char)79, (char)150, (char)96, (char)211, (char)84, (char)243, (char)203, (char)166, (char)120, (char)210, (char)140, (char)117, (char)160, (char)176, (char)154, (char)225, (char)150, (char)102, (char)127, (char)69, (char)250, (char)17, (char)4, (char)87, (char)194, (char)240, (char)113, (char)88, (char)115, (char)196, (char)18, (char)2, (char)218, (char)94, (char)74, (char)101, (char)93, (char)114, (char)72, (char)99, (char)234, (char)106, (char)116, (char)170, (char)227, (char)95, (char)172, (char)88, (char)5, (char)38, (char)238, (char)102, (char)220, (char)24, (char)101, (char)206, (char)35, (char)158, (char)222, (char)85, (char)198, (char)11, (char)10, (char)155, (char)220, (char)200, (char)69, (char)20, (char)58, (char)253, (char)183, (char)92, (char)28, (char)6, (char)129, (char)130, (char)118, (char)152, (char)114, (char)212, (char)161, (char)177, (char)183, (char)218, (char)107, (char)77, (char)204, (char)149, (char)101, (char)35, (char)58, (char)38, (char)89, (char)221, (char)1, (char)46, (char)34, (char)142, (char)134, (char)100, (char)207, (char)243, (char)236, (char)156, (char)70, (char)82, (char)212, (char)184, (char)56, (char)120, (char)2, (char)230, (char)94, (char)229, (char)92, (char)171, (char)100, (char)187, (char)35, (char)188, (char)237, (char)194, (char)105, (char)218, (char)202}));
         });
         GroundControl.ENCAPSULATED_DATA p131 = CommunicationChannel.new_ENCAPSULATED_DATA();
         PH.setPack(p131);
-        p131.data__SET(new char[] {(char)248, (char)105, (char)212, (char)20, (char)201, (char)1, (char)141, (char)51, (char)103, (char)243, (char)240, (char)133, (char)224, (char)184, (char)53, (char)154, (char)99, (char)8, (char)49, (char)19, (char)171, (char)96, (char)122, (char)63, (char)252, (char)95, (char)158, (char)112, (char)39, (char)67, (char)37, (char)134, (char)154, (char)72, (char)227, (char)53, (char)39, (char)235, (char)87, (char)104, (char)23, (char)157, (char)125, (char)141, (char)187, (char)224, (char)120, (char)48, (char)143, (char)245, (char)141, (char)63, (char)243, (char)186, (char)9, (char)158, (char)36, (char)81, (char)67, (char)157, (char)33, (char)60, (char)205, (char)28, (char)107, (char)36, (char)72, (char)173, (char)124, (char)28, (char)231, (char)252, (char)21, (char)240, (char)166, (char)202, (char)105, (char)9, (char)92, (char)70, (char)11, (char)62, (char)91, (char)249, (char)189, (char)10, (char)138, (char)191, (char)226, (char)3, (char)206, (char)58, (char)225, (char)247, (char)59, (char)52, (char)229, (char)114, (char)133, (char)126, (char)37, (char)103, (char)182, (char)127, (char)125, (char)38, (char)223, (char)156, (char)21, (char)241, (char)191, (char)177, (char)54, (char)70, (char)68, (char)186, (char)239, (char)68, (char)120, (char)33, (char)134, (char)23, (char)75, (char)121, (char)134, (char)179, (char)155, (char)5, (char)174, (char)178, (char)25, (char)86, (char)0, (char)239, (char)184, (char)246, (char)209, (char)197, (char)152, (char)3, (char)251, (char)140, (char)41, (char)186, (char)181, (char)130, (char)133, (char)175, (char)6, (char)254, (char)72, (char)6, (char)77, (char)184, (char)64, (char)238, (char)199, (char)205, (char)70, (char)108, (char)233, (char)225, (char)251, (char)122, (char)119, (char)146, (char)99, (char)29, (char)218, (char)233, (char)22, (char)235, (char)183, (char)4, (char)1, (char)125, (char)13, (char)87, (char)147, (char)163, (char)42, (char)20, (char)84, (char)43, (char)149, (char)190, (char)131, (char)67, (char)203, (char)169, (char)222, (char)30, (char)153, (char)242, (char)145, (char)41, (char)97, (char)103, (char)67, (char)60, (char)120, (char)134, (char)255, (char)149, (char)85, (char)90, (char)246, (char)255, (char)74, (char)53, (char)6, (char)79, (char)161, (char)217, (char)112, (char)234, (char)51, (char)251, (char)49, (char)95, (char)70, (char)85, (char)32, (char)217, (char)114, (char)60, (char)23, (char)84, (char)221, (char)78, (char)132, (char)58, (char)167, (char)119, (char)206, (char)40, (char)22, (char)249, (char)87, (char)238, (char)6, (char)34, (char)100, (char)102, (char)6, (char)221, (char)37, (char)33, (char)241, (char)91, (char)139, (char)101, (char)204}, 0) ;
-        p131.seqnr_SET((char)2321) ;
+        p131.data__SET(new char[] {(char)151, (char)117, (char)169, (char)22, (char)98, (char)124, (char)155, (char)102, (char)148, (char)65, (char)96, (char)52, (char)205, (char)190, (char)252, (char)160, (char)49, (char)29, (char)176, (char)210, (char)222, (char)131, (char)91, (char)230, (char)184, (char)74, (char)168, (char)95, (char)230, (char)94, (char)71, (char)34, (char)88, (char)37, (char)25, (char)148, (char)21, (char)38, (char)125, (char)84, (char)49, (char)135, (char)103, (char)182, (char)193, (char)164, (char)193, (char)65, (char)226, (char)40, (char)113, (char)186, (char)235, (char)25, (char)79, (char)98, (char)79, (char)221, (char)221, (char)243, (char)134, (char)80, (char)239, (char)82, (char)45, (char)26, (char)214, (char)202, (char)8, (char)111, (char)28, (char)10, (char)179, (char)198, (char)225, (char)133, (char)153, (char)35, (char)8, (char)80, (char)51, (char)13, (char)212, (char)118, (char)202, (char)70, (char)89, (char)25, (char)81, (char)208, (char)203, (char)46, (char)102, (char)106, (char)23, (char)188, (char)114, (char)79, (char)43, (char)115, (char)198, (char)153, (char)174, (char)134, (char)220, (char)15, (char)186, (char)104, (char)222, (char)155, (char)21, (char)227, (char)110, (char)233, (char)177, (char)96, (char)72, (char)85, (char)213, (char)132, (char)248, (char)176, (char)151, (char)36, (char)130, (char)223, (char)27, (char)102, (char)79, (char)150, (char)96, (char)211, (char)84, (char)243, (char)203, (char)166, (char)120, (char)210, (char)140, (char)117, (char)160, (char)176, (char)154, (char)225, (char)150, (char)102, (char)127, (char)69, (char)250, (char)17, (char)4, (char)87, (char)194, (char)240, (char)113, (char)88, (char)115, (char)196, (char)18, (char)2, (char)218, (char)94, (char)74, (char)101, (char)93, (char)114, (char)72, (char)99, (char)234, (char)106, (char)116, (char)170, (char)227, (char)95, (char)172, (char)88, (char)5, (char)38, (char)238, (char)102, (char)220, (char)24, (char)101, (char)206, (char)35, (char)158, (char)222, (char)85, (char)198, (char)11, (char)10, (char)155, (char)220, (char)200, (char)69, (char)20, (char)58, (char)253, (char)183, (char)92, (char)28, (char)6, (char)129, (char)130, (char)118, (char)152, (char)114, (char)212, (char)161, (char)177, (char)183, (char)218, (char)107, (char)77, (char)204, (char)149, (char)101, (char)35, (char)58, (char)38, (char)89, (char)221, (char)1, (char)46, (char)34, (char)142, (char)134, (char)100, (char)207, (char)243, (char)236, (char)156, (char)70, (char)82, (char)212, (char)184, (char)56, (char)120, (char)2, (char)230, (char)94, (char)229, (char)92, (char)171, (char)100, (char)187, (char)35, (char)188, (char)237, (char)194, (char)105, (char)218, (char)202}, 0) ;
+        p131.seqnr_SET((char)59047) ;
         CommunicationChannel.instance.send(p131);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_DISTANCE_SENSOR.add((src, ph, pack) ->
         {
-            assert(pack.covariance_GET() == (char)9);
-            assert(pack.id_GET() == (char)10);
-            assert(pack.min_distance_GET() == (char)11855);
-            assert(pack.max_distance_GET() == (char)1352);
-            assert(pack.current_distance_GET() == (char)47658);
-            assert(pack.time_boot_ms_GET() == 2306380213L);
-            assert(pack.type_GET() == MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_ULTRASOUND);
+            assert(pack.type_GET() == MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_RADAR);
+            assert(pack.min_distance_GET() == (char)43624);
+            assert(pack.id_GET() == (char)196);
+            assert(pack.covariance_GET() == (char)197);
+            assert(pack.current_distance_GET() == (char)24878);
+            assert(pack.time_boot_ms_GET() == 3479357730L);
             assert(pack.orientation_GET() == MAV_SENSOR_ORIENTATION.MAV_SENSOR_ROTATION_YAW_180);
+            assert(pack.max_distance_GET() == (char)62607);
         });
         GroundControl.DISTANCE_SENSOR p132 = CommunicationChannel.new_DISTANCE_SENSOR();
         PH.setPack(p132);
-        p132.current_distance_SET((char)47658) ;
-        p132.type_SET(MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_ULTRASOUND) ;
+        p132.time_boot_ms_SET(3479357730L) ;
+        p132.type_SET(MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_RADAR) ;
+        p132.max_distance_SET((char)62607) ;
         p132.orientation_SET(MAV_SENSOR_ORIENTATION.MAV_SENSOR_ROTATION_YAW_180) ;
-        p132.time_boot_ms_SET(2306380213L) ;
-        p132.id_SET((char)10) ;
-        p132.min_distance_SET((char)11855) ;
-        p132.covariance_SET((char)9) ;
-        p132.max_distance_SET((char)1352) ;
+        p132.id_SET((char)196) ;
+        p132.min_distance_SET((char)43624) ;
+        p132.current_distance_SET((char)24878) ;
+        p132.covariance_SET((char)197) ;
         CommunicationChannel.instance.send(p132);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_TERRAIN_REQUEST.add((src, ph, pack) ->
         {
-            assert(pack.lon_GET() == 129251930);
-            assert(pack.grid_spacing_GET() == (char)34489);
-            assert(pack.lat_GET() == -1448890257);
-            assert(pack.mask_GET() == 5280765450594851166L);
+            assert(pack.mask_GET() == 5154497265799306330L);
+            assert(pack.lat_GET() == -1281566101);
+            assert(pack.grid_spacing_GET() == (char)60553);
+            assert(pack.lon_GET() == 487084808);
         });
         GroundControl.TERRAIN_REQUEST p133 = CommunicationChannel.new_TERRAIN_REQUEST();
         PH.setPack(p133);
-        p133.lat_SET(-1448890257) ;
-        p133.mask_SET(5280765450594851166L) ;
-        p133.lon_SET(129251930) ;
-        p133.grid_spacing_SET((char)34489) ;
+        p133.grid_spacing_SET((char)60553) ;
+        p133.lat_SET(-1281566101) ;
+        p133.lon_SET(487084808) ;
+        p133.mask_SET(5154497265799306330L) ;
         CommunicationChannel.instance.send(p133);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_TERRAIN_DATA.add((src, ph, pack) ->
         {
-            assert(Arrays.equals(pack.data__GET(),  new short[] {(short)4199, (short) -8774, (short) -20426, (short)13067, (short) -16797, (short) -7453, (short)11233, (short)29632, (short) -6923, (short)27031, (short)16958, (short)26839, (short)10160, (short) -30005, (short)252, (short) -20713}));
-            assert(pack.lon_GET() == 1992020475);
-            assert(pack.grid_spacing_GET() == (char)62503);
-            assert(pack.gridbit_GET() == (char)216);
-            assert(pack.lat_GET() == 1955073006);
+            assert(pack.lat_GET() == -826612555);
+            assert(pack.lon_GET() == -646127031);
+            assert(pack.grid_spacing_GET() == (char)6544);
+            assert(pack.gridbit_GET() == (char)180);
+            assert(Arrays.equals(pack.data__GET(),  new short[] {(short)31328, (short) -4014, (short) -299, (short) -7065, (short) -26550, (short) -27663, (short)25932, (short)2458, (short) -19812, (short) -3403, (short) -14050, (short) -26864, (short)13253, (short)1822, (short) -13, (short) -23246}));
         });
         GroundControl.TERRAIN_DATA p134 = CommunicationChannel.new_TERRAIN_DATA();
         PH.setPack(p134);
-        p134.grid_spacing_SET((char)62503) ;
-        p134.data__SET(new short[] {(short)4199, (short) -8774, (short) -20426, (short)13067, (short) -16797, (short) -7453, (short)11233, (short)29632, (short) -6923, (short)27031, (short)16958, (short)26839, (short)10160, (short) -30005, (short)252, (short) -20713}, 0) ;
-        p134.gridbit_SET((char)216) ;
-        p134.lat_SET(1955073006) ;
-        p134.lon_SET(1992020475) ;
+        p134.lon_SET(-646127031) ;
+        p134.lat_SET(-826612555) ;
+        p134.gridbit_SET((char)180) ;
+        p134.grid_spacing_SET((char)6544) ;
+        p134.data__SET(new short[] {(short)31328, (short) -4014, (short) -299, (short) -7065, (short) -26550, (short) -27663, (short)25932, (short)2458, (short) -19812, (short) -3403, (short) -14050, (short) -26864, (short)13253, (short)1822, (short) -13, (short) -23246}, 0) ;
         CommunicationChannel.instance.send(p134);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_TERRAIN_CHECK.add((src, ph, pack) ->
         {
-            assert(pack.lon_GET() == 1750756929);
-            assert(pack.lat_GET() == 1600938820);
+            assert(pack.lon_GET() == 374619660);
+            assert(pack.lat_GET() == -2005128944);
         });
         GroundControl.TERRAIN_CHECK p135 = CommunicationChannel.new_TERRAIN_CHECK();
         PH.setPack(p135);
-        p135.lon_SET(1750756929) ;
-        p135.lat_SET(1600938820) ;
+        p135.lat_SET(-2005128944) ;
+        p135.lon_SET(374619660) ;
         CommunicationChannel.instance.send(p135);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_TERRAIN_REPORT.add((src, ph, pack) ->
         {
-            assert(pack.terrain_height_GET() == 1.3569741E38F);
-            assert(pack.loaded_GET() == (char)55237);
-            assert(pack.lat_GET() == -1649105727);
-            assert(pack.lon_GET() == 628505394);
-            assert(pack.spacing_GET() == (char)36691);
-            assert(pack.pending_GET() == (char)62179);
-            assert(pack.current_height_GET() == 1.0889474E36F);
+            assert(pack.spacing_GET() == (char)17334);
+            assert(pack.current_height_GET() == -5.554866E36F);
+            assert(pack.terrain_height_GET() == 2.4211145E38F);
+            assert(pack.pending_GET() == (char)5475);
+            assert(pack.lon_GET() == -1137687693);
+            assert(pack.lat_GET() == -1926293909);
+            assert(pack.loaded_GET() == (char)12724);
         });
         GroundControl.TERRAIN_REPORT p136 = CommunicationChannel.new_TERRAIN_REPORT();
         PH.setPack(p136);
-        p136.lon_SET(628505394) ;
-        p136.pending_SET((char)62179) ;
-        p136.terrain_height_SET(1.3569741E38F) ;
-        p136.lat_SET(-1649105727) ;
-        p136.spacing_SET((char)36691) ;
-        p136.current_height_SET(1.0889474E36F) ;
-        p136.loaded_SET((char)55237) ;
+        p136.current_height_SET(-5.554866E36F) ;
+        p136.terrain_height_SET(2.4211145E38F) ;
+        p136.lon_SET(-1137687693) ;
+        p136.lat_SET(-1926293909) ;
+        p136.pending_SET((char)5475) ;
+        p136.spacing_SET((char)17334) ;
+        p136.loaded_SET((char)12724) ;
         CommunicationChannel.instance.send(p136);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SCALED_PRESSURE2.add((src, ph, pack) ->
         {
-            assert(pack.time_boot_ms_GET() == 1888664079L);
-            assert(pack.temperature_GET() == (short) -25404);
-            assert(pack.press_abs_GET() == -1.7628703E37F);
-            assert(pack.press_diff_GET() == -2.3847885E38F);
+            assert(pack.time_boot_ms_GET() == 2865561313L);
+            assert(pack.press_abs_GET() == -1.8075856E38F);
+            assert(pack.press_diff_GET() == 3.2727477E38F);
+            assert(pack.temperature_GET() == (short) -31328);
         });
         GroundControl.SCALED_PRESSURE2 p137 = CommunicationChannel.new_SCALED_PRESSURE2();
         PH.setPack(p137);
-        p137.temperature_SET((short) -25404) ;
-        p137.press_diff_SET(-2.3847885E38F) ;
-        p137.time_boot_ms_SET(1888664079L) ;
-        p137.press_abs_SET(-1.7628703E37F) ;
+        p137.press_diff_SET(3.2727477E38F) ;
+        p137.time_boot_ms_SET(2865561313L) ;
+        p137.temperature_SET((short) -31328) ;
+        p137.press_abs_SET(-1.8075856E38F) ;
         CommunicationChannel.instance.send(p137);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_ATT_POS_MOCAP.add((src, ph, pack) ->
         {
-            assert(pack.time_usec_GET() == 6520166234207834393L);
-            assert(Arrays.equals(pack.q_GET(),  new float[] {-1.0087681E38F, -1.400362E38F, 6.2640316E37F, 7.554969E37F}));
-            assert(pack.y_GET() == -9.934757E37F);
-            assert(pack.z_GET() == -3.3155406E38F);
-            assert(pack.x_GET() == -3.131577E38F);
+            assert(pack.time_usec_GET() == 834063722049578554L);
+            assert(Arrays.equals(pack.q_GET(),  new float[] {1.2058951E38F, 1.0978428E36F, 3.2978291E38F, -1.3624199E38F}));
+            assert(pack.x_GET() == -7.9247867E37F);
+            assert(pack.y_GET() == 1.7681655E38F);
+            assert(pack.z_GET() == -2.7310896E37F);
         });
         GroundControl.ATT_POS_MOCAP p138 = CommunicationChannel.new_ATT_POS_MOCAP();
         PH.setPack(p138);
-        p138.x_SET(-3.131577E38F) ;
-        p138.time_usec_SET(6520166234207834393L) ;
-        p138.y_SET(-9.934757E37F) ;
-        p138.z_SET(-3.3155406E38F) ;
-        p138.q_SET(new float[] {-1.0087681E38F, -1.400362E38F, 6.2640316E37F, 7.554969E37F}, 0) ;
+        p138.time_usec_SET(834063722049578554L) ;
+        p138.z_SET(-2.7310896E37F) ;
+        p138.x_SET(-7.9247867E37F) ;
+        p138.y_SET(1.7681655E38F) ;
+        p138.q_SET(new float[] {1.2058951E38F, 1.0978428E36F, 3.2978291E38F, -1.3624199E38F}, 0) ;
         CommunicationChannel.instance.send(p138);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_SET_ACTUATOR_CONTROL_TARGET.add((src, ph, pack) ->
         {
-            assert(Arrays.equals(pack.controls_GET(),  new float[] {4.229754E37F, -2.8526246E37F, -2.3640698E38F, -8.927082E37F, -1.2893439E37F, -3.4753536E37F, 1.7937063E38F, -1.1064238E38F}));
-            assert(pack.time_usec_GET() == 6846897202882491831L);
-            assert(pack.group_mlx_GET() == (char)91);
-            assert(pack.target_system_GET() == (char)239);
-            assert(pack.target_component_GET() == (char)46);
+            assert(pack.group_mlx_GET() == (char)201);
+            assert(Arrays.equals(pack.controls_GET(),  new float[] {-1.5306243E38F, 6.284952E36F, -5.6637316E37F, 3.250161E38F, -1.47717E37F, 4.5302587E37F, 4.2149616E37F, 2.1475786E38F}));
+            assert(pack.time_usec_GET() == 4247703477781908549L);
+            assert(pack.target_system_GET() == (char)140);
+            assert(pack.target_component_GET() == (char)50);
         });
         GroundControl.SET_ACTUATOR_CONTROL_TARGET p139 = CommunicationChannel.new_SET_ACTUATOR_CONTROL_TARGET();
         PH.setPack(p139);
-        p139.time_usec_SET(6846897202882491831L) ;
-        p139.target_component_SET((char)46) ;
-        p139.target_system_SET((char)239) ;
-        p139.group_mlx_SET((char)91) ;
-        p139.controls_SET(new float[] {4.229754E37F, -2.8526246E37F, -2.3640698E38F, -8.927082E37F, -1.2893439E37F, -3.4753536E37F, 1.7937063E38F, -1.1064238E38F}, 0) ;
+        p139.time_usec_SET(4247703477781908549L) ;
+        p139.group_mlx_SET((char)201) ;
+        p139.controls_SET(new float[] {-1.5306243E38F, 6.284952E36F, -5.6637316E37F, 3.250161E38F, -1.47717E37F, 4.5302587E37F, 4.2149616E37F, 2.1475786E38F}, 0) ;
+        p139.target_component_SET((char)50) ;
+        p139.target_system_SET((char)140) ;
         CommunicationChannel.instance.send(p139);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_ACTUATOR_CONTROL_TARGET.add((src, ph, pack) ->
         {
-            assert(Arrays.equals(pack.controls_GET(),  new float[] {2.4824554E38F, -2.00372E38F, 3.5709378E37F, -4.633374E37F, -1.740274E38F, -8.3123374E37F, 1.5978731E38F, 1.8505837E38F}));
-            assert(pack.group_mlx_GET() == (char)56);
-            assert(pack.time_usec_GET() == 3064416480114222793L);
+            assert(Arrays.equals(pack.controls_GET(),  new float[] {-2.0513327E38F, 1.0272511E38F, -1.1431714E38F, 2.1807367E38F, -2.6572346E38F, 9.846521E37F, 2.972011E38F, 1.8833597E38F}));
+            assert(pack.group_mlx_GET() == (char)177);
+            assert(pack.time_usec_GET() == 5011649016687064911L);
         });
         GroundControl.ACTUATOR_CONTROL_TARGET p140 = CommunicationChannel.new_ACTUATOR_CONTROL_TARGET();
         PH.setPack(p140);
-        p140.group_mlx_SET((char)56) ;
-        p140.controls_SET(new float[] {2.4824554E38F, -2.00372E38F, 3.5709378E37F, -4.633374E37F, -1.740274E38F, -8.3123374E37F, 1.5978731E38F, 1.8505837E38F}, 0) ;
-        p140.time_usec_SET(3064416480114222793L) ;
+        p140.time_usec_SET(5011649016687064911L) ;
+        p140.group_mlx_SET((char)177) ;
+        p140.controls_SET(new float[] {-2.0513327E38F, 1.0272511E38F, -1.1431714E38F, 2.1807367E38F, -2.6572346E38F, 9.846521E37F, 2.972011E38F, 1.8833597E38F}, 0) ;
         CommunicationChannel.instance.send(p140);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         CommunicationChannel.instance.on_ALTITUDE.add((src, ph, pack) ->
         {
-            assert(pack.time_usec_GET() == 2446628050814867536L);
-            assert(pack.altitude_amsl_GET() == -1.8864393E38F);
-            assert(pack.altitude_local_GET() == -1.3579722E38F);
-            assert(pack.bottom_clearance_GET() == -2.9021126E38F);
-            assert(pack.altitude_terrain_GET() == -1.4348402E38F);
-            assert(pack.altitude_monotonic_GET() == -7.1801094E37F);
-            assert(pack.altitude_relative_GET() == -8.3133044E37F);
+            assert(pack.altitude_relative_GET() == -3.140477E38F);
+            assert(pack.altitude_local_GET() == 1.2828416E38F);
+            assert(pack.time_usec_GET() == 1867988826739502192L);
+            assert(pack.altitude_terrain_GET() == -2.5567326E37F);
+            assert(pack.altitude_amsl_GET() == -3.2363179E38F);
+            assert(pack.bottom_clearance_GET() == -2.1902686E38F);
+            assert(pack.altitude_monotonic_GET() == 1.0514308E38F);
         });
         GroundControl.ALTITUDE p141 = CommunicationChannel.new_ALTITUDE();
         PH.setPack(p141);
-        p141.altitude_local_SET(-1.3579722E38F) ;
-        p141.altitude_relative_SET(-8.3133044E37F) ;
-        p141.altitude_terrain_SET(-1.4348402E38F) ;
-        p141.altitude_amsl_SET(-1.8864393E38F) ;
-        p141.time_usec_SET(2446628050814867536L) ;
-        p141.altitude_monotonic_SET(-7.1801094E37F) ;
-        p141.bottom_clearance_SET(-2.9021126E38F) ;
+        p141.altitude_monotonic_SET(1.0514308E38F) ;
+        p141.altitude_amsl_SET(-3.2363179E38F) ;
+        p141.altitude_relative_SET(-3.140477E38F) ;
+        p141.altitude_terrain_SET(-2.5567326E37F) ;
+        p141.bottom_clearance_SET(-2.1902686E38F) ;
+        p141.time_usec_SET(1867988826739502192L) ;
+        p141.altitude_local_SET(1.2828416E38F) ;
         CommunicationChannel.instance.send(p141);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, CommunicationChannel.instance.outputStream, CommunicationChannel.instance);
         TestChannel.instance.on_RESOURCE_REQUEST.add((src, ph, pack) ->
         {
-            assert(Arrays.equals(pack.storage_GET(),  new char[] {(char)85, (char)119, (char)67, (char)147, (char)200, (char)177, (char)196, (char)251, (char)221, (char)110, (char)119, (char)231, (char)26, (char)46, (char)235, (char)224, (char)56, (char)175, (char)93, (char)115, (char)15, (char)102, (char)141, (char)148, (char)32, (char)87, (char)82, (char)168, (char)133, (char)206, (char)177, (char)8, (char)66, (char)70, (char)81, (char)169, (char)228, (char)207, (char)248, (char)220, (char)157, (char)144, (char)49, (char)177, (char)97, (char)156, (char)94, (char)125, (char)28, (char)174, (char)208, (char)141, (char)195, (char)255, (char)154, (char)216, (char)63, (char)66, (char)16, (char)113, (char)41, (char)12, (char)149, (char)44, (char)167, (char)70, (char)75, (char)216, (char)62, (char)214, (char)227, (char)152, (char)1, (char)63, (char)208, (char)189, (char)230, (char)176, (char)9, (char)41, (char)19, (char)116, (char)29, (char)72, (char)45, (char)33, (char)172, (char)76, (char)46, (char)115, (char)244, (char)219, (char)252, (char)137, (char)121, (char)145, (char)229, (char)130, (char)112, (char)58, (char)172, (char)45, (char)217, (char)240, (char)195, (char)115, (char)77, (char)176, (char)82, (char)115, (char)132, (char)47, (char)244, (char)225, (char)113, (char)182, (char)116, (char)185, (char)185, (char)73}));
-            assert(Arrays.equals(pack.uri_GET(),  new char[] {(char)19, (char)144, (char)147, (char)183, (char)183, (char)144, (char)151, (char)72, (char)69, (char)114, (char)51, (char)46, (char)81, (char)154, (char)87, (char)113, (char)38, (char)135, (char)35, (char)80, (char)232, (char)51, (char)244, (char)33, (char)11, (char)153, (char)172, (char)179, (char)126, (char)187, (char)46, (char)143, (char)203, (char)103, (char)164, (char)104, (char)242, (char)32, (char)47, (char)151, (char)220, (char)93, (char)27, (char)34, (char)197, (char)247, (char)51, (char)104, (char)100, (char)98, (char)6, (char)121, (char)154, (char)154, (char)147, (char)38, (char)249, (char)195, (char)206, (char)224, (char)146, (char)244, (char)180, (char)186, (char)127, (char)12, (char)158, (char)118, (char)141, (char)79, (char)192, (char)186, (char)125, (char)129, (char)131, (char)162, (char)212, (char)72, (char)53, (char)35, (char)47, (char)137, (char)120, (char)171, (char)32, (char)179, (char)163, (char)92, (char)132, (char)212, (char)204, (char)159, (char)97, (char)214, (char)227, (char)215, (char)127, (char)107, (char)222, (char)209, (char)176, (char)132, (char)19, (char)23, (char)209, (char)84, (char)222, (char)235, (char)242, (char)19, (char)169, (char)149, (char)42, (char)125, (char)135, (char)221, (char)255, (char)195, (char)45, (char)201}));
-            assert(pack.transfer_type_GET() == (char)238);
-            assert(pack.request_id_GET() == (char)22);
-            assert(pack.uri_type_GET() == (char)211);
+            assert(Arrays.equals(pack.uri_GET(),  new char[] {(char)170, (char)125, (char)110, (char)29, (char)131, (char)12, (char)67, (char)64, (char)245, (char)132, (char)73, (char)162, (char)218, (char)105, (char)63, (char)243, (char)150, (char)197, (char)76, (char)251, (char)214, (char)169, (char)89, (char)117, (char)100, (char)73, (char)40, (char)108, (char)173, (char)251, (char)116, (char)182, (char)41, (char)83, (char)114, (char)47, (char)129, (char)136, (char)49, (char)25, (char)39, (char)216, (char)119, (char)7, (char)34, (char)7, (char)24, (char)75, (char)81, (char)69, (char)210, (char)84, (char)6, (char)116, (char)141, (char)123, (char)216, (char)219, (char)148, (char)221, (char)179, (char)178, (char)39, (char)86, (char)199, (char)84, (char)125, (char)4, (char)165, (char)97, (char)12, (char)151, (char)163, (char)88, (char)12, (char)141, (char)254, (char)221, (char)223, (char)31, (char)39, (char)155, (char)188, (char)75, (char)39, (char)175, (char)246, (char)213, (char)197, (char)105, (char)128, (char)46, (char)192, (char)244, (char)213, (char)187, (char)220, (char)140, (char)232, (char)133, (char)45, (char)183, (char)250, (char)96, (char)70, (char)188, (char)7, (char)63, (char)171, (char)117, (char)55, (char)39, (char)75, (char)185, (char)87, (char)147, (char)65, (char)220, (char)218, (char)153}));
+            assert(Arrays.equals(pack.storage_GET(),  new char[] {(char)2, (char)96, (char)43, (char)250, (char)208, (char)92, (char)11, (char)99, (char)27, (char)71, (char)213, (char)168, (char)97, (char)214, (char)104, (char)22, (char)4, (char)187, (char)81, (char)26, (char)132, (char)14, (char)163, (char)126, (char)238, (char)62, (char)242, (char)14, (char)95, (char)4, (char)119, (char)54, (char)71, (char)100, (char)68, (char)153, (char)243, (char)127, (char)78, (char)121, (char)122, (char)234, (char)67, (char)157, (char)203, (char)37, (char)228, (char)71, (char)38, (char)165, (char)11, (char)122, (char)175, (char)176, (char)66, (char)172, (char)78, (char)180, (char)61, (char)41, (char)90, (char)133, (char)243, (char)230, (char)53, (char)1, (char)249, (char)58, (char)224, (char)247, (char)136, (char)17, (char)162, (char)62, (char)249, (char)97, (char)188, (char)171, (char)45, (char)34, (char)144, (char)221, (char)231, (char)159, (char)133, (char)165, (char)80, (char)11, (char)0, (char)30, (char)171, (char)71, (char)153, (char)123, (char)197, (char)122, (char)95, (char)135, (char)225, (char)175, (char)227, (char)154, (char)98, (char)225, (char)229, (char)141, (char)25, (char)125, (char)187, (char)7, (char)14, (char)86, (char)188, (char)121, (char)247, (char)122, (char)164, (char)214, (char)70, (char)32}));
+            assert(pack.uri_type_GET() == (char)154);
+            assert(pack.transfer_type_GET() == (char)77);
+            assert(pack.request_id_GET() == (char)62);
         });
         GroundControl.RESOURCE_REQUEST p142 = CommunicationChannel.new_RESOURCE_REQUEST();
         PH.setPack(p142);
-        p142.storage_SET(new char[] {(char)85, (char)119, (char)67, (char)147, (char)200, (char)177, (char)196, (char)251, (char)221, (char)110, (char)119, (char)231, (char)26, (char)46, (char)235, (char)224, (char)56, (char)175, (char)93, (char)115, (char)15, (char)102, (char)141, (char)148, (char)32, (char)87, (char)82, (char)168, (char)133, (char)206, (char)177, (char)8, (char)66, (char)70, (char)81, (char)169, (char)228, (char)207, (char)248, (char)220, (char)157, (char)144, (char)49, (char)177, (char)97, (char)156, (char)94, (char)125, (char)28, (char)174, (char)208, (char)141, (char)195, (char)255, (char)154, (char)216, (char)63, (char)66, (char)16, (char)113, (char)41, (char)12, (char)149, (char)44, (char)167, (char)70, (char)75, (char)216, (char)62, (char)214, (char)227, (char)152, (char)1, (char)63, (char)208, (char)189, (char)230, (char)176, (char)9, (char)41, (char)19, (char)116, (char)29, (char)72, (char)45, (char)33, (char)172, (char)76, (char)46, (char)115, (char)244, (char)219, (char)252, (char)137, (char)121, (char)145, (char)229, (char)130, (char)112, (char)58, (char)172, (char)45, (char)217, (char)240, (char)195, (char)115, (char)77, (char)176, (char)82, (char)115, (char)132, (char)47, (char)244, (char)225, (char)113, (char)182, (char)116, (char)185, (char)185, (char)73}, 0) ;
-        p142.uri_SET(new char[] {(char)19, (char)144, (char)147, (char)183, (char)183, (char)144, (char)151, (char)72, (char)69, (char)114, (char)51, (char)46, (char)81, (char)154, (char)87, (char)113, (char)38, (char)135, (char)35, (char)80, (char)232, (char)51, (char)244, (char)33, (char)11, (char)153, (char)172, (char)179, (char)126, (char)187, (char)46, (char)143, (char)203, (char)103, (char)164, (char)104, (char)242, (char)32, (char)47, (char)151, (char)220, (char)93, (char)27, (char)34, (char)197, (char)247, (char)51, (char)104, (char)100, (char)98, (char)6, (char)121, (char)154, (char)154, (char)147, (char)38, (char)249, (char)195, (char)206, (char)224, (char)146, (char)244, (char)180, (char)186, (char)127, (char)12, (char)158, (char)118, (char)141, (char)79, (char)192, (char)186, (char)125, (char)129, (char)131, (char)162, (char)212, (char)72, (char)53, (char)35, (char)47, (char)137, (char)120, (char)171, (char)32, (char)179, (char)163, (char)92, (char)132, (char)212, (char)204, (char)159, (char)97, (char)214, (char)227, (char)215, (char)127, (char)107, (char)222, (char)209, (char)176, (char)132, (char)19, (char)23, (char)209, (char)84, (char)222, (char)235, (char)242, (char)19, (char)169, (char)149, (char)42, (char)125, (char)135, (char)221, (char)255, (char)195, (char)45, (char)201}, 0) ;
-        p142.transfer_type_SET((char)238) ;
-        p142.uri_type_SET((char)211) ;
-        p142.request_id_SET((char)22) ;
+        p142.uri_SET(new char[] {(char)170, (char)125, (char)110, (char)29, (char)131, (char)12, (char)67, (char)64, (char)245, (char)132, (char)73, (char)162, (char)218, (char)105, (char)63, (char)243, (char)150, (char)197, (char)76, (char)251, (char)214, (char)169, (char)89, (char)117, (char)100, (char)73, (char)40, (char)108, (char)173, (char)251, (char)116, (char)182, (char)41, (char)83, (char)114, (char)47, (char)129, (char)136, (char)49, (char)25, (char)39, (char)216, (char)119, (char)7, (char)34, (char)7, (char)24, (char)75, (char)81, (char)69, (char)210, (char)84, (char)6, (char)116, (char)141, (char)123, (char)216, (char)219, (char)148, (char)221, (char)179, (char)178, (char)39, (char)86, (char)199, (char)84, (char)125, (char)4, (char)165, (char)97, (char)12, (char)151, (char)163, (char)88, (char)12, (char)141, (char)254, (char)221, (char)223, (char)31, (char)39, (char)155, (char)188, (char)75, (char)39, (char)175, (char)246, (char)213, (char)197, (char)105, (char)128, (char)46, (char)192, (char)244, (char)213, (char)187, (char)220, (char)140, (char)232, (char)133, (char)45, (char)183, (char)250, (char)96, (char)70, (char)188, (char)7, (char)63, (char)171, (char)117, (char)55, (char)39, (char)75, (char)185, (char)87, (char)147, (char)65, (char)220, (char)218, (char)153}, 0) ;
+        p142.uri_type_SET((char)154) ;
+        p142.storage_SET(new char[] {(char)2, (char)96, (char)43, (char)250, (char)208, (char)92, (char)11, (char)99, (char)27, (char)71, (char)213, (char)168, (char)97, (char)214, (char)104, (char)22, (char)4, (char)187, (char)81, (char)26, (char)132, (char)14, (char)163, (char)126, (char)238, (char)62, (char)242, (char)14, (char)95, (char)4, (char)119, (char)54, (char)71, (char)100, (char)68, (char)153, (char)243, (char)127, (char)78, (char)121, (char)122, (char)234, (char)67, (char)157, (char)203, (char)37, (char)228, (char)71, (char)38, (char)165, (char)11, (char)122, (char)175, (char)176, (char)66, (char)172, (char)78, (char)180, (char)61, (char)41, (char)90, (char)133, (char)243, (char)230, (char)53, (char)1, (char)249, (char)58, (char)224, (char)247, (char)136, (char)17, (char)162, (char)62, (char)249, (char)97, (char)188, (char)171, (char)45, (char)34, (char)144, (char)221, (char)231, (char)159, (char)133, (char)165, (char)80, (char)11, (char)0, (char)30, (char)171, (char)71, (char)153, (char)123, (char)197, (char)122, (char)95, (char)135, (char)225, (char)175, (char)227, (char)154, (char)98, (char)225, (char)229, (char)141, (char)25, (char)125, (char)187, (char)7, (char)14, (char)86, (char)188, (char)121, (char)247, (char)122, (char)164, (char)214, (char)70, (char)32}, 0) ;
+        p142.request_id_SET((char)62) ;
+        p142.transfer_type_SET((char)77) ;
         CommunicationChannel.instance.send(p142);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_SCALED_PRESSURE3.add((src, ph, pack) ->
         {
-            assert(pack.press_diff_GET() == -2.8932442E38F);
-            assert(pack.press_abs_GET() == -1.59388E37F);
-            assert(pack.time_boot_ms_GET() == 4293605124L);
-            assert(pack.temperature_GET() == (short) -15570);
+            assert(pack.temperature_GET() == (short)1401);
+            assert(pack.time_boot_ms_GET() == 3136934910L);
+            assert(pack.press_abs_GET() == 7.4884857E37F);
+            assert(pack.press_diff_GET() == 3.1090894E38F);
         });
         GroundControl.SCALED_PRESSURE3 p143 = CommunicationChannel.new_SCALED_PRESSURE3();
         PH.setPack(p143);
-        p143.press_abs_SET(-1.59388E37F) ;
-        p143.time_boot_ms_SET(4293605124L) ;
-        p143.press_diff_SET(-2.8932442E38F) ;
-        p143.temperature_SET((short) -15570) ;
+        p143.temperature_SET((short)1401) ;
+        p143.time_boot_ms_SET(3136934910L) ;
+        p143.press_diff_SET(3.1090894E38F) ;
+        p143.press_abs_SET(7.4884857E37F) ;
         CommunicationChannel.instance.send(p143);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_FOLLOW_TARGET.add((src, ph, pack) ->
         {
-            assert(pack.timestamp_GET() == 2160199515834250000L);
-            assert(pack.lon_GET() == 646327212);
-            assert(Arrays.equals(pack.vel_GET(),  new float[] {1.0552917E38F, 3.0306792E38F, 2.4355464E38F}));
-            assert(pack.lat_GET() == 1103391433);
-            assert(Arrays.equals(pack.acc_GET(),  new float[] {-3.0792547E38F, 1.7794061E37F, 2.4007383E37F}));
-            assert(Arrays.equals(pack.attitude_q_GET(),  new float[] {3.1145555E38F, -2.1566351E38F, 2.1136108E38F, -3.30757E38F}));
-            assert(pack.alt_GET() == -1.2523596E38F);
-            assert(pack.est_capabilities_GET() == (char)217);
-            assert(pack.custom_state_GET() == 874254097415564131L);
-            assert(Arrays.equals(pack.position_cov_GET(),  new float[] {1.2121337E38F, 3.3239099E38F, -3.238603E38F}));
-            assert(Arrays.equals(pack.rates_GET(),  new float[] {2.6403333E38F, -1.9782276E38F, 5.532612E36F}));
+            assert(Arrays.equals(pack.vel_GET(),  new float[] {1.9352541E37F, -1.9083679E38F, -2.0159701E38F}));
+            assert(Arrays.equals(pack.attitude_q_GET(),  new float[] {-3.3213202E38F, 3.172461E37F, 2.1552093E38F, 1.377977E38F}));
+            assert(pack.lon_GET() == -1284619904);
+            assert(pack.est_capabilities_GET() == (char)130);
+            assert(Arrays.equals(pack.position_cov_GET(),  new float[] {3.1571984E38F, -1.4944591E38F, 8.551869E37F}));
+            assert(pack.alt_GET() == -1.5366558E37F);
+            assert(Arrays.equals(pack.rates_GET(),  new float[] {3.176875E38F, 2.1285266E37F, -1.6769018E38F}));
+            assert(pack.lat_GET() == 925971871);
+            assert(Arrays.equals(pack.acc_GET(),  new float[] {-2.3511278E38F, 1.1601177E38F, 2.4805095E38F}));
+            assert(pack.timestamp_GET() == 8784048077513380943L);
+            assert(pack.custom_state_GET() == 4783528514162373441L);
         });
         GroundControl.FOLLOW_TARGET p144 = CommunicationChannel.new_FOLLOW_TARGET();
         PH.setPack(p144);
-        p144.attitude_q_SET(new float[] {3.1145555E38F, -2.1566351E38F, 2.1136108E38F, -3.30757E38F}, 0) ;
-        p144.lat_SET(1103391433) ;
-        p144.position_cov_SET(new float[] {1.2121337E38F, 3.3239099E38F, -3.238603E38F}, 0) ;
-        p144.est_capabilities_SET((char)217) ;
-        p144.alt_SET(-1.2523596E38F) ;
-        p144.custom_state_SET(874254097415564131L) ;
-        p144.acc_SET(new float[] {-3.0792547E38F, 1.7794061E37F, 2.4007383E37F}, 0) ;
-        p144.rates_SET(new float[] {2.6403333E38F, -1.9782276E38F, 5.532612E36F}, 0) ;
-        p144.timestamp_SET(2160199515834250000L) ;
-        p144.vel_SET(new float[] {1.0552917E38F, 3.0306792E38F, 2.4355464E38F}, 0) ;
-        p144.lon_SET(646327212) ;
+        p144.est_capabilities_SET((char)130) ;
+        p144.rates_SET(new float[] {3.176875E38F, 2.1285266E37F, -1.6769018E38F}, 0) ;
+        p144.custom_state_SET(4783528514162373441L) ;
+        p144.lat_SET(925971871) ;
+        p144.lon_SET(-1284619904) ;
+        p144.alt_SET(-1.5366558E37F) ;
+        p144.timestamp_SET(8784048077513380943L) ;
+        p144.acc_SET(new float[] {-2.3511278E38F, 1.1601177E38F, 2.4805095E38F}, 0) ;
+        p144.position_cov_SET(new float[] {3.1571984E38F, -1.4944591E38F, 8.551869E37F}, 0) ;
+        p144.attitude_q_SET(new float[] {-3.3213202E38F, 3.172461E37F, 2.1552093E38F, 1.377977E38F}, 0) ;
+        p144.vel_SET(new float[] {1.9352541E37F, -1.9083679E38F, -2.0159701E38F}, 0) ;
         CommunicationChannel.instance.send(p144);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_CONTROL_SYSTEM_STATE.add((src, ph, pack) ->
         {
-            assert(pack.x_pos_GET() == -2.6267006E38F);
-            assert(Arrays.equals(pack.pos_variance_GET(),  new float[] {6.5752225E37F, 4.508039E37F, 8.254326E37F}));
-            assert(pack.z_pos_GET() == -2.6674912E38F);
-            assert(pack.z_acc_GET() == -2.5703518E38F);
-            assert(pack.time_usec_GET() == 418392178431305465L);
-            assert(pack.roll_rate_GET() == -2.5882685E38F);
-            assert(pack.x_vel_GET() == -2.1010817E37F);
-            assert(Arrays.equals(pack.vel_variance_GET(),  new float[] {4.866002E37F, -2.1224199E38F, 2.3491437E37F}));
-            assert(pack.y_vel_GET() == -3.1488646E38F);
-            assert(pack.z_vel_GET() == 5.6390854E37F);
-            assert(pack.y_pos_GET() == -1.6287404E38F);
-            assert(pack.yaw_rate_GET() == -1.5768177E37F);
-            assert(pack.airspeed_GET() == 2.9702636E38F);
-            assert(pack.y_acc_GET() == 6.48792E37F);
-            assert(pack.pitch_rate_GET() == -2.3924824E38F);
-            assert(Arrays.equals(pack.q_GET(),  new float[] {-3.389267E38F, -2.8157428E38F, -1.5024009E38F, -2.5961403E38F}));
-            assert(pack.x_acc_GET() == 1.1070136E38F);
+            assert(pack.x_acc_GET() == -7.282214E37F);
+            assert(pack.y_acc_GET() == 4.6349946E37F);
+            assert(Arrays.equals(pack.pos_variance_GET(),  new float[] {4.6825203E37F, 2.3479745E38F, -1.2668502E37F}));
+            assert(pack.pitch_rate_GET() == 8.3004986E37F);
+            assert(pack.x_vel_GET() == 3.1325255E38F);
+            assert(pack.z_pos_GET() == 1.3751722E38F);
+            assert(pack.z_vel_GET() == -1.8708649E38F);
+            assert(pack.roll_rate_GET() == 2.2005836E38F);
+            assert(pack.x_pos_GET() == 1.3659544E37F);
+            assert(pack.yaw_rate_GET() == 6.068445E37F);
+            assert(pack.airspeed_GET() == 3.2875802E38F);
+            assert(pack.z_acc_GET() == 3.8781767E37F);
+            assert(pack.time_usec_GET() == 2647620191409274159L);
+            assert(pack.y_pos_GET() == -6.5314024E36F);
+            assert(Arrays.equals(pack.vel_variance_GET(),  new float[] {1.8773226E37F, -4.52495E37F, -2.8149758E38F}));
+            assert(pack.y_vel_GET() == 2.7650512E37F);
+            assert(Arrays.equals(pack.q_GET(),  new float[] {-3.003803E38F, -2.0199971E36F, -3.3528825E38F, 2.371997E38F}));
         });
         GroundControl.CONTROL_SYSTEM_STATE p146 = CommunicationChannel.new_CONTROL_SYSTEM_STATE();
         PH.setPack(p146);
-        p146.y_acc_SET(6.48792E37F) ;
-        p146.x_vel_SET(-2.1010817E37F) ;
-        p146.z_pos_SET(-2.6674912E38F) ;
-        p146.z_acc_SET(-2.5703518E38F) ;
-        p146.vel_variance_SET(new float[] {4.866002E37F, -2.1224199E38F, 2.3491437E37F}, 0) ;
-        p146.z_vel_SET(5.6390854E37F) ;
-        p146.q_SET(new float[] {-3.389267E38F, -2.8157428E38F, -1.5024009E38F, -2.5961403E38F}, 0) ;
-        p146.pos_variance_SET(new float[] {6.5752225E37F, 4.508039E37F, 8.254326E37F}, 0) ;
-        p146.roll_rate_SET(-2.5882685E38F) ;
-        p146.y_pos_SET(-1.6287404E38F) ;
-        p146.yaw_rate_SET(-1.5768177E37F) ;
-        p146.time_usec_SET(418392178431305465L) ;
-        p146.x_pos_SET(-2.6267006E38F) ;
-        p146.x_acc_SET(1.1070136E38F) ;
-        p146.airspeed_SET(2.9702636E38F) ;
-        p146.y_vel_SET(-3.1488646E38F) ;
-        p146.pitch_rate_SET(-2.3924824E38F) ;
+        p146.z_pos_SET(1.3751722E38F) ;
+        p146.y_acc_SET(4.6349946E37F) ;
+        p146.z_vel_SET(-1.8708649E38F) ;
+        p146.pos_variance_SET(new float[] {4.6825203E37F, 2.3479745E38F, -1.2668502E37F}, 0) ;
+        p146.pitch_rate_SET(8.3004986E37F) ;
+        p146.time_usec_SET(2647620191409274159L) ;
+        p146.yaw_rate_SET(6.068445E37F) ;
+        p146.x_vel_SET(3.1325255E38F) ;
+        p146.airspeed_SET(3.2875802E38F) ;
+        p146.x_pos_SET(1.3659544E37F) ;
+        p146.y_pos_SET(-6.5314024E36F) ;
+        p146.x_acc_SET(-7.282214E37F) ;
+        p146.z_acc_SET(3.8781767E37F) ;
+        p146.y_vel_SET(2.7650512E37F) ;
+        p146.vel_variance_SET(new float[] {1.8773226E37F, -4.52495E37F, -2.8149758E38F}, 0) ;
+        p146.q_SET(new float[] {-3.003803E38F, -2.0199971E36F, -3.3528825E38F, 2.371997E38F}, 0) ;
+        p146.roll_rate_SET(2.2005836E38F) ;
         CommunicationChannel.instance.send(p146);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_BATTERY_STATUS.add((src, ph, pack) ->
         {
-            assert(pack.temperature_GET() == (short) -13623);
+            assert(pack.type_GET() == MAV_BATTERY_TYPE.MAV_BATTERY_TYPE_LIFE);
             assert(pack.battery_function_GET() == MAV_BATTERY_FUNCTION.MAV_BATTERY_FUNCTION_UNKNOWN);
-            assert(pack.energy_consumed_GET() == 1872020099);
-            assert(pack.type_GET() == MAV_BATTERY_TYPE.MAV_BATTERY_TYPE_LION);
-            assert(pack.current_battery_GET() == (short) -8971);
-            assert(Arrays.equals(pack.voltages_GET(),  new char[] {(char)64670, (char)45932, (char)64436, (char)50229, (char)61111, (char)59638, (char)18392, (char)36061, (char)9720, (char)34811}));
-            assert(pack.id_GET() == (char)162);
-            assert(pack.current_consumed_GET() == 1665399894);
-            assert(pack.battery_remaining_GET() == (byte) - 3);
+            assert(Arrays.equals(pack.voltages_GET(),  new char[] {(char)54211, (char)6597, (char)35771, (char)62511, (char)49660, (char)9465, (char)18878, (char)15947, (char)15091, (char)5578}));
+            assert(pack.battery_remaining_GET() == (byte)84);
+            assert(pack.temperature_GET() == (short)23690);
+            assert(pack.current_consumed_GET() == -430950670);
+            assert(pack.id_GET() == (char)189);
+            assert(pack.current_battery_GET() == (short)16226);
+            assert(pack.energy_consumed_GET() == -893597999);
         });
         GroundControl.BATTERY_STATUS p147 = CommunicationChannel.new_BATTERY_STATUS();
         PH.setPack(p147);
-        p147.temperature_SET((short) -13623) ;
-        p147.current_consumed_SET(1665399894) ;
+        p147.current_battery_SET((short)16226) ;
+        p147.temperature_SET((short)23690) ;
+        p147.battery_remaining_SET((byte)84) ;
+        p147.current_consumed_SET(-430950670) ;
         p147.battery_function_SET(MAV_BATTERY_FUNCTION.MAV_BATTERY_FUNCTION_UNKNOWN) ;
-        p147.voltages_SET(new char[] {(char)64670, (char)45932, (char)64436, (char)50229, (char)61111, (char)59638, (char)18392, (char)36061, (char)9720, (char)34811}, 0) ;
-        p147.id_SET((char)162) ;
-        p147.energy_consumed_SET(1872020099) ;
-        p147.battery_remaining_SET((byte) - 3) ;
-        p147.current_battery_SET((short) -8971) ;
-        p147.type_SET(MAV_BATTERY_TYPE.MAV_BATTERY_TYPE_LION) ;
+        p147.type_SET(MAV_BATTERY_TYPE.MAV_BATTERY_TYPE_LIFE) ;
+        p147.id_SET((char)189) ;
+        p147.energy_consumed_SET(-893597999) ;
+        p147.voltages_SET(new char[] {(char)54211, (char)6597, (char)35771, (char)62511, (char)49660, (char)9465, (char)18878, (char)15947, (char)15091, (char)5578}, 0) ;
         CommunicationChannel.instance.send(p147);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_AUTOPILOT_VERSION.add((src, ph, pack) ->
         {
-            assert(pack.product_id_GET() == (char)61052);
-            assert(pack.middleware_sw_version_GET() == 3583214801L);
-            assert(Arrays.equals(pack.middleware_custom_version_GET(),  new char[] {(char)6, (char)170, (char)19, (char)100, (char)216, (char)61, (char)144, (char)121}));
-            assert(Arrays.equals(pack.uid2_TRY(ph),  new char[] {(char)235, (char)98, (char)80, (char)44, (char)103, (char)42, (char)57, (char)57, (char)228, (char)84, (char)168, (char)230, (char)65, (char)2, (char)104, (char)216, (char)87, (char)227}));
-            assert(pack.flight_sw_version_GET() == 2237954448L);
-            assert(Arrays.equals(pack.flight_custom_version_GET(),  new char[] {(char)80, (char)75, (char)97, (char)76, (char)174, (char)112, (char)249, (char)13}));
-            assert(pack.os_sw_version_GET() == 1262275960L);
+            assert(pack.uid_GET() == 2886233144305836376L);
+            assert(Arrays.equals(pack.middleware_custom_version_GET(),  new char[] {(char)232, (char)146, (char)111, (char)245, (char)30, (char)218, (char)188, (char)243}));
+            assert(Arrays.equals(pack.flight_custom_version_GET(),  new char[] {(char)178, (char)68, (char)58, (char)243, (char)74, (char)217, (char)170, (char)52}));
+            assert(pack.flight_sw_version_GET() == 718116056L);
+            assert(pack.product_id_GET() == (char)21362);
+            assert(pack.vendor_id_GET() == (char)7816);
+            assert(pack.middleware_sw_version_GET() == 4027933731L);
             assert(pack.capabilities_GET() == (MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_ATTITUDE_TARGET |
                                                MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MAVLINK2 |
+                                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FLIGHT_INFORMATION |
                                                MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_RALLY |
                                                MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FLOAT |
-                                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FTP |
+                                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_GLOBAL_INT |
                                                MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_TERRAIN |
-                                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_COMPASS_CALIBRATION |
-                                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FENCE));
-            assert(Arrays.equals(pack.os_custom_version_GET(),  new char[] {(char)212, (char)76, (char)202, (char)7, (char)21, (char)55, (char)12, (char)227}));
-            assert(pack.uid_GET() == 8470779405973373467L);
-            assert(pack.board_version_GET() == 4202260713L);
-            assert(pack.vendor_id_GET() == (char)31442);
+                                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FLIGHT_TERMINATION |
+                                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FENCE |
+                                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_COMMAND_INT));
+            assert(Arrays.equals(pack.uid2_TRY(ph),  new char[] {(char)211, (char)108, (char)89, (char)224, (char)62, (char)43, (char)176, (char)73, (char)213, (char)51, (char)148, (char)185, (char)8, (char)87, (char)175, (char)235, (char)105, (char)80}));
+            assert(pack.board_version_GET() == 388179011L);
+            assert(Arrays.equals(pack.os_custom_version_GET(),  new char[] {(char)138, (char)30, (char)76, (char)114, (char)130, (char)33, (char)46, (char)244}));
+            assert(pack.os_sw_version_GET() == 2151309912L);
         });
         GroundControl.AUTOPILOT_VERSION p148 = CommunicationChannel.new_AUTOPILOT_VERSION();
         PH.setPack(p148);
-        p148.uid2_SET(new char[] {(char)235, (char)98, (char)80, (char)44, (char)103, (char)42, (char)57, (char)57, (char)228, (char)84, (char)168, (char)230, (char)65, (char)2, (char)104, (char)216, (char)87, (char)227}, 0, PH) ;
+        p148.vendor_id_SET((char)7816) ;
+        p148.product_id_SET((char)21362) ;
+        p148.board_version_SET(388179011L) ;
+        p148.middleware_custom_version_SET(new char[] {(char)232, (char)146, (char)111, (char)245, (char)30, (char)218, (char)188, (char)243}, 0) ;
+        p148.flight_custom_version_SET(new char[] {(char)178, (char)68, (char)58, (char)243, (char)74, (char)217, (char)170, (char)52}, 0) ;
+        p148.os_custom_version_SET(new char[] {(char)138, (char)30, (char)76, (char)114, (char)130, (char)33, (char)46, (char)244}, 0) ;
+        p148.uid_SET(2886233144305836376L) ;
+        p148.flight_sw_version_SET(718116056L) ;
+        p148.middleware_sw_version_SET(4027933731L) ;
+        p148.os_sw_version_SET(2151309912L) ;
         p148.capabilities_SET((MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_ATTITUDE_TARGET |
                                MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MAVLINK2 |
+                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FLIGHT_INFORMATION |
                                MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_RALLY |
                                MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FLOAT |
-                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FTP |
+                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_GLOBAL_INT |
                                MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_TERRAIN |
-                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_COMPASS_CALIBRATION |
-                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FENCE)) ;
-        p148.middleware_custom_version_SET(new char[] {(char)6, (char)170, (char)19, (char)100, (char)216, (char)61, (char)144, (char)121}, 0) ;
-        p148.os_sw_version_SET(1262275960L) ;
-        p148.vendor_id_SET((char)31442) ;
-        p148.board_version_SET(4202260713L) ;
-        p148.middleware_sw_version_SET(3583214801L) ;
-        p148.product_id_SET((char)61052) ;
-        p148.flight_sw_version_SET(2237954448L) ;
-        p148.uid_SET(8470779405973373467L) ;
-        p148.os_custom_version_SET(new char[] {(char)212, (char)76, (char)202, (char)7, (char)21, (char)55, (char)12, (char)227}, 0) ;
-        p148.flight_custom_version_SET(new char[] {(char)80, (char)75, (char)97, (char)76, (char)174, (char)112, (char)249, (char)13}, 0) ;
+                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_FLIGHT_TERMINATION |
+                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_MISSION_FENCE |
+                               MAV_PROTOCOL_CAPABILITY.MAV_PROTOCOL_CAPABILITY_COMMAND_INT)) ;
+        p148.uid2_SET(new char[] {(char)211, (char)108, (char)89, (char)224, (char)62, (char)43, (char)176, (char)73, (char)213, (char)51, (char)148, (char)185, (char)8, (char)87, (char)175, (char)235, (char)105, (char)80}, 0, PH) ;
         CommunicationChannel.instance.send(p148);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_LANDING_TARGET.add((src, ph, pack) ->
         {
-            assert(pack.type_GET() == LANDING_TARGET_TYPE.LANDING_TARGET_TYPE_LIGHT_BEACON);
-            assert(pack.angle_y_GET() == 1.9551612E38F);
-            assert(pack.frame_GET() == MAV_FRAME.MAV_FRAME_GLOBAL_INT);
-            assert(pack.time_usec_GET() == 8432024784433054324L);
-            assert(pack.angle_x_GET() == 2.3009258E38F);
-            assert(pack.position_valid_TRY(ph) == (char)52);
-            assert(pack.distance_GET() == 2.0714979E38F);
-            assert(Arrays.equals(pack.q_TRY(ph),  new float[] {1.01092E38F, -1.466432E38F, 1.908876E38F, -3.3772419E38F}));
-            assert(pack.y_TRY(ph) == -3.3285732E38F);
-            assert(pack.x_TRY(ph) == -1.5709212E38F);
-            assert(pack.target_num_GET() == (char)84);
-            assert(pack.z_TRY(ph) == -2.4001206E38F);
-            assert(pack.size_y_GET() == -8.193212E37F);
-            assert(pack.size_x_GET() == 2.3434414E38F);
+            assert(pack.frame_GET() == MAV_FRAME.MAV_FRAME_LOCAL_ENU);
+            assert(pack.x_TRY(ph) == 1.9297175E38F);
+            assert(pack.size_x_GET() == 1.1627547E38F);
+            assert(Arrays.equals(pack.q_TRY(ph),  new float[] {3.2122228E37F, -1.7691318E38F, 2.9798488E37F, 3.284843E38F}));
+            assert(pack.target_num_GET() == (char)26);
+            assert(pack.angle_y_GET() == -7.4646686E37F);
+            assert(pack.z_TRY(ph) == 2.9796507E38F);
+            assert(pack.distance_GET() == -4.0748783E37F);
+            assert(pack.y_TRY(ph) == -1.3463706E38F);
+            assert(pack.size_y_GET() == 9.207969E37F);
+            assert(pack.time_usec_GET() == 2235970561659869735L);
+            assert(pack.type_GET() == LANDING_TARGET_TYPE.LANDING_TARGET_TYPE_RADIO_BEACON);
+            assert(pack.position_valid_TRY(ph) == (char)2);
+            assert(pack.angle_x_GET() == 1.8437487E38F);
         });
         GroundControl.LANDING_TARGET p149 = CommunicationChannel.new_LANDING_TARGET();
         PH.setPack(p149);
-        p149.distance_SET(2.0714979E38F) ;
-        p149.type_SET(LANDING_TARGET_TYPE.LANDING_TARGET_TYPE_LIGHT_BEACON) ;
-        p149.time_usec_SET(8432024784433054324L) ;
-        p149.q_SET(new float[] {1.01092E38F, -1.466432E38F, 1.908876E38F, -3.3772419E38F}, 0, PH) ;
-        p149.x_SET(-1.5709212E38F, PH) ;
-        p149.angle_x_SET(2.3009258E38F) ;
-        p149.z_SET(-2.4001206E38F, PH) ;
-        p149.size_x_SET(2.3434414E38F) ;
-        p149.size_y_SET(-8.193212E37F) ;
-        p149.angle_y_SET(1.9551612E38F) ;
-        p149.position_valid_SET((char)52, PH) ;
-        p149.target_num_SET((char)84) ;
-        p149.y_SET(-3.3285732E38F, PH) ;
-        p149.frame_SET(MAV_FRAME.MAV_FRAME_GLOBAL_INT) ;
+        p149.position_valid_SET((char)2, PH) ;
+        p149.size_y_SET(9.207969E37F) ;
+        p149.distance_SET(-4.0748783E37F) ;
+        p149.z_SET(2.9796507E38F, PH) ;
+        p149.angle_x_SET(1.8437487E38F) ;
+        p149.size_x_SET(1.1627547E38F) ;
+        p149.frame_SET(MAV_FRAME.MAV_FRAME_LOCAL_ENU) ;
+        p149.y_SET(-1.3463706E38F, PH) ;
+        p149.target_num_SET((char)26) ;
+        p149.time_usec_SET(2235970561659869735L) ;
+        p149.angle_y_SET(-7.4646686E37F) ;
+        p149.x_SET(1.9297175E38F, PH) ;
+        p149.type_SET(LANDING_TARGET_TYPE.LANDING_TARGET_TYPE_RADIO_BEACON) ;
+        p149.q_SET(new float[] {3.2122228E37F, -1.7691318E38F, 2.9798488E37F, 3.284843E38F}, 0, PH) ;
         CommunicationChannel.instance.send(p149);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_SCRIPT_ITEM.add((src, ph, pack) ->
         {
-            assert(pack.target_component_GET() == (char)93);
-            assert(pack.seq_GET() == (char)64518);
-            assert(pack.name_LEN(ph) == 18);
-            assert(pack.name_TRY(ph).equals("npnBrdbrvdtGjufkaq"));
-            assert(pack.target_system_GET() == (char)135);
+            assert(pack.target_system_GET() == (char)178);
+            assert(pack.seq_GET() == (char)61107);
+            assert(pack.target_component_GET() == (char)84);
+            assert(pack.name_LEN(ph) == 21);
+            assert(pack.name_TRY(ph).equals("hDdeasbCcpevcgzybxvmt"));
         });
         GroundControl.SCRIPT_ITEM p180 = CommunicationChannel.new_SCRIPT_ITEM();
         PH.setPack(p180);
-        p180.name_SET("npnBrdbrvdtGjufkaq", PH) ;
-        p180.seq_SET((char)64518) ;
-        p180.target_system_SET((char)135) ;
-        p180.target_component_SET((char)93) ;
+        p180.target_component_SET((char)84) ;
+        p180.target_system_SET((char)178) ;
+        p180.name_SET("hDdeasbCcpevcgzybxvmt", PH) ;
+        p180.seq_SET((char)61107) ;
         CommunicationChannel.instance.send(p180);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_SCRIPT_REQUEST.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)40);
-            assert(pack.seq_GET() == (char)1261);
-            assert(pack.target_component_GET() == (char)11);
+            assert(pack.seq_GET() == (char)7685);
+            assert(pack.target_system_GET() == (char)25);
+            assert(pack.target_component_GET() == (char)115);
         });
         GroundControl.SCRIPT_REQUEST p181 = CommunicationChannel.new_SCRIPT_REQUEST();
         PH.setPack(p181);
-        p181.target_system_SET((char)40) ;
-        p181.seq_SET((char)1261) ;
-        p181.target_component_SET((char)11) ;
+        p181.target_system_SET((char)25) ;
+        p181.seq_SET((char)7685) ;
+        p181.target_component_SET((char)115) ;
         CommunicationChannel.instance.send(p181);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_SCRIPT_REQUEST_LIST.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)20);
-            assert(pack.target_component_GET() == (char)96);
+            assert(pack.target_system_GET() == (char)113);
+            assert(pack.target_component_GET() == (char)178);
         });
         GroundControl.SCRIPT_REQUEST_LIST p182 = CommunicationChannel.new_SCRIPT_REQUEST_LIST();
         PH.setPack(p182);
-        p182.target_component_SET((char)96) ;
-        p182.target_system_SET((char)20) ;
+        p182.target_component_SET((char)178) ;
+        p182.target_system_SET((char)113) ;
         CommunicationChannel.instance.send(p182);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_SCRIPT_COUNT.add((src, ph, pack) ->
         {
-            assert(pack.count_GET() == (char)40526);
-            assert(pack.target_system_GET() == (char)165);
-            assert(pack.target_component_GET() == (char)171);
+            assert(pack.target_system_GET() == (char)153);
+            assert(pack.count_GET() == (char)48413);
+            assert(pack.target_component_GET() == (char)118);
         });
         GroundControl.SCRIPT_COUNT p183 = CommunicationChannel.new_SCRIPT_COUNT();
         PH.setPack(p183);
-        p183.target_component_SET((char)171) ;
-        p183.target_system_SET((char)165) ;
-        p183.count_SET((char)40526) ;
+        p183.count_SET((char)48413) ;
+        p183.target_system_SET((char)153) ;
+        p183.target_component_SET((char)118) ;
         CommunicationChannel.instance.send(p183);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_SCRIPT_CURRENT.add((src, ph, pack) ->
         {
-            assert(pack.seq_GET() == (char)52137);
+            assert(pack.seq_GET() == (char)43427);
         });
         GroundControl.SCRIPT_CURRENT p184 = CommunicationChannel.new_SCRIPT_CURRENT();
         PH.setPack(p184);
-        p184.seq_SET((char)52137) ;
+        p184.seq_SET((char)43427) ;
         CommunicationChannel.instance.send(p184);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_ESTIMATOR_STATUS.add((src, ph, pack) ->
         {
-            assert(pack.pos_vert_ratio_GET() == -1.3921767E38F);
-            assert(pack.flags_GET() == (ESTIMATOR_STATUS_FLAGS.ESTIMATOR_VELOCITY_VERT));
-            assert(pack.pos_horiz_accuracy_GET() == 5.4087097E37F);
-            assert(pack.tas_ratio_GET() == -2.7633428E38F);
-            assert(pack.vel_ratio_GET() == -1.3769499E38F);
-            assert(pack.pos_horiz_ratio_GET() == 1.1563505E38F);
-            assert(pack.time_usec_GET() == 3555854548701158371L);
-            assert(pack.pos_vert_accuracy_GET() == -5.2112356E37F);
-            assert(pack.mag_ratio_GET() == 4.681421E37F);
-            assert(pack.hagl_ratio_GET() == 2.5454627E37F);
+            assert(pack.flags_GET() == (ESTIMATOR_STATUS_FLAGS.ESTIMATOR_VELOCITY_VERT |
+                                        ESTIMATOR_STATUS_FLAGS.ESTIMATOR_PRED_POS_HORIZ_REL |
+                                        ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_VERT_AGL |
+                                        ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_HORIZ_ABS |
+                                        ESTIMATOR_STATUS_FLAGS.ESTIMATOR_GPS_GLITCH |
+                                        ESTIMATOR_STATUS_FLAGS.ESTIMATOR_PRED_POS_HORIZ_ABS));
+            assert(pack.hagl_ratio_GET() == -1.7267878E38F);
+            assert(pack.pos_vert_accuracy_GET() == -5.940994E37F);
+            assert(pack.time_usec_GET() == 950839809619548135L);
+            assert(pack.pos_horiz_ratio_GET() == 3.13017E38F);
+            assert(pack.mag_ratio_GET() == -2.144089E38F);
+            assert(pack.pos_vert_ratio_GET() == 2.4257322E38F);
+            assert(pack.tas_ratio_GET() == 2.753978E38F);
+            assert(pack.vel_ratio_GET() == 1.7183951E38F);
+            assert(pack.pos_horiz_accuracy_GET() == 5.725968E37F);
         });
         GroundControl.ESTIMATOR_STATUS p230 = CommunicationChannel.new_ESTIMATOR_STATUS();
         PH.setPack(p230);
-        p230.tas_ratio_SET(-2.7633428E38F) ;
-        p230.pos_vert_ratio_SET(-1.3921767E38F) ;
-        p230.flags_SET((ESTIMATOR_STATUS_FLAGS.ESTIMATOR_VELOCITY_VERT)) ;
-        p230.pos_vert_accuracy_SET(-5.2112356E37F) ;
-        p230.pos_horiz_ratio_SET(1.1563505E38F) ;
-        p230.pos_horiz_accuracy_SET(5.4087097E37F) ;
-        p230.vel_ratio_SET(-1.3769499E38F) ;
-        p230.mag_ratio_SET(4.681421E37F) ;
-        p230.hagl_ratio_SET(2.5454627E37F) ;
-        p230.time_usec_SET(3555854548701158371L) ;
+        p230.tas_ratio_SET(2.753978E38F) ;
+        p230.mag_ratio_SET(-2.144089E38F) ;
+        p230.pos_vert_accuracy_SET(-5.940994E37F) ;
+        p230.time_usec_SET(950839809619548135L) ;
+        p230.pos_vert_ratio_SET(2.4257322E38F) ;
+        p230.pos_horiz_accuracy_SET(5.725968E37F) ;
+        p230.pos_horiz_ratio_SET(3.13017E38F) ;
+        p230.flags_SET((ESTIMATOR_STATUS_FLAGS.ESTIMATOR_VELOCITY_VERT |
+                        ESTIMATOR_STATUS_FLAGS.ESTIMATOR_PRED_POS_HORIZ_REL |
+                        ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_VERT_AGL |
+                        ESTIMATOR_STATUS_FLAGS.ESTIMATOR_POS_HORIZ_ABS |
+                        ESTIMATOR_STATUS_FLAGS.ESTIMATOR_GPS_GLITCH |
+                        ESTIMATOR_STATUS_FLAGS.ESTIMATOR_PRED_POS_HORIZ_ABS)) ;
+        p230.hagl_ratio_SET(-1.7267878E38F) ;
+        p230.vel_ratio_SET(1.7183951E38F) ;
         CommunicationChannel.instance.send(p230);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_WIND_COV.add((src, ph, pack) ->
         {
-            assert(pack.vert_accuracy_GET() == 1.7236981E38F);
-            assert(pack.wind_x_GET() == 8.645464E37F);
-            assert(pack.wind_alt_GET() == -1.0577578E38F);
-            assert(pack.wind_z_GET() == 1.0804475E38F);
-            assert(pack.time_usec_GET() == 2401818378609216605L);
-            assert(pack.wind_y_GET() == -3.5447742E37F);
-            assert(pack.horiz_accuracy_GET() == 1.7441016E38F);
-            assert(pack.var_vert_GET() == -1.2602317E38F);
-            assert(pack.var_horiz_GET() == -2.1858495E38F);
+            assert(pack.time_usec_GET() == 3931565422461976936L);
+            assert(pack.var_vert_GET() == -5.715354E37F);
+            assert(pack.wind_z_GET() == 1.8742733E38F);
+            assert(pack.horiz_accuracy_GET() == 8.642025E37F);
+            assert(pack.wind_x_GET() == -1.5777962E38F);
+            assert(pack.wind_alt_GET() == 1.1524864E37F);
+            assert(pack.vert_accuracy_GET() == -7.733188E37F);
+            assert(pack.var_horiz_GET() == 4.03395E37F);
+            assert(pack.wind_y_GET() == 2.627413E38F);
         });
         GroundControl.WIND_COV p231 = CommunicationChannel.new_WIND_COV();
         PH.setPack(p231);
-        p231.vert_accuracy_SET(1.7236981E38F) ;
-        p231.wind_y_SET(-3.5447742E37F) ;
-        p231.var_vert_SET(-1.2602317E38F) ;
-        p231.wind_x_SET(8.645464E37F) ;
-        p231.horiz_accuracy_SET(1.7441016E38F) ;
-        p231.time_usec_SET(2401818378609216605L) ;
-        p231.wind_z_SET(1.0804475E38F) ;
-        p231.var_horiz_SET(-2.1858495E38F) ;
-        p231.wind_alt_SET(-1.0577578E38F) ;
+        p231.wind_y_SET(2.627413E38F) ;
+        p231.horiz_accuracy_SET(8.642025E37F) ;
+        p231.vert_accuracy_SET(-7.733188E37F) ;
+        p231.var_horiz_SET(4.03395E37F) ;
+        p231.wind_x_SET(-1.5777962E38F) ;
+        p231.var_vert_SET(-5.715354E37F) ;
+        p231.wind_alt_SET(1.1524864E37F) ;
+        p231.wind_z_SET(1.8742733E38F) ;
+        p231.time_usec_SET(3931565422461976936L) ;
         CommunicationChannel.instance.send(p231);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_GPS_INPUT.add((src, ph, pack) ->
         {
-            assert(pack.time_usec_GET() == 949080629102974304L);
-            assert(pack.vn_GET() == -9.211549E37F);
-            assert(pack.lat_GET() == -720043338);
-            assert(pack.ignore_flags_GET() == (GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VEL_VERT |
-                                               GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_ALT |
+            assert(pack.vd_GET() == -1.1385373E38F);
+            assert(pack.vdop_GET() == -3.0786732E38F);
+            assert(pack.vn_GET() == 1.5182191E38F);
+            assert(pack.satellites_visible_GET() == (char)248);
+            assert(pack.lat_GET() == 433982635);
+            assert(pack.vert_accuracy_GET() == 3.3970134E38F);
+            assert(pack.fix_type_GET() == (char)93);
+            assert(pack.gps_id_GET() == (char)89);
+            assert(pack.time_week_GET() == (char)9184);
+            assert(pack.time_week_ms_GET() == 2319313787L);
+            assert(pack.lon_GET() == 1817959847);
+            assert(pack.horiz_accuracy_GET() == 1.797066E38F);
+            assert(pack.ve_GET() == -1.2324588E38F);
+            assert(pack.alt_GET() == 3.3136857E38F);
+            assert(pack.ignore_flags_GET() == (GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_SPEED_ACCURACY |
                                                GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VERTICAL_ACCURACY |
-                                               GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_HORIZONTAL_ACCURACY));
-            assert(pack.speed_accuracy_GET() == 6.5975535E37F);
-            assert(pack.time_week_GET() == (char)8590);
-            assert(pack.fix_type_GET() == (char)165);
-            assert(pack.vert_accuracy_GET() == 1.4185953E38F);
-            assert(pack.lon_GET() == -809879146);
-            assert(pack.satellites_visible_GET() == (char)213);
-            assert(pack.time_week_ms_GET() == 752517122L);
-            assert(pack.horiz_accuracy_GET() == 2.048173E38F);
-            assert(pack.vdop_GET() == -5.739751E37F);
-            assert(pack.gps_id_GET() == (char)78);
-            assert(pack.hdop_GET() == 1.7001964E38F);
-            assert(pack.ve_GET() == -2.3808168E38F);
-            assert(pack.vd_GET() == 7.0899754E37F);
-            assert(pack.alt_GET() == 2.1579677E38F);
+                                               GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VDOP));
+            assert(pack.hdop_GET() == 2.057009E38F);
+            assert(pack.speed_accuracy_GET() == 3.2652124E38F);
+            assert(pack.time_usec_GET() == 7693753091460278391L);
         });
         GroundControl.GPS_INPUT p232 = CommunicationChannel.new_GPS_INPUT();
         PH.setPack(p232);
-        p232.lat_SET(-720043338) ;
-        p232.lon_SET(-809879146) ;
-        p232.gps_id_SET((char)78) ;
-        p232.vdop_SET(-5.739751E37F) ;
-        p232.ignore_flags_SET((GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VEL_VERT |
-                               GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_ALT |
+        p232.time_week_SET((char)9184) ;
+        p232.fix_type_SET((char)93) ;
+        p232.vn_SET(1.5182191E38F) ;
+        p232.speed_accuracy_SET(3.2652124E38F) ;
+        p232.lat_SET(433982635) ;
+        p232.vd_SET(-1.1385373E38F) ;
+        p232.ignore_flags_SET((GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_SPEED_ACCURACY |
                                GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VERTICAL_ACCURACY |
-                               GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_HORIZONTAL_ACCURACY)) ;
-        p232.time_week_SET((char)8590) ;
-        p232.horiz_accuracy_SET(2.048173E38F) ;
-        p232.speed_accuracy_SET(6.5975535E37F) ;
-        p232.vert_accuracy_SET(1.4185953E38F) ;
-        p232.fix_type_SET((char)165) ;
-        p232.hdop_SET(1.7001964E38F) ;
-        p232.time_usec_SET(949080629102974304L) ;
-        p232.alt_SET(2.1579677E38F) ;
-        p232.satellites_visible_SET((char)213) ;
-        p232.vn_SET(-9.211549E37F) ;
-        p232.time_week_ms_SET(752517122L) ;
-        p232.ve_SET(-2.3808168E38F) ;
-        p232.vd_SET(7.0899754E37F) ;
+                               GPS_INPUT_IGNORE_FLAGS.GPS_INPUT_IGNORE_FLAG_VDOP)) ;
+        p232.time_usec_SET(7693753091460278391L) ;
+        p232.gps_id_SET((char)89) ;
+        p232.lon_SET(1817959847) ;
+        p232.vdop_SET(-3.0786732E38F) ;
+        p232.ve_SET(-1.2324588E38F) ;
+        p232.satellites_visible_SET((char)248) ;
+        p232.vert_accuracy_SET(3.3970134E38F) ;
+        p232.time_week_ms_SET(2319313787L) ;
+        p232.alt_SET(3.3136857E38F) ;
+        p232.hdop_SET(2.057009E38F) ;
+        p232.horiz_accuracy_SET(1.797066E38F) ;
         CommunicationChannel.instance.send(p232);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_GPS_RTCM_DATA.add((src, ph, pack) ->
         {
-            assert(pack.flags_GET() == (char)21);
-            assert(pack.len_GET() == (char)182);
-            assert(Arrays.equals(pack.data__GET(),  new char[] {(char)120, (char)135, (char)125, (char)184, (char)253, (char)192, (char)15, (char)231, (char)223, (char)53, (char)31, (char)56, (char)129, (char)141, (char)224, (char)41, (char)47, (char)85, (char)245, (char)182, (char)153, (char)58, (char)10, (char)252, (char)7, (char)104, (char)215, (char)1, (char)48, (char)34, (char)112, (char)248, (char)214, (char)17, (char)164, (char)137, (char)248, (char)115, (char)168, (char)138, (char)32, (char)218, (char)251, (char)249, (char)39, (char)119, (char)30, (char)31, (char)161, (char)178, (char)238, (char)166, (char)132, (char)167, (char)192, (char)245, (char)133, (char)3, (char)130, (char)252, (char)53, (char)220, (char)243, (char)154, (char)154, (char)100, (char)213, (char)41, (char)19, (char)255, (char)159, (char)166, (char)222, (char)216, (char)3, (char)188, (char)139, (char)81, (char)255, (char)117, (char)195, (char)15, (char)24, (char)104, (char)30, (char)243, (char)1, (char)229, (char)220, (char)253, (char)52, (char)194, (char)227, (char)248, (char)40, (char)174, (char)69, (char)209, (char)248, (char)136, (char)91, (char)246, (char)62, (char)101, (char)87, (char)10, (char)19, (char)108, (char)166, (char)46, (char)69, (char)125, (char)121, (char)15, (char)3, (char)72, (char)110, (char)174, (char)106, (char)215, (char)235, (char)12, (char)181, (char)176, (char)159, (char)224, (char)75, (char)208, (char)197, (char)62, (char)176, (char)223, (char)158, (char)54, (char)21, (char)198, (char)239, (char)139, (char)19, (char)160, (char)66, (char)115, (char)237, (char)131, (char)112, (char)255, (char)112, (char)220, (char)47, (char)212, (char)7, (char)16, (char)177, (char)138, (char)155, (char)59, (char)237, (char)186, (char)254, (char)204, (char)171, (char)51, (char)97, (char)241, (char)5, (char)97, (char)59, (char)13, (char)117, (char)34, (char)36, (char)77, (char)36, (char)38, (char)51, (char)155, (char)106, (char)21, (char)47, (char)30}));
+            assert(pack.len_GET() == (char)220);
+            assert(Arrays.equals(pack.data__GET(),  new char[] {(char)195, (char)46, (char)54, (char)115, (char)123, (char)3, (char)186, (char)70, (char)3, (char)220, (char)118, (char)196, (char)203, (char)8, (char)224, (char)111, (char)143, (char)50, (char)98, (char)247, (char)21, (char)225, (char)140, (char)250, (char)16, (char)153, (char)86, (char)230, (char)165, (char)85, (char)129, (char)8, (char)82, (char)236, (char)5, (char)33, (char)37, (char)112, (char)195, (char)160, (char)242, (char)237, (char)187, (char)98, (char)54, (char)42, (char)22, (char)235, (char)115, (char)197, (char)225, (char)231, (char)10, (char)216, (char)229, (char)43, (char)232, (char)189, (char)116, (char)46, (char)33, (char)88, (char)215, (char)54, (char)197, (char)201, (char)159, (char)232, (char)231, (char)46, (char)214, (char)28, (char)17, (char)222, (char)75, (char)8, (char)71, (char)191, (char)211, (char)233, (char)135, (char)194, (char)41, (char)14, (char)45, (char)226, (char)74, (char)126, (char)37, (char)25, (char)71, (char)43, (char)246, (char)242, (char)178, (char)137, (char)120, (char)51, (char)102, (char)129, (char)3, (char)20, (char)158, (char)195, (char)55, (char)44, (char)146, (char)6, (char)118, (char)56, (char)47, (char)241, (char)85, (char)77, (char)142, (char)213, (char)149, (char)72, (char)228, (char)134, (char)151, (char)232, (char)199, (char)53, (char)84, (char)136, (char)24, (char)199, (char)105, (char)237, (char)42, (char)136, (char)57, (char)41, (char)11, (char)238, (char)27, (char)6, (char)130, (char)47, (char)234, (char)86, (char)156, (char)175, (char)9, (char)163, (char)244, (char)131, (char)136, (char)142, (char)212, (char)177, (char)171, (char)42, (char)3, (char)97, (char)29, (char)125, (char)81, (char)74, (char)14, (char)49, (char)220, (char)43, (char)84, (char)240, (char)133, (char)33, (char)193, (char)78, (char)107, (char)245, (char)50, (char)119, (char)110, (char)133, (char)250, (char)80, (char)38, (char)202}));
+            assert(pack.flags_GET() == (char)54);
         });
         GroundControl.GPS_RTCM_DATA p233 = CommunicationChannel.new_GPS_RTCM_DATA();
         PH.setPack(p233);
-        p233.len_SET((char)182) ;
-        p233.flags_SET((char)21) ;
-        p233.data__SET(new char[] {(char)120, (char)135, (char)125, (char)184, (char)253, (char)192, (char)15, (char)231, (char)223, (char)53, (char)31, (char)56, (char)129, (char)141, (char)224, (char)41, (char)47, (char)85, (char)245, (char)182, (char)153, (char)58, (char)10, (char)252, (char)7, (char)104, (char)215, (char)1, (char)48, (char)34, (char)112, (char)248, (char)214, (char)17, (char)164, (char)137, (char)248, (char)115, (char)168, (char)138, (char)32, (char)218, (char)251, (char)249, (char)39, (char)119, (char)30, (char)31, (char)161, (char)178, (char)238, (char)166, (char)132, (char)167, (char)192, (char)245, (char)133, (char)3, (char)130, (char)252, (char)53, (char)220, (char)243, (char)154, (char)154, (char)100, (char)213, (char)41, (char)19, (char)255, (char)159, (char)166, (char)222, (char)216, (char)3, (char)188, (char)139, (char)81, (char)255, (char)117, (char)195, (char)15, (char)24, (char)104, (char)30, (char)243, (char)1, (char)229, (char)220, (char)253, (char)52, (char)194, (char)227, (char)248, (char)40, (char)174, (char)69, (char)209, (char)248, (char)136, (char)91, (char)246, (char)62, (char)101, (char)87, (char)10, (char)19, (char)108, (char)166, (char)46, (char)69, (char)125, (char)121, (char)15, (char)3, (char)72, (char)110, (char)174, (char)106, (char)215, (char)235, (char)12, (char)181, (char)176, (char)159, (char)224, (char)75, (char)208, (char)197, (char)62, (char)176, (char)223, (char)158, (char)54, (char)21, (char)198, (char)239, (char)139, (char)19, (char)160, (char)66, (char)115, (char)237, (char)131, (char)112, (char)255, (char)112, (char)220, (char)47, (char)212, (char)7, (char)16, (char)177, (char)138, (char)155, (char)59, (char)237, (char)186, (char)254, (char)204, (char)171, (char)51, (char)97, (char)241, (char)5, (char)97, (char)59, (char)13, (char)117, (char)34, (char)36, (char)77, (char)36, (char)38, (char)51, (char)155, (char)106, (char)21, (char)47, (char)30}, 0) ;
+        p233.flags_SET((char)54) ;
+        p233.data__SET(new char[] {(char)195, (char)46, (char)54, (char)115, (char)123, (char)3, (char)186, (char)70, (char)3, (char)220, (char)118, (char)196, (char)203, (char)8, (char)224, (char)111, (char)143, (char)50, (char)98, (char)247, (char)21, (char)225, (char)140, (char)250, (char)16, (char)153, (char)86, (char)230, (char)165, (char)85, (char)129, (char)8, (char)82, (char)236, (char)5, (char)33, (char)37, (char)112, (char)195, (char)160, (char)242, (char)237, (char)187, (char)98, (char)54, (char)42, (char)22, (char)235, (char)115, (char)197, (char)225, (char)231, (char)10, (char)216, (char)229, (char)43, (char)232, (char)189, (char)116, (char)46, (char)33, (char)88, (char)215, (char)54, (char)197, (char)201, (char)159, (char)232, (char)231, (char)46, (char)214, (char)28, (char)17, (char)222, (char)75, (char)8, (char)71, (char)191, (char)211, (char)233, (char)135, (char)194, (char)41, (char)14, (char)45, (char)226, (char)74, (char)126, (char)37, (char)25, (char)71, (char)43, (char)246, (char)242, (char)178, (char)137, (char)120, (char)51, (char)102, (char)129, (char)3, (char)20, (char)158, (char)195, (char)55, (char)44, (char)146, (char)6, (char)118, (char)56, (char)47, (char)241, (char)85, (char)77, (char)142, (char)213, (char)149, (char)72, (char)228, (char)134, (char)151, (char)232, (char)199, (char)53, (char)84, (char)136, (char)24, (char)199, (char)105, (char)237, (char)42, (char)136, (char)57, (char)41, (char)11, (char)238, (char)27, (char)6, (char)130, (char)47, (char)234, (char)86, (char)156, (char)175, (char)9, (char)163, (char)244, (char)131, (char)136, (char)142, (char)212, (char)177, (char)171, (char)42, (char)3, (char)97, (char)29, (char)125, (char)81, (char)74, (char)14, (char)49, (char)220, (char)43, (char)84, (char)240, (char)133, (char)33, (char)193, (char)78, (char)107, (char)245, (char)50, (char)119, (char)110, (char)133, (char)250, (char)80, (char)38, (char)202}, 0) ;
+        p233.len_SET((char)220) ;
         CommunicationChannel.instance.send(p233);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_HIGH_LATENCY.add((src, ph, pack) ->
         {
-            assert(pack.roll_GET() == (short) -5957);
-            assert(pack.airspeed_sp_GET() == (char)7);
-            assert(pack.wp_num_GET() == (char)70);
-            assert(pack.base_mode_GET() == (MAV_MODE_FLAG.MAV_MODE_FLAG_MANUAL_INPUT_ENABLED |
-                                            MAV_MODE_FLAG.MAV_MODE_FLAG_AUTO_ENABLED |
-                                            MAV_MODE_FLAG.MAV_MODE_FLAG_STABILIZE_ENABLED |
-                                            MAV_MODE_FLAG.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED |
+            assert(pack.altitude_sp_GET() == (short)16631);
+            assert(pack.base_mode_GET() == (MAV_MODE_FLAG.MAV_MODE_FLAG_AUTO_ENABLED |
+                                            MAV_MODE_FLAG.MAV_MODE_FLAG_GUIDED_ENABLED |
+                                            MAV_MODE_FLAG.MAV_MODE_FLAG_TEST_ENABLED |
+                                            MAV_MODE_FLAG.MAV_MODE_FLAG_SAFETY_ARMED |
                                             MAV_MODE_FLAG.MAV_MODE_FLAG_HIL_ENABLED));
-            assert(pack.landed_state_GET() == MAV_LANDED_STATE.MAV_LANDED_STATE_LANDING);
-            assert(pack.heading_sp_GET() == (short)22607);
-            assert(pack.battery_remaining_GET() == (char)91);
-            assert(pack.longitude_GET() == -2047228059);
-            assert(pack.altitude_amsl_GET() == (short)191);
-            assert(pack.throttle_GET() == (byte) - 122);
-            assert(pack.latitude_GET() == -226056995);
-            assert(pack.airspeed_GET() == (char)18);
-            assert(pack.custom_mode_GET() == 2298740081L);
-            assert(pack.altitude_sp_GET() == (short) -12258);
-            assert(pack.gps_fix_type_GET() == GPS_FIX_TYPE.GPS_FIX_TYPE_PPP);
-            assert(pack.failsafe_GET() == (char)96);
-            assert(pack.climb_rate_GET() == (byte)86);
-            assert(pack.gps_nsat_GET() == (char)109);
-            assert(pack.temperature_air_GET() == (byte) - 38);
-            assert(pack.groundspeed_GET() == (char)190);
-            assert(pack.pitch_GET() == (short) -1327);
-            assert(pack.heading_GET() == (char)37458);
-            assert(pack.temperature_GET() == (byte)9);
-            assert(pack.wp_distance_GET() == (char)27239);
+            assert(pack.pitch_GET() == (short)16798);
+            assert(pack.climb_rate_GET() == (byte)95);
+            assert(pack.temperature_air_GET() == (byte)32);
+            assert(pack.failsafe_GET() == (char)183);
+            assert(pack.custom_mode_GET() == 3739971378L);
+            assert(pack.battery_remaining_GET() == (char)161);
+            assert(pack.groundspeed_GET() == (char)200);
+            assert(pack.longitude_GET() == -1288124485);
+            assert(pack.airspeed_GET() == (char)228);
+            assert(pack.wp_distance_GET() == (char)11558);
+            assert(pack.airspeed_sp_GET() == (char)17);
+            assert(pack.latitude_GET() == 1405280698);
+            assert(pack.landed_state_GET() == MAV_LANDED_STATE.MAV_LANDED_STATE_TAKEOFF);
+            assert(pack.gps_fix_type_GET() == GPS_FIX_TYPE.GPS_FIX_TYPE_STATIC);
+            assert(pack.gps_nsat_GET() == (char)159);
+            assert(pack.altitude_amsl_GET() == (short)25205);
+            assert(pack.wp_num_GET() == (char)200);
+            assert(pack.throttle_GET() == (byte) - 65);
+            assert(pack.roll_GET() == (short)23568);
+            assert(pack.temperature_GET() == (byte)58);
+            assert(pack.heading_sp_GET() == (short)25820);
+            assert(pack.heading_GET() == (char)61193);
         });
         GroundControl.HIGH_LATENCY p234 = CommunicationChannel.new_HIGH_LATENCY();
         PH.setPack(p234);
-        p234.wp_distance_SET((char)27239) ;
-        p234.groundspeed_SET((char)190) ;
-        p234.temperature_air_SET((byte) - 38) ;
-        p234.heading_sp_SET((short)22607) ;
-        p234.climb_rate_SET((byte)86) ;
-        p234.gps_fix_type_SET(GPS_FIX_TYPE.GPS_FIX_TYPE_PPP) ;
-        p234.pitch_SET((short) -1327) ;
-        p234.throttle_SET((byte) - 122) ;
-        p234.custom_mode_SET(2298740081L) ;
-        p234.altitude_sp_SET((short) -12258) ;
-        p234.longitude_SET(-2047228059) ;
-        p234.latitude_SET(-226056995) ;
-        p234.temperature_SET((byte)9) ;
-        p234.roll_SET((short) -5957) ;
-        p234.airspeed_sp_SET((char)7) ;
-        p234.landed_state_SET(MAV_LANDED_STATE.MAV_LANDED_STATE_LANDING) ;
-        p234.battery_remaining_SET((char)91) ;
-        p234.wp_num_SET((char)70) ;
-        p234.failsafe_SET((char)96) ;
-        p234.gps_nsat_SET((char)109) ;
-        p234.altitude_amsl_SET((short)191) ;
-        p234.base_mode_SET((MAV_MODE_FLAG.MAV_MODE_FLAG_MANUAL_INPUT_ENABLED |
-                            MAV_MODE_FLAG.MAV_MODE_FLAG_AUTO_ENABLED |
-                            MAV_MODE_FLAG.MAV_MODE_FLAG_STABILIZE_ENABLED |
-                            MAV_MODE_FLAG.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED |
+        p234.landed_state_SET(MAV_LANDED_STATE.MAV_LANDED_STATE_TAKEOFF) ;
+        p234.wp_num_SET((char)200) ;
+        p234.battery_remaining_SET((char)161) ;
+        p234.airspeed_SET((char)228) ;
+        p234.wp_distance_SET((char)11558) ;
+        p234.heading_SET((char)61193) ;
+        p234.custom_mode_SET(3739971378L) ;
+        p234.pitch_SET((short)16798) ;
+        p234.throttle_SET((byte) - 65) ;
+        p234.gps_nsat_SET((char)159) ;
+        p234.roll_SET((short)23568) ;
+        p234.longitude_SET(-1288124485) ;
+        p234.airspeed_sp_SET((char)17) ;
+        p234.gps_fix_type_SET(GPS_FIX_TYPE.GPS_FIX_TYPE_STATIC) ;
+        p234.groundspeed_SET((char)200) ;
+        p234.temperature_SET((byte)58) ;
+        p234.temperature_air_SET((byte)32) ;
+        p234.climb_rate_SET((byte)95) ;
+        p234.altitude_sp_SET((short)16631) ;
+        p234.latitude_SET(1405280698) ;
+        p234.altitude_amsl_SET((short)25205) ;
+        p234.heading_sp_SET((short)25820) ;
+        p234.base_mode_SET((MAV_MODE_FLAG.MAV_MODE_FLAG_AUTO_ENABLED |
+                            MAV_MODE_FLAG.MAV_MODE_FLAG_GUIDED_ENABLED |
+                            MAV_MODE_FLAG.MAV_MODE_FLAG_TEST_ENABLED |
+                            MAV_MODE_FLAG.MAV_MODE_FLAG_SAFETY_ARMED |
                             MAV_MODE_FLAG.MAV_MODE_FLAG_HIL_ENABLED)) ;
-        p234.heading_SET((char)37458) ;
-        p234.airspeed_SET((char)18) ;
+        p234.failsafe_SET((char)183) ;
         CommunicationChannel.instance.send(p234);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_VIBRATION.add((src, ph, pack) ->
         {
-            assert(pack.clipping_2_GET() == 408743496L);
-            assert(pack.time_usec_GET() == 6801783511273986901L);
-            assert(pack.vibration_y_GET() == 7.9499425E37F);
-            assert(pack.clipping_1_GET() == 2277304732L);
-            assert(pack.vibration_z_GET() == 2.4477053E38F);
-            assert(pack.clipping_0_GET() == 2540802268L);
-            assert(pack.vibration_x_GET() == 1.3164993E38F);
+            assert(pack.vibration_x_GET() == 7.130329E37F);
+            assert(pack.clipping_1_GET() == 3180419175L);
+            assert(pack.vibration_y_GET() == -1.5468542E38F);
+            assert(pack.clipping_2_GET() == 342129666L);
+            assert(pack.vibration_z_GET() == -1.2961725E38F);
+            assert(pack.time_usec_GET() == 7656428987321241695L);
+            assert(pack.clipping_0_GET() == 629015844L);
         });
         GroundControl.VIBRATION p241 = CommunicationChannel.new_VIBRATION();
         PH.setPack(p241);
-        p241.vibration_x_SET(1.3164993E38F) ;
-        p241.time_usec_SET(6801783511273986901L) ;
-        p241.vibration_y_SET(7.9499425E37F) ;
-        p241.clipping_1_SET(2277304732L) ;
-        p241.clipping_0_SET(2540802268L) ;
-        p241.vibration_z_SET(2.4477053E38F) ;
-        p241.clipping_2_SET(408743496L) ;
+        p241.vibration_y_SET(-1.5468542E38F) ;
+        p241.clipping_1_SET(3180419175L) ;
+        p241.vibration_z_SET(-1.2961725E38F) ;
+        p241.clipping_0_SET(629015844L) ;
+        p241.clipping_2_SET(342129666L) ;
+        p241.vibration_x_SET(7.130329E37F) ;
+        p241.time_usec_SET(7656428987321241695L) ;
         CommunicationChannel.instance.send(p241);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_HOME_POSITION.add((src, ph, pack) ->
         {
-            assert(pack.z_GET() == 2.9949795E38F);
-            assert(pack.time_usec_TRY(ph) == 3257218310466995004L);
-            assert(pack.approach_x_GET() == -2.1845216E38F);
-            assert(pack.y_GET() == 4.112205E36F);
-            assert(pack.longitude_GET() == 317124494);
-            assert(pack.approach_y_GET() == 3.0730481E38F);
-            assert(Arrays.equals(pack.q_GET(),  new float[] {-1.9155403E38F, -1.9938712E38F, -1.0962807E38F, 2.752162E38F}));
-            assert(pack.altitude_GET() == 346571017);
-            assert(pack.latitude_GET() == 542495716);
-            assert(pack.x_GET() == 2.4230379E38F);
-            assert(pack.approach_z_GET() == -2.3061943E38F);
+            assert(pack.time_usec_TRY(ph) == 3738406674816540780L);
+            assert(pack.longitude_GET() == 1939339744);
+            assert(pack.approach_z_GET() == 6.0891967E37F);
+            assert(pack.altitude_GET() == 512734252);
+            assert(pack.latitude_GET() == -935299941);
+            assert(Arrays.equals(pack.q_GET(),  new float[] {-1.0391321E38F, 1.5770361E38F, -4.388767E37F, -4.663169E37F}));
+            assert(pack.approach_x_GET() == -3.2528632E38F);
+            assert(pack.x_GET() == 2.2838738E38F);
+            assert(pack.y_GET() == 2.7642972E37F);
+            assert(pack.z_GET() == -5.143045E37F);
+            assert(pack.approach_y_GET() == 1.5779748E37F);
         });
         GroundControl.HOME_POSITION p242 = CommunicationChannel.new_HOME_POSITION();
         PH.setPack(p242);
-        p242.x_SET(2.4230379E38F) ;
-        p242.longitude_SET(317124494) ;
-        p242.time_usec_SET(3257218310466995004L, PH) ;
-        p242.y_SET(4.112205E36F) ;
-        p242.q_SET(new float[] {-1.9155403E38F, -1.9938712E38F, -1.0962807E38F, 2.752162E38F}, 0) ;
-        p242.z_SET(2.9949795E38F) ;
-        p242.latitude_SET(542495716) ;
-        p242.approach_z_SET(-2.3061943E38F) ;
-        p242.altitude_SET(346571017) ;
-        p242.approach_y_SET(3.0730481E38F) ;
-        p242.approach_x_SET(-2.1845216E38F) ;
+        p242.approach_x_SET(-3.2528632E38F) ;
+        p242.approach_y_SET(1.5779748E37F) ;
+        p242.longitude_SET(1939339744) ;
+        p242.z_SET(-5.143045E37F) ;
+        p242.q_SET(new float[] {-1.0391321E38F, 1.5770361E38F, -4.388767E37F, -4.663169E37F}, 0) ;
+        p242.latitude_SET(-935299941) ;
+        p242.x_SET(2.2838738E38F) ;
+        p242.y_SET(2.7642972E37F) ;
+        p242.approach_z_SET(6.0891967E37F) ;
+        p242.altitude_SET(512734252) ;
+        p242.time_usec_SET(3738406674816540780L, PH) ;
         CommunicationChannel.instance.send(p242);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_SET_HOME_POSITION.add((src, ph, pack) ->
         {
-            assert(pack.approach_y_GET() == 1.3737894E38F);
-            assert(pack.time_usec_TRY(ph) == 1982531281571075402L);
-            assert(pack.y_GET() == 4.827073E37F);
-            assert(pack.approach_x_GET() == 7.47068E37F);
-            assert(pack.approach_z_GET() == -1.0565103E38F);
-            assert(pack.longitude_GET() == 27589036);
-            assert(Arrays.equals(pack.q_GET(),  new float[] {2.3823905E38F, 1.8565575E38F, -1.6828756E38F, 3.150314E38F}));
-            assert(pack.target_system_GET() == (char)28);
-            assert(pack.altitude_GET() == 1403888238);
-            assert(pack.z_GET() == 2.1169193E38F);
-            assert(pack.latitude_GET() == 141966599);
-            assert(pack.x_GET() == 2.418212E37F);
+            assert(pack.latitude_GET() == 1589758965);
+            assert(pack.approach_y_GET() == -8.0809024E37F);
+            assert(Arrays.equals(pack.q_GET(),  new float[] {-2.025205E38F, 1.4362621E38F, 1.5311446E36F, 3.3916203E38F}));
+            assert(pack.y_GET() == -1.4185446E38F);
+            assert(pack.x_GET() == -2.8574587E38F);
+            assert(pack.z_GET() == 1.0457374E38F);
+            assert(pack.approach_z_GET() == -1.4989308E38F);
+            assert(pack.target_system_GET() == (char)100);
+            assert(pack.altitude_GET() == -1812069326);
+            assert(pack.longitude_GET() == 226726057);
+            assert(pack.time_usec_TRY(ph) == 2531576810327211860L);
+            assert(pack.approach_x_GET() == 2.9993323E38F);
         });
         GroundControl.SET_HOME_POSITION p243 = CommunicationChannel.new_SET_HOME_POSITION();
         PH.setPack(p243);
-        p243.approach_x_SET(7.47068E37F) ;
-        p243.approach_z_SET(-1.0565103E38F) ;
-        p243.longitude_SET(27589036) ;
-        p243.x_SET(2.418212E37F) ;
-        p243.target_system_SET((char)28) ;
-        p243.latitude_SET(141966599) ;
-        p243.z_SET(2.1169193E38F) ;
-        p243.altitude_SET(1403888238) ;
-        p243.approach_y_SET(1.3737894E38F) ;
-        p243.q_SET(new float[] {2.3823905E38F, 1.8565575E38F, -1.6828756E38F, 3.150314E38F}, 0) ;
-        p243.time_usec_SET(1982531281571075402L, PH) ;
-        p243.y_SET(4.827073E37F) ;
+        p243.time_usec_SET(2531576810327211860L, PH) ;
+        p243.approach_x_SET(2.9993323E38F) ;
+        p243.z_SET(1.0457374E38F) ;
+        p243.altitude_SET(-1812069326) ;
+        p243.y_SET(-1.4185446E38F) ;
+        p243.approach_z_SET(-1.4989308E38F) ;
+        p243.latitude_SET(1589758965) ;
+        p243.longitude_SET(226726057) ;
+        p243.q_SET(new float[] {-2.025205E38F, 1.4362621E38F, 1.5311446E36F, 3.3916203E38F}, 0) ;
+        p243.approach_y_SET(-8.0809024E37F) ;
+        p243.target_system_SET((char)100) ;
+        p243.x_SET(-2.8574587E38F) ;
         CommunicationChannel.instance.send(p243);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_MESSAGE_INTERVAL.add((src, ph, pack) ->
         {
-            assert(pack.message_id_GET() == (char)45311);
-            assert(pack.interval_us_GET() == -601647164);
+            assert(pack.message_id_GET() == (char)14749);
+            assert(pack.interval_us_GET() == -1800669666);
         });
         GroundControl.MESSAGE_INTERVAL p244 = CommunicationChannel.new_MESSAGE_INTERVAL();
         PH.setPack(p244);
-        p244.interval_us_SET(-601647164) ;
-        p244.message_id_SET((char)45311) ;
+        p244.interval_us_SET(-1800669666) ;
+        p244.message_id_SET((char)14749) ;
         CommunicationChannel.instance.send(p244);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_EXTENDED_SYS_STATE.add((src, ph, pack) ->
         {
-            assert(pack.landed_state_GET() == MAV_LANDED_STATE.MAV_LANDED_STATE_LANDING);
-            assert(pack.vtol_state_GET() == MAV_VTOL_STATE.MAV_VTOL_STATE_UNDEFINED);
+            assert(pack.vtol_state_GET() == MAV_VTOL_STATE.MAV_VTOL_STATE_FW);
+            assert(pack.landed_state_GET() == MAV_LANDED_STATE.MAV_LANDED_STATE_ON_GROUND);
         });
         GroundControl.EXTENDED_SYS_STATE p245 = CommunicationChannel.new_EXTENDED_SYS_STATE();
         PH.setPack(p245);
-        p245.landed_state_SET(MAV_LANDED_STATE.MAV_LANDED_STATE_LANDING) ;
-        p245.vtol_state_SET(MAV_VTOL_STATE.MAV_VTOL_STATE_UNDEFINED) ;
+        p245.vtol_state_SET(MAV_VTOL_STATE.MAV_VTOL_STATE_FW) ;
+        p245.landed_state_SET(MAV_LANDED_STATE.MAV_LANDED_STATE_ON_GROUND) ;
         CommunicationChannel.instance.send(p245);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_ADSB_VEHICLE.add((src, ph, pack) ->
         {
-            assert(pack.flags_GET() == (ADSB_FLAGS.ADSB_FLAGS_VALID_ALTITUDE |
-                                        ADSB_FLAGS.ADSB_FLAGS_VALID_CALLSIGN |
-                                        ADSB_FLAGS.ADSB_FLAGS_VALID_HEADING));
+            assert(pack.tslc_GET() == (char)230);
             assert(pack.altitude_type_GET() == ADSB_ALTITUDE_TYPE.ADSB_ALTITUDE_TYPE_GEOMETRIC);
-            assert(pack.heading_GET() == (char)48937);
-            assert(pack.tslc_GET() == (char)79);
-            assert(pack.ICAO_address_GET() == 1015511085L);
-            assert(pack.emitter_type_GET() == ADSB_EMITTER_TYPE.ADSB_EMITTER_TYPE_PARACHUTE);
-            assert(pack.altitude_GET() == -264695219);
-            assert(pack.squawk_GET() == (char)12715);
-            assert(pack.hor_velocity_GET() == (char)43919);
-            assert(pack.callsign_LEN(ph) == 3);
-            assert(pack.callsign_TRY(ph).equals("hoy"));
-            assert(pack.ver_velocity_GET() == (short) -5249);
-            assert(pack.lat_GET() == 1169889893);
-            assert(pack.lon_GET() == -997710548);
+            assert(pack.lon_GET() == -701121211);
+            assert(pack.altitude_GET() == -1069343842);
+            assert(pack.lat_GET() == -1685212404);
+            assert(pack.heading_GET() == (char)28617);
+            assert(pack.hor_velocity_GET() == (char)56768);
+            assert(pack.emitter_type_GET() == ADSB_EMITTER_TYPE.ADSB_EMITTER_TYPE_HIGHLY_MANUV);
+            assert(pack.callsign_LEN(ph) == 6);
+            assert(pack.callsign_TRY(ph).equals("rtfgau"));
+            assert(pack.squawk_GET() == (char)50512);
+            assert(pack.flags_GET() == (ADSB_FLAGS.ADSB_FLAGS_VALID_VELOCITY |
+                                        ADSB_FLAGS.ADSB_FLAGS_SIMULATED |
+                                        ADSB_FLAGS.ADSB_FLAGS_VALID_SQUAWK |
+                                        ADSB_FLAGS.ADSB_FLAGS_VALID_HEADING));
+            assert(pack.ver_velocity_GET() == (short) -26147);
+            assert(pack.ICAO_address_GET() == 2759743333L);
         });
         GroundControl.ADSB_VEHICLE p246 = CommunicationChannel.new_ADSB_VEHICLE();
         PH.setPack(p246);
-        p246.lon_SET(-997710548) ;
-        p246.emitter_type_SET(ADSB_EMITTER_TYPE.ADSB_EMITTER_TYPE_PARACHUTE) ;
-        p246.flags_SET((ADSB_FLAGS.ADSB_FLAGS_VALID_ALTITUDE |
-                        ADSB_FLAGS.ADSB_FLAGS_VALID_CALLSIGN |
+        p246.hor_velocity_SET((char)56768) ;
+        p246.emitter_type_SET(ADSB_EMITTER_TYPE.ADSB_EMITTER_TYPE_HIGHLY_MANUV) ;
+        p246.lon_SET(-701121211) ;
+        p246.lat_SET(-1685212404) ;
+        p246.ver_velocity_SET((short) -26147) ;
+        p246.ICAO_address_SET(2759743333L) ;
+        p246.flags_SET((ADSB_FLAGS.ADSB_FLAGS_VALID_VELOCITY |
+                        ADSB_FLAGS.ADSB_FLAGS_SIMULATED |
+                        ADSB_FLAGS.ADSB_FLAGS_VALID_SQUAWK |
                         ADSB_FLAGS.ADSB_FLAGS_VALID_HEADING)) ;
-        p246.squawk_SET((char)12715) ;
-        p246.callsign_SET("hoy", PH) ;
-        p246.hor_velocity_SET((char)43919) ;
+        p246.altitude_SET(-1069343842) ;
+        p246.callsign_SET("rtfgau", PH) ;
+        p246.squawk_SET((char)50512) ;
+        p246.heading_SET((char)28617) ;
+        p246.tslc_SET((char)230) ;
         p246.altitude_type_SET(ADSB_ALTITUDE_TYPE.ADSB_ALTITUDE_TYPE_GEOMETRIC) ;
-        p246.altitude_SET(-264695219) ;
-        p246.ver_velocity_SET((short) -5249) ;
-        p246.lat_SET(1169889893) ;
-        p246.ICAO_address_SET(1015511085L) ;
-        p246.heading_SET((char)48937) ;
-        p246.tslc_SET((char)79) ;
         CommunicationChannel.instance.send(p246);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_COLLISION.add((src, ph, pack) ->
         {
-            assert(pack.id_GET() == 2571145152L);
-            assert(pack.altitude_minimum_delta_GET() == 3.19864E38F);
-            assert(pack.threat_level_GET() == MAV_COLLISION_THREAT_LEVEL.MAV_COLLISION_THREAT_LEVEL_NONE);
-            assert(pack.action_GET() == MAV_COLLISION_ACTION.MAV_COLLISION_ACTION_RTL);
-            assert(pack.time_to_minimum_delta_GET() == 3.1083434E38F);
-            assert(pack.src__GET() == MAV_COLLISION_SRC.MAV_COLLISION_SRC_MAVLINK_GPS_GLOBAL_INT);
-            assert(pack.horizontal_minimum_delta_GET() == -1.9013406E38F);
+            assert(pack.altitude_minimum_delta_GET() == -3.367332E38F);
+            assert(pack.threat_level_GET() == (MAV_COLLISION_THREAT_LEVEL.MAV_COLLISION_THREAT_LEVEL_NONE |
+                                               MAV_COLLISION_THREAT_LEVEL.MAV_COLLISION_THREAT_LEVEL_LOW));
+            assert(pack.action_GET() == MAV_COLLISION_ACTION.MAV_COLLISION_ACTION_REPORT);
+            assert(pack.time_to_minimum_delta_GET() == 1.4014851E38F);
+            assert(pack.id_GET() == 401215897L);
+            assert(pack.src__GET() == MAV_COLLISION_SRC.MAV_COLLISION_SRC_ADSB);
+            assert(pack.horizontal_minimum_delta_GET() == -1.7044043E38F);
         });
         GroundControl.COLLISION p247 = CommunicationChannel.new_COLLISION();
         PH.setPack(p247);
-        p247.id_SET(2571145152L) ;
-        p247.src__SET(MAV_COLLISION_SRC.MAV_COLLISION_SRC_MAVLINK_GPS_GLOBAL_INT) ;
-        p247.threat_level_SET(MAV_COLLISION_THREAT_LEVEL.MAV_COLLISION_THREAT_LEVEL_NONE) ;
-        p247.altitude_minimum_delta_SET(3.19864E38F) ;
-        p247.action_SET(MAV_COLLISION_ACTION.MAV_COLLISION_ACTION_RTL) ;
-        p247.horizontal_minimum_delta_SET(-1.9013406E38F) ;
-        p247.time_to_minimum_delta_SET(3.1083434E38F) ;
+        p247.time_to_minimum_delta_SET(1.4014851E38F) ;
+        p247.threat_level_SET((MAV_COLLISION_THREAT_LEVEL.MAV_COLLISION_THREAT_LEVEL_NONE |
+                               MAV_COLLISION_THREAT_LEVEL.MAV_COLLISION_THREAT_LEVEL_LOW)) ;
+        p247.src__SET(MAV_COLLISION_SRC.MAV_COLLISION_SRC_ADSB) ;
+        p247.action_SET(MAV_COLLISION_ACTION.MAV_COLLISION_ACTION_REPORT) ;
+        p247.altitude_minimum_delta_SET(-3.367332E38F) ;
+        p247.horizontal_minimum_delta_SET(-1.7044043E38F) ;
+        p247.id_SET(401215897L) ;
         CommunicationChannel.instance.send(p247);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_V2_EXTENSION.add((src, ph, pack) ->
         {
-            assert(pack.target_component_GET() == (char)204);
-            assert(Arrays.equals(pack.payload_GET(),  new char[] {(char)190, (char)24, (char)34, (char)55, (char)124, (char)244, (char)99, (char)33, (char)218, (char)3, (char)245, (char)147, (char)5, (char)105, (char)125, (char)88, (char)19, (char)99, (char)108, (char)37, (char)255, (char)60, (char)233, (char)35, (char)211, (char)130, (char)120, (char)21, (char)252, (char)217, (char)245, (char)186, (char)225, (char)205, (char)189, (char)43, (char)186, (char)144, (char)204, (char)48, (char)148, (char)94, (char)92, (char)125, (char)158, (char)99, (char)133, (char)15, (char)96, (char)147, (char)85, (char)4, (char)166, (char)88, (char)177, (char)104, (char)31, (char)188, (char)102, (char)188, (char)7, (char)212, (char)114, (char)78, (char)249, (char)247, (char)202, (char)110, (char)59, (char)80, (char)153, (char)63, (char)86, (char)61, (char)139, (char)11, (char)6, (char)246, (char)243, (char)93, (char)77, (char)209, (char)244, (char)49, (char)230, (char)221, (char)85, (char)198, (char)184, (char)155, (char)93, (char)73, (char)109, (char)114, (char)174, (char)47, (char)18, (char)109, (char)35, (char)51, (char)120, (char)178, (char)245, (char)10, (char)63, (char)208, (char)0, (char)117, (char)18, (char)224, (char)175, (char)7, (char)167, (char)139, (char)198, (char)28, (char)230, (char)122, (char)193, (char)141, (char)96, (char)23, (char)78, (char)35, (char)105, (char)243, (char)113, (char)254, (char)74, (char)22, (char)236, (char)50, (char)97, (char)83, (char)33, (char)79, (char)99, (char)111, (char)156, (char)14, (char)1, (char)135, (char)219, (char)45, (char)240, (char)130, (char)165, (char)96, (char)173, (char)100, (char)22, (char)57, (char)106, (char)154, (char)47, (char)93, (char)51, (char)67, (char)11, (char)127, (char)170, (char)97, (char)70, (char)77, (char)247, (char)175, (char)130, (char)33, (char)177, (char)23, (char)213, (char)142, (char)113, (char)254, (char)68, (char)143, (char)35, (char)143, (char)36, (char)138, (char)198, (char)248, (char)127, (char)182, (char)201, (char)199, (char)249, (char)63, (char)197, (char)230, (char)22, (char)19, (char)163, (char)30, (char)24, (char)92, (char)86, (char)164, (char)208, (char)33, (char)61, (char)161, (char)93, (char)89, (char)100, (char)238, (char)141, (char)11, (char)112, (char)122, (char)39, (char)207, (char)50, (char)68, (char)204, (char)49, (char)19, (char)52, (char)176, (char)216, (char)108, (char)156, (char)254, (char)201, (char)213, (char)204, (char)231, (char)10, (char)108, (char)51, (char)203, (char)232, (char)119, (char)231, (char)29, (char)106, (char)13, (char)4, (char)171, (char)89, (char)5, (char)153, (char)64, (char)237, (char)107, (char)101, (char)114, (char)6, (char)183}));
-            assert(pack.target_system_GET() == (char)109);
-            assert(pack.target_network_GET() == (char)76);
-            assert(pack.message_type_GET() == (char)51715);
+            assert(pack.target_network_GET() == (char)200);
+            assert(Arrays.equals(pack.payload_GET(),  new char[] {(char)42, (char)0, (char)204, (char)144, (char)21, (char)242, (char)4, (char)188, (char)85, (char)86, (char)145, (char)32, (char)42, (char)208, (char)162, (char)197, (char)51, (char)216, (char)175, (char)181, (char)28, (char)15, (char)215, (char)158, (char)14, (char)34, (char)207, (char)140, (char)181, (char)166, (char)219, (char)243, (char)46, (char)158, (char)83, (char)8, (char)167, (char)122, (char)90, (char)200, (char)148, (char)21, (char)50, (char)204, (char)50, (char)246, (char)61, (char)56, (char)1, (char)214, (char)172, (char)15, (char)193, (char)36, (char)203, (char)176, (char)15, (char)71, (char)225, (char)208, (char)23, (char)191, (char)157, (char)230, (char)196, (char)43, (char)242, (char)121, (char)68, (char)71, (char)0, (char)72, (char)218, (char)4, (char)99, (char)235, (char)143, (char)196, (char)98, (char)126, (char)35, (char)150, (char)10, (char)41, (char)149, (char)76, (char)147, (char)10, (char)147, (char)178, (char)35, (char)202, (char)240, (char)107, (char)93, (char)124, (char)149, (char)234, (char)45, (char)190, (char)65, (char)165, (char)5, (char)163, (char)239, (char)131, (char)25, (char)254, (char)130, (char)243, (char)187, (char)67, (char)72, (char)177, (char)98, (char)118, (char)218, (char)80, (char)116, (char)102, (char)216, (char)69, (char)156, (char)24, (char)218, (char)51, (char)234, (char)161, (char)214, (char)34, (char)231, (char)157, (char)82, (char)130, (char)30, (char)25, (char)129, (char)178, (char)253, (char)220, (char)129, (char)225, (char)151, (char)213, (char)8, (char)65, (char)162, (char)200, (char)195, (char)197, (char)168, (char)86, (char)132, (char)244, (char)88, (char)225, (char)104, (char)181, (char)35, (char)210, (char)97, (char)86, (char)90, (char)209, (char)106, (char)172, (char)85, (char)48, (char)71, (char)152, (char)248, (char)155, (char)12, (char)88, (char)12, (char)71, (char)13, (char)130, (char)143, (char)242, (char)97, (char)33, (char)204, (char)130, (char)56, (char)55, (char)9, (char)126, (char)72, (char)251, (char)205, (char)237, (char)226, (char)97, (char)239, (char)111, (char)80, (char)254, (char)184, (char)170, (char)197, (char)93, (char)77, (char)103, (char)81, (char)248, (char)56, (char)133, (char)173, (char)87, (char)239, (char)223, (char)149, (char)50, (char)44, (char)229, (char)111, (char)66, (char)215, (char)80, (char)202, (char)131, (char)117, (char)34, (char)40, (char)7, (char)113, (char)214, (char)107, (char)172, (char)77, (char)214, (char)122, (char)14, (char)38, (char)38, (char)252, (char)192, (char)174, (char)160, (char)141, (char)179, (char)193, (char)240, (char)75, (char)68, (char)104, (char)95, (char)51}));
+            assert(pack.message_type_GET() == (char)18525);
+            assert(pack.target_system_GET() == (char)178);
+            assert(pack.target_component_GET() == (char)117);
         });
         GroundControl.V2_EXTENSION p248 = CommunicationChannel.new_V2_EXTENSION();
         PH.setPack(p248);
-        p248.target_network_SET((char)76) ;
-        p248.target_component_SET((char)204) ;
-        p248.target_system_SET((char)109) ;
-        p248.payload_SET(new char[] {(char)190, (char)24, (char)34, (char)55, (char)124, (char)244, (char)99, (char)33, (char)218, (char)3, (char)245, (char)147, (char)5, (char)105, (char)125, (char)88, (char)19, (char)99, (char)108, (char)37, (char)255, (char)60, (char)233, (char)35, (char)211, (char)130, (char)120, (char)21, (char)252, (char)217, (char)245, (char)186, (char)225, (char)205, (char)189, (char)43, (char)186, (char)144, (char)204, (char)48, (char)148, (char)94, (char)92, (char)125, (char)158, (char)99, (char)133, (char)15, (char)96, (char)147, (char)85, (char)4, (char)166, (char)88, (char)177, (char)104, (char)31, (char)188, (char)102, (char)188, (char)7, (char)212, (char)114, (char)78, (char)249, (char)247, (char)202, (char)110, (char)59, (char)80, (char)153, (char)63, (char)86, (char)61, (char)139, (char)11, (char)6, (char)246, (char)243, (char)93, (char)77, (char)209, (char)244, (char)49, (char)230, (char)221, (char)85, (char)198, (char)184, (char)155, (char)93, (char)73, (char)109, (char)114, (char)174, (char)47, (char)18, (char)109, (char)35, (char)51, (char)120, (char)178, (char)245, (char)10, (char)63, (char)208, (char)0, (char)117, (char)18, (char)224, (char)175, (char)7, (char)167, (char)139, (char)198, (char)28, (char)230, (char)122, (char)193, (char)141, (char)96, (char)23, (char)78, (char)35, (char)105, (char)243, (char)113, (char)254, (char)74, (char)22, (char)236, (char)50, (char)97, (char)83, (char)33, (char)79, (char)99, (char)111, (char)156, (char)14, (char)1, (char)135, (char)219, (char)45, (char)240, (char)130, (char)165, (char)96, (char)173, (char)100, (char)22, (char)57, (char)106, (char)154, (char)47, (char)93, (char)51, (char)67, (char)11, (char)127, (char)170, (char)97, (char)70, (char)77, (char)247, (char)175, (char)130, (char)33, (char)177, (char)23, (char)213, (char)142, (char)113, (char)254, (char)68, (char)143, (char)35, (char)143, (char)36, (char)138, (char)198, (char)248, (char)127, (char)182, (char)201, (char)199, (char)249, (char)63, (char)197, (char)230, (char)22, (char)19, (char)163, (char)30, (char)24, (char)92, (char)86, (char)164, (char)208, (char)33, (char)61, (char)161, (char)93, (char)89, (char)100, (char)238, (char)141, (char)11, (char)112, (char)122, (char)39, (char)207, (char)50, (char)68, (char)204, (char)49, (char)19, (char)52, (char)176, (char)216, (char)108, (char)156, (char)254, (char)201, (char)213, (char)204, (char)231, (char)10, (char)108, (char)51, (char)203, (char)232, (char)119, (char)231, (char)29, (char)106, (char)13, (char)4, (char)171, (char)89, (char)5, (char)153, (char)64, (char)237, (char)107, (char)101, (char)114, (char)6, (char)183}, 0) ;
-        p248.message_type_SET((char)51715) ;
+        p248.message_type_SET((char)18525) ;
+        p248.target_network_SET((char)200) ;
+        p248.payload_SET(new char[] {(char)42, (char)0, (char)204, (char)144, (char)21, (char)242, (char)4, (char)188, (char)85, (char)86, (char)145, (char)32, (char)42, (char)208, (char)162, (char)197, (char)51, (char)216, (char)175, (char)181, (char)28, (char)15, (char)215, (char)158, (char)14, (char)34, (char)207, (char)140, (char)181, (char)166, (char)219, (char)243, (char)46, (char)158, (char)83, (char)8, (char)167, (char)122, (char)90, (char)200, (char)148, (char)21, (char)50, (char)204, (char)50, (char)246, (char)61, (char)56, (char)1, (char)214, (char)172, (char)15, (char)193, (char)36, (char)203, (char)176, (char)15, (char)71, (char)225, (char)208, (char)23, (char)191, (char)157, (char)230, (char)196, (char)43, (char)242, (char)121, (char)68, (char)71, (char)0, (char)72, (char)218, (char)4, (char)99, (char)235, (char)143, (char)196, (char)98, (char)126, (char)35, (char)150, (char)10, (char)41, (char)149, (char)76, (char)147, (char)10, (char)147, (char)178, (char)35, (char)202, (char)240, (char)107, (char)93, (char)124, (char)149, (char)234, (char)45, (char)190, (char)65, (char)165, (char)5, (char)163, (char)239, (char)131, (char)25, (char)254, (char)130, (char)243, (char)187, (char)67, (char)72, (char)177, (char)98, (char)118, (char)218, (char)80, (char)116, (char)102, (char)216, (char)69, (char)156, (char)24, (char)218, (char)51, (char)234, (char)161, (char)214, (char)34, (char)231, (char)157, (char)82, (char)130, (char)30, (char)25, (char)129, (char)178, (char)253, (char)220, (char)129, (char)225, (char)151, (char)213, (char)8, (char)65, (char)162, (char)200, (char)195, (char)197, (char)168, (char)86, (char)132, (char)244, (char)88, (char)225, (char)104, (char)181, (char)35, (char)210, (char)97, (char)86, (char)90, (char)209, (char)106, (char)172, (char)85, (char)48, (char)71, (char)152, (char)248, (char)155, (char)12, (char)88, (char)12, (char)71, (char)13, (char)130, (char)143, (char)242, (char)97, (char)33, (char)204, (char)130, (char)56, (char)55, (char)9, (char)126, (char)72, (char)251, (char)205, (char)237, (char)226, (char)97, (char)239, (char)111, (char)80, (char)254, (char)184, (char)170, (char)197, (char)93, (char)77, (char)103, (char)81, (char)248, (char)56, (char)133, (char)173, (char)87, (char)239, (char)223, (char)149, (char)50, (char)44, (char)229, (char)111, (char)66, (char)215, (char)80, (char)202, (char)131, (char)117, (char)34, (char)40, (char)7, (char)113, (char)214, (char)107, (char)172, (char)77, (char)214, (char)122, (char)14, (char)38, (char)38, (char)252, (char)192, (char)174, (char)160, (char)141, (char)179, (char)193, (char)240, (char)75, (char)68, (char)104, (char)95, (char)51}, 0) ;
+        p248.target_system_SET((char)178) ;
+        p248.target_component_SET((char)117) ;
         CommunicationChannel.instance.send(p248);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_MEMORY_VECT.add((src, ph, pack) ->
         {
-            assert(pack.address_GET() == (char)47957);
-            assert(pack.type_GET() == (char)207);
-            assert(Arrays.equals(pack.value_GET(),  new byte[] {(byte) - 119, (byte)116, (byte) - 13, (byte)64, (byte) - 10, (byte)40, (byte)50, (byte) - 77, (byte) - 44, (byte) - 82, (byte) - 117, (byte) - 25, (byte) - 38, (byte) - 52, (byte)84, (byte) - 114, (byte) - 88, (byte)77, (byte) - 68, (byte) - 46, (byte)48, (byte) - 2, (byte) - 55, (byte) - 56, (byte)102, (byte)120, (byte) - 106, (byte)124, (byte)103, (byte) - 101, (byte)36, (byte) - 67}));
-            assert(pack.ver_GET() == (char)104);
+            assert(pack.type_GET() == (char)6);
+            assert(pack.address_GET() == (char)50321);
+            assert(pack.ver_GET() == (char)8);
+            assert(Arrays.equals(pack.value_GET(),  new byte[] {(byte)127, (byte) - 40, (byte)39, (byte) - 50, (byte) - 13, (byte)37, (byte) - 65, (byte) - 62, (byte) - 58, (byte) - 16, (byte)95, (byte)113, (byte) - 22, (byte)124, (byte) - 111, (byte)108, (byte) - 81, (byte)83, (byte)44, (byte)103, (byte) - 8, (byte) - 124, (byte)121, (byte) - 28, (byte)94, (byte)25, (byte)73, (byte)17, (byte)17, (byte) - 34, (byte) - 34, (byte) - 119}));
         });
         GroundControl.MEMORY_VECT p249 = CommunicationChannel.new_MEMORY_VECT();
         PH.setPack(p249);
-        p249.address_SET((char)47957) ;
-        p249.value_SET(new byte[] {(byte) - 119, (byte)116, (byte) - 13, (byte)64, (byte) - 10, (byte)40, (byte)50, (byte) - 77, (byte) - 44, (byte) - 82, (byte) - 117, (byte) - 25, (byte) - 38, (byte) - 52, (byte)84, (byte) - 114, (byte) - 88, (byte)77, (byte) - 68, (byte) - 46, (byte)48, (byte) - 2, (byte) - 55, (byte) - 56, (byte)102, (byte)120, (byte) - 106, (byte)124, (byte)103, (byte) - 101, (byte)36, (byte) - 67}, 0) ;
-        p249.ver_SET((char)104) ;
-        p249.type_SET((char)207) ;
+        p249.ver_SET((char)8) ;
+        p249.address_SET((char)50321) ;
+        p249.type_SET((char)6) ;
+        p249.value_SET(new byte[] {(byte)127, (byte) - 40, (byte)39, (byte) - 50, (byte) - 13, (byte)37, (byte) - 65, (byte) - 62, (byte) - 58, (byte) - 16, (byte)95, (byte)113, (byte) - 22, (byte)124, (byte) - 111, (byte)108, (byte) - 81, (byte)83, (byte)44, (byte)103, (byte) - 8, (byte) - 124, (byte)121, (byte) - 28, (byte)94, (byte)25, (byte)73, (byte)17, (byte)17, (byte) - 34, (byte) - 34, (byte) - 119}, 0) ;
         CommunicationChannel.instance.send(p249);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_DEBUG_VECT.add((src, ph, pack) ->
         {
-            assert(pack.z_GET() == -1.8790348E38F);
-            assert(pack.name_LEN(ph) == 10);
-            assert(pack.name_TRY(ph).equals("FjowbVeexn"));
-            assert(pack.y_GET() == -3.1818172E38F);
-            assert(pack.time_usec_GET() == 3678729180835132389L);
-            assert(pack.x_GET() == 2.651351E38F);
+            assert(pack.y_GET() == -3.3987627E38F);
+            assert(pack.x_GET() == -1.5440908E38F);
+            assert(pack.time_usec_GET() == 1018973050468283541L);
+            assert(pack.z_GET() == -2.7398133E37F);
+            assert(pack.name_LEN(ph) == 6);
+            assert(pack.name_TRY(ph).equals("iklzfc"));
         });
         GroundControl.DEBUG_VECT p250 = CommunicationChannel.new_DEBUG_VECT();
         PH.setPack(p250);
-        p250.name_SET("FjowbVeexn", PH) ;
-        p250.z_SET(-1.8790348E38F) ;
-        p250.y_SET(-3.1818172E38F) ;
-        p250.x_SET(2.651351E38F) ;
-        p250.time_usec_SET(3678729180835132389L) ;
+        p250.x_SET(-1.5440908E38F) ;
+        p250.y_SET(-3.3987627E38F) ;
+        p250.time_usec_SET(1018973050468283541L) ;
+        p250.z_SET(-2.7398133E37F) ;
+        p250.name_SET("iklzfc", PH) ;
         CommunicationChannel.instance.send(p250);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_NAMED_VALUE_FLOAT.add((src, ph, pack) ->
         {
-            assert(pack.name_LEN(ph) == 9);
-            assert(pack.name_TRY(ph).equals("vlgysvtwj"));
-            assert(pack.value_GET() == 1.670526E38F);
-            assert(pack.time_boot_ms_GET() == 1684596916L);
+            assert(pack.name_LEN(ph) == 10);
+            assert(pack.name_TRY(ph).equals("xmbgafxrua"));
+            assert(pack.time_boot_ms_GET() == 1641220487L);
+            assert(pack.value_GET() == 4.0244727E37F);
         });
         GroundControl.NAMED_VALUE_FLOAT p251 = CommunicationChannel.new_NAMED_VALUE_FLOAT();
         PH.setPack(p251);
-        p251.value_SET(1.670526E38F) ;
-        p251.time_boot_ms_SET(1684596916L) ;
-        p251.name_SET("vlgysvtwj", PH) ;
+        p251.name_SET("xmbgafxrua", PH) ;
+        p251.time_boot_ms_SET(1641220487L) ;
+        p251.value_SET(4.0244727E37F) ;
         CommunicationChannel.instance.send(p251);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_NAMED_VALUE_INT.add((src, ph, pack) ->
         {
-            assert(pack.time_boot_ms_GET() == 3538694957L);
-            assert(pack.value_GET() == -677903144);
-            assert(pack.name_LEN(ph) == 2);
-            assert(pack.name_TRY(ph).equals("xn"));
+            assert(pack.time_boot_ms_GET() == 767661552L);
+            assert(pack.name_LEN(ph) == 3);
+            assert(pack.name_TRY(ph).equals("flr"));
+            assert(pack.value_GET() == 1842829962);
         });
         GroundControl.NAMED_VALUE_INT p252 = CommunicationChannel.new_NAMED_VALUE_INT();
         PH.setPack(p252);
-        p252.time_boot_ms_SET(3538694957L) ;
-        p252.value_SET(-677903144) ;
-        p252.name_SET("xn", PH) ;
+        p252.name_SET("flr", PH) ;
+        p252.time_boot_ms_SET(767661552L) ;
+        p252.value_SET(1842829962) ;
         CommunicationChannel.instance.send(p252);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_STATUSTEXT.add((src, ph, pack) ->
         {
-            assert(pack.text_LEN(ph) == 38);
-            assert(pack.text_TRY(ph).equals("ynvnctrjtnCukztrqimgzycigzepaaKdnuhtte"));
-            assert(pack.severity_GET() == MAV_SEVERITY.MAV_SEVERITY_ERROR);
+            assert(pack.text_LEN(ph) == 46);
+            assert(pack.text_TRY(ph).equals("cnjpxpujHvVYoquprxozwgqwpGajweptzazpqsnhwQwljx"));
+            assert(pack.severity_GET() == MAV_SEVERITY.MAV_SEVERITY_INFO);
         });
         GroundControl.STATUSTEXT p253 = CommunicationChannel.new_STATUSTEXT();
         PH.setPack(p253);
-        p253.severity_SET(MAV_SEVERITY.MAV_SEVERITY_ERROR) ;
-        p253.text_SET("ynvnctrjtnCukztrqimgzycigzepaaKdnuhtte", PH) ;
+        p253.text_SET("cnjpxpujHvVYoquprxozwgqwpGajweptzazpqsnhwQwljx", PH) ;
+        p253.severity_SET(MAV_SEVERITY.MAV_SEVERITY_INFO) ;
         CommunicationChannel.instance.send(p253);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_DEBUG.add((src, ph, pack) ->
         {
-            assert(pack.ind_GET() == (char)250);
-            assert(pack.time_boot_ms_GET() == 2029391900L);
-            assert(pack.value_GET() == -1.8470328E38F);
+            assert(pack.value_GET() == 1.1480369E38F);
+            assert(pack.time_boot_ms_GET() == 2497078925L);
+            assert(pack.ind_GET() == (char)44);
         });
         GroundControl.DEBUG p254 = CommunicationChannel.new_DEBUG();
         PH.setPack(p254);
-        p254.ind_SET((char)250) ;
-        p254.time_boot_ms_SET(2029391900L) ;
-        p254.value_SET(-1.8470328E38F) ;
+        p254.time_boot_ms_SET(2497078925L) ;
+        p254.ind_SET((char)44) ;
+        p254.value_SET(1.1480369E38F) ;
         CommunicationChannel.instance.send(p254);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_SETUP_SIGNING.add((src, ph, pack) ->
         {
-            assert(pack.target_component_GET() == (char)171);
-            assert(pack.target_system_GET() == (char)132);
-            assert(pack.initial_timestamp_GET() == 2881419238394791355L);
-            assert(Arrays.equals(pack.secret_key_GET(),  new char[] {(char)37, (char)90, (char)134, (char)196, (char)241, (char)176, (char)114, (char)223, (char)65, (char)119, (char)16, (char)223, (char)234, (char)233, (char)148, (char)135, (char)239, (char)169, (char)223, (char)254, (char)47, (char)119, (char)140, (char)32, (char)236, (char)127, (char)244, (char)40, (char)1, (char)221, (char)110, (char)122}));
+            assert(pack.target_system_GET() == (char)228);
+            assert(Arrays.equals(pack.secret_key_GET(),  new char[] {(char)41, (char)233, (char)135, (char)180, (char)20, (char)107, (char)241, (char)234, (char)185, (char)184, (char)64, (char)122, (char)234, (char)34, (char)11, (char)129, (char)123, (char)232, (char)157, (char)179, (char)236, (char)201, (char)127, (char)207, (char)138, (char)125, (char)225, (char)80, (char)63, (char)208, (char)48, (char)15}));
+            assert(pack.initial_timestamp_GET() == 2647961772401064450L);
+            assert(pack.target_component_GET() == (char)0);
         });
         GroundControl.SETUP_SIGNING p256 = CommunicationChannel.new_SETUP_SIGNING();
         PH.setPack(p256);
-        p256.initial_timestamp_SET(2881419238394791355L) ;
-        p256.target_component_SET((char)171) ;
-        p256.secret_key_SET(new char[] {(char)37, (char)90, (char)134, (char)196, (char)241, (char)176, (char)114, (char)223, (char)65, (char)119, (char)16, (char)223, (char)234, (char)233, (char)148, (char)135, (char)239, (char)169, (char)223, (char)254, (char)47, (char)119, (char)140, (char)32, (char)236, (char)127, (char)244, (char)40, (char)1, (char)221, (char)110, (char)122}, 0) ;
-        p256.target_system_SET((char)132) ;
+        p256.target_system_SET((char)228) ;
+        p256.initial_timestamp_SET(2647961772401064450L) ;
+        p256.secret_key_SET(new char[] {(char)41, (char)233, (char)135, (char)180, (char)20, (char)107, (char)241, (char)234, (char)185, (char)184, (char)64, (char)122, (char)234, (char)34, (char)11, (char)129, (char)123, (char)232, (char)157, (char)179, (char)236, (char)201, (char)127, (char)207, (char)138, (char)125, (char)225, (char)80, (char)63, (char)208, (char)48, (char)15}, 0) ;
+        p256.target_component_SET((char)0) ;
         CommunicationChannel.instance.send(p256);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_BUTTON_CHANGE.add((src, ph, pack) ->
         {
-            assert(pack.state_GET() == (char)213);
-            assert(pack.last_change_ms_GET() == 1077873797L);
-            assert(pack.time_boot_ms_GET() == 1900858921L);
+            assert(pack.time_boot_ms_GET() == 3437780256L);
+            assert(pack.state_GET() == (char)143);
+            assert(pack.last_change_ms_GET() == 3545666241L);
         });
         GroundControl.BUTTON_CHANGE p257 = CommunicationChannel.new_BUTTON_CHANGE();
         PH.setPack(p257);
-        p257.state_SET((char)213) ;
-        p257.time_boot_ms_SET(1900858921L) ;
-        p257.last_change_ms_SET(1077873797L) ;
+        p257.last_change_ms_SET(3545666241L) ;
+        p257.time_boot_ms_SET(3437780256L) ;
+        p257.state_SET((char)143) ;
         CommunicationChannel.instance.send(p257);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_PLAY_TUNE.add((src, ph, pack) ->
         {
-            assert(pack.target_component_GET() == (char)82);
-            assert(pack.target_system_GET() == (char)94);
-            assert(pack.tune_LEN(ph) == 23);
-            assert(pack.tune_TRY(ph).equals("poQnAwarxagiuydbrcWsumb"));
+            assert(pack.target_component_GET() == (char)209);
+            assert(pack.target_system_GET() == (char)150);
+            assert(pack.tune_LEN(ph) == 4);
+            assert(pack.tune_TRY(ph).equals("Cdya"));
         });
         GroundControl.PLAY_TUNE p258 = CommunicationChannel.new_PLAY_TUNE();
         PH.setPack(p258);
-        p258.tune_SET("poQnAwarxagiuydbrcWsumb", PH) ;
-        p258.target_component_SET((char)82) ;
-        p258.target_system_SET((char)94) ;
+        p258.target_system_SET((char)150) ;
+        p258.target_component_SET((char)209) ;
+        p258.tune_SET("Cdya", PH) ;
         CommunicationChannel.instance.send(p258);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_CAMERA_INFORMATION.add((src, ph, pack) ->
         {
-            assert(pack.flags_GET() == (CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAN_CAPTURE_VIDEO_IN_IMAGE_MODE |
-                                        CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAPTURE_VIDEO));
-            assert(pack.time_boot_ms_GET() == 2508643645L);
-            assert(pack.cam_definition_version_GET() == (char)8064);
-            assert(Arrays.equals(pack.model_name_GET(),  new char[] {(char)198, (char)173, (char)168, (char)91, (char)254, (char)72, (char)165, (char)123, (char)79, (char)207, (char)231, (char)242, (char)3, (char)136, (char)76, (char)55, (char)24, (char)44, (char)215, (char)100, (char)8, (char)30, (char)189, (char)240, (char)157, (char)221, (char)234, (char)185, (char)113, (char)188, (char)90, (char)111}));
-            assert(pack.firmware_version_GET() == 2799793628L);
-            assert(pack.cam_definition_uri_LEN(ph) == 61);
-            assert(pack.cam_definition_uri_TRY(ph).equals("evxiecfsnuehlpisunbzizzbeVpnymbpmzawafgntidmleomncxytrlwbhqws"));
-            assert(pack.lens_id_GET() == (char)121);
-            assert(pack.sensor_size_h_GET() == -3.0875216E38F);
-            assert(pack.resolution_v_GET() == (char)3042);
-            assert(pack.resolution_h_GET() == (char)13721);
-            assert(pack.sensor_size_v_GET() == 1.1598656E37F);
-            assert(pack.focal_length_GET() == -1.678936E38F);
-            assert(Arrays.equals(pack.vendor_name_GET(),  new char[] {(char)168, (char)95, (char)228, (char)44, (char)89, (char)194, (char)3, (char)151, (char)57, (char)243, (char)29, (char)25, (char)47, (char)124, (char)35, (char)142, (char)100, (char)51, (char)105, (char)22, (char)72, (char)48, (char)188, (char)170, (char)27, (char)31, (char)72, (char)216, (char)44, (char)215, (char)226, (char)253}));
+            assert(pack.resolution_h_GET() == (char)62141);
+            assert(Arrays.equals(pack.vendor_name_GET(),  new char[] {(char)156, (char)99, (char)163, (char)35, (char)80, (char)148, (char)247, (char)209, (char)207, (char)0, (char)248, (char)152, (char)207, (char)222, (char)37, (char)106, (char)193, (char)157, (char)232, (char)42, (char)238, (char)227, (char)189, (char)83, (char)184, (char)228, (char)136, (char)98, (char)212, (char)22, (char)215, (char)103}));
+            assert(pack.sensor_size_v_GET() == 2.9750348E38F);
+            assert(pack.lens_id_GET() == (char)169);
+            assert(pack.resolution_v_GET() == (char)24732);
+            assert(pack.time_boot_ms_GET() == 3308773198L);
+            assert(pack.cam_definition_version_GET() == (char)47734);
+            assert(pack.cam_definition_uri_LEN(ph) == 53);
+            assert(pack.cam_definition_uri_TRY(ph).equals("xyywuhwgqscxqtojgupyhqLuIxzlaingrhsceWcwhqarixelbFrij"));
+            assert(pack.sensor_size_h_GET() == 1.5321753E37F);
+            assert(pack.focal_length_GET() == -1.6267257E38F);
+            assert(pack.firmware_version_GET() == 4270134376L);
+            assert(Arrays.equals(pack.model_name_GET(),  new char[] {(char)194, (char)102, (char)206, (char)194, (char)207, (char)98, (char)55, (char)0, (char)207, (char)237, (char)161, (char)254, (char)147, (char)102, (char)58, (char)139, (char)119, (char)178, (char)240, (char)3, (char)40, (char)36, (char)61, (char)175, (char)233, (char)142, (char)206, (char)242, (char)88, (char)60, (char)159, (char)73}));
+            assert(pack.flags_GET() == (CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_HAS_MODES));
         });
         GroundControl.CAMERA_INFORMATION p259 = CommunicationChannel.new_CAMERA_INFORMATION();
         PH.setPack(p259);
-        p259.model_name_SET(new char[] {(char)198, (char)173, (char)168, (char)91, (char)254, (char)72, (char)165, (char)123, (char)79, (char)207, (char)231, (char)242, (char)3, (char)136, (char)76, (char)55, (char)24, (char)44, (char)215, (char)100, (char)8, (char)30, (char)189, (char)240, (char)157, (char)221, (char)234, (char)185, (char)113, (char)188, (char)90, (char)111}, 0) ;
-        p259.vendor_name_SET(new char[] {(char)168, (char)95, (char)228, (char)44, (char)89, (char)194, (char)3, (char)151, (char)57, (char)243, (char)29, (char)25, (char)47, (char)124, (char)35, (char)142, (char)100, (char)51, (char)105, (char)22, (char)72, (char)48, (char)188, (char)170, (char)27, (char)31, (char)72, (char)216, (char)44, (char)215, (char)226, (char)253}, 0) ;
-        p259.firmware_version_SET(2799793628L) ;
-        p259.focal_length_SET(-1.678936E38F) ;
-        p259.sensor_size_h_SET(-3.0875216E38F) ;
-        p259.cam_definition_version_SET((char)8064) ;
-        p259.resolution_h_SET((char)13721) ;
-        p259.lens_id_SET((char)121) ;
-        p259.cam_definition_uri_SET("evxiecfsnuehlpisunbzizzbeVpnymbpmzawafgntidmleomncxytrlwbhqws", PH) ;
-        p259.flags_SET((CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAN_CAPTURE_VIDEO_IN_IMAGE_MODE |
-                        CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_CAPTURE_VIDEO)) ;
-        p259.resolution_v_SET((char)3042) ;
-        p259.sensor_size_v_SET(1.1598656E37F) ;
-        p259.time_boot_ms_SET(2508643645L) ;
+        p259.sensor_size_v_SET(2.9750348E38F) ;
+        p259.lens_id_SET((char)169) ;
+        p259.focal_length_SET(-1.6267257E38F) ;
+        p259.vendor_name_SET(new char[] {(char)156, (char)99, (char)163, (char)35, (char)80, (char)148, (char)247, (char)209, (char)207, (char)0, (char)248, (char)152, (char)207, (char)222, (char)37, (char)106, (char)193, (char)157, (char)232, (char)42, (char)238, (char)227, (char)189, (char)83, (char)184, (char)228, (char)136, (char)98, (char)212, (char)22, (char)215, (char)103}, 0) ;
+        p259.firmware_version_SET(4270134376L) ;
+        p259.model_name_SET(new char[] {(char)194, (char)102, (char)206, (char)194, (char)207, (char)98, (char)55, (char)0, (char)207, (char)237, (char)161, (char)254, (char)147, (char)102, (char)58, (char)139, (char)119, (char)178, (char)240, (char)3, (char)40, (char)36, (char)61, (char)175, (char)233, (char)142, (char)206, (char)242, (char)88, (char)60, (char)159, (char)73}, 0) ;
+        p259.cam_definition_version_SET((char)47734) ;
+        p259.time_boot_ms_SET(3308773198L) ;
+        p259.flags_SET((CAMERA_CAP_FLAGS.CAMERA_CAP_FLAGS_HAS_MODES)) ;
+        p259.resolution_h_SET((char)62141) ;
+        p259.cam_definition_uri_SET("xyywuhwgqscxqtojgupyhqLuIxzlaingrhsceWcwhqarixelbFrij", PH) ;
+        p259.resolution_v_SET((char)24732) ;
+        p259.sensor_size_h_SET(1.5321753E37F) ;
         CommunicationChannel.instance.send(p259);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_CAMERA_SETTINGS.add((src, ph, pack) ->
         {
-            assert(pack.time_boot_ms_GET() == 437257297L);
-            assert(pack.mode_id_GET() == CAMERA_MODE.CAMERA_MODE_VIDEO);
+            assert(pack.mode_id_GET() == (CAMERA_MODE.CAMERA_MODE_IMAGE));
+            assert(pack.time_boot_ms_GET() == 2928632267L);
         });
         GroundControl.CAMERA_SETTINGS p260 = CommunicationChannel.new_CAMERA_SETTINGS();
         PH.setPack(p260);
-        p260.mode_id_SET(CAMERA_MODE.CAMERA_MODE_VIDEO) ;
-        p260.time_boot_ms_SET(437257297L) ;
+        p260.time_boot_ms_SET(2928632267L) ;
+        p260.mode_id_SET((CAMERA_MODE.CAMERA_MODE_IMAGE)) ;
         CommunicationChannel.instance.send(p260);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_STORAGE_INFORMATION.add((src, ph, pack) ->
         {
-            assert(pack.total_capacity_GET() == -2.762245E38F);
-            assert(pack.write_speed_GET() == -3.2639983E38F);
-            assert(pack.available_capacity_GET() == -2.9807771E38F);
-            assert(pack.status_GET() == (char)234);
-            assert(pack.storage_count_GET() == (char)141);
-            assert(pack.used_capacity_GET() == -5.321957E37F);
-            assert(pack.read_speed_GET() == 3.0159136E38F);
-            assert(pack.time_boot_ms_GET() == 1744815606L);
-            assert(pack.storage_id_GET() == (char)33);
+            assert(pack.time_boot_ms_GET() == 2267161140L);
+            assert(pack.storage_id_GET() == (char)207);
+            assert(pack.total_capacity_GET() == -3.0893793E38F);
+            assert(pack.used_capacity_GET() == -1.403564E38F);
+            assert(pack.status_GET() == (char)146);
+            assert(pack.storage_count_GET() == (char)104);
+            assert(pack.write_speed_GET() == -2.5276306E38F);
+            assert(pack.read_speed_GET() == 3.1939838E38F);
+            assert(pack.available_capacity_GET() == -1.2660309E38F);
         });
         GroundControl.STORAGE_INFORMATION p261 = CommunicationChannel.new_STORAGE_INFORMATION();
         PH.setPack(p261);
-        p261.available_capacity_SET(-2.9807771E38F) ;
-        p261.total_capacity_SET(-2.762245E38F) ;
-        p261.write_speed_SET(-3.2639983E38F) ;
-        p261.used_capacity_SET(-5.321957E37F) ;
-        p261.storage_count_SET((char)141) ;
-        p261.read_speed_SET(3.0159136E38F) ;
-        p261.time_boot_ms_SET(1744815606L) ;
-        p261.status_SET((char)234) ;
-        p261.storage_id_SET((char)33) ;
+        p261.write_speed_SET(-2.5276306E38F) ;
+        p261.storage_count_SET((char)104) ;
+        p261.read_speed_SET(3.1939838E38F) ;
+        p261.time_boot_ms_SET(2267161140L) ;
+        p261.available_capacity_SET(-1.2660309E38F) ;
+        p261.storage_id_SET((char)207) ;
+        p261.total_capacity_SET(-3.0893793E38F) ;
+        p261.used_capacity_SET(-1.403564E38F) ;
+        p261.status_SET((char)146) ;
         CommunicationChannel.instance.send(p261);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_CAMERA_CAPTURE_STATUS.add((src, ph, pack) ->
         {
-            assert(pack.video_status_GET() == (char)106);
-            assert(pack.image_status_GET() == (char)67);
-            assert(pack.time_boot_ms_GET() == 2351287538L);
-            assert(pack.recording_time_ms_GET() == 1925558743L);
-            assert(pack.image_interval_GET() == -7.598816E37F);
-            assert(pack.available_capacity_GET() == 4.407273E37F);
+            assert(pack.recording_time_ms_GET() == 3765020612L);
+            assert(pack.image_interval_GET() == -2.56535E38F);
+            assert(pack.time_boot_ms_GET() == 3418362709L);
+            assert(pack.available_capacity_GET() == 1.8318606E37F);
+            assert(pack.image_status_GET() == (char)40);
+            assert(pack.video_status_GET() == (char)184);
         });
         GroundControl.CAMERA_CAPTURE_STATUS p262 = CommunicationChannel.new_CAMERA_CAPTURE_STATUS();
         PH.setPack(p262);
-        p262.image_interval_SET(-7.598816E37F) ;
-        p262.available_capacity_SET(4.407273E37F) ;
-        p262.time_boot_ms_SET(2351287538L) ;
-        p262.image_status_SET((char)67) ;
-        p262.recording_time_ms_SET(1925558743L) ;
-        p262.video_status_SET((char)106) ;
+        p262.available_capacity_SET(1.8318606E37F) ;
+        p262.video_status_SET((char)184) ;
+        p262.image_status_SET((char)40) ;
+        p262.time_boot_ms_SET(3418362709L) ;
+        p262.image_interval_SET(-2.56535E38F) ;
+        p262.recording_time_ms_SET(3765020612L) ;
         CommunicationChannel.instance.send(p262);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_CAMERA_IMAGE_CAPTURED.add((src, ph, pack) ->
         {
-            assert(pack.capture_result_GET() == (byte)79);
-            assert(pack.file_url_LEN(ph) == 70);
-            assert(pack.file_url_TRY(ph).equals("FfoywvwrgzopllwYymjoEpodlqTgdyfhojEjpwmxkxcdoxpekxjedqpjVuvvjeyexcSLgH"));
-            assert(pack.camera_id_GET() == (char)64);
-            assert(pack.relative_alt_GET() == 45364997);
-            assert(Arrays.equals(pack.q_GET(),  new float[] {-9.4381715E36F, -1.0384191E38F, 3.3125037E38F, -2.5774892E38F}));
-            assert(pack.lon_GET() == -1201076794);
-            assert(pack.lat_GET() == 756171875);
-            assert(pack.time_boot_ms_GET() == 4203155072L);
-            assert(pack.alt_GET() == -733990589);
-            assert(pack.image_index_GET() == -744001711);
-            assert(pack.time_utc_GET() == 5260835004924928840L);
+            assert(pack.lat_GET() == 224186329);
+            assert(pack.alt_GET() == 1328504517);
+            assert(pack.time_utc_GET() == 75469379699597778L);
+            assert(pack.relative_alt_GET() == -1757894592);
+            assert(pack.image_index_GET() == 514715552);
+            assert(pack.time_boot_ms_GET() == 2530216798L);
+            assert(pack.camera_id_GET() == (char)43);
+            assert(Arrays.equals(pack.q_GET(),  new float[] {-7.4877647E37F, -3.131819E37F, -2.5506043E38F, -9.690099E37F}));
+            assert(pack.lon_GET() == -998675436);
+            assert(pack.capture_result_GET() == (byte) - 118);
+            assert(pack.file_url_LEN(ph) == 136);
+            assert(pack.file_url_TRY(ph).equals("dsiKYgynwuGzxhfcboxtgBjpXhxinvoMhuqpunrrmLelcfsWczplrTddVubxxyhsgrmLgdCrqjosaNvyeaggtIsobsTuihepxaldshadjJaghtpVfwnwiejoYmutjgUsvrcjkjhd"));
         });
         GroundControl.CAMERA_IMAGE_CAPTURED p263 = CommunicationChannel.new_CAMERA_IMAGE_CAPTURED();
         PH.setPack(p263);
-        p263.time_boot_ms_SET(4203155072L) ;
-        p263.relative_alt_SET(45364997) ;
-        p263.file_url_SET("FfoywvwrgzopllwYymjoEpodlqTgdyfhojEjpwmxkxcdoxpekxjedqpjVuvvjeyexcSLgH", PH) ;
-        p263.capture_result_SET((byte)79) ;
-        p263.lon_SET(-1201076794) ;
-        p263.image_index_SET(-744001711) ;
-        p263.q_SET(new float[] {-9.4381715E36F, -1.0384191E38F, 3.3125037E38F, -2.5774892E38F}, 0) ;
-        p263.time_utc_SET(5260835004924928840L) ;
-        p263.camera_id_SET((char)64) ;
-        p263.lat_SET(756171875) ;
-        p263.alt_SET(-733990589) ;
+        p263.lat_SET(224186329) ;
+        p263.relative_alt_SET(-1757894592) ;
+        p263.camera_id_SET((char)43) ;
+        p263.capture_result_SET((byte) - 118) ;
+        p263.file_url_SET("dsiKYgynwuGzxhfcboxtgBjpXhxinvoMhuqpunrrmLelcfsWczplrTddVubxxyhsgrmLgdCrqjosaNvyeaggtIsobsTuihepxaldshadjJaghtpVfwnwiejoYmutjgUsvrcjkjhd", PH) ;
+        p263.q_SET(new float[] {-7.4877647E37F, -3.131819E37F, -2.5506043E38F, -9.690099E37F}, 0) ;
+        p263.lon_SET(-998675436) ;
+        p263.time_utc_SET(75469379699597778L) ;
+        p263.image_index_SET(514715552) ;
+        p263.alt_SET(1328504517) ;
+        p263.time_boot_ms_SET(2530216798L) ;
         CommunicationChannel.instance.send(p263);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_FLIGHT_INFORMATION.add((src, ph, pack) ->
         {
-            assert(pack.time_boot_ms_GET() == 3299789862L);
-            assert(pack.flight_uuid_GET() == 2481707320678178058L);
-            assert(pack.takeoff_time_utc_GET() == 8303269922391076229L);
-            assert(pack.arming_time_utc_GET() == 8641399659127468536L);
+            assert(pack.takeoff_time_utc_GET() == 2492920871615414772L);
+            assert(pack.time_boot_ms_GET() == 449531047L);
+            assert(pack.flight_uuid_GET() == 2910015563800469724L);
+            assert(pack.arming_time_utc_GET() == 2901805565172070219L);
         });
         GroundControl.FLIGHT_INFORMATION p264 = CommunicationChannel.new_FLIGHT_INFORMATION();
         PH.setPack(p264);
-        p264.takeoff_time_utc_SET(8303269922391076229L) ;
-        p264.arming_time_utc_SET(8641399659127468536L) ;
-        p264.time_boot_ms_SET(3299789862L) ;
-        p264.flight_uuid_SET(2481707320678178058L) ;
+        p264.arming_time_utc_SET(2901805565172070219L) ;
+        p264.flight_uuid_SET(2910015563800469724L) ;
+        p264.takeoff_time_utc_SET(2492920871615414772L) ;
+        p264.time_boot_ms_SET(449531047L) ;
         CommunicationChannel.instance.send(p264);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_MOUNT_ORIENTATION.add((src, ph, pack) ->
         {
-            assert(pack.roll_GET() == -2.4321193E38F);
-            assert(pack.yaw_GET() == 4.933055E36F);
-            assert(pack.pitch_GET() == -6.5014275E37F);
-            assert(pack.time_boot_ms_GET() == 1475856970L);
+            assert(pack.pitch_GET() == 1.8941848E38F);
+            assert(pack.time_boot_ms_GET() == 1336838921L);
+            assert(pack.yaw_GET() == -1.5081856E38F);
+            assert(pack.roll_GET() == 6.7296376E37F);
         });
         GroundControl.MOUNT_ORIENTATION p265 = CommunicationChannel.new_MOUNT_ORIENTATION();
         PH.setPack(p265);
-        p265.roll_SET(-2.4321193E38F) ;
-        p265.yaw_SET(4.933055E36F) ;
-        p265.pitch_SET(-6.5014275E37F) ;
-        p265.time_boot_ms_SET(1475856970L) ;
+        p265.roll_SET(6.7296376E37F) ;
+        p265.yaw_SET(-1.5081856E38F) ;
+        p265.pitch_SET(1.8941848E38F) ;
+        p265.time_boot_ms_SET(1336838921L) ;
         CommunicationChannel.instance.send(p265);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_LOGGING_DATA.add((src, ph, pack) ->
         {
-            assert(pack.target_component_GET() == (char)205);
-            assert(pack.length_GET() == (char)241);
-            assert(pack.sequence_GET() == (char)2931);
-            assert(pack.first_message_offset_GET() == (char)167);
-            assert(pack.target_system_GET() == (char)41);
-            assert(Arrays.equals(pack.data__GET(),  new char[] {(char)3, (char)248, (char)233, (char)27, (char)236, (char)53, (char)83, (char)19, (char)190, (char)235, (char)163, (char)46, (char)198, (char)141, (char)157, (char)199, (char)181, (char)120, (char)58, (char)47, (char)209, (char)61, (char)36, (char)21, (char)255, (char)86, (char)59, (char)119, (char)9, (char)114, (char)16, (char)67, (char)97, (char)169, (char)24, (char)183, (char)150, (char)96, (char)4, (char)54, (char)168, (char)142, (char)3, (char)226, (char)31, (char)186, (char)37, (char)245, (char)118, (char)201, (char)120, (char)209, (char)155, (char)97, (char)104, (char)47, (char)55, (char)91, (char)49, (char)100, (char)87, (char)107, (char)53, (char)16, (char)252, (char)27, (char)51, (char)144, (char)164, (char)103, (char)146, (char)149, (char)168, (char)114, (char)251, (char)87, (char)2, (char)130, (char)76, (char)162, (char)44, (char)11, (char)24, (char)118, (char)148, (char)83, (char)181, (char)90, (char)12, (char)79, (char)80, (char)113, (char)157, (char)78, (char)120, (char)173, (char)126, (char)236, (char)171, (char)248, (char)46, (char)46, (char)192, (char)131, (char)42, (char)57, (char)17, (char)47, (char)176, (char)93, (char)238, (char)18, (char)26, (char)228, (char)7, (char)73, (char)76, (char)166, (char)5, (char)112, (char)122, (char)108, (char)103, (char)126, (char)133, (char)29, (char)7, (char)136, (char)179, (char)140, (char)217, (char)160, (char)59, (char)214, (char)101, (char)55, (char)8, (char)87, (char)78, (char)14, (char)96, (char)61, (char)157, (char)194, (char)61, (char)128, (char)229, (char)0, (char)158, (char)35, (char)86, (char)112, (char)103, (char)82, (char)38, (char)56, (char)19, (char)179, (char)128, (char)109, (char)174, (char)238, (char)18, (char)211, (char)70, (char)32, (char)161, (char)167, (char)166, (char)234, (char)150, (char)193, (char)239, (char)247, (char)130, (char)133, (char)197, (char)80, (char)241, (char)110, (char)136, (char)75, (char)27, (char)18, (char)126, (char)212, (char)54, (char)147, (char)80, (char)166, (char)81, (char)47, (char)154, (char)147, (char)99, (char)81, (char)254, (char)198, (char)160, (char)69, (char)216, (char)7, (char)53, (char)99, (char)169, (char)173, (char)7, (char)141, (char)222, (char)115, (char)225, (char)164, (char)114, (char)139, (char)134, (char)56, (char)102, (char)57, (char)254, (char)253, (char)171, (char)203, (char)60, (char)253, (char)240, (char)23, (char)27, (char)222, (char)248, (char)126, (char)131, (char)227, (char)146, (char)37, (char)43, (char)200, (char)133, (char)68, (char)172, (char)177, (char)231, (char)74, (char)119, (char)156, (char)13, (char)170, (char)221, (char)34, (char)97}));
+            assert(pack.first_message_offset_GET() == (char)13);
+            assert(Arrays.equals(pack.data__GET(),  new char[] {(char)217, (char)149, (char)66, (char)225, (char)59, (char)198, (char)255, (char)135, (char)76, (char)91, (char)207, (char)244, (char)54, (char)198, (char)153, (char)86, (char)136, (char)47, (char)162, (char)235, (char)133, (char)84, (char)236, (char)99, (char)221, (char)202, (char)155, (char)245, (char)232, (char)86, (char)57, (char)75, (char)229, (char)123, (char)157, (char)77, (char)84, (char)250, (char)240, (char)254, (char)54, (char)201, (char)67, (char)87, (char)97, (char)103, (char)129, (char)74, (char)128, (char)227, (char)238, (char)121, (char)177, (char)175, (char)79, (char)36, (char)98, (char)220, (char)21, (char)87, (char)186, (char)124, (char)65, (char)102, (char)103, (char)146, (char)124, (char)156, (char)14, (char)126, (char)220, (char)63, (char)183, (char)20, (char)233, (char)94, (char)176, (char)74, (char)69, (char)106, (char)169, (char)23, (char)87, (char)189, (char)125, (char)26, (char)126, (char)31, (char)192, (char)74, (char)118, (char)211, (char)188, (char)190, (char)3, (char)54, (char)224, (char)33, (char)204, (char)195, (char)35, (char)42, (char)86, (char)202, (char)213, (char)184, (char)86, (char)251, (char)150, (char)3, (char)47, (char)175, (char)10, (char)72, (char)90, (char)137, (char)113, (char)97, (char)47, (char)92, (char)35, (char)126, (char)153, (char)190, (char)93, (char)40, (char)255, (char)230, (char)69, (char)230, (char)119, (char)23, (char)96, (char)147, (char)143, (char)110, (char)211, (char)135, (char)109, (char)105, (char)95, (char)53, (char)136, (char)115, (char)6, (char)230, (char)68, (char)14, (char)240, (char)233, (char)162, (char)129, (char)125, (char)135, (char)58, (char)163, (char)122, (char)46, (char)87, (char)144, (char)38, (char)232, (char)250, (char)62, (char)124, (char)254, (char)16, (char)170, (char)208, (char)149, (char)33, (char)113, (char)162, (char)251, (char)142, (char)162, (char)51, (char)123, (char)146, (char)139, (char)135, (char)182, (char)218, (char)58, (char)164, (char)110, (char)227, (char)144, (char)146, (char)43, (char)213, (char)237, (char)97, (char)142, (char)1, (char)146, (char)12, (char)114, (char)233, (char)198, (char)38, (char)245, (char)53, (char)99, (char)5, (char)156, (char)208, (char)155, (char)217, (char)13, (char)0, (char)4, (char)143, (char)5, (char)193, (char)122, (char)54, (char)115, (char)68, (char)7, (char)254, (char)159, (char)239, (char)21, (char)186, (char)37, (char)102, (char)102, (char)2, (char)214, (char)66, (char)231, (char)199, (char)231, (char)68, (char)87, (char)138, (char)32, (char)144, (char)241, (char)59, (char)148, (char)39, (char)109, (char)212, (char)198, (char)199, (char)38, (char)151}));
+            assert(pack.target_component_GET() == (char)197);
+            assert(pack.length_GET() == (char)174);
+            assert(pack.sequence_GET() == (char)58382);
+            assert(pack.target_system_GET() == (char)65);
         });
         GroundControl.LOGGING_DATA p266 = CommunicationChannel.new_LOGGING_DATA();
         PH.setPack(p266);
-        p266.first_message_offset_SET((char)167) ;
-        p266.length_SET((char)241) ;
-        p266.target_system_SET((char)41) ;
-        p266.data__SET(new char[] {(char)3, (char)248, (char)233, (char)27, (char)236, (char)53, (char)83, (char)19, (char)190, (char)235, (char)163, (char)46, (char)198, (char)141, (char)157, (char)199, (char)181, (char)120, (char)58, (char)47, (char)209, (char)61, (char)36, (char)21, (char)255, (char)86, (char)59, (char)119, (char)9, (char)114, (char)16, (char)67, (char)97, (char)169, (char)24, (char)183, (char)150, (char)96, (char)4, (char)54, (char)168, (char)142, (char)3, (char)226, (char)31, (char)186, (char)37, (char)245, (char)118, (char)201, (char)120, (char)209, (char)155, (char)97, (char)104, (char)47, (char)55, (char)91, (char)49, (char)100, (char)87, (char)107, (char)53, (char)16, (char)252, (char)27, (char)51, (char)144, (char)164, (char)103, (char)146, (char)149, (char)168, (char)114, (char)251, (char)87, (char)2, (char)130, (char)76, (char)162, (char)44, (char)11, (char)24, (char)118, (char)148, (char)83, (char)181, (char)90, (char)12, (char)79, (char)80, (char)113, (char)157, (char)78, (char)120, (char)173, (char)126, (char)236, (char)171, (char)248, (char)46, (char)46, (char)192, (char)131, (char)42, (char)57, (char)17, (char)47, (char)176, (char)93, (char)238, (char)18, (char)26, (char)228, (char)7, (char)73, (char)76, (char)166, (char)5, (char)112, (char)122, (char)108, (char)103, (char)126, (char)133, (char)29, (char)7, (char)136, (char)179, (char)140, (char)217, (char)160, (char)59, (char)214, (char)101, (char)55, (char)8, (char)87, (char)78, (char)14, (char)96, (char)61, (char)157, (char)194, (char)61, (char)128, (char)229, (char)0, (char)158, (char)35, (char)86, (char)112, (char)103, (char)82, (char)38, (char)56, (char)19, (char)179, (char)128, (char)109, (char)174, (char)238, (char)18, (char)211, (char)70, (char)32, (char)161, (char)167, (char)166, (char)234, (char)150, (char)193, (char)239, (char)247, (char)130, (char)133, (char)197, (char)80, (char)241, (char)110, (char)136, (char)75, (char)27, (char)18, (char)126, (char)212, (char)54, (char)147, (char)80, (char)166, (char)81, (char)47, (char)154, (char)147, (char)99, (char)81, (char)254, (char)198, (char)160, (char)69, (char)216, (char)7, (char)53, (char)99, (char)169, (char)173, (char)7, (char)141, (char)222, (char)115, (char)225, (char)164, (char)114, (char)139, (char)134, (char)56, (char)102, (char)57, (char)254, (char)253, (char)171, (char)203, (char)60, (char)253, (char)240, (char)23, (char)27, (char)222, (char)248, (char)126, (char)131, (char)227, (char)146, (char)37, (char)43, (char)200, (char)133, (char)68, (char)172, (char)177, (char)231, (char)74, (char)119, (char)156, (char)13, (char)170, (char)221, (char)34, (char)97}, 0) ;
-        p266.target_component_SET((char)205) ;
-        p266.sequence_SET((char)2931) ;
+        p266.target_component_SET((char)197) ;
+        p266.length_SET((char)174) ;
+        p266.first_message_offset_SET((char)13) ;
+        p266.data__SET(new char[] {(char)217, (char)149, (char)66, (char)225, (char)59, (char)198, (char)255, (char)135, (char)76, (char)91, (char)207, (char)244, (char)54, (char)198, (char)153, (char)86, (char)136, (char)47, (char)162, (char)235, (char)133, (char)84, (char)236, (char)99, (char)221, (char)202, (char)155, (char)245, (char)232, (char)86, (char)57, (char)75, (char)229, (char)123, (char)157, (char)77, (char)84, (char)250, (char)240, (char)254, (char)54, (char)201, (char)67, (char)87, (char)97, (char)103, (char)129, (char)74, (char)128, (char)227, (char)238, (char)121, (char)177, (char)175, (char)79, (char)36, (char)98, (char)220, (char)21, (char)87, (char)186, (char)124, (char)65, (char)102, (char)103, (char)146, (char)124, (char)156, (char)14, (char)126, (char)220, (char)63, (char)183, (char)20, (char)233, (char)94, (char)176, (char)74, (char)69, (char)106, (char)169, (char)23, (char)87, (char)189, (char)125, (char)26, (char)126, (char)31, (char)192, (char)74, (char)118, (char)211, (char)188, (char)190, (char)3, (char)54, (char)224, (char)33, (char)204, (char)195, (char)35, (char)42, (char)86, (char)202, (char)213, (char)184, (char)86, (char)251, (char)150, (char)3, (char)47, (char)175, (char)10, (char)72, (char)90, (char)137, (char)113, (char)97, (char)47, (char)92, (char)35, (char)126, (char)153, (char)190, (char)93, (char)40, (char)255, (char)230, (char)69, (char)230, (char)119, (char)23, (char)96, (char)147, (char)143, (char)110, (char)211, (char)135, (char)109, (char)105, (char)95, (char)53, (char)136, (char)115, (char)6, (char)230, (char)68, (char)14, (char)240, (char)233, (char)162, (char)129, (char)125, (char)135, (char)58, (char)163, (char)122, (char)46, (char)87, (char)144, (char)38, (char)232, (char)250, (char)62, (char)124, (char)254, (char)16, (char)170, (char)208, (char)149, (char)33, (char)113, (char)162, (char)251, (char)142, (char)162, (char)51, (char)123, (char)146, (char)139, (char)135, (char)182, (char)218, (char)58, (char)164, (char)110, (char)227, (char)144, (char)146, (char)43, (char)213, (char)237, (char)97, (char)142, (char)1, (char)146, (char)12, (char)114, (char)233, (char)198, (char)38, (char)245, (char)53, (char)99, (char)5, (char)156, (char)208, (char)155, (char)217, (char)13, (char)0, (char)4, (char)143, (char)5, (char)193, (char)122, (char)54, (char)115, (char)68, (char)7, (char)254, (char)159, (char)239, (char)21, (char)186, (char)37, (char)102, (char)102, (char)2, (char)214, (char)66, (char)231, (char)199, (char)231, (char)68, (char)87, (char)138, (char)32, (char)144, (char)241, (char)59, (char)148, (char)39, (char)109, (char)212, (char)198, (char)199, (char)38, (char)151}, 0) ;
+        p266.sequence_SET((char)58382) ;
+        p266.target_system_SET((char)65) ;
         CommunicationChannel.instance.send(p266);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_LOGGING_DATA_ACKED.add((src, ph, pack) ->
         {
-            assert(pack.target_component_GET() == (char)138);
-            assert(pack.sequence_GET() == (char)53635);
-            assert(pack.length_GET() == (char)147);
-            assert(pack.first_message_offset_GET() == (char)225);
-            assert(pack.target_system_GET() == (char)29);
-            assert(Arrays.equals(pack.data__GET(),  new char[] {(char)167, (char)214, (char)54, (char)240, (char)167, (char)73, (char)146, (char)1, (char)92, (char)90, (char)135, (char)180, (char)123, (char)123, (char)136, (char)0, (char)58, (char)87, (char)118, (char)204, (char)91, (char)218, (char)109, (char)112, (char)137, (char)82, (char)4, (char)223, (char)172, (char)23, (char)151, (char)164, (char)153, (char)194, (char)148, (char)23, (char)203, (char)14, (char)81, (char)71, (char)48, (char)153, (char)196, (char)224, (char)111, (char)100, (char)233, (char)132, (char)230, (char)225, (char)37, (char)240, (char)93, (char)153, (char)31, (char)217, (char)42, (char)23, (char)239, (char)55, (char)221, (char)207, (char)194, (char)84, (char)183, (char)109, (char)48, (char)245, (char)159, (char)207, (char)130, (char)75, (char)97, (char)166, (char)138, (char)249, (char)17, (char)18, (char)195, (char)238, (char)239, (char)104, (char)103, (char)250, (char)220, (char)184, (char)55, (char)169, (char)115, (char)11, (char)2, (char)145, (char)131, (char)112, (char)73, (char)90, (char)223, (char)157, (char)148, (char)17, (char)31, (char)190, (char)25, (char)146, (char)98, (char)154, (char)59, (char)100, (char)91, (char)40, (char)50, (char)233, (char)109, (char)24, (char)185, (char)139, (char)234, (char)20, (char)179, (char)221, (char)197, (char)101, (char)139, (char)113, (char)78, (char)103, (char)19, (char)143, (char)237, (char)248, (char)246, (char)219, (char)74, (char)7, (char)100, (char)236, (char)196, (char)248, (char)90, (char)2, (char)9, (char)61, (char)11, (char)103, (char)6, (char)146, (char)121, (char)228, (char)178, (char)55, (char)66, (char)181, (char)130, (char)230, (char)18, (char)218, (char)26, (char)158, (char)52, (char)137, (char)62, (char)64, (char)48, (char)247, (char)222, (char)219, (char)115, (char)219, (char)69, (char)196, (char)31, (char)120, (char)112, (char)210, (char)136, (char)249, (char)223, (char)124, (char)78, (char)252, (char)82, (char)249, (char)252, (char)110, (char)120, (char)117, (char)99, (char)5, (char)77, (char)172, (char)196, (char)122, (char)121, (char)231, (char)222, (char)127, (char)3, (char)79, (char)124, (char)135, (char)154, (char)224, (char)135, (char)196, (char)182, (char)173, (char)161, (char)55, (char)182, (char)78, (char)113, (char)10, (char)179, (char)14, (char)122, (char)63, (char)3, (char)78, (char)35, (char)161, (char)119, (char)1, (char)83, (char)98, (char)154, (char)193, (char)64, (char)196, (char)234, (char)139, (char)116, (char)30, (char)63, (char)128, (char)64, (char)180, (char)233, (char)123, (char)40, (char)23, (char)61, (char)51, (char)113, (char)20, (char)245, (char)235, (char)5, (char)157, (char)102}));
+            assert(pack.length_GET() == (char)243);
+            assert(pack.target_component_GET() == (char)167);
+            assert(pack.sequence_GET() == (char)41611);
+            assert(Arrays.equals(pack.data__GET(),  new char[] {(char)52, (char)169, (char)178, (char)37, (char)218, (char)143, (char)213, (char)219, (char)99, (char)182, (char)141, (char)206, (char)70, (char)252, (char)157, (char)71, (char)29, (char)46, (char)162, (char)151, (char)54, (char)85, (char)103, (char)89, (char)144, (char)134, (char)88, (char)181, (char)179, (char)1, (char)74, (char)169, (char)149, (char)89, (char)197, (char)212, (char)82, (char)61, (char)219, (char)225, (char)38, (char)116, (char)107, (char)193, (char)90, (char)217, (char)12, (char)114, (char)138, (char)44, (char)14, (char)26, (char)93, (char)56, (char)229, (char)11, (char)93, (char)30, (char)183, (char)10, (char)68, (char)107, (char)66, (char)53, (char)87, (char)222, (char)252, (char)208, (char)205, (char)250, (char)153, (char)16, (char)133, (char)192, (char)255, (char)147, (char)222, (char)87, (char)206, (char)85, (char)74, (char)193, (char)186, (char)62, (char)40, (char)32, (char)225, (char)2, (char)199, (char)165, (char)26, (char)84, (char)165, (char)233, (char)82, (char)24, (char)252, (char)86, (char)49, (char)48, (char)16, (char)89, (char)112, (char)89, (char)186, (char)72, (char)16, (char)243, (char)133, (char)128, (char)1, (char)10, (char)14, (char)239, (char)38, (char)147, (char)254, (char)118, (char)11, (char)243, (char)201, (char)245, (char)1, (char)51, (char)72, (char)196, (char)178, (char)90, (char)49, (char)160, (char)219, (char)38, (char)33, (char)134, (char)39, (char)210, (char)151, (char)242, (char)123, (char)16, (char)90, (char)141, (char)36, (char)18, (char)179, (char)26, (char)33, (char)188, (char)48, (char)13, (char)244, (char)217, (char)169, (char)249, (char)48, (char)147, (char)253, (char)238, (char)82, (char)175, (char)220, (char)11, (char)76, (char)101, (char)47, (char)0, (char)41, (char)220, (char)7, (char)168, (char)223, (char)159, (char)152, (char)0, (char)25, (char)150, (char)21, (char)160, (char)167, (char)20, (char)236, (char)143, (char)85, (char)82, (char)166, (char)44, (char)143, (char)215, (char)235, (char)194, (char)8, (char)208, (char)157, (char)118, (char)111, (char)10, (char)179, (char)85, (char)114, (char)13, (char)50, (char)177, (char)81, (char)7, (char)103, (char)149, (char)254, (char)210, (char)168, (char)41, (char)114, (char)128, (char)170, (char)227, (char)92, (char)106, (char)223, (char)183, (char)3, (char)204, (char)110, (char)233, (char)97, (char)104, (char)49, (char)90, (char)244, (char)163, (char)205, (char)3, (char)236, (char)39, (char)184, (char)107, (char)59, (char)219, (char)45, (char)153, (char)182, (char)237, (char)211, (char)181, (char)122, (char)47, (char)67, (char)141, (char)106, (char)204, (char)227}));
+            assert(pack.first_message_offset_GET() == (char)94);
+            assert(pack.target_system_GET() == (char)64);
         });
         GroundControl.LOGGING_DATA_ACKED p267 = CommunicationChannel.new_LOGGING_DATA_ACKED();
         PH.setPack(p267);
-        p267.sequence_SET((char)53635) ;
-        p267.first_message_offset_SET((char)225) ;
-        p267.data__SET(new char[] {(char)167, (char)214, (char)54, (char)240, (char)167, (char)73, (char)146, (char)1, (char)92, (char)90, (char)135, (char)180, (char)123, (char)123, (char)136, (char)0, (char)58, (char)87, (char)118, (char)204, (char)91, (char)218, (char)109, (char)112, (char)137, (char)82, (char)4, (char)223, (char)172, (char)23, (char)151, (char)164, (char)153, (char)194, (char)148, (char)23, (char)203, (char)14, (char)81, (char)71, (char)48, (char)153, (char)196, (char)224, (char)111, (char)100, (char)233, (char)132, (char)230, (char)225, (char)37, (char)240, (char)93, (char)153, (char)31, (char)217, (char)42, (char)23, (char)239, (char)55, (char)221, (char)207, (char)194, (char)84, (char)183, (char)109, (char)48, (char)245, (char)159, (char)207, (char)130, (char)75, (char)97, (char)166, (char)138, (char)249, (char)17, (char)18, (char)195, (char)238, (char)239, (char)104, (char)103, (char)250, (char)220, (char)184, (char)55, (char)169, (char)115, (char)11, (char)2, (char)145, (char)131, (char)112, (char)73, (char)90, (char)223, (char)157, (char)148, (char)17, (char)31, (char)190, (char)25, (char)146, (char)98, (char)154, (char)59, (char)100, (char)91, (char)40, (char)50, (char)233, (char)109, (char)24, (char)185, (char)139, (char)234, (char)20, (char)179, (char)221, (char)197, (char)101, (char)139, (char)113, (char)78, (char)103, (char)19, (char)143, (char)237, (char)248, (char)246, (char)219, (char)74, (char)7, (char)100, (char)236, (char)196, (char)248, (char)90, (char)2, (char)9, (char)61, (char)11, (char)103, (char)6, (char)146, (char)121, (char)228, (char)178, (char)55, (char)66, (char)181, (char)130, (char)230, (char)18, (char)218, (char)26, (char)158, (char)52, (char)137, (char)62, (char)64, (char)48, (char)247, (char)222, (char)219, (char)115, (char)219, (char)69, (char)196, (char)31, (char)120, (char)112, (char)210, (char)136, (char)249, (char)223, (char)124, (char)78, (char)252, (char)82, (char)249, (char)252, (char)110, (char)120, (char)117, (char)99, (char)5, (char)77, (char)172, (char)196, (char)122, (char)121, (char)231, (char)222, (char)127, (char)3, (char)79, (char)124, (char)135, (char)154, (char)224, (char)135, (char)196, (char)182, (char)173, (char)161, (char)55, (char)182, (char)78, (char)113, (char)10, (char)179, (char)14, (char)122, (char)63, (char)3, (char)78, (char)35, (char)161, (char)119, (char)1, (char)83, (char)98, (char)154, (char)193, (char)64, (char)196, (char)234, (char)139, (char)116, (char)30, (char)63, (char)128, (char)64, (char)180, (char)233, (char)123, (char)40, (char)23, (char)61, (char)51, (char)113, (char)20, (char)245, (char)235, (char)5, (char)157, (char)102}, 0) ;
-        p267.target_system_SET((char)29) ;
-        p267.length_SET((char)147) ;
-        p267.target_component_SET((char)138) ;
+        p267.sequence_SET((char)41611) ;
+        p267.data__SET(new char[] {(char)52, (char)169, (char)178, (char)37, (char)218, (char)143, (char)213, (char)219, (char)99, (char)182, (char)141, (char)206, (char)70, (char)252, (char)157, (char)71, (char)29, (char)46, (char)162, (char)151, (char)54, (char)85, (char)103, (char)89, (char)144, (char)134, (char)88, (char)181, (char)179, (char)1, (char)74, (char)169, (char)149, (char)89, (char)197, (char)212, (char)82, (char)61, (char)219, (char)225, (char)38, (char)116, (char)107, (char)193, (char)90, (char)217, (char)12, (char)114, (char)138, (char)44, (char)14, (char)26, (char)93, (char)56, (char)229, (char)11, (char)93, (char)30, (char)183, (char)10, (char)68, (char)107, (char)66, (char)53, (char)87, (char)222, (char)252, (char)208, (char)205, (char)250, (char)153, (char)16, (char)133, (char)192, (char)255, (char)147, (char)222, (char)87, (char)206, (char)85, (char)74, (char)193, (char)186, (char)62, (char)40, (char)32, (char)225, (char)2, (char)199, (char)165, (char)26, (char)84, (char)165, (char)233, (char)82, (char)24, (char)252, (char)86, (char)49, (char)48, (char)16, (char)89, (char)112, (char)89, (char)186, (char)72, (char)16, (char)243, (char)133, (char)128, (char)1, (char)10, (char)14, (char)239, (char)38, (char)147, (char)254, (char)118, (char)11, (char)243, (char)201, (char)245, (char)1, (char)51, (char)72, (char)196, (char)178, (char)90, (char)49, (char)160, (char)219, (char)38, (char)33, (char)134, (char)39, (char)210, (char)151, (char)242, (char)123, (char)16, (char)90, (char)141, (char)36, (char)18, (char)179, (char)26, (char)33, (char)188, (char)48, (char)13, (char)244, (char)217, (char)169, (char)249, (char)48, (char)147, (char)253, (char)238, (char)82, (char)175, (char)220, (char)11, (char)76, (char)101, (char)47, (char)0, (char)41, (char)220, (char)7, (char)168, (char)223, (char)159, (char)152, (char)0, (char)25, (char)150, (char)21, (char)160, (char)167, (char)20, (char)236, (char)143, (char)85, (char)82, (char)166, (char)44, (char)143, (char)215, (char)235, (char)194, (char)8, (char)208, (char)157, (char)118, (char)111, (char)10, (char)179, (char)85, (char)114, (char)13, (char)50, (char)177, (char)81, (char)7, (char)103, (char)149, (char)254, (char)210, (char)168, (char)41, (char)114, (char)128, (char)170, (char)227, (char)92, (char)106, (char)223, (char)183, (char)3, (char)204, (char)110, (char)233, (char)97, (char)104, (char)49, (char)90, (char)244, (char)163, (char)205, (char)3, (char)236, (char)39, (char)184, (char)107, (char)59, (char)219, (char)45, (char)153, (char)182, (char)237, (char)211, (char)181, (char)122, (char)47, (char)67, (char)141, (char)106, (char)204, (char)227}, 0) ;
+        p267.target_system_SET((char)64) ;
+        p267.first_message_offset_SET((char)94) ;
+        p267.length_SET((char)243) ;
+        p267.target_component_SET((char)167) ;
         CommunicationChannel.instance.send(p267);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_LOGGING_ACK.add((src, ph, pack) ->
         {
-            assert(pack.target_system_GET() == (char)51);
-            assert(pack.sequence_GET() == (char)60653);
-            assert(pack.target_component_GET() == (char)130);
+            assert(pack.target_component_GET() == (char)88);
+            assert(pack.target_system_GET() == (char)106);
+            assert(pack.sequence_GET() == (char)49194);
         });
         GroundControl.LOGGING_ACK p268 = CommunicationChannel.new_LOGGING_ACK();
         PH.setPack(p268);
-        p268.target_component_SET((char)130) ;
-        p268.sequence_SET((char)60653) ;
-        p268.target_system_SET((char)51) ;
+        p268.target_component_SET((char)88) ;
+        p268.sequence_SET((char)49194) ;
+        p268.target_system_SET((char)106) ;
         CommunicationChannel.instance.send(p268);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_VIDEO_STREAM_INFORMATION.add((src, ph, pack) ->
         {
-            assert(pack.framerate_GET() == 1.6501327E37F);
-            assert(pack.camera_id_GET() == (char)243);
-            assert(pack.uri_LEN(ph) == 216);
-            assert(pack.uri_TRY(ph).equals("yxuimtbJFyyzrjcsxstcnjrturqhncsHmdnnffuzPzIgmbjcshcJwmqmzhnyphvohgdabjtnsirYjyetazuNofevqzffzJqtdtsymznpzmtczzxrsoyqztptlezqztuGctgaeyyfjGggmObflegzleHmxblwneaeprWadvatlusqRZlescgiamgJfmoddwkkZqwjsxwjokwXlboHwwnqudsL"));
-            assert(pack.bitrate_GET() == 3445226255L);
-            assert(pack.resolution_h_GET() == (char)20014);
-            assert(pack.rotation_GET() == (char)53165);
-            assert(pack.resolution_v_GET() == (char)35094);
-            assert(pack.status_GET() == (char)24);
+            assert(pack.uri_LEN(ph) == 132);
+            assert(pack.uri_TRY(ph).equals("mmoqjomskqqbisjqlvotoQmpsavorgvxFdxmviTpdbipgywGqyvtuylfivkwbivhGrvfhgxVwramxgvoitlsqhkjwsmwqkqwxtqvvtpEchwfizqrcpmndqtchkkUpqegqLfY"));
+            assert(pack.resolution_h_GET() == (char)16969);
+            assert(pack.rotation_GET() == (char)2165);
+            assert(pack.status_GET() == (char)23);
+            assert(pack.bitrate_GET() == 3217480157L);
+            assert(pack.resolution_v_GET() == (char)34319);
+            assert(pack.camera_id_GET() == (char)254);
+            assert(pack.framerate_GET() == -2.5560057E37F);
         });
         GroundControl.VIDEO_STREAM_INFORMATION p269 = CommunicationChannel.new_VIDEO_STREAM_INFORMATION();
         PH.setPack(p269);
-        p269.camera_id_SET((char)243) ;
-        p269.status_SET((char)24) ;
-        p269.rotation_SET((char)53165) ;
-        p269.uri_SET("yxuimtbJFyyzrjcsxstcnjrturqhncsHmdnnffuzPzIgmbjcshcJwmqmzhnyphvohgdabjtnsirYjyetazuNofevqzffzJqtdtsymznpzmtczzxrsoyqztptlezqztuGctgaeyyfjGggmObflegzleHmxblwneaeprWadvatlusqRZlescgiamgJfmoddwkkZqwjsxwjokwXlboHwwnqudsL", PH) ;
-        p269.resolution_v_SET((char)35094) ;
-        p269.bitrate_SET(3445226255L) ;
-        p269.framerate_SET(1.6501327E37F) ;
-        p269.resolution_h_SET((char)20014) ;
+        p269.camera_id_SET((char)254) ;
+        p269.bitrate_SET(3217480157L) ;
+        p269.resolution_v_SET((char)34319) ;
+        p269.framerate_SET(-2.5560057E37F) ;
+        p269.resolution_h_SET((char)16969) ;
+        p269.status_SET((char)23) ;
+        p269.uri_SET("mmoqjomskqqbisjqlvotoQmpsavorgvxFdxmviTpdbipgywGqyvtuylfivkwbivhGrvfhgxVwramxgvoitlsqhkjwsmwqkqwxtqvvtpEchwfizqrcpmndqtchkkUpqegqLfY", PH) ;
+        p269.rotation_SET((char)2165) ;
         CommunicationChannel.instance.send(p269);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_SET_VIDEO_STREAM_SETTINGS.add((src, ph, pack) ->
         {
-            assert(pack.bitrate_GET() == 3938781016L);
-            assert(pack.camera_id_GET() == (char)230);
-            assert(pack.framerate_GET() == -2.8895345E38F);
-            assert(pack.uri_LEN(ph) == 177);
-            assert(pack.uri_TRY(ph).equals("dwLmaootitiBgyUgQokzwrepIbmaaloxaezuqfhiMijexoqkqrlwycpXguflzfpuwrwfarvinandbvkveghphsgusVixaqtqslbyofhclmjmpiygVmebHumnkxfvNzfhufiUizBhpjdyouakjgbetslurkpbcsviaorrtxvnuvzstagjf"));
-            assert(pack.target_component_GET() == (char)116);
-            assert(pack.resolution_h_GET() == (char)64922);
-            assert(pack.rotation_GET() == (char)33578);
-            assert(pack.target_system_GET() == (char)61);
-            assert(pack.resolution_v_GET() == (char)37535);
+            assert(pack.uri_LEN(ph) == 191);
+            assert(pack.uri_TRY(ph).equals("prcryrobalaCvbxrUqYvNxmnhsapqsmrxbmgjkotvIunogcvkgjrywewzymtqdpuqcvhovcyrwkgsnaddifycbjjrvxlbtlitsbelgGicttsnrkTuxpgwtuLjtezqhlbgnvVhmnhntjKlrsmhdkmdZnzxrwcJZtstpsxcdsybBzguKmAgatmyjsijkykgru"));
+            assert(pack.resolution_h_GET() == (char)21612);
+            assert(pack.rotation_GET() == (char)42064);
+            assert(pack.framerate_GET() == 2.5472885E38F);
+            assert(pack.bitrate_GET() == 3709447071L);
+            assert(pack.camera_id_GET() == (char)240);
+            assert(pack.target_system_GET() == (char)88);
+            assert(pack.target_component_GET() == (char)179);
+            assert(pack.resolution_v_GET() == (char)54275);
         });
         GroundControl.SET_VIDEO_STREAM_SETTINGS p270 = CommunicationChannel.new_SET_VIDEO_STREAM_SETTINGS();
         PH.setPack(p270);
-        p270.uri_SET("dwLmaootitiBgyUgQokzwrepIbmaaloxaezuqfhiMijexoqkqrlwycpXguflzfpuwrwfarvinandbvkveghphsgusVixaqtqslbyofhclmjmpiygVmebHumnkxfvNzfhufiUizBhpjdyouakjgbetslurkpbcsviaorrtxvnuvzstagjf", PH) ;
-        p270.bitrate_SET(3938781016L) ;
-        p270.target_component_SET((char)116) ;
-        p270.resolution_v_SET((char)37535) ;
-        p270.resolution_h_SET((char)64922) ;
-        p270.camera_id_SET((char)230) ;
-        p270.target_system_SET((char)61) ;
-        p270.framerate_SET(-2.8895345E38F) ;
-        p270.rotation_SET((char)33578) ;
+        p270.camera_id_SET((char)240) ;
+        p270.target_component_SET((char)179) ;
+        p270.resolution_v_SET((char)54275) ;
+        p270.target_system_SET((char)88) ;
+        p270.framerate_SET(2.5472885E38F) ;
+        p270.uri_SET("prcryrobalaCvbxrUqYvNxmnhsapqsmrxbmgjkotvIunogcvkgjrywewzymtqdpuqcvhovcyrwkgsnaddifycbjjrvxlbtlitsbelgGicttsnrkTuxpgwtuLjtezqhlbgnvVhmnhntjKlrsmhdkmdZnzxrwcJZtstpsxcdsybBzguKmAgatmyjsijkykgru", PH) ;
+        p270.bitrate_SET(3709447071L) ;
+        p270.rotation_SET((char)42064) ;
+        p270.resolution_h_SET((char)21612) ;
         CommunicationChannel.instance.send(p270);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_WIFI_CONFIG_AP.add((src, ph, pack) ->
         {
-            assert(pack.password_LEN(ph) == 14);
-            assert(pack.password_TRY(ph).equals("usvflDphiKwibx"));
-            assert(pack.ssid_LEN(ph) == 20);
-            assert(pack.ssid_TRY(ph).equals("mrtcpvezmkddbzrUqwpc"));
+            assert(pack.password_LEN(ph) == 12);
+            assert(pack.password_TRY(ph).equals("desqijrkVqra"));
+            assert(pack.ssid_LEN(ph) == 17);
+            assert(pack.ssid_TRY(ph).equals("uepzidlcavdOybbnG"));
         });
         GroundControl.WIFI_CONFIG_AP p299 = CommunicationChannel.new_WIFI_CONFIG_AP();
         PH.setPack(p299);
-        p299.password_SET("usvflDphiKwibx", PH) ;
-        p299.ssid_SET("mrtcpvezmkddbzrUqwpc", PH) ;
+        p299.password_SET("desqijrkVqra", PH) ;
+        p299.ssid_SET("uepzidlcavdOybbnG", PH) ;
         CommunicationChannel.instance.send(p299);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_PROTOCOL_VERSION.add((src, ph, pack) ->
         {
-            assert(pack.max_version_GET() == (char)15978);
-            assert(pack.min_version_GET() == (char)739);
-            assert(pack.version_GET() == (char)54851);
-            assert(Arrays.equals(pack.library_version_hash_GET(),  new char[] {(char)155, (char)27, (char)176, (char)143, (char)34, (char)24, (char)40, (char)244}));
-            assert(Arrays.equals(pack.spec_version_hash_GET(),  new char[] {(char)245, (char)119, (char)17, (char)54, (char)182, (char)173, (char)12, (char)181}));
+            assert(pack.version_GET() == (char)24162);
+            assert(pack.min_version_GET() == (char)56452);
+            assert(pack.max_version_GET() == (char)54735);
+            assert(Arrays.equals(pack.spec_version_hash_GET(),  new char[] {(char)252, (char)10, (char)151, (char)25, (char)61, (char)116, (char)84, (char)49}));
+            assert(Arrays.equals(pack.library_version_hash_GET(),  new char[] {(char)186, (char)16, (char)43, (char)180, (char)117, (char)240, (char)130, (char)126}));
         });
         GroundControl.PROTOCOL_VERSION p300 = CommunicationChannel.new_PROTOCOL_VERSION();
         PH.setPack(p300);
-        p300.library_version_hash_SET(new char[] {(char)155, (char)27, (char)176, (char)143, (char)34, (char)24, (char)40, (char)244}, 0) ;
-        p300.min_version_SET((char)739) ;
-        p300.max_version_SET((char)15978) ;
-        p300.version_SET((char)54851) ;
-        p300.spec_version_hash_SET(new char[] {(char)245, (char)119, (char)17, (char)54, (char)182, (char)173, (char)12, (char)181}, 0) ;
+        p300.spec_version_hash_SET(new char[] {(char)252, (char)10, (char)151, (char)25, (char)61, (char)116, (char)84, (char)49}, 0) ;
+        p300.min_version_SET((char)56452) ;
+        p300.version_SET((char)24162) ;
+        p300.max_version_SET((char)54735) ;
+        p300.library_version_hash_SET(new char[] {(char)186, (char)16, (char)43, (char)180, (char)117, (char)240, (char)130, (char)126}, 0) ;
         CommunicationChannel.instance.send(p300);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_UAVCAN_NODE_STATUS.add((src, ph, pack) ->
         {
-            assert(pack.vendor_specific_status_code_GET() == (char)57919);
-            assert(pack.sub_mode_GET() == (char)226);
-            assert(pack.uptime_sec_GET() == 3959955482L);
-            assert(pack.mode_GET() == UAVCAN_NODE_MODE.UAVCAN_NODE_MODE_SOFTWARE_UPDATE);
             assert(pack.health_GET() == UAVCAN_NODE_HEALTH.UAVCAN_NODE_HEALTH_CRITICAL);
-            assert(pack.time_usec_GET() == 6003048116818872624L);
+            assert(pack.sub_mode_GET() == (char)191);
+            assert(pack.vendor_specific_status_code_GET() == (char)39496);
+            assert(pack.time_usec_GET() == 6509156782067534632L);
+            assert(pack.mode_GET() == UAVCAN_NODE_MODE.UAVCAN_NODE_MODE_OFFLINE);
+            assert(pack.uptime_sec_GET() == 3298209534L);
         });
         GroundControl.UAVCAN_NODE_STATUS p310 = CommunicationChannel.new_UAVCAN_NODE_STATUS();
         PH.setPack(p310);
-        p310.time_usec_SET(6003048116818872624L) ;
-        p310.vendor_specific_status_code_SET((char)57919) ;
-        p310.uptime_sec_SET(3959955482L) ;
         p310.health_SET(UAVCAN_NODE_HEALTH.UAVCAN_NODE_HEALTH_CRITICAL) ;
-        p310.mode_SET(UAVCAN_NODE_MODE.UAVCAN_NODE_MODE_SOFTWARE_UPDATE) ;
-        p310.sub_mode_SET((char)226) ;
+        p310.vendor_specific_status_code_SET((char)39496) ;
+        p310.time_usec_SET(6509156782067534632L) ;
+        p310.mode_SET(UAVCAN_NODE_MODE.UAVCAN_NODE_MODE_OFFLINE) ;
+        p310.sub_mode_SET((char)191) ;
+        p310.uptime_sec_SET(3298209534L) ;
         CommunicationChannel.instance.send(p310);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_UAVCAN_NODE_INFO.add((src, ph, pack) ->
         {
-            assert(pack.name_LEN(ph) == 9);
-            assert(pack.name_TRY(ph).equals("Ijgfyswlb"));
-            assert(Arrays.equals(pack.hw_unique_id_GET(),  new char[] {(char)237, (char)242, (char)126, (char)244, (char)82, (char)43, (char)111, (char)136, (char)116, (char)197, (char)6, (char)185, (char)161, (char)190, (char)27, (char)250}));
-            assert(pack.sw_version_minor_GET() == (char)5);
-            assert(pack.uptime_sec_GET() == 3763500241L);
-            assert(pack.sw_vcs_commit_GET() == 504611281L);
-            assert(pack.hw_version_minor_GET() == (char)77);
-            assert(pack.sw_version_major_GET() == (char)88);
-            assert(pack.time_usec_GET() == 9135517068134991573L);
-            assert(pack.hw_version_major_GET() == (char)20);
+            assert(pack.sw_vcs_commit_GET() == 1188041326L);
+            assert(pack.sw_version_minor_GET() == (char)244);
+            assert(pack.name_LEN(ph) == 47);
+            assert(pack.name_TRY(ph).equals("edvewbEeyputfAnRjofngvxuxtnjezPlqyrtjsmggbkklsH"));
+            assert(pack.time_usec_GET() == 3604807550796763896L);
+            assert(pack.hw_version_minor_GET() == (char)143);
+            assert(pack.sw_version_major_GET() == (char)128);
+            assert(pack.hw_version_major_GET() == (char)179);
+            assert(pack.uptime_sec_GET() == 3563428174L);
+            assert(Arrays.equals(pack.hw_unique_id_GET(),  new char[] {(char)79, (char)141, (char)73, (char)96, (char)184, (char)193, (char)47, (char)50, (char)157, (char)15, (char)21, (char)191, (char)74, (char)148, (char)32, (char)255}));
         });
         GroundControl.UAVCAN_NODE_INFO p311 = CommunicationChannel.new_UAVCAN_NODE_INFO();
         PH.setPack(p311);
-        p311.name_SET("Ijgfyswlb", PH) ;
-        p311.hw_version_minor_SET((char)77) ;
-        p311.uptime_sec_SET(3763500241L) ;
-        p311.hw_unique_id_SET(new char[] {(char)237, (char)242, (char)126, (char)244, (char)82, (char)43, (char)111, (char)136, (char)116, (char)197, (char)6, (char)185, (char)161, (char)190, (char)27, (char)250}, 0) ;
-        p311.sw_version_major_SET((char)88) ;
-        p311.time_usec_SET(9135517068134991573L) ;
-        p311.sw_vcs_commit_SET(504611281L) ;
-        p311.hw_version_major_SET((char)20) ;
-        p311.sw_version_minor_SET((char)5) ;
+        p311.hw_version_minor_SET((char)143) ;
+        p311.hw_version_major_SET((char)179) ;
+        p311.sw_version_major_SET((char)128) ;
+        p311.time_usec_SET(3604807550796763896L) ;
+        p311.uptime_sec_SET(3563428174L) ;
+        p311.sw_version_minor_SET((char)244) ;
+        p311.hw_unique_id_SET(new char[] {(char)79, (char)141, (char)73, (char)96, (char)184, (char)193, (char)47, (char)50, (char)157, (char)15, (char)21, (char)191, (char)74, (char)148, (char)32, (char)255}, 0) ;
+        p311.name_SET("edvewbEeyputfAnRjofngvxuxtnjezPlqyrtjsmggbkklsH", PH) ;
+        p311.sw_vcs_commit_SET(1188041326L) ;
         CommunicationChannel.instance.send(p311);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_PARAM_EXT_REQUEST_READ.add((src, ph, pack) ->
         {
-            assert(pack.param_id_LEN(ph) == 13);
-            assert(pack.param_id_TRY(ph).equals("pjsgdoAoufxbm"));
-            assert(pack.target_component_GET() == (char)122);
-            assert(pack.param_index_GET() == (short)27556);
-            assert(pack.target_system_GET() == (char)27);
+            assert(pack.target_system_GET() == (char)151);
+            assert(pack.param_id_LEN(ph) == 7);
+            assert(pack.param_id_TRY(ph).equals("ndielpl"));
+            assert(pack.target_component_GET() == (char)164);
+            assert(pack.param_index_GET() == (short) -5437);
         });
         GroundControl.PARAM_EXT_REQUEST_READ p320 = CommunicationChannel.new_PARAM_EXT_REQUEST_READ();
         PH.setPack(p320);
-        p320.param_id_SET("pjsgdoAoufxbm", PH) ;
-        p320.param_index_SET((short)27556) ;
-        p320.target_component_SET((char)122) ;
-        p320.target_system_SET((char)27) ;
+        p320.target_system_SET((char)151) ;
+        p320.target_component_SET((char)164) ;
+        p320.param_index_SET((short) -5437) ;
+        p320.param_id_SET("ndielpl", PH) ;
         CommunicationChannel.instance.send(p320);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_PARAM_EXT_REQUEST_LIST.add((src, ph, pack) ->
         {
-            assert(pack.target_component_GET() == (char)146);
-            assert(pack.target_system_GET() == (char)48);
+            assert(pack.target_system_GET() == (char)58);
+            assert(pack.target_component_GET() == (char)66);
         });
         GroundControl.PARAM_EXT_REQUEST_LIST p321 = CommunicationChannel.new_PARAM_EXT_REQUEST_LIST();
         PH.setPack(p321);
-        p321.target_component_SET((char)146) ;
-        p321.target_system_SET((char)48) ;
+        p321.target_component_SET((char)66) ;
+        p321.target_system_SET((char)58) ;
         CommunicationChannel.instance.send(p321);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_PARAM_EXT_VALUE.add((src, ph, pack) ->
         {
-            assert(pack.param_id_LEN(ph) == 9);
-            assert(pack.param_id_TRY(ph).equals("heebljqTF"));
-            assert(pack.param_type_GET() == MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_UINT8);
-            assert(pack.param_index_GET() == (char)21760);
-            assert(pack.param_count_GET() == (char)26177);
-            assert(pack.param_value_LEN(ph) == 114);
-            assert(pack.param_value_TRY(ph).equals("wmndjwgkffyxdmoFchcjTpmlyonVptxpbbztlIhjtWfuibOjnqfoueAlbxXOagJrdqpxkoDanmXvvjktjhawbCdWrwvftkhIeueKkdHzQjyDlpxhsx"));
+            assert(pack.param_value_LEN(ph) == 109);
+            assert(pack.param_value_TRY(ph).equals("dqwixwvysrthNdqqymmixhzoiqwawPkjhyWwqhminnmhuouvsxcwooecbxzcuprycolmrsiUdcjvadpatTmbPAgpapjrbgwnvqyjqxxxstElj"));
+            assert(pack.param_count_GET() == (char)2773);
+            assert(pack.param_type_GET() == MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_UINT16);
+            assert(pack.param_id_LEN(ph) == 2);
+            assert(pack.param_id_TRY(ph).equals("xm"));
+            assert(pack.param_index_GET() == (char)39926);
         });
         GroundControl.PARAM_EXT_VALUE p322 = CommunicationChannel.new_PARAM_EXT_VALUE();
         PH.setPack(p322);
-        p322.param_count_SET((char)26177) ;
-        p322.param_type_SET(MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_UINT8) ;
-        p322.param_value_SET("wmndjwgkffyxdmoFchcjTpmlyonVptxpbbztlIhjtWfuibOjnqfoueAlbxXOagJrdqpxkoDanmXvvjktjhawbCdWrwvftkhIeueKkdHzQjyDlpxhsx", PH) ;
-        p322.param_index_SET((char)21760) ;
-        p322.param_id_SET("heebljqTF", PH) ;
+        p322.param_id_SET("xm", PH) ;
+        p322.param_index_SET((char)39926) ;
+        p322.param_value_SET("dqwixwvysrthNdqqymmixhzoiqwawPkjhyWwqhminnmhuouvsxcwooecbxzcuprycolmrsiUdcjvadpatTmbPAgpapjrbgwnvqyjqxxxstElj", PH) ;
+        p322.param_type_SET(MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_UINT16) ;
+        p322.param_count_SET((char)2773) ;
         CommunicationChannel.instance.send(p322);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_PARAM_EXT_SET.add((src, ph, pack) ->
         {
-            assert(pack.target_component_GET() == (char)47);
-            assert(pack.param_id_LEN(ph) == 7);
-            assert(pack.param_id_TRY(ph).equals("Uhqskoy"));
-            assert(pack.param_type_GET() == MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_UINT8);
-            assert(pack.param_value_LEN(ph) == 116);
-            assert(pack.param_value_TRY(ph).equals("kfSivxiutmgouoorVkxUmbFecdapdhqlmlsmjIJowsJswzwpsewcwtnjsiyofpsykmzocrhLbqmtalbxrhkgthbwboiewhivrhfsmlwpszuxrlnnRomo"));
-            assert(pack.target_system_GET() == (char)157);
+            assert(pack.target_component_GET() == (char)239);
+            assert(pack.target_system_GET() == (char)237);
+            assert(pack.param_id_LEN(ph) == 9);
+            assert(pack.param_id_TRY(ph).equals("gmmBeziPf"));
+            assert(pack.param_type_GET() == MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_INT16);
+            assert(pack.param_value_LEN(ph) == 103);
+            assert(pack.param_value_TRY(ph).equals("djtqogcdbsuynCFfnapnwJceDbudpscfusdgHsdwsziakmpBcyhrsbeCsaggolxisovofibvljEMvrgsifpkpyayVuutwlmlZfrfluk"));
         });
         GroundControl.PARAM_EXT_SET p323 = CommunicationChannel.new_PARAM_EXT_SET();
         PH.setPack(p323);
-        p323.param_id_SET("Uhqskoy", PH) ;
-        p323.target_system_SET((char)157) ;
-        p323.param_value_SET("kfSivxiutmgouoorVkxUmbFecdapdhqlmlsmjIJowsJswzwpsewcwtnjsiyofpsykmzocrhLbqmtalbxrhkgthbwboiewhivrhfsmlwpszuxrlnnRomo", PH) ;
-        p323.target_component_SET((char)47) ;
-        p323.param_type_SET(MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_UINT8) ;
+        p323.param_type_SET(MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_INT16) ;
+        p323.target_system_SET((char)237) ;
+        p323.target_component_SET((char)239) ;
+        p323.param_value_SET("djtqogcdbsuynCFfnapnwJceDbudpscfusdgHsdwsziakmpBcyhrsbeCsaggolxisovofibvljEMvrgsifpkpyayVuutwlmlZfrfluk", PH) ;
+        p323.param_id_SET("gmmBeziPf", PH) ;
         CommunicationChannel.instance.send(p323);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_PARAM_EXT_ACK.add((src, ph, pack) ->
         {
-            assert(pack.param_id_LEN(ph) == 14);
-            assert(pack.param_id_TRY(ph).equals("ipfuosovKtjmqp"));
-            assert(pack.param_value_LEN(ph) == 94);
-            assert(pack.param_value_TRY(ph).equals("XxNyqwfdavmFfthdweiAeoafikwhnntmmhbBbHhjhxnrqmyoaUhlgzmnregqscopOdklvznprTnyutplznkjycArdqblvi"));
-            assert(pack.param_type_GET() == MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_REAL64);
+            assert(pack.param_value_LEN(ph) == 4);
+            assert(pack.param_value_TRY(ph).equals("Fhdr"));
+            assert(pack.param_id_LEN(ph) == 2);
+            assert(pack.param_id_TRY(ph).equals("rz"));
             assert(pack.param_result_GET() == PARAM_ACK.PARAM_ACK_IN_PROGRESS);
+            assert(pack.param_type_GET() == MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_UINT32);
         });
         GroundControl.PARAM_EXT_ACK p324 = CommunicationChannel.new_PARAM_EXT_ACK();
         PH.setPack(p324);
-        p324.param_type_SET(MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_REAL64) ;
+        p324.param_id_SET("rz", PH) ;
+        p324.param_value_SET("Fhdr", PH) ;
         p324.param_result_SET(PARAM_ACK.PARAM_ACK_IN_PROGRESS) ;
-        p324.param_value_SET("XxNyqwfdavmFfthdweiAeoafikwhnntmmhbBbHhjhxnrqmyoaUhlgzmnregqscopOdklvznprTnyutplznkjycArdqblvi", PH) ;
-        p324.param_id_SET("ipfuosovKtjmqp", PH) ;
+        p324.param_type_SET(MAV_PARAM_EXT_TYPE.MAV_PARAM_EXT_TYPE_UINT32) ;
         CommunicationChannel.instance.send(p324);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
         TestChannel.instance.on_OBSTACLE_DISTANCE.add((src, ph, pack) ->
         {
-            assert(Arrays.equals(pack.distances_GET(),  new char[] {(char)62528, (char)65479, (char)34516, (char)33982, (char)6814, (char)61822, (char)43345, (char)1356, (char)14643, (char)46704, (char)47544, (char)59241, (char)56523, (char)43963, (char)12307, (char)2136, (char)24488, (char)1020, (char)42396, (char)15225, (char)56935, (char)25910, (char)42307, (char)15660, (char)53334, (char)6271, (char)34042, (char)14210, (char)30093, (char)19087, (char)13680, (char)33969, (char)35739, (char)8866, (char)37125, (char)19468, (char)12419, (char)61899, (char)54215, (char)27314, (char)62106, (char)35911, (char)52275, (char)13493, (char)39052, (char)7733, (char)37270, (char)43990, (char)7582, (char)50186, (char)13148, (char)13729, (char)2249, (char)59845, (char)9045, (char)46278, (char)38639, (char)2314, (char)17093, (char)59000, (char)26184, (char)22308, (char)38786, (char)29466, (char)34949, (char)24198, (char)64970, (char)40642, (char)65518, (char)37839, (char)62443, (char)28027}));
-            assert(pack.sensor_type_GET() == MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_RADAR);
-            assert(pack.increment_GET() == (char)244);
-            assert(pack.max_distance_GET() == (char)30399);
-            assert(pack.min_distance_GET() == (char)36839);
-            assert(pack.time_usec_GET() == 1543892516334643757L);
+            assert(pack.increment_GET() == (char)214);
+            assert(pack.sensor_type_GET() == MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_LASER);
+            assert(Arrays.equals(pack.distances_GET(),  new char[] {(char)1232, (char)107, (char)32467, (char)32096, (char)2040, (char)16147, (char)21006, (char)22909, (char)28381, (char)2109, (char)33080, (char)30977, (char)33897, (char)23517, (char)590, (char)12676, (char)7051, (char)26215, (char)10051, (char)18106, (char)7434, (char)38751, (char)43869, (char)3288, (char)22262, (char)60498, (char)633, (char)40118, (char)50046, (char)50352, (char)47498, (char)8580, (char)3015, (char)57271, (char)27055, (char)62551, (char)16521, (char)21304, (char)64545, (char)47534, (char)43899, (char)49308, (char)4725, (char)54256, (char)64263, (char)39827, (char)51444, (char)14847, (char)39300, (char)48184, (char)57390, (char)4888, (char)64464, (char)25440, (char)3559, (char)14499, (char)46268, (char)28720, (char)54091, (char)6899, (char)13767, (char)38978, (char)48036, (char)23897, (char)63651, (char)33136, (char)6822, (char)15085, (char)23580, (char)7169, (char)40191, (char)26491}));
+            assert(pack.min_distance_GET() == (char)52967);
+            assert(pack.max_distance_GET() == (char)57793);
+            assert(pack.time_usec_GET() == 1944389489883777162L);
         });
         GroundControl.OBSTACLE_DISTANCE p330 = CommunicationChannel.new_OBSTACLE_DISTANCE();
         PH.setPack(p330);
-        p330.increment_SET((char)244) ;
-        p330.sensor_type_SET(MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_RADAR) ;
-        p330.max_distance_SET((char)30399) ;
-        p330.time_usec_SET(1543892516334643757L) ;
-        p330.min_distance_SET((char)36839) ;
-        p330.distances_SET(new char[] {(char)62528, (char)65479, (char)34516, (char)33982, (char)6814, (char)61822, (char)43345, (char)1356, (char)14643, (char)46704, (char)47544, (char)59241, (char)56523, (char)43963, (char)12307, (char)2136, (char)24488, (char)1020, (char)42396, (char)15225, (char)56935, (char)25910, (char)42307, (char)15660, (char)53334, (char)6271, (char)34042, (char)14210, (char)30093, (char)19087, (char)13680, (char)33969, (char)35739, (char)8866, (char)37125, (char)19468, (char)12419, (char)61899, (char)54215, (char)27314, (char)62106, (char)35911, (char)52275, (char)13493, (char)39052, (char)7733, (char)37270, (char)43990, (char)7582, (char)50186, (char)13148, (char)13729, (char)2249, (char)59845, (char)9045, (char)46278, (char)38639, (char)2314, (char)17093, (char)59000, (char)26184, (char)22308, (char)38786, (char)29466, (char)34949, (char)24198, (char)64970, (char)40642, (char)65518, (char)37839, (char)62443, (char)28027}, 0) ;
+        p330.distances_SET(new char[] {(char)1232, (char)107, (char)32467, (char)32096, (char)2040, (char)16147, (char)21006, (char)22909, (char)28381, (char)2109, (char)33080, (char)30977, (char)33897, (char)23517, (char)590, (char)12676, (char)7051, (char)26215, (char)10051, (char)18106, (char)7434, (char)38751, (char)43869, (char)3288, (char)22262, (char)60498, (char)633, (char)40118, (char)50046, (char)50352, (char)47498, (char)8580, (char)3015, (char)57271, (char)27055, (char)62551, (char)16521, (char)21304, (char)64545, (char)47534, (char)43899, (char)49308, (char)4725, (char)54256, (char)64263, (char)39827, (char)51444, (char)14847, (char)39300, (char)48184, (char)57390, (char)4888, (char)64464, (char)25440, (char)3559, (char)14499, (char)46268, (char)28720, (char)54091, (char)6899, (char)13767, (char)38978, (char)48036, (char)23897, (char)63651, (char)33136, (char)6822, (char)15085, (char)23580, (char)7169, (char)40191, (char)26491}, 0) ;
+        p330.max_distance_SET((char)57793) ;
+        p330.min_distance_SET((char)52967) ;
+        p330.sensor_type_SET(MAV_DISTANCE_SENSOR.MAV_DISTANCE_SENSOR_LASER) ;
+        p330.time_usec_SET(1944389489883777162L) ;
+        p330.increment_SET((char)214) ;
         CommunicationChannel.instance.send(p330);//put test pack to the  channel send buffer
         TestChannel.transmission(CommunicationChannel.instance.inputStream, TestChannel.instance.outputStream, TestChannel.instance);
     }

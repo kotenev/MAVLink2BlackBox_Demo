@@ -1002,7 +1002,7 @@ typedef  enum
     e_MAV_MODE_MAV_MODE_AUTO_ARMED = 220
 } e_MAV_MODE;
 
-inline static e_MAV_MODE _en__M(UMAX id)
+inline static e_MAV_MODE _en__X(UMAX id)
 {
     switch(id)
     {
@@ -1032,7 +1032,7 @@ inline static e_MAV_MODE _en__M(UMAX id)
     }
     return -1;
 }
-inline static UMAX _id__M(e_MAV_MODE en)
+inline static UMAX _id__X(e_MAV_MODE en)
 {
     switch(en)
     {
@@ -1103,11 +1103,10 @@ typedef  enum
     ** Specifies the rally points for the vehicle. Rally points are alternative RTL points. Items are MAV_CMD_RALLY_POINT
     *		 * rally point items*/
     e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY = 2,
-    e_MAV_MISSION_TYPE_MAV_DATA_STREAM_PROPULSION = 3, //Motor/ESC telemetry data.
     e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL = 255 //Only used in MISSION_CLEAR_ALL to clear all mission types.
 } e_MAV_MISSION_TYPE;
 
-inline static UMAX _id__B(e_MAV_MISSION_TYPE en)
+inline static UMAX _id__h(e_MAV_MISSION_TYPE en)
 {
     switch(en)
     {
@@ -1117,10 +1116,8 @@ inline static UMAX _id__B(e_MAV_MISSION_TYPE en)
             return 1;
         case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_RALLY:
             return 2;
-        case e_MAV_MISSION_TYPE_MAV_DATA_STREAM_PROPULSION:
-            return 3;
         case e_MAV_MISSION_TYPE_MAV_MISSION_TYPE_ALL:
-            return 4;
+            return 3;
         default: ;// assert(false);//("Unknown enum" + id);
     }
 }
@@ -2340,7 +2337,7 @@ typedef  enum
     e_MAV_CMD_MAV_CMD_USER_5 = 31014
 } e_MAV_CMD;
 
-inline static e_MAV_CMD _en__K(UMAX id)
+inline static e_MAV_CMD _en__G(UMAX id)
 {
     switch(id)
     {
@@ -2608,7 +2605,7 @@ inline static e_MAV_CMD _en__K(UMAX id)
     }
     return -1;
 }
-inline static UMAX _id__K(e_MAV_CMD en)
+inline static UMAX _id__G(e_MAV_CMD en)
 {
     switch(en)
     {
@@ -3672,7 +3669,7 @@ INLINER void p11_target_system_SET(uint8_t  src, Pack * dst)//The system setting
 INLINER void p11_base_mode_SET(e_MAV_MODE  src, Pack * dst)//The new base mode
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__M(src);
+    UMAX id = _id__X(src);
     set_bits(id, 4, data, 40);
 }
 INLINER void p20_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -4452,7 +4449,7 @@ INLINER void p37_end_index_SET(int16_t  src, Pack * dst)//End index, -1 by defau
 INLINER void p37_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__B(src);
+    UMAX id = _id__h(src);
     set_bits(id, 3, data, 48);
 }
 INLINER void p38_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -4478,7 +4475,7 @@ INLINER void p38_end_index_SET(int16_t  src, Pack * dst)//End index, equal or gr
 INLINER void p38_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__B(src);
+    UMAX id = _id__h(src);
     set_bits(id, 3, data, 48);
 }
 INLINER void p39_seq_SET(uint16_t  src, Pack * dst)//Sequence
@@ -4549,13 +4546,13 @@ INLINER void p39_frame_SET(e_MAV_FRAME  src, Pack * dst)//The coordinate system 
 INLINER void p39_command_SET(e_MAV_CMD  src, Pack * dst)//The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__K(src);
+    UMAX id = _id__G(src);
     set_bits(id, 8, data, 276);
 }
 INLINER void p39_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__B(src);
+    UMAX id = _id__h(src);
     set_bits(id, 3, data, 284);
 }
 INLINER void p40_seq_SET(uint16_t  src, Pack * dst)//Sequence
@@ -4576,7 +4573,7 @@ INLINER void p40_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p40_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__B(src);
+    UMAX id = _id__h(src);
     set_bits(id, 3, data, 32);
 }
 INLINER void p41_seq_SET(uint16_t  src, Pack * dst)//Sequence
@@ -4612,7 +4609,7 @@ INLINER void p43_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p43_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__B(src);
+    UMAX id = _id__h(src);
     set_bits(id, 3, data, 16);
 }
 INLINER void p44_count_SET(uint16_t  src, Pack * dst)//Number of mission items in the sequence
@@ -4633,7 +4630,7 @@ INLINER void p44_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p44_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__B(src);
+    UMAX id = _id__h(src);
     set_bits(id, 3, data, 32);
 }
 INLINER void p45_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -4649,7 +4646,7 @@ INLINER void p45_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p45_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__B(src);
+    UMAX id = _id__h(src);
     set_bits(id, 3, data, 16);
 }
 INLINER void p46_seq_SET(uint16_t  src, Pack * dst)//Sequence
@@ -4675,7 +4672,7 @@ INLINER void p47_type_SET(e_MAV_MISSION_RESULT  src, Pack * dst)//See MAV_MISSIO
 INLINER void p47_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__B(src);
+    UMAX id = _id__h(src);
     set_bits(id, 3, data, 20);
 }
 INLINER void p48_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -4811,7 +4808,7 @@ INLINER void p51_target_component_SET(uint8_t  src, Pack * dst)//Component ID
 INLINER void p51_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__B(src);
+    UMAX id = _id__h(src);
     set_bits(id, 3, data, 32);
 }
 INLINER void p54_target_system_SET(uint8_t  src, Pack * dst)//System ID
@@ -5404,13 +5401,13 @@ INLINER void p73_frame_SET(e_MAV_FRAME  src, Pack * dst)//The coordinate system 
 INLINER void p73_command_SET(e_MAV_CMD  src, Pack * dst)//The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__K(src);
+    UMAX id = _id__G(src);
     set_bits(id, 8, data, 276);
 }
 INLINER void p73_mission_type_SET(e_MAV_MISSION_TYPE  src, Pack * dst)//Mission type, see MAV_MISSION_TYPE
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__B(src);
+    UMAX id = _id__h(src);
     set_bits(id, 3, data, 284);
 }
 INLINER void p74_throttle_SET(uint16_t  src, Pack * dst)//Current throttle setting in integer percent, 0 to 100
@@ -5566,12 +5563,12 @@ INLINER void p75_frame_SET(e_MAV_FRAME  src, Pack * dst)//The coordinate system 
 INLINER e_MAV_CMD p75_command_GET(Pack * src)//The scheduled action for the mission item. see MAV_CMD in common.xml MAVLink specs
 {
     uint8_t * data = src->data;
-    return  _en__K(get_bits(data, 260, 8));
+    return  _en__G(get_bits(data, 260, 8));
 }
 INLINER void p75_command_SET(e_MAV_CMD  src, Pack * dst)//The scheduled action for the mission item. see MAV_CMD in common.xml MAVLink specs
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__K(src);
+    UMAX id = _id__G(src);
     set_bits(id, 8, data, 260);
 }
 INLINER uint8_t p76_target_system_GET(Pack * src)//System which should execute the command
@@ -5677,23 +5674,23 @@ INLINER void p76_param7_SET(float  src, Pack * dst)//Parameter 7, as defined by 
 INLINER e_MAV_CMD p76_command_GET(Pack * src)//Command ID, as defined by MAV_CMD enum.
 {
     uint8_t * data = src->data;
-    return  _en__K(get_bits(data, 248, 8));
+    return  _en__G(get_bits(data, 248, 8));
 }
 INLINER void p76_command_SET(e_MAV_CMD  src, Pack * dst)//Command ID, as defined by MAV_CMD enum.
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__K(src);
+    UMAX id = _id__G(src);
     set_bits(id, 8, data, 248);
 }
 INLINER e_MAV_CMD p77_command_GET(Pack * src)//Command ID, as defined by MAV_CMD enum.
 {
     uint8_t * data = src->data;
-    return  _en__K(get_bits(data, 0, 8));
+    return  _en__G(get_bits(data, 0, 8));
 }
 INLINER void p77_command_SET(e_MAV_CMD  src, Pack * dst)//Command ID, as defined by MAV_CMD enum.
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__K(src);
+    UMAX id = _id__G(src);
     set_bits(id, 8, data, 0);
 }
 INLINER e_MAV_RESULT p77_result_GET(Pack * src)//See MAV_RESULT enum
@@ -6879,12 +6876,12 @@ INLINER void p91_nav_mode_SET(uint8_t  src, Pack * dst)//Navigation mode (MAV_NA
 INLINER e_MAV_MODE p91_mode_GET(Pack * src)//System mode (MAV_MODE)
 {
     uint8_t * data = src->data;
-    return  _en__M(get_bits(data, 328, 4));
+    return  _en__X(get_bits(data, 328, 4));
 }
 INLINER void p91_mode_SET(e_MAV_MODE  src, Pack * dst)//System mode (MAV_MODE)
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__M(src);
+    UMAX id = _id__X(src);
     set_bits(id, 4, data, 328);
 }
 INLINER uint16_t p92_chan1_raw_GET(Pack * src)//RC channel 1 value, in microseconds
@@ -7067,12 +7064,12 @@ INLINER void p93_controls_SET(float*  src, int32_t pos, Pack * dst) //Control ou
 INLINER e_MAV_MODE p93_mode_GET(Pack * src)//System mode (MAV_MODE), includes arming state.
 {
     uint8_t * data = src->data;
-    return  _en__M(get_bits(data, 640, 4));
+    return  _en__X(get_bits(data, 640, 4));
 }
 INLINER void p93_mode_SET(e_MAV_MODE  src, Pack * dst)//System mode (MAV_MODE), includes arming state.
 {
     uint8_t * data = dst->data;
-    UMAX id = _id__M(src);
+    UMAX id = _id__X(src);
     set_bits(id, 4, data, 640);
 }
 INLINER uint64_t p100_time_usec_GET(Pack * src)//Timestamp (UNIX)
@@ -11708,7 +11705,7 @@ INLINER e_MAV_COLLISION_ACTION p247_action_GET(Pack * src)//Action that is being
 INLINER e_MAV_COLLISION_THREAT_LEVEL p247_threat_level_GET(Pack * src)//How concerned the aircraft is about this collision
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 132, 2);
+    return  0 + (int)get_bits(data, 132, 3);
 }
 /**
 *A code that identifies the software component that understands this message (analogous to usb device classes
@@ -12083,7 +12080,7 @@ INLINER uint32_t p260_time_boot_ms_GET(Pack * src)//Timestamp (milliseconds sinc
 INLINER e_CAMERA_MODE p260_mode_id_GET(Pack * src)//Camera mode (CAMERA_MODE)
 {
     uint8_t * data = src->data;
-    return  0 + (int)get_bits(data, 32, 2);
+    return  0 + (int)get_bits(data, 32, 3);
 }
 INLINER uint32_t p261_time_boot_ms_GET(Pack * src)//Timestamp (milliseconds since system boot)
 {

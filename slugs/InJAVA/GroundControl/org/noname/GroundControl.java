@@ -12,8 +12,8 @@ public class GroundControl extends Host
 
     /**
     *The heartbeat message shows that a system is present and responding. The type of the MAV and Autopilot
-    *	hardware allow the receiving system to treat further messages from this system appropriate (e.g. by laying
-    *	out the user interface based on the autopilot)*/
+    *	 hardware allow the receiving system to treat further messages from this system appropriate (e.g. by laying
+    *	 out the user interface based on the autopilot)*/
     public static class HEARTBEAT extends Pack
     {
 
@@ -34,15 +34,15 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(0, 0, 1, 0, 8, 62);
     }/**
 *The general system state. If the system is following the MAVLink standard, the system state is mainly
-*	defined by three orthogonal states/modes: The system mode, which is either LOCKED (motors shut down and
-*	locked), MANUAL (system under RC control), GUIDED (system with autonomous position control, position
-*	setpoint controlled manually) or AUTO (system guided by path/waypoint planner). The NAV_MODE defined
-*	the current flight state: LIFTOFF (often an open-loop maneuver), LANDING, WAYPOINTS or VECTOR. This represents
-*	the internal navigation state machine. The system status shows whether the system is currently active
-*	or not and if an emergency occured. During the CRITICAL and EMERGENCY states the MAV is still considered
-*	to be active, but should start emergency procedures autonomously. After a failure occured it should first
-*	move from active to critical to allow manual intervention and then move to emergency after a certain
-*	timeout*/
+*	 defined by three orthogonal states/modes: The system mode, which is either LOCKED (motors shut down and
+*	 locked), MANUAL (system under RC control), GUIDED (system with autonomous position control, position
+*	 setpoint controlled manually) or AUTO (system guided by path/waypoint planner). The NAV_MODE defined
+*	 the current flight state: LIFTOFF (often an open-loop maneuver), LANDING, WAYPOINTS or VECTOR. This represents
+*	 the internal navigation state machine. The system status shows whether the system is currently active
+*	 or not and if an emergency occured. During the CRITICAL and EMERGENCY states the MAV is still considered
+*	 to be active, but should start emergency procedures autonomously. After a failure occured it should first
+*	 move from active to critical to allow manual intervention and then move to emergency after a certain
+*	 timeout*/
     public static class SYS_STATUS extends Pack
     {
 
@@ -54,12 +54,12 @@ public class GroundControl extends Host
         {  return (char)((char) get_bytes(data,  2, 2)); }
         /**
         *Communication drops in percent, (0%: 0, 100%: 10'000), (UART, I2C, SPI, CAN), dropped packets on all links
-        *	(packets that were corrupted on reception on the MAV*/
+        *	 (packets that were corrupted on reception on the MAV*/
         public char drop_rate_comm_GET()
         {  return (char)((char) get_bytes(data,  4, 2)); }
         /**
         *Communication errors (UART, I2C, SPI, CAN), dropped packets on all links (packets that were corrupted
-        *	on reception on the MAV*/
+        *	 on reception on the MAV*/
         public char errors_comm_GET()
         {  return (char)((char) get_bytes(data,  6, 2)); }
         public char errors_count1_GET()//Autopilot-specific errors
@@ -76,17 +76,17 @@ public class GroundControl extends Host
         {  return (byte)((byte) get_bytes(data,  18, 1)); }
         /**
         *Bitmask showing which onboard controllers and sensors are present. Value of 0: not present. Value of 1:
-        *	present. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
+        *	 present. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
         public @MAV_SYS_STATUS_SENSOR int onboard_control_sensors_present_GET()
         {  return  1 + (int)get_bits(data, 152, 26); }
         /**
         *Bitmask showing which onboard controllers and sensors are enabled:  Value of 0: not enabled. Value of
-        *	1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
+        *	 1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
         public @MAV_SYS_STATUS_SENSOR int onboard_control_sensors_enabled_GET()
         {  return  1 + (int)get_bits(data, 178, 26); }
         /**
         *Bitmask showing which onboard controllers and sensors are operational or have an error:  Value of 0: not
-        *	enabled. Value of 1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
+        *	 enabled. Value of 1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSO*/
         public @MAV_SYS_STATUS_SENSOR int onboard_control_sensors_health_GET()
         {  return  1 + (int)get_bits(data, 204, 26); }
         static final Meta meta = new Meta(1, 8, 0, 0, 29, 230);
@@ -104,8 +104,8 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(2, 0, 1, 1, 12, 96);
     }/**
 *Reports the current commanded vehicle position, velocity, and acceleration as specified by the autopilot.
-*	This should match the commands sent in SET_POSITION_TARGET_LOCAL_NED if the vehicle is being controlled
-*	this way*/
+*	 This should match the commands sent in SET_POSITION_TARGET_LOCAL_NED if the vehicle is being controlled
+*	 this way*/
     public static class POSITION_TARGET_LOCAL_NED extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -113,18 +113,18 @@ public class GroundControl extends Host
         POSITION_TARGET_LOCAL_NED(int bytes) { super(meta, bytes); }
         /**
         *Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or
-        *	0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
-        *	the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
-        *	2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
-        *	bit 11: yaw, bit 12: yaw rat*/
+        *	 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
+        *	 the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
+        *	 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
+        *	 bit 11: yaw, bit 12: yaw rat*/
         public char type_mask_GET()
         {  return (char)((char) get_bytes(data,  0, 2)); }
         /**
         *Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or
-        *	0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
-        *	the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
-        *	2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
-        *	bit 11: yaw, bit 12: yaw rat*/
+        *	 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
+        *	 the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
+        *	 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
+        *	 bit 11: yaw, bit 12: yaw rat*/
         public void type_mask_SET(char  src)
         {  set_bytes((char)(src) & -1L, 2, data,  0); }
         public long time_boot_ms_GET()//Timestamp in milliseconds since system boot
@@ -177,18 +177,18 @@ public class GroundControl extends Host
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 46); }
         /**
         *Valid options are: MAV_FRAME_LOCAL_NED = 1, MAV_FRAME_LOCAL_OFFSET_NED = 7, MAV_FRAME_BODY_NED = 8, MAV_FRAME_BODY_OFFSET_NED
-        *	=*/
+        *	 =*/
         public @MAV_FRAME int coordinate_frame_GET()
         {  return  0 + (int)get_bits(data, 400, 4); }
         /**
         *Valid options are: MAV_FRAME_LOCAL_NED = 1, MAV_FRAME_LOCAL_OFFSET_NED = 7, MAV_FRAME_BODY_NED = 8, MAV_FRAME_BODY_OFFSET_NED
-        *	=*/
+        *	 =*/
         public void coordinate_frame_SET(@MAV_FRAME int  src)
         {  set_bits(- 0 +   src, 4, data, 400); }
         static final Meta meta = new Meta(3, 1, 1, 0, 51, 404);
     }/**
 *A ping message either requesting or responding to a ping. This allows to measure the system latencies,
-*	including serial port, radio modem and UDP connections*/
+*	 including serial port, radio modem and UDP connections*/
     public static class PING extends Pack
     {
 
@@ -200,12 +200,12 @@ public class GroundControl extends Host
         {  return (get_bytes(data,  4, 8)); }
         /**
         *0: request ping from all receiving systems, if greater than 0: message is a ping response and number is
-        *	the system id of the requesting syste*/
+        *	 the system id of the requesting syste*/
         public char target_system_GET()
         {  return (char)((char) get_bytes(data,  12, 1)); }
         /**
         *0: request ping from all receiving components, if greater than 0: message is a ping response and number
-        *	is the system id of the requesting syste*/
+        *	 is the system id of the requesting syste*/
         public char target_component_GET()
         {  return (char)((char) get_bytes(data,  13, 1)); }
         static final Meta meta = new Meta(4, 0, 1, 1, 14, 112);
@@ -222,13 +222,13 @@ public class GroundControl extends Host
         {  return (char)((char) get_bytes(data,  1, 1)); }
         /**
         *0: key as plaintext, 1-255: future, different hashing/encryption variants. The GCS should in general use
-        *	the safest mode possible initially and then gradually move down the encryption level if it gets a NACK
-        *	message indicating an encryption mismatch*/
+        *	 the safest mode possible initially and then gradually move down the encryption level if it gets a NACK
+        *	 message indicating an encryption mismatch*/
         public char version_GET()
         {  return (char)((char) get_bytes(data,  2, 1)); }
         /**
         *Password / Key, depending on version plaintext or encrypted. 25 or less characters, NULL terminated. The
-        *	characters may involve A-Z, a-z, 0-9, and "!?,.-*/
+        *	 characters may involve A-Z, a-z, 0-9, and "!?,.-*/
         public String passkey_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  24 && !try_visit_field(ph, 24)  ||  !try_visit_item(ph, 0)) return null;
@@ -236,7 +236,7 @@ public class GroundControl extends Host
         }
         /**
         *Password / Key, depending on version plaintext or encrypted. 25 or less characters, NULL terminated. The
-        *	characters may involve A-Z, a-z, 0-9, and "!?,.-*/
+        *	 characters may involve A-Z, a-z, 0-9, and "!?,.-*/
         public char[] passkey_GET(Bounds.Inside ph, char[]  dst_ch, int pos)
         {
             for(int BYTE = ph.BYTE, dst_max = pos + ph.items; pos < dst_max ; pos++,  BYTE += 2)
@@ -246,7 +246,7 @@ public class GroundControl extends Host
         public int passkey_LEN(Bounds.Inside ph)
         {
             return (ph.field_bit !=  24 && !try_visit_field(ph, 24)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-        } static final Meta meta = new Meta(5, 0, 0, 0, 4, 24, 0, _E);
+        } static final Meta meta = new Meta(5, 0, 0, 0, 4, 24, 0, _t);
     }/**
 *Accept / deny control of this MAV*/
     public static class CHANGE_OPERATOR_CONTROL_ACK extends Pack
@@ -260,13 +260,13 @@ public class GroundControl extends Host
         {  return (char)((char) get_bytes(data,  1, 1)); }
         /**
         *0: ACK, 1: NACK: Wrong passkey, 2: NACK: Unsupported passkey encryption method, 3: NACK: Already under
-        *	contro*/
+        *	 contro*/
         public char ack_GET()
         {  return (char)((char) get_bytes(data,  2, 1)); }
         static final Meta meta = new Meta(6, 0, 0, 0, 3, 24);
     }/**
 *Emit an encrypted signature / key identifying this system. PLEASE NOTE: This protocol has been kept simple,
-*	so transmitting the key requires an encrypted channel for true safety*/
+*	 so transmitting the key requires an encrypted channel for true safety*/
     public static class AUTH_KEY extends Pack
     {
 
@@ -286,11 +286,11 @@ public class GroundControl extends Host
         public int key_LEN(Bounds.Inside ph)
         {
             return (ph.field_bit !=  0 && !try_visit_field(ph, 0)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-        } static final Meta meta = new Meta(7, 0, 0, 0, 1, 0, 0, _m);
+        } static final Meta meta = new Meta(7, 0, 0, 0, 1, 0, 0, _i);
     }/**
 *THIS INTERFACE IS DEPRECATED. USE COMMAND_LONG with MAV_CMD_DO_SET_MODE INSTEAD. Set the system mode,
-*	as defined by enum MAV_MODE. There is no target component id as the mode is by definition for the overall
-*	aircraft, not only for one component*/
+*	 as defined by enum MAV_MODE. There is no target component id as the mode is by definition for the overall
+*	 aircraft, not only for one component*/
     public static class SET_MODE extends Pack
     {
 
@@ -301,13 +301,13 @@ public class GroundControl extends Host
         public char target_system_GET()//The system setting the mode
         {  return (char)((char) get_bytes(data,  4, 1)); }
         public @MAV_MODE int base_mode_GET()//The new base mode
-        {  return  en__p((int)get_bits(data, 40, 4)); }
+        {  return  en__O((int)get_bits(data, 40, 4)); }
         static final Meta meta = new Meta(11, 0, 1, 0, 6, 44);
     }/**
 *value[float]. This allows to send a parameter to any other component (such as the GCS) without the need
-*	of previous knowledge of possible parameter names. Thus the same GCS can store different parameters for
-*	different autopilots. See also http:qgroundcontrol.org/parameter_interface for a full documentation
-*	of QGroundControl and IMU code*/
+*	 of previous knowledge of possible parameter names. Thus the same GCS can store different parameters for
+*	 different autopilots. See also http:qgroundcontrol.org/parameter_interface for a full documentation
+*	 of QGroundControl and IMU code*/
     public static class PARAM_REQUEST_READ extends Pack
     {
 
@@ -321,8 +321,8 @@ public class GroundControl extends Host
         {  return (short)((short) get_bytes(data,  2, 2)); }
         /**
         *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-        *	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-        *	storage if the ID is stored as strin*/
+        *	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+        *	 storage if the ID is stored as strin*/
         public String param_id_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  32 && !try_visit_field(ph, 32)  ||  !try_visit_item(ph, 0)) return null;
@@ -330,8 +330,8 @@ public class GroundControl extends Host
         }
         /**
         *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-        *	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-        *	storage if the ID is stored as strin*/
+        *	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+        *	 storage if the ID is stored as strin*/
         public char[] param_id_GET(Bounds.Inside ph, char[]  dst_ch, int pos)
         {
             for(int BYTE = ph.BYTE, dst_max = pos + ph.items; pos < dst_max ; pos++,  BYTE += 2)
@@ -341,7 +341,7 @@ public class GroundControl extends Host
         public int param_id_LEN(Bounds.Inside ph)
         {
             return (ph.field_bit !=  32 && !try_visit_field(ph, 32)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-        } static final Meta meta = new Meta(20, 0, 0, 0, 5, 32, 0, _b);
+        } static final Meta meta = new Meta(20, 0, 0, 0, 5, 32, 0, _N);
     }/**
 *Request all parameters of this component. After this request, all parameters are emitted.*/
     public static class PARAM_REQUEST_LIST extends Pack
@@ -356,8 +356,8 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(21, 0, 0, 0, 2, 16);
     }/**
 *Emit the value of a onboard parameter. The inclusion of param_count and param_index in the message allows
-*	the recipient to keep track of received parameters and allows him to re-request missing parameters after
-*	a loss or timeout*/
+*	 the recipient to keep track of received parameters and allows him to re-request missing parameters after
+*	 a loss or timeout*/
     public static class PARAM_VALUE extends Pack
     {
 
@@ -373,8 +373,8 @@ public class GroundControl extends Host
         {  return  1 + (int)get_bits(data, 64, 4); }
         /**
         *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-        *	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-        *	storage if the ID is stored as strin*/
+        *	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+        *	 storage if the ID is stored as strin*/
         public String param_id_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  68 && !try_visit_field(ph, 68)  ||  !try_visit_item(ph, 0)) return null;
@@ -382,8 +382,8 @@ public class GroundControl extends Host
         }
         /**
         *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-        *	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-        *	storage if the ID is stored as strin*/
+        *	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+        *	 storage if the ID is stored as strin*/
         public char[] param_id_GET(Bounds.Inside ph, char[]  dst_ch, int pos)
         {
             for(int BYTE = ph.BYTE, dst_max = pos + ph.items; pos < dst_max ; pos++,  BYTE += 2)
@@ -393,13 +393,13 @@ public class GroundControl extends Host
         public int param_id_LEN(Bounds.Inside ph)
         {
             return (ph.field_bit !=  68 && !try_visit_field(ph, 68)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-        } static final Meta meta = new Meta(22, 2, 0, 0, 10, 68, 0, _Y);
+        } static final Meta meta = new Meta(22, 2, 0, 0, 10, 68, 0, _S);
     }/**
 *Set a parameter value TEMPORARILY to RAM. It will be reset to default on system reboot. Send the ACTION
-*	MAV_ACTION_STORAGE_WRITE to PERMANENTLY write the RAM contents to EEPROM. IMPORTANT: The receiving component
-*	should acknowledge the new parameter value by sending a param_value message to all communication partners.
-*	This will also ensure that multiple GCS all have an up-to-date list of all parameters. If the sending
-*	GCS did not receive a PARAM_VALUE message within its timeout time, it should re-send the PARAM_SET message*/
+*	 MAV_ACTION_STORAGE_WRITE to PERMANENTLY write the RAM contents to EEPROM. IMPORTANT: The receiving component
+*	 should acknowledge the new parameter value by sending a param_value message to all communication partners.
+*	 This will also ensure that multiple GCS all have an up-to-date list of all parameters. If the sending
+*	 GCS did not receive a PARAM_VALUE message within its timeout time, it should re-send the PARAM_SET message*/
     public static class PARAM_SET extends Pack
     {
 
@@ -415,8 +415,8 @@ public class GroundControl extends Host
         {  return  1 + (int)get_bits(data, 48, 4); }
         /**
         *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-        *	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-        *	storage if the ID is stored as strin*/
+        *	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+        *	 storage if the ID is stored as strin*/
         public String param_id_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  52 && !try_visit_field(ph, 52)  ||  !try_visit_item(ph, 0)) return null;
@@ -424,8 +424,8 @@ public class GroundControl extends Host
         }
         /**
         *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-        *	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-        *	storage if the ID is stored as strin*/
+        *	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+        *	 storage if the ID is stored as strin*/
         public char[] param_id_GET(Bounds.Inside ph, char[]  dst_ch, int pos)
         {
             for(int BYTE = ph.BYTE, dst_max = pos + ph.items; pos < dst_max ; pos++,  BYTE += 2)
@@ -435,10 +435,10 @@ public class GroundControl extends Host
         public int param_id_LEN(Bounds.Inside ph)
         {
             return (ph.field_bit !=  52 && !try_visit_field(ph, 52)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-        } static final Meta meta = new Meta(23, 0, 0, 0, 8, 52, 0, _M);
+        } static final Meta meta = new Meta(23, 0, 0, 0, 8, 52, 0, _b);
     }/**
 *The global position, as returned by the Global Positioning System (GPS). This is
-*	NOT the global position estimate of the system, but rather a RAW sensor value. See message GLOBAL_POSITION for the global position estimate. Coordinate frame is right-handed, Z-axis up (GPS frame).*/
+*	 NOT the global position estimate of the system, but rather a RAW sensor value. See message GLOBAL_POSITION for the global position estimate. Coordinate frame is right-handed, Z-axis up (GPS frame).*/
     public static class GPS_RAW_INT extends Pack
     {
 
@@ -452,7 +452,7 @@ public class GroundControl extends Host
         {  return (char)((char) get_bytes(data,  4, 2)); }
         /**
         *Course over ground (NOT heading, but direction of movement) in degrees * 100, 0.0..359.99 degrees. If
-        *	unknown, set to: UINT16_MA*/
+        *	 unknown, set to: UINT16_MA*/
         public char cog_GET()
         {  return (char)((char) get_bytes(data,  6, 2)); }
         public long time_usec_GET()//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
@@ -463,7 +463,7 @@ public class GroundControl extends Host
         {  return (int)((int) get_bytes(data,  20, 4)); }
         /**
         *Altitude (AMSL, NOT WGS84), in meters * 1000 (positive for up). Note that virtually all GPS modules provide
-        *	the AMSL altitude in addition to the WGS84 altitude*/
+        *	 the AMSL altitude in addition to the WGS84 altitude*/
         public int alt_GET()
         {  return (int)((int) get_bytes(data,  24, 4)); }
         public char satellites_visible_GET()//Number of satellites visible. If unknown, set to 255
@@ -495,11 +495,11 @@ public class GroundControl extends Host
             if(ph.field_bit !=  240 && !try_visit_field(ph, 240)) return 0;
             return (get_bytes(data,  ph.BYTE, 4));
         }
-        static final Meta meta = new Meta(24, 4, 0, 1, 31, 236, 0, _gd, _Ad, _yd, _Cd, _Dd);
+        static final Meta meta = new Meta(24, 4, 0, 1, 31, 236, 0, _Af, _xf, _Zf, _hf, _Xf);
     }/**
 *The positioning status, as reported by GPS. This message is intended to display status information about
-*	each satellite visible to the receiver. See message GLOBAL_POSITION for the global position estimate.
-*	This message can contain information for up to 20 satellites*/
+*	 each satellite visible to the receiver. See message GLOBAL_POSITION for the global position estimate.
+*	 This message can contain information for up to 20 satellites*/
     public static class GPS_STATUS extends Pack
     {
 
@@ -545,7 +545,7 @@ public class GroundControl extends Host
         {return satellite_snr_GET(new char[20], 0);} static final Meta meta = new Meta(25, 0, 0, 0, 101, 808);
     }/**
 *The RAW IMU readings for the usual 9DOF sensor setup. This message should contain the scaled values to
-*	the described unit*/
+*	 the described unit*/
     public static class SCALED_IMU extends Pack
     {
 
@@ -574,7 +574,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(26, 0, 1, 0, 22, 176);
     }/**
 *The RAW IMU readings for the usual 9DOF sensor setup. This message should always contain the true raw
-*	values without any scaling to allow data capture and system debugging*/
+*	 values without any scaling to allow data capture and system debugging*/
     public static class RAW_IMU extends Pack
     {
 
@@ -603,7 +603,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(27, 0, 0, 1, 26, 208);
     }/**
 *The RAW pressure readings for the typical setup of one absolute pressure and one differential pressure
-*	sensor. The sensor values should be the raw, UNSCALED ADC values*/
+*	 sensor. The sensor values should be the raw, UNSCALED ADC values*/
     public static class RAW_PRESSURE extends Pack
     {
 
@@ -622,7 +622,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(28, 0, 0, 1, 16, 128);
     }/**
 *The pressure readings for the typical setup of one absolute and differential pressure sensor. The units
-*	are as specified in each field*/
+*	 are as specified in each field*/
     public static class SCALED_PRESSURE extends Pack
     {
 
@@ -661,7 +661,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(30, 0, 1, 0, 28, 224);
     }/**
 *The attitude in the aeronautical frame (right-handed, Z-down, X-front, Y-right), expressed as quaternion.
-*	Quaternion order is w, x, y, z and a zero rotation would be expressed as (1 0 0 0)*/
+*	 Quaternion order is w, x, y, z and a zero rotation would be expressed as (1 0 0 0)*/
     public static class ATTITUDE_QUATERNION extends Pack
     {
 
@@ -686,7 +686,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(31, 0, 1, 0, 32, 256);
     }/**
 *The filtered local position (e.g. fused computer vision and accelerometers). Coordinate frame is right-handed,
-*	Z-axis down (aeronautical frame, NED / north-east-down convention*/
+*	 Z-axis down (aeronautical frame, NED / north-east-down convention*/
     public static class LOCAL_POSITION_NED extends Pack
     {
 
@@ -724,7 +724,7 @@ public class GroundControl extends Host
         {  return (int)((int) get_bytes(data,  10, 4)); }
         /**
         *Altitude in meters, expressed as * 1000 (millimeters), AMSL (not WGS84 - note that virtually all GPS modules
-        *	provide the AMSL as well*/
+        *	 provide the AMSL as well*/
         public int alt_GET()
         {  return (int)((int) get_bytes(data,  14, 4)); }
         public int relative_alt_GET()//Altitude above ground in meters, expressed as * 1000 (millimeters)
@@ -738,7 +738,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(33, 1, 1, 0, 28, 224);
     }/**
 *The scaled values of the RC channels received. (-100%) -10000, (0%) 0, (100%) 10000. Channels that are
-*	inactive should be set to UINT16_MAX*/
+*	 inactive should be set to UINT16_MAX*/
     public static class RC_CHANNELS_SCALED extends Pack
     {
 
@@ -748,7 +748,7 @@ public class GroundControl extends Host
         {  return (get_bytes(data,  0, 4)); }
         /**
         *Servo output port (set of 8 outputs = 1 port). Most MAVs will just use one, but this allows for more than
-        *	8 servos*/
+        *	 8 servos*/
         public char port_GET()
         {  return (char)((char) get_bytes(data,  4, 1)); }
         public short chan1_scaled_GET()//RC channel 1 value scaled, (-100%) -10000, (0%) 0, (100%) 10000, (invalid) INT16_MAX.
@@ -772,7 +772,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(34, 0, 1, 0, 22, 176);
     }/**
 *The RAW values of the RC channels received. The standard PPM modulation is as follows: 1000 microseconds:
-*	0%, 2000 microseconds: 100%. Individual receivers/transmitters might violate this specification*/
+*	 0%, 2000 microseconds: 100%. Individual receivers/transmitters might violate this specification*/
     public static class RC_CHANNELS_RAW extends Pack
     {
 
@@ -798,7 +798,7 @@ public class GroundControl extends Host
         {  return (get_bytes(data,  16, 4)); }
         /**
         *Servo output port (set of 8 outputs = 1 port). Most MAVs will just use one, but this allows for more than
-        *	8 servos*/
+        *	 8 servos*/
         public char port_GET()
         {  return (char)((char) get_bytes(data,  20, 1)); }
         public char rssi_GET()//Receive signal strength indicator, 0: 0%, 100: 100%, 255: invalid/unknown.
@@ -806,7 +806,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(35, 8, 1, 0, 22, 176);
     }/**
 *The RAW values of the servo outputs (for RC input from the remote, use the RC_CHANNELS messages). The
-*	standard PPM modulation is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%*/
+*	 standard PPM modulation is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%*/
     public static class SERVO_OUTPUT_RAW extends Pack
     {
 
@@ -832,7 +832,7 @@ public class GroundControl extends Host
         {  return (get_bytes(data,  16, 4)); }
         /**
         *Servo output port (set of 8 outputs = 1 port). Most MAVs will just use one, but this allows to encode
-        *	more than 8 servos*/
+        *	 more than 8 servos*/
         public char port_GET()
         {  return (char)((char) get_bytes(data,  20, 1)); }
         public char  servo9_raw_TRY(Bounds.Inside ph)//Servo output 9 value, in microseconds
@@ -875,10 +875,10 @@ public class GroundControl extends Host
             if(ph.field_bit !=  175 && !try_visit_field(ph, 175)) return 0;
             return (char)((char) get_bytes(data,  ph.BYTE, 2));
         }
-        static final Meta meta = new Meta(36, 8, 1, 0, 22, 168, 0, _UF, _gF, _AF, _yF, _CF, _DF, _IF, _lF);
+        static final Meta meta = new Meta(36, 8, 1, 0, 22, 168, 0, _TP, _AP, _xP, _ZP, _hP, _XP, _lP, _BP);
     }/**
 *Request a partial list of mission items from the system/component. http:qgroundcontrol.org/mavlink/waypoint_protocol.
-*	If start and end index are the same, just send one waypoint*/
+*	 If start and end index are the same, just send one waypoint*/
     public static class MISSION_REQUEST_PARTIAL_LIST extends Pack
     {
 
@@ -893,12 +893,12 @@ public class GroundControl extends Host
         public short end_index_GET()//End index, -1 by default (-1: send list to end). Else a valid index of the list
         {  return (short)((short) get_bytes(data,  4, 2)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__m((int)get_bits(data, 48, 3)); }
+        {  return  en__i((int)get_bits(data, 48, 3)); }
         static final Meta meta = new Meta(37, 0, 0, 0, 7, 51);
     }/**
 *This message is sent to the MAV to write a partial list. If start index == end index, only one item will
-*	be transmitted / updated. If the start index is NOT 0 and above the current list size, this request should
-*	be REJECTED*/
+*	 be transmitted / updated. If the start index is NOT 0 and above the current list size, this request should
+*	 be REJECTED*/
     public static class MISSION_WRITE_PARTIAL_LIST extends Pack
     {
 
@@ -913,11 +913,11 @@ public class GroundControl extends Host
         public short end_index_GET()//End index, equal or greater than start index.
         {  return (short)((short) get_bytes(data,  4, 2)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__m((int)get_bits(data, 48, 3)); }
+        {  return  en__i((int)get_bits(data, 48, 3)); }
         static final Meta meta = new Meta(38, 0, 0, 0, 7, 51);
     }/**
 *Message encoding a mission item. This message is emitted to announce
-*	the presence of a mission item and to set a mission item on the system. The mission item can be either in x, y, z meters (type: LOCAL) or x:lat, y:lon, z:altitude. Local frame is Z-down, right handed (NED), global frame is Z-up, right handed (ENU). See also http:qgroundcontrol.org/mavlink/waypoint_protocol.*/
+*	 the presence of a mission item and to set a mission item on the system. The mission item can be either in x, y, z meters (type: LOCAL) or x:lat, y:lon, z:altitude. Local frame is Z-down, right handed (NED), global frame is Z-up, right handed (ENU). See also http:qgroundcontrol.org/mavlink/waypoint_protocol.*/
     public static class MISSION_ITEM extends Pack
     {
 
@@ -950,13 +950,13 @@ public class GroundControl extends Host
         public @MAV_FRAME int frame_GET()//The coordinate system of the waypoint. see MAV_FRAME in mavlink_types.h
         {  return  0 + (int)get_bits(data, 272, 4); }
         public @MAV_CMD int command_GET()//The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
-        {  return  en__u((int)get_bits(data, 276, 8)); }
+        {  return  en__Q((int)get_bits(data, 276, 8)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__m((int)get_bits(data, 284, 3)); }
+        {  return  en__i((int)get_bits(data, 284, 3)); }
         static final Meta meta = new Meta(39, 1, 0, 0, 36, 287);
     }/**
 *Request the information of the mission item with the sequence number seq. The response of the system to
-*	this message should be a MISSION_ITEM message. http:qgroundcontrol.org/mavlink/waypoint_protoco*/
+*	 this message should be a MISSION_ITEM message. http:qgroundcontrol.org/mavlink/waypoint_protoco*/
     public static class MISSION_REQUEST extends Pack
     {
 
@@ -969,11 +969,11 @@ public class GroundControl extends Host
         public char target_component_GET()//Component ID
         {  return (char)((char) get_bytes(data,  3, 1)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__m((int)get_bits(data, 32, 3)); }
+        {  return  en__i((int)get_bits(data, 32, 3)); }
         static final Meta meta = new Meta(40, 1, 0, 0, 5, 35);
     }/**
 *Set the mission item with sequence number seq as current item. This means that the MAV will continue to
-*	this mission item on the shortest path (not following the mission items in-between)*/
+*	 this mission item on the shortest path (not following the mission items in-between)*/
     public static class MISSION_SET_CURRENT extends Pack
     {
 
@@ -988,7 +988,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(41, 1, 0, 0, 4, 32);
     }/**
 *Message that announces the sequence number of the current active mission item. The MAV will fly towards
-*	this mission item*/
+*	 this mission item*/
     public static class MISSION_CURRENT extends Pack
     {
 
@@ -1009,11 +1009,11 @@ public class GroundControl extends Host
         public char target_component_GET()//Component ID
         {  return (char)((char) get_bytes(data,  1, 1)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__m((int)get_bits(data, 16, 3)); }
+        {  return  en__i((int)get_bits(data, 16, 3)); }
         static final Meta meta = new Meta(43, 0, 0, 0, 3, 19);
     }/**
 *This message is emitted as response to MISSION_REQUEST_LIST by the MAV and to initiate a write transaction.
-*	The GCS can then request the individual mission item based on the knowledge of the total number of waypoints*/
+*	 The GCS can then request the individual mission item based on the knowledge of the total number of waypoints*/
     public static class MISSION_COUNT extends Pack
     {
 
@@ -1026,7 +1026,7 @@ public class GroundControl extends Host
         public char target_component_GET()//Component ID
         {  return (char)((char) get_bytes(data,  3, 1)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__m((int)get_bits(data, 32, 3)); }
+        {  return  en__i((int)get_bits(data, 32, 3)); }
         static final Meta meta = new Meta(44, 1, 0, 0, 5, 35);
     }/**
 *Delete all mission items at once.*/
@@ -1040,11 +1040,11 @@ public class GroundControl extends Host
         public char target_component_GET()//Component ID
         {  return (char)((char) get_bytes(data,  1, 1)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__m((int)get_bits(data, 16, 3)); }
+        {  return  en__i((int)get_bits(data, 16, 3)); }
         static final Meta meta = new Meta(45, 0, 0, 0, 3, 19);
     }/**
 *A certain mission item has been reached. The system will either hold this position (or circle on the orbit)
-*	or (if the autocontinue on the WP was set) continue to the next waypoint*/
+*	 or (if the autocontinue on the WP was set) continue to the next waypoint*/
     public static class MISSION_ITEM_REACHED extends Pack
     {
 
@@ -1055,7 +1055,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(46, 1, 0, 0, 2, 16);
     }/**
 *Ack message during waypoint handling. The type field states if this message is a positive ack (type=0)
-*	or if an error happened (type=non-zero)*/
+*	 or if an error happened (type=non-zero)*/
     public static class MISSION_ACK extends Pack
     {
 
@@ -1068,12 +1068,12 @@ public class GroundControl extends Host
         public @MAV_MISSION_RESULT int type_GET()//See MAV_MISSION_RESULT enum
         {  return  0 + (int)get_bits(data, 16, 4); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__m((int)get_bits(data, 20, 3)); }
+        {  return  en__i((int)get_bits(data, 20, 3)); }
         static final Meta meta = new Meta(47, 0, 0, 0, 3, 23);
     }/**
 *As local waypoints exist, the global waypoint reference allows to transform between the local coordinate
-*	frame and the global (GPS) coordinate frame. This can be necessary when e.g. in- and outdoor settings
-*	are connected and the MAV should move from in- to outdoor*/
+*	 frame and the global (GPS) coordinate frame. This can be necessary when e.g. in- and outdoor settings
+*	 are connected and the MAV should move from in- to outdoor*/
     public static class SET_GPS_GLOBAL_ORIGIN extends Pack
     {
 
@@ -1092,7 +1092,7 @@ public class GroundControl extends Host
             if(ph.field_bit !=  104 && !try_visit_field(ph, 104)) return 0;
             return (get_bytes(data,  ph.BYTE, 8));
         }
-        static final Meta meta = new Meta(48, 0, 0, 0, 14, 104, 0, _Ba);
+        static final Meta meta = new Meta(48, 0, 0, 0, 14, 104, 0, _wk);
     }/**
 *Once the MAV sets a new GPS-Local correspondence, this message announces the origin (0,0,0) positio*/
     public static class GPS_GLOBAL_ORIGIN extends Pack
@@ -1111,7 +1111,7 @@ public class GroundControl extends Host
             if(ph.field_bit !=  96 && !try_visit_field(ph, 96)) return 0;
             return (get_bytes(data,  ph.BYTE, 8));
         }
-        static final Meta meta = new Meta(49, 0, 0, 0, 13, 96, 0, _Za);
+        static final Meta meta = new Meta(49, 0, 0, 0, 13, 96, 0, _yk);
     }/**
 *Bind a RC channel to a parameter. The parameter should change accoding to the RC channel value.*/
     public static class PARAM_MAP_RC extends Pack
@@ -1125,12 +1125,12 @@ public class GroundControl extends Host
         {  return (char)((char) get_bytes(data,  1, 1)); }
         /**
         *Parameter index. Send -1 to use the param ID field as identifier (else the param id will be ignored),
-        *	send -2 to disable any existing map for this rc_channel_index*/
+        *	 send -2 to disable any existing map for this rc_channel_index*/
         public short param_index_GET()
         {  return (short)((short) get_bytes(data,  2, 2)); }
         /**
         *Index of parameter RC channel. Not equal to the RC channel id. Typically correpsonds to a potentiometer-knob
-        *	on the RC*/
+        *	 on the RC*/
         public char parameter_rc_channel_index_GET()
         {  return (char)((char) get_bytes(data,  4, 1)); }
         public float param_value0_GET()//Initial parameter value
@@ -1139,18 +1139,18 @@ public class GroundControl extends Host
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  9, 4))); }
         /**
         *Minimum param value. The protocol does not define if this overwrites an onboard minimum value. (Depends
-        *	on implementation*/
+        *	 on implementation*/
         public float param_value_min_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  13, 4))); }
         /**
         *Maximum param value. The protocol does not define if this overwrites an onboard maximum value. (Depends
-        *	on implementation*/
+        *	 on implementation*/
         public float param_value_max_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  17, 4))); }
         /**
         *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-        *	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-        *	storage if the ID is stored as strin*/
+        *	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+        *	 storage if the ID is stored as strin*/
         public String param_id_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  168 && !try_visit_field(ph, 168)  ||  !try_visit_item(ph, 0)) return null;
@@ -1158,8 +1158,8 @@ public class GroundControl extends Host
         }
         /**
         *Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT
-        *	null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
-        *	storage if the ID is stored as strin*/
+        *	 null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes
+        *	 storage if the ID is stored as strin*/
         public char[] param_id_GET(Bounds.Inside ph, char[]  dst_ch, int pos)
         {
             for(int BYTE = ph.BYTE, dst_max = pos + ph.items; pos < dst_max ; pos++,  BYTE += 2)
@@ -1169,10 +1169,10 @@ public class GroundControl extends Host
         public int param_id_LEN(Bounds.Inside ph)
         {
             return (ph.field_bit !=  168 && !try_visit_field(ph, 168)  ||  !try_visit_item(ph, 0)) ? 0 : ph.items;
-        } static final Meta meta = new Meta(50, 0, 0, 0, 22, 168, 0, _Na);
+        } static final Meta meta = new Meta(50, 0, 0, 0, 22, 168, 0, _ak);
     }/**
 *Request the information of the mission item with the sequence number seq. The response of the system to
-*	this message should be a MISSION_ITEM_INT message. http:qgroundcontrol.org/mavlink/waypoint_protoco*/
+*	 this message should be a MISSION_ITEM_INT message. http:qgroundcontrol.org/mavlink/waypoint_protoco*/
     public static class MISSION_REQUEST_INT extends Pack
     {
 
@@ -1185,12 +1185,12 @@ public class GroundControl extends Host
         public char target_component_GET()//Component ID
         {  return (char)((char) get_bytes(data,  3, 1)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__m((int)get_bits(data, 32, 3)); }
+        {  return  en__i((int)get_bits(data, 32, 3)); }
         static final Meta meta = new Meta(51, 1, 0, 0, 5, 35);
     }/**
 *Set a safety zone (volume), which is defined by two corners of a cube. This message can be used to tell
-*	the MAV which setpoints/waypoints to accept and which to reject. Safety areas are often enforced by national
-*	or competition regulations*/
+*	 the MAV which setpoints/waypoints to accept and which to reject. Safety areas are often enforced by national
+*	 or competition regulations*/
     public static class SAFETY_SET_ALLOWED_AREA extends Pack
     {
 
@@ -1214,7 +1214,7 @@ public class GroundControl extends Host
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  22, 4))); }
         /**
         *Coordinate frame, as defined by MAV_FRAME enum in mavlink_types.h. Can be either global, GPS, right-handed
-        *	with Z axis up or local, right handed, Z axis down*/
+        *	 with Z axis up or local, right handed, Z axis down*/
         public @MAV_FRAME int frame_GET()
         {  return  0 + (int)get_bits(data, 208, 4); }
         static final Meta meta = new Meta(54, 0, 0, 0, 27, 212);
@@ -1239,13 +1239,13 @@ public class GroundControl extends Host
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  20, 4))); }
         /**
         *Coordinate frame, as defined by MAV_FRAME enum in mavlink_types.h. Can be either global, GPS, right-handed
-        *	with Z axis up or local, right handed, Z axis down*/
+        *	 with Z axis up or local, right handed, Z axis down*/
         public @MAV_FRAME int frame_GET()
         {  return  0 + (int)get_bits(data, 192, 4); }
         static final Meta meta = new Meta(55, 0, 0, 0, 25, 196);
     }/**
 *The attitude in the aeronautical frame (right-handed, Z-down, X-front, Y-right), expressed as quaternion.
-*	Quaternion order is w, x, y, z and a zero rotation would be expressed as (1 0 0 0)*/
+*	 Quaternion order is w, x, y, z and a zero rotation would be expressed as (1 0 0 0)*/
     public static class ATTITUDE_QUATERNION_COV extends Pack
     {
 
@@ -1300,9 +1300,9 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(62, 1, 0, 0, 26, 208);
     }/**
 *The filtered global position (e.g. fused GPS and accelerometers). The position is in GPS-frame (right-handed,
-*	Z-up). It  is designed as scaled integer message since the resolution of float is not sufficient. NOTE:
-*	This message is intended for onboard networks / companion computers and higher-bandwidth links and optimized
-*	for accuracy and completeness. Please use the GLOBAL_POSITION_INT message for a minimal subset*/
+*	 Z-up). It  is designed as scaled integer message since the resolution of float is not sufficient. NOTE:
+*	 This message is intended for onboard networks / companion computers and higher-bandwidth links and optimized
+*	 for accuracy and completeness. Please use the GLOBAL_POSITION_INT message for a minimal subset*/
     public static class GLOBAL_POSITION_INT_COV extends Pack
     {
 
@@ -1336,7 +1336,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(63, 0, 0, 1, 181, 1443);
     }/**
 *The filtered local position (e.g. fused computer vision and accelerometers). Coordinate frame is right-handed,
-*	Z-axis down (aeronautical frame, NED / north-east-down convention*/
+*	 Z-axis down (aeronautical frame, NED / north-east-down convention*/
     public static class LOCAL_POSITION_NED_COV extends Pack
     {
 
@@ -1364,7 +1364,7 @@ public class GroundControl extends Host
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  40, 4))); }
         /**
         *Covariance matrix upper right triangular (first nine entries are the first ROW, next eight entries are
-        *	the second row, etc.*/
+        *	 the second row, etc.*/
         public float[] covariance_GET(float[]  dst_ch, int pos)
         {
             for(int BYTE = 44, dst_max = pos + 45; pos < dst_max ; pos++,  BYTE += 4)
@@ -1373,14 +1373,14 @@ public class GroundControl extends Host
         }
         /**
         *Covariance matrix upper right triangular (first nine entries are the first ROW, next eight entries are
-        *	the second row, etc.*/
+        *	 the second row, etc.*/
         public float[] covariance_GET()
         {return covariance_GET(new float[45], 0);} public @MAV_ESTIMATOR_TYPE int estimator_type_GET()//Class id of the estimator this estimate originated from.
         {  return  1 + (int)get_bits(data, 1792, 3); }
         static final Meta meta = new Meta(64, 0, 0, 1, 225, 1795);
     }/**
 *The PPM values of the RC channels received. The standard PPM modulation is as follows: 1000 microseconds:
-*	0%, 2000 microseconds: 100%. Individual receivers/transmitters might violate this specification*/
+*	 0%, 2000 microseconds: 100%. Individual receivers/transmitters might violate this specification*/
     public static class RC_CHANNELS extends Pack
     {
 
@@ -1426,7 +1426,7 @@ public class GroundControl extends Host
         {  return (get_bytes(data,  36, 4)); }
         /**
         *Total number of RC channels being received. This can be larger than 18, indicating that more channels
-        *	are available but not given in this message. This value should be 0 when no RC channels are available*/
+        *	 are available but not given in this message. This value should be 0 when no RC channels are available*/
         public char chancount_GET()
         {  return (char)((char) get_bytes(data,  40, 1)); }
         public char rssi_GET()//Receive signal strength indicator, 0: 0%, 100: 100%, 255: invalid/unknown.
@@ -1466,8 +1466,8 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(67, 1, 0, 0, 4, 32);
     }/**
 *This message provides an API for manually controlling the vehicle using standard joystick axes nomenclature,
-*	along with a joystick-like input device. Unused axes can be disabled an buttons are also transmit as
-*	boolean values of their*/
+*	 along with a joystick-like input device. Unused axes can be disabled an buttons are also transmit as
+*	 boolean values of their*/
     public static class MANUAL_CONTROL extends Pack
     {
 
@@ -1475,40 +1475,40 @@ public class GroundControl extends Host
         MANUAL_CONTROL(int bytes) { super(meta, bytes); }
         /**
         *A bitfield corresponding to the joystick buttons' current state, 1 for pressed, 0 for released. The lowest
-        *	bit corresponds to Button 1*/
+        *	 bit corresponds to Button 1*/
         public char buttons_GET()
         {  return (char)((char) get_bytes(data,  0, 2)); }
         public char target_GET()//The system to be controlled.
         {  return (char)((char) get_bytes(data,  2, 1)); }
         /**
         *X-axis, normalized to the range [-1000,1000]. A value of INT16_MAX indicates that this axis is invalid.
-        *	Generally corresponds to forward(1000)-backward(-1000) movement on a joystick and the pitch of a vehicle*/
+        *	 Generally corresponds to forward(1000)-backward(-1000) movement on a joystick and the pitch of a vehicle*/
         public short x_GET()
         {  return (short)((short) get_bytes(data,  3, 2)); }
         /**
         *Y-axis, normalized to the range [-1000,1000]. A value of INT16_MAX indicates that this axis is invalid.
-        *	Generally corresponds to left(-1000)-right(1000) movement on a joystick and the roll of a vehicle*/
+        *	 Generally corresponds to left(-1000)-right(1000) movement on a joystick and the roll of a vehicle*/
         public short y_GET()
         {  return (short)((short) get_bytes(data,  5, 2)); }
         /**
         *Z-axis, normalized to the range [-1000,1000]. A value of INT16_MAX indicates that this axis is invalid.
-        *	Generally corresponds to a separate slider movement with maximum being 1000 and minimum being -1000 on
-        *	a joystick and the thrust of a vehicle. Positive values are positive thrust, negative values are negative
-        *	thrust*/
+        *	 Generally corresponds to a separate slider movement with maximum being 1000 and minimum being -1000 on
+        *	 a joystick and the thrust of a vehicle. Positive values are positive thrust, negative values are negative
+        *	 thrust*/
         public short z_GET()
         {  return (short)((short) get_bytes(data,  7, 2)); }
         /**
         *R-axis, normalized to the range [-1000,1000]. A value of INT16_MAX indicates that this axis is invalid.
-        *	Generally corresponds to a twisting of the joystick, with counter-clockwise being 1000 and clockwise
-        *	being -1000, and the yaw of a vehicle*/
+        *	 Generally corresponds to a twisting of the joystick, with counter-clockwise being 1000 and clockwise
+        *	 being -1000, and the yaw of a vehicle*/
         public short r_GET()
         {  return (short)((short) get_bytes(data,  9, 2)); }
         static final Meta meta = new Meta(69, 1, 0, 0, 11, 88);
     }/**
 *The RAW values of the RC channels sent to the MAV to override info received from the RC radio. A value
-*	of UINT16_MAX means no change to that channel. A value of 0 means control of that channel should be released
-*	back to the RC radio. The standard PPM modulation is as follows: 1000 microseconds: 0%, 2000 microseconds:
-*	100%. Individual receivers/transmitters might violate this specification*/
+*	 of UINT16_MAX means no change to that channel. A value of 0 means control of that channel should be released
+*	 back to the RC radio. The standard PPM modulation is as follows: 1000 microseconds: 0%, 2000 microseconds:
+*	 100%. Individual receivers/transmitters might violate this specification*/
     public static class RC_CHANNELS_OVERRIDE extends Pack
     {
 
@@ -1537,7 +1537,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(70, 8, 0, 0, 18, 144);
     }/**
 *Message encoding a mission item. This message is emitted to announce
-*	the presence of a mission item and to set a mission item on the system. The mission item can be either in x, y, z meters (type: LOCAL) or x:lat, y:lon, z:altitude. Local frame is Z-down, right handed (NED), global frame is Z-up, right handed (ENU). See alsohttp:qgroundcontrol.org/mavlink/waypoint_protocol.*/
+*	 the presence of a mission item and to set a mission item on the system. The mission item can be either in x, y, z meters (type: LOCAL) or x:lat, y:lon, z:altitude. Local frame is Z-down, right handed (NED), global frame is Z-up, right handed (ENU). See alsohttp:qgroundcontrol.org/mavlink/waypoint_protocol.*/
     public static class MISSION_ITEM_INT extends Pack
     {
 
@@ -1545,7 +1545,7 @@ public class GroundControl extends Host
         MISSION_ITEM_INT(int bytes) { super(meta, bytes); }
         /**
         *Waypoint ID (sequence number). Starts at zero. Increases monotonically for each waypoint, no gaps in the
-        *	sequence (0,1,2,3,4)*/
+        *	 sequence (0,1,2,3,4)*/
         public char seq_GET()
         {  return (char)((char) get_bytes(data,  0, 2)); }
         public char target_system_GET()//System ID
@@ -1573,9 +1573,9 @@ public class GroundControl extends Host
         public @MAV_FRAME int frame_GET()//The coordinate system of the waypoint. see MAV_FRAME in mavlink_types.h
         {  return  0 + (int)get_bits(data, 272, 4); }
         public @MAV_CMD int command_GET()//The scheduled action for the waypoint. see MAV_CMD in common.xml MAVLink specs
-        {  return  en__u((int)get_bits(data, 276, 8)); }
+        {  return  en__Q((int)get_bits(data, 276, 8)); }
         public @MAV_MISSION_TYPE int mission_type_GET()//Mission type, see MAV_MISSION_TYPE
-        {  return  en__m((int)get_bits(data, 284, 3)); }
+        {  return  en__i((int)get_bits(data, 284, 3)); }
         static final Meta meta = new Meta(73, 1, 0, 0, 36, 287);
     }/**
 *Metrics typically displayed on a HUD for fixed wing aircraft*/
@@ -1629,7 +1629,7 @@ public class GroundControl extends Host
         public @MAV_FRAME int frame_GET()//The coordinate system of the COMMAND. see MAV_FRAME in mavlink_types.h
         {  return  0 + (int)get_bits(data, 256, 4); }
         public @MAV_CMD int command_GET()//The scheduled action for the mission item. see MAV_CMD in common.xml MAVLink specs
-        {  return  en__u((int)get_bits(data, 260, 8)); }
+        {  return  en__Q((int)get_bits(data, 260, 8)); }
         static final Meta meta = new Meta(75, 0, 0, 0, 34, 268);
     }/**
 *Send a command with up to seven parameters to the MAV*/
@@ -1659,7 +1659,7 @@ public class GroundControl extends Host
         public float param7_GET()//Parameter 7, as defined by MAV_CMD enum.
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  27, 4))); }
         public @MAV_CMD int command_GET()//Command ID, as defined by MAV_CMD enum.
-        {  return  en__u((int)get_bits(data, 248, 8)); }
+        {  return  en__Q((int)get_bits(data, 248, 8)); }
         static final Meta meta = new Meta(76, 0, 0, 0, 32, 256);
     }/**
 *Report status of a command. Includes feedback whether the command was executed.*/
@@ -1669,12 +1669,12 @@ public class GroundControl extends Host
         COMMAND_ACK() { super(meta, 0); }
         COMMAND_ACK(int bytes) { super(meta, bytes); }
         public @MAV_CMD int command_GET()//Command ID, as defined by MAV_CMD enum.
-        {  return  en__u((int)get_bits(data, 0, 8)); }
+        {  return  en__Q((int)get_bits(data, 0, 8)); }
         public @MAV_RESULT int result_GET()//See MAV_RESULT enum
         {  return  0 + (int)get_bits(data, 8, 3); }
         /**
         *WIP: Also used as result_param1, it can be set with a enum containing the errors reasons of why the command
-        *	was denied or the progress percentage or 255 if unknown the progress when result is MAV_RESULT_IN_PROGRESS*/
+        *	 was denied or the progress percentage or 255 if unknown the progress when result is MAV_RESULT_IN_PROGRESS*/
         public char  progress_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  11 && !try_visit_field(ph, 11)) return 0;
@@ -1682,7 +1682,7 @@ public class GroundControl extends Host
         }
         /**
         *WIP: Additional parameter of the result, example: which parameter of MAV_CMD_NAV_WAYPOINT caused it to
-        *	be denied*/
+        *	 be denied*/
         public int  result_param2_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  12 && !try_visit_field(ph, 12)) return 0;
@@ -1698,7 +1698,7 @@ public class GroundControl extends Host
             if(ph.field_bit !=  14 && !try_visit_field(ph, 14)) return 0;
             return (char)((char) get_bytes(data,  ph.BYTE, 1));
         }
-        static final Meta meta = new Meta(77, 0, 0, 0, 3, 11, 0, _ep, _Np, _Kp, _np);
+        static final Meta meta = new Meta(77, 0, 0, 0, 3, 11, 0, _GO, _aO, _pO, _sO);
     }/**
 *Setpoint in roll, pitch, yaw and thrust from the operator*/
     public static class MANUAL_SETPOINT extends Pack
@@ -1723,7 +1723,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(81, 0, 1, 0, 22, 176);
     }/**
 *Sets a desired vehicle attitude. Used by an external controller to command the vehicle (manual controller
-*	or other system)*/
+*	 or other system)*/
     public static class SET_ATTITUDE_TARGET extends Pack
     {
 
@@ -1737,7 +1737,7 @@ public class GroundControl extends Host
         {  return (char)((char) get_bytes(data,  5, 1)); }
         /**
         *Mappings: If any of these bits are set, the corresponding input should be ignored: bit 1: body roll rate,
-        *	bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 6: reserved, bit 7: throttle, bit 8: attitud*/
+        *	 bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 6: reserved, bit 7: throttle, bit 8: attitud*/
         public char type_mask_GET()
         {  return (char)((char) get_bytes(data,  6, 1)); }
         public float[] q_GET(float[]  dst_ch, int pos)  //Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
@@ -1758,7 +1758,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(82, 0, 1, 0, 39, 312);
     }/**
 *Reports the current commanded attitude of the vehicle as specified by the autopilot. This should match
-*	the commands sent in a SET_ATTITUDE_TARGET message if the vehicle is being controlled this way*/
+*	 the commands sent in a SET_ATTITUDE_TARGET message if the vehicle is being controlled this way*/
     public static class ATTITUDE_TARGET extends Pack
     {
 
@@ -1768,7 +1768,7 @@ public class GroundControl extends Host
         {  return (get_bytes(data,  0, 4)); }
         /**
         *Mappings: If any of these bits are set, the corresponding input should be ignored: bit 1: body roll rate,
-        *	bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 7: reserved, bit 8: attitud*/
+        *	 bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 7: reserved, bit 8: attitud*/
         public char type_mask_GET()
         {  return (char)((char) get_bytes(data,  4, 1)); }
         public float[] q_GET(float[]  dst_ch, int pos)  //Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
@@ -1794,18 +1794,18 @@ public class GroundControl extends Host
         SET_POSITION_TARGET_LOCAL_NED(int bytes) { super(meta, bytes); }
         /**
         *Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or
-        *	0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
-        *	the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
-        *	2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
-        *	bit 11: yaw, bit 12: yaw rat*/
+        *	 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
+        *	 the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
+        *	 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
+        *	 bit 11: yaw, bit 12: yaw rat*/
         public char type_mask_GET()
         {  return (char)((char) get_bytes(data,  0, 2)); }
         /**
         *Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or
-        *	0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
-        *	the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
-        *	2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
-        *	bit 11: yaw, bit 12: yaw rat*/
+        *	 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
+        *	 the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
+        *	 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
+        *	 bit 11: yaw, bit 12: yaw rat*/
         public void type_mask_SET(char  src)
         {  set_bytes((char)(src) & -1L, 2, data,  0); }
         public long time_boot_ms_GET()//Timestamp in milliseconds since system boot
@@ -1866,18 +1866,18 @@ public class GroundControl extends Host
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 48); }
         /**
         *Valid options are: MAV_FRAME_LOCAL_NED = 1, MAV_FRAME_LOCAL_OFFSET_NED = 7, MAV_FRAME_BODY_NED = 8, MAV_FRAME_BODY_OFFSET_NED
-        *	=*/
+        *	 =*/
         public @MAV_FRAME int coordinate_frame_GET()
         {  return  0 + (int)get_bits(data, 416, 4); }
         /**
         *Valid options are: MAV_FRAME_LOCAL_NED = 1, MAV_FRAME_LOCAL_OFFSET_NED = 7, MAV_FRAME_BODY_NED = 8, MAV_FRAME_BODY_OFFSET_NED
-        *	=*/
+        *	 =*/
         public void coordinate_frame_SET(@MAV_FRAME int  src)
         {  set_bits(- 0 +   src, 4, data, 416); }
         static final Meta meta = new Meta(84, 1, 1, 0, 53, 420);
     }/**
 *Sets a desired vehicle position, velocity, and/or acceleration in a global coordinate system (WGS84).
-*	Used by an external controller to command the vehicle (manual controller or other system)*/
+*	 Used by an external controller to command the vehicle (manual controller or other system)*/
     public static class SET_POSITION_TARGET_GLOBAL_INT extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -1885,30 +1885,30 @@ public class GroundControl extends Host
         SET_POSITION_TARGET_GLOBAL_INT(int bytes) { super(meta, bytes); }
         /**
         *Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or
-        *	0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
-        *	the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
-        *	2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
-        *	bit 11: yaw, bit 12: yaw rat*/
+        *	 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
+        *	 the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
+        *	 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
+        *	 bit 11: yaw, bit 12: yaw rat*/
         public char type_mask_GET()
         {  return (char)((char) get_bytes(data,  0, 2)); }
         /**
         *Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or
-        *	0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
-        *	the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
-        *	2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
-        *	bit 11: yaw, bit 12: yaw rat*/
+        *	 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
+        *	 the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
+        *	 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
+        *	 bit 11: yaw, bit 12: yaw rat*/
         public void type_mask_SET(char  src)
         {  set_bytes((char)(src) & -1L, 2, data,  0); }
         /**
         *Timestamp in milliseconds since system boot. The rationale for the timestamp in the setpoint is to allow
-        *	the system to compensate for the transport delay of the setpoint. This allows the system to compensate
-        *	processing latency*/
+        *	 the system to compensate for the transport delay of the setpoint. This allows the system to compensate
+        *	 processing latency*/
         public long time_boot_ms_GET()
         {  return (get_bytes(data,  2, 4)); }
         /**
         *Timestamp in milliseconds since system boot. The rationale for the timestamp in the setpoint is to allow
-        *	the system to compensate for the transport delay of the setpoint. This allows the system to compensate
-        *	processing latency*/
+        *	 the system to compensate for the transport delay of the setpoint. This allows the system to compensate
+        *	 processing latency*/
         public void time_boot_ms_SET(long  src)
         {  set_bytes((src) & -1L, 4, data,  2); }
         public char target_system_GET()//System ID
@@ -1965,19 +1965,19 @@ public class GroundControl extends Host
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 48); }
         /**
         *Valid options are: MAV_FRAME_GLOBAL_INT = 5, MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6, MAV_FRAME_GLOBAL_TERRAIN_ALT_INT
-        *	= 1*/
+        *	 = 1*/
         public @MAV_FRAME int coordinate_frame_GET()
         {  return  0 + (int)get_bits(data, 416, 4); }
         /**
         *Valid options are: MAV_FRAME_GLOBAL_INT = 5, MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6, MAV_FRAME_GLOBAL_TERRAIN_ALT_INT
-        *	= 1*/
+        *	 = 1*/
         public void coordinate_frame_SET(@MAV_FRAME int  src)
         {  set_bits(- 0 +   src, 4, data, 416); }
         static final Meta meta = new Meta(86, 1, 1, 0, 53, 420);
     }/**
 *Reports the current commanded vehicle position, velocity, and acceleration as specified by the autopilot.
-*	This should match the commands sent in SET_POSITION_TARGET_GLOBAL_INT if the vehicle is being controlled
-*	this way*/
+*	 This should match the commands sent in SET_POSITION_TARGET_GLOBAL_INT if the vehicle is being controlled
+*	 this way*/
     public static class POSITION_TARGET_GLOBAL_INT extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -1985,30 +1985,30 @@ public class GroundControl extends Host
         POSITION_TARGET_GLOBAL_INT(int bytes) { super(meta, bytes); }
         /**
         *Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or
-        *	0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
-        *	the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
-        *	2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
-        *	bit 11: yaw, bit 12: yaw rat*/
+        *	 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
+        *	 the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
+        *	 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
+        *	 bit 11: yaw, bit 12: yaw rat*/
         public char type_mask_GET()
         {  return (char)((char) get_bytes(data,  0, 2)); }
         /**
         *Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or
-        *	0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
-        *	the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
-        *	2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
-        *	bit 11: yaw, bit 12: yaw rat*/
+        *	 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set
+        *	 the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit
+        *	 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint,
+        *	 bit 11: yaw, bit 12: yaw rat*/
         public void type_mask_SET(char  src)
         {  set_bytes((char)(src) & -1L, 2, data,  0); }
         /**
         *Timestamp in milliseconds since system boot. The rationale for the timestamp in the setpoint is to allow
-        *	the system to compensate for the transport delay of the setpoint. This allows the system to compensate
-        *	processing latency*/
+        *	 the system to compensate for the transport delay of the setpoint. This allows the system to compensate
+        *	 processing latency*/
         public long time_boot_ms_GET()
         {  return (get_bytes(data,  2, 4)); }
         /**
         *Timestamp in milliseconds since system boot. The rationale for the timestamp in the setpoint is to allow
-        *	the system to compensate for the transport delay of the setpoint. This allows the system to compensate
-        *	processing latency*/
+        *	 the system to compensate for the transport delay of the setpoint. This allows the system to compensate
+        *	 processing latency*/
         public void time_boot_ms_SET(long  src)
         {  set_bytes((src) & -1L, 4, data,  2); }
         public int lat_int_GET()//X Position in WGS84 frame in 1e7 * meters
@@ -2057,19 +2057,19 @@ public class GroundControl extends Host
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 46); }
         /**
         *Valid options are: MAV_FRAME_GLOBAL_INT = 5, MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6, MAV_FRAME_GLOBAL_TERRAIN_ALT_INT
-        *	= 1*/
+        *	 = 1*/
         public @MAV_FRAME int coordinate_frame_GET()
         {  return  0 + (int)get_bits(data, 400, 4); }
         /**
         *Valid options are: MAV_FRAME_GLOBAL_INT = 5, MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6, MAV_FRAME_GLOBAL_TERRAIN_ALT_INT
-        *	= 1*/
+        *	 = 1*/
         public void coordinate_frame_SET(@MAV_FRAME int  src)
         {  set_bits(- 0 +   src, 4, data, 400); }
         static final Meta meta = new Meta(87, 1, 1, 0, 51, 404);
     }/**
 *The offset in X, Y, Z and yaw between the LOCAL_POSITION_NED messages of MAV X and the global coordinate
-*	frame in NED coordinates. Coordinate frame is right-handed, Z-axis down (aeronautical frame, NED / north-east-down
-*	convention*/
+*	 frame in NED coordinates. Coordinate frame is right-handed, Z-axis down (aeronautical frame, NED / north-east-down
+*	 convention*/
     public static class LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -2106,8 +2106,8 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(89, 0, 1, 0, 28, 224);
     }/**
 *DEPRECATED PACKET! Suffers from missing airspeed fields and singularities due to Euler angles. Please
-*	use HIL_STATE_QUATERNION instead. Sent from simulation to autopilot. This packet is useful for high throughput
-*	applications such as hardware in the loop simulations*/
+*	 use HIL_STATE_QUATERNION instead. Sent from simulation to autopilot. This packet is useful for high throughput
+*	 applications such as hardware in the loop simulations*/
     public static class HIL_STATE extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -2226,17 +2226,17 @@ public class GroundControl extends Host
         public void nav_mode_SET(char  src) //Navigation mode (MAV_NAV_MODE)
         {  set_bytes((char)(src) & -1L, 1, data,  40); }
         public @MAV_MODE int mode_GET()//System mode (MAV_MODE)
-        {  return  en__p((int)get_bits(data, 328, 4)); }
+        {  return  en__O((int)get_bits(data, 328, 4)); }
         public void mode_SET(@MAV_MODE int  src) //System mode (MAV_MODE)
         {
-            long id = id__p(src);
+            long id = id__O(src);
             set_bits(id, 4, data, 328);
         }
         static final Meta meta = new Meta(91, 0, 0, 1, 42, 332);
     }/**
 *Sent from simulation to autopilot. The RAW values of the RC channels received. The standard PPM modulation
-*	is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%. Individual receivers/transmitters might
-*	violate this specification*/
+*	 is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%. Individual receivers/transmitters might
+*	 violate this specification*/
     public static class HIL_RC_INPUTS_RAW extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -2327,10 +2327,10 @@ public class GroundControl extends Host
                 set_bytes(Float.floatToIntBits(src[pos]) & -1L, 4, data, BYTE);
         }
         public @MAV_MODE int mode_GET()//System mode (MAV_MODE), includes arming state.
-        {  return  en__p((int)get_bits(data, 640, 4)); }
+        {  return  en__O((int)get_bits(data, 640, 4)); }
         public void mode_SET(@MAV_MODE int  src) //System mode (MAV_MODE), includes arming state.
         {
-            long id = id__p(src);
+            long id = id__O(src);
             set_bits(id, 4, data, 640);
         }
         static final Meta meta = new Meta(93, 0, 0, 2, 81, 644);
@@ -2391,7 +2391,7 @@ public class GroundControl extends Host
         {
             if(ph.field_bit != 209)insert_field(ph, 209, 0);
             set_bytes(Float.floatToIntBits(src) & -1L, 4, data, ph.BYTE);
-        } static final Meta meta = new Meta(100, 0, 0, 1, 27, 208, 0, _Dg, _Ig);
+        } static final Meta meta = new Meta(100, 0, 0, 1, 27, 208, 0, _XA, _lA);
     } public static class GLOBAL_VISION_POSITION_ESTIMATE extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -2593,12 +2593,12 @@ public class GroundControl extends Host
         OPTICAL_FLOW_RAD(int bytes) { super(meta, bytes); }
         /**
         *Integration time in microseconds. Divide integrated_x and integrated_y by the integration time to obtain
-        *	average flow. The integration time also indicates the*/
+        *	 average flow. The integration time also indicates the*/
         public long integration_time_us_GET()
         {  return (get_bytes(data,  0, 4)); }
         /**
         *Integration time in microseconds. Divide integrated_x and integrated_y by the integration time to obtain
-        *	average flow. The integration time also indicates the*/
+        *	 average flow. The integration time also indicates the*/
         public void integration_time_us_SET(long  src)
         {  set_bytes((src) & -1L, 4, data,  0); }
         public long time_delta_distance_us_GET()//Time in microseconds since the distance was sampled.
@@ -2615,22 +2615,22 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 1, data,  16); }
         /**
         *Flow in radians around X axis (Sensor RH rotation about the X axis induces a positive flow. Sensor linear
-        *	motion along the positive Y axis induces a negative flow.*/
+        *	 motion along the positive Y axis induces a negative flow.*/
         public float integrated_x_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  17, 4))); }
         /**
         *Flow in radians around X axis (Sensor RH rotation about the X axis induces a positive flow. Sensor linear
-        *	motion along the positive Y axis induces a negative flow.*/
+        *	 motion along the positive Y axis induces a negative flow.*/
         public void integrated_x_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 17); }
         /**
         *Flow in radians around Y axis (Sensor RH rotation about the Y axis induces a positive flow. Sensor linear
-        *	motion along the positive X axis induces a positive flow.*/
+        *	 motion along the positive X axis induces a positive flow.*/
         public float integrated_y_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  21, 4))); }
         /**
         *Flow in radians around Y axis (Sensor RH rotation about the Y axis induces a positive flow. Sensor linear
-        *	motion along the positive X axis induces a positive flow.*/
+        *	 motion along the positive X axis induces a positive flow.*/
         public void integrated_y_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 21); }
         public float integrated_xgyro_GET()//RH rotation around X axis (rad)
@@ -2655,12 +2655,12 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 1, data,  39); }
         /**
         *Distance to the center of the flow field in meters. Positive value (including zero): distance known. Negative
-        *	value: Unknown distance*/
+        *	 value: Unknown distance*/
         public float distance_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  40, 4))); }
         /**
         *Distance to the center of the flow field in meters. Positive value (including zero): distance known. Negative
-        *	value: Unknown distance*/
+        *	 value: Unknown distance*/
         public void distance_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 40); }
         static final Meta meta = new Meta(106, 0, 2, 1, 44, 352);
@@ -2673,12 +2673,12 @@ public class GroundControl extends Host
         HIL_SENSOR(int bytes) { super(meta, bytes); }
         /**
         *Bitmask for fields that have updated since last message, bit 0 = xacc, bit 12: temperature, bit 31: full
-        *	reset of attitude/position/velocities/etc was performed in sim*/
+        *	 reset of attitude/position/velocities/etc was performed in sim*/
         public long fields_updated_GET()
         {  return (get_bytes(data,  0, 4)); }
         /**
         *Bitmask for fields that have updated since last message, bit 0 = xacc, bit 12: temperature, bit 31: full
-        *	reset of attitude/position/velocities/etc was performed in sim*/
+        *	 reset of attitude/position/velocities/etc was performed in sim*/
         public void fields_updated_SET(long  src)
         {  set_bytes((src) & -1L, 4, data,  0); }
         public long time_usec_GET()//Timestamp (microseconds, synced to UNIX time or since system boot)
@@ -2887,9 +2887,9 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 1, data,  2); }
         /**
         *Variable length payload. The length is defined by the remaining message length when subtracting the header
-        *	and other fields.  The entire content of this block is opaque unless you understand any the encoding
-        *	message_type.  The particular encoding used can be extension specific and might not always be documented
-        *	as part of the mavlink specification*/
+        *	 and other fields.  The entire content of this block is opaque unless you understand any the encoding
+        *	 message_type.  The particular encoding used can be extension specific and might not always be documented
+        *	 as part of the mavlink specification*/
         public char[] payload_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 3, dst_max = pos + 251; pos < dst_max ; pos++,  BYTE += 1)
@@ -2898,15 +2898,15 @@ public class GroundControl extends Host
         }
         /**
         *Variable length payload. The length is defined by the remaining message length when subtracting the header
-        *	and other fields.  The entire content of this block is opaque unless you understand any the encoding
-        *	message_type.  The particular encoding used can be extension specific and might not always be documented
-        *	as part of the mavlink specification*/
+        *	 and other fields.  The entire content of this block is opaque unless you understand any the encoding
+        *	 message_type.  The particular encoding used can be extension specific and might not always be documented
+        *	 as part of the mavlink specification*/
         public char[] payload_GET()
         {return payload_GET(new char[251], 0);}/**
 *Variable length payload. The length is defined by the remaining message length when subtracting the header
-*	and other fields.  The entire content of this block is opaque unless you understand any the encoding
-*	message_type.  The particular encoding used can be extension specific and might not always be documented
-*	as part of the mavlink specification*/
+*	 and other fields.  The entire content of this block is opaque unless you understand any the encoding
+*	 message_type.  The particular encoding used can be extension specific and might not always be documented
+*	 as part of the mavlink specification*/
         public void payload_SET(char[]  src, int pos)
         {
             for(int BYTE =  3, src_max = pos + 251; pos < src_max; pos++, BYTE += 1)
@@ -2967,12 +2967,12 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 2, data,  4); }
         /**
         *Course over ground (NOT heading, but direction of movement) in degrees * 100, 0.0..359.99 degrees. If
-        *	unknown, set to: 6553*/
+        *	 unknown, set to: 6553*/
         public char cog_GET()
         {  return (char)((char) get_bytes(data,  6, 2)); }
         /**
         *Course over ground (NOT heading, but direction of movement) in degrees * 100, 0.0..359.99 degrees. If
-        *	unknown, set to: 6553*/
+        *	 unknown, set to: 6553*/
         public void cog_SET(char  src)
         {  set_bytes((char)(src) & -1L, 2, data,  6); }
         public long time_usec_GET()//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
@@ -2981,12 +2981,12 @@ public class GroundControl extends Host
         {  set_bytes((src) & -1L, 8, data,  8); }
         /**
         *0-1: no fix, 2: 2D fix, 3: 3D fix. Some applications will not use the value of this field unless it is
-        *	at least two, so always correctly fill in the fix*/
+        *	 at least two, so always correctly fill in the fix*/
         public char fix_type_GET()
         {  return (char)((char) get_bytes(data,  16, 1)); }
         /**
         *0-1: no fix, 2: 2D fix, 3: 3D fix. Some applications will not use the value of this field unless it is
-        *	at least two, so always correctly fill in the fix*/
+        *	 at least two, so always correctly fill in the fix*/
         public void fix_type_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  16); }
         public int lat_GET()//Latitude (WGS84), in degrees * 1E7
@@ -3027,12 +3027,12 @@ public class GroundControl extends Host
         HIL_OPTICAL_FLOW(int bytes) { super(meta, bytes); }
         /**
         *Integration time in microseconds. Divide integrated_x and integrated_y by the integration time to obtain
-        *	average flow. The integration time also indicates the*/
+        *	 average flow. The integration time also indicates the*/
         public long integration_time_us_GET()
         {  return (get_bytes(data,  0, 4)); }
         /**
         *Integration time in microseconds. Divide integrated_x and integrated_y by the integration time to obtain
-        *	average flow. The integration time also indicates the*/
+        *	 average flow. The integration time also indicates the*/
         public void integration_time_us_SET(long  src)
         {  set_bytes((src) & -1L, 4, data,  0); }
         public long time_delta_distance_us_GET()//Time in microseconds since the distance was sampled.
@@ -3049,22 +3049,22 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 1, data,  16); }
         /**
         *Flow in radians around X axis (Sensor RH rotation about the X axis induces a positive flow. Sensor linear
-        *	motion along the positive Y axis induces a negative flow.*/
+        *	 motion along the positive Y axis induces a negative flow.*/
         public float integrated_x_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  17, 4))); }
         /**
         *Flow in radians around X axis (Sensor RH rotation about the X axis induces a positive flow. Sensor linear
-        *	motion along the positive Y axis induces a negative flow.*/
+        *	 motion along the positive Y axis induces a negative flow.*/
         public void integrated_x_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 17); }
         /**
         *Flow in radians around Y axis (Sensor RH rotation about the Y axis induces a positive flow. Sensor linear
-        *	motion along the positive X axis induces a positive flow.*/
+        *	 motion along the positive X axis induces a positive flow.*/
         public float integrated_y_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  21, 4))); }
         /**
         *Flow in radians around Y axis (Sensor RH rotation about the Y axis induces a positive flow. Sensor linear
-        *	motion along the positive X axis induces a positive flow.*/
+        *	 motion along the positive X axis induces a positive flow.*/
         public void integrated_y_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 21); }
         public float integrated_xgyro_GET()//RH rotation around X axis (rad)
@@ -3089,18 +3089,18 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 1, data,  39); }
         /**
         *Distance to the center of the flow field in meters. Positive value (including zero): distance known. Negative
-        *	value: Unknown distance*/
+        *	 value: Unknown distance*/
         public float distance_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  40, 4))); }
         /**
         *Distance to the center of the flow field in meters. Positive value (including zero): distance known. Negative
-        *	value: Unknown distance*/
+        *	 value: Unknown distance*/
         public void distance_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 40); }
         static final Meta meta = new Meta(114, 0, 2, 1, 44, 352);
     }/**
 *Sent from simulation to autopilot, avoids in contrast to HIL_STATE singularities. This packet is useful
-*	for high throughput applications such as hardware in the loop simulations*/
+*	 for high throughput applications such as hardware in the loop simulations*/
     public static class HIL_STATE_QUATERNION extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -3181,7 +3181,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(115, 2, 0, 1, 64, 512);
     }/**
 *The RAW IMU readings for secondary 9DOF sensor setup. This message should contain the scaled values to
-*	the described unit*/
+*	 the described unit*/
     public static class SCALED_IMU2 extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -3230,7 +3230,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(116, 0, 1, 0, 22, 176);
     }/**
 *Request a list of available logs. On some systems calling this may stop on-board logging until LOG_REQUEST_END
-*	is called*/
+*	 is called*/
     public static class LOG_REQUEST_LIST extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -3426,12 +3426,12 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 2, data,  4); }
         /**
         *Course over ground (NOT heading, but direction of movement) in degrees * 100, 0.0..359.99 degrees. If
-        *	unknown, set to: UINT16_MA*/
+        *	 unknown, set to: UINT16_MA*/
         public char cog_GET()
         {  return (char)((char) get_bytes(data,  6, 2)); }
         /**
         *Course over ground (NOT heading, but direction of movement) in degrees * 100, 0.0..359.99 degrees. If
-        *	unknown, set to: UINT16_MA*/
+        *	 unknown, set to: UINT16_MA*/
         public void cog_SET(char  src)
         {  set_bytes((char)(src) & -1L, 2, data,  6); }
         public long dgps_age_GET()//Age of DGPS info
@@ -3489,8 +3489,8 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(125, 2, 0, 0, 5, 38);
     }/**
 *Control a serial port. This can be used for raw access to an onboard serial peripheral such as a GPS or
-*	telemetry radio. It is designed to make it possible to update the devices firmware via MAVLink messages
-*	or change the devices settings. A message with zero bytes can be used to change just the baudrate*/
+*	 telemetry radio. It is designed to make it possible to update the devices firmware via MAVLink messages
+*	 or change the devices settings. A message with zero bytes can be used to change just the baudrate*/
     public static class SERIAL_CONTROL extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -3690,7 +3690,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(128, 1, 3, 0, 35, 280);
     }/**
 *The RAW IMU readings for 3rd 9DOF sensor setup. This message should contain the scaled values to the described
-*	unit*/
+*	 unit*/
     public static class SCALED_IMU3 extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -3764,12 +3764,12 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 1, data,  10); }
         /**
         *payload size per packet (normally 253 byte, see DATA field size in message ENCAPSULATED_DATA) (set on
-        *	ACK only*/
+        *	 ACK only*/
         public char payload_GET()
         {  return (char)((char) get_bytes(data,  11, 1)); }
         /**
         *payload size per packet (normally 253 byte, see DATA field size in message ENCAPSULATED_DATA) (set on
-        *	ACK only*/
+        *	 ACK only*/
         public void payload_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  11); }
         public char jpg_quality_GET()//JPEG quality out of [1,100]
@@ -3834,14 +3834,14 @@ public class GroundControl extends Host
         {  set_bits(- 0 +   src, 3, data, 96); }
         /**
         *Direction the sensor faces from MAV_SENSOR_ORIENTATION enum. downward-facing: ROTATION_PITCH_270, upward-facing:
-        *	ROTATION_PITCH_90, backward-facing: ROTATION_PITCH_180, forward-facing: ROTATION_NONE, left-facing: ROTATION_YAW_90,
-        *	right-facing: ROTATION_YAW_27*/
+        *	 ROTATION_PITCH_90, backward-facing: ROTATION_PITCH_180, forward-facing: ROTATION_NONE, left-facing: ROTATION_YAW_90,
+        *	 right-facing: ROTATION_YAW_27*/
         public @MAV_SENSOR_ORIENTATION int orientation_GET()
         {  return  0 + (int)get_bits(data, 99, 6); }
         /**
         *Direction the sensor faces from MAV_SENSOR_ORIENTATION enum. downward-facing: ROTATION_PITCH_270, upward-facing:
-        *	ROTATION_PITCH_90, backward-facing: ROTATION_PITCH_180, forward-facing: ROTATION_NONE, left-facing: ROTATION_YAW_90,
-        *	right-facing: ROTATION_YAW_27*/
+        *	 ROTATION_PITCH_90, backward-facing: ROTATION_PITCH_180, forward-facing: ROTATION_NONE, left-facing: ROTATION_YAW_90,
+        *	 right-facing: ROTATION_YAW_27*/
         public void orientation_SET(@MAV_SENSOR_ORIENTATION int  src)
         {  set_bits(- 0 +   src, 6, data, 99); }
         static final Meta meta = new Meta(132, 3, 1, 0, 14, 105);
@@ -3907,7 +3907,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(134, 1, 0, 0, 43, 344);
     }/**
 *Request that the vehicle report terrain height at the given location. Used by GCS to check if vehicle
-*	has all terrain data needed for a mission*/
+*	 has all terrain data needed for a mission*/
     public static class TERRAIN_CHECK extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -4031,12 +4031,12 @@ public class GroundControl extends Host
         {  set_bytes((src) & -1L, 8, data,  0); }
         /**
         *Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use
-        *	this field to difference between instances*/
+        *	 this field to difference between instances*/
         public char group_mlx_GET()
         {  return (char)((char) get_bytes(data,  8, 1)); }
         /**
         *Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use
-        *	this field to difference between instances*/
+        *	 this field to difference between instances*/
         public void group_mlx_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  8); }
         public char target_system_GET()//System ID
@@ -4049,9 +4049,9 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 1, data,  10); }
         /**
         *Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction
-        *	motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
-        *	(index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through
-        *	mixer to repurpose them as generic outputs*/
+        *	 motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
+        *	 (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through
+        *	 mixer to repurpose them as generic outputs*/
         public float[] controls_GET(float[]  dst_ch, int pos)
         {
             for(int BYTE = 11, dst_max = pos + 8; pos < dst_max ; pos++,  BYTE += 4)
@@ -4060,15 +4060,15 @@ public class GroundControl extends Host
         }
         /**
         *Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction
-        *	motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
-        *	(index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through
-        *	mixer to repurpose them as generic outputs*/
+        *	 motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
+        *	 (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through
+        *	 mixer to repurpose them as generic outputs*/
         public float[] controls_GET()
         {return controls_GET(new float[8], 0);}/**
 *Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction
-*	motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
-*	(index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through
-*	mixer to repurpose them as generic outputs*/
+*	 motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
+*	 (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through
+*	 mixer to repurpose them as generic outputs*/
         public void controls_SET(float[]  src, int pos)
         {
             for(int BYTE =  11, src_max = pos + 8; pos < src_max; pos++, BYTE += 4)
@@ -4088,19 +4088,19 @@ public class GroundControl extends Host
         {  set_bytes((src) & -1L, 8, data,  0); }
         /**
         *Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use
-        *	this field to difference between instances*/
+        *	 this field to difference between instances*/
         public char group_mlx_GET()
         {  return (char)((char) get_bytes(data,  8, 1)); }
         /**
         *Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use
-        *	this field to difference between instances*/
+        *	 this field to difference between instances*/
         public void group_mlx_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  8); }
         /**
         *Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction
-        *	motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
-        *	(index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through
-        *	mixer to repurpose them as generic outputs*/
+        *	 motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
+        *	 (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through
+        *	 mixer to repurpose them as generic outputs*/
         public float[] controls_GET(float[]  dst_ch, int pos)
         {
             for(int BYTE = 9, dst_max = pos + 8; pos < dst_max ; pos++,  BYTE += 4)
@@ -4109,15 +4109,15 @@ public class GroundControl extends Host
         }
         /**
         *Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction
-        *	motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
-        *	(index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through
-        *	mixer to repurpose them as generic outputs*/
+        *	 motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
+        *	 (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through
+        *	 mixer to repurpose them as generic outputs*/
         public float[] controls_GET()
         {return controls_GET(new float[8], 0);}/**
 *Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction
-*	motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
-*	(index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through
-*	mixer to repurpose them as generic outputs*/
+*	 motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
+*	 (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through
+*	 mixer to repurpose them as generic outputs*/
         public void controls_SET(float[]  src, int pos)
         {
             for(int BYTE =  9, src_max = pos + 8; pos < src_max; pos++, BYTE += 4)
@@ -4137,40 +4137,40 @@ public class GroundControl extends Host
         {  set_bytes((src) & -1L, 8, data,  0); }
         /**
         *This altitude measure is initialized on system boot and monotonic (it is never reset, but represents the
-        *	local altitude change). The only guarantee on this field is that it will never be reset and is consistent
-        *	within a flight. The recommended value for this field is the uncorrected barometric altitude at boot
-        *	time. This altitude will also drift and vary between flights*/
+        *	 local altitude change). The only guarantee on this field is that it will never be reset and is consistent
+        *	 within a flight. The recommended value for this field is the uncorrected barometric altitude at boot
+        *	 time. This altitude will also drift and vary between flights*/
         public float altitude_monotonic_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  8, 4))); }
         /**
         *This altitude measure is initialized on system boot and monotonic (it is never reset, but represents the
-        *	local altitude change). The only guarantee on this field is that it will never be reset and is consistent
-        *	within a flight. The recommended value for this field is the uncorrected barometric altitude at boot
-        *	time. This altitude will also drift and vary between flights*/
+        *	 local altitude change). The only guarantee on this field is that it will never be reset and is consistent
+        *	 within a flight. The recommended value for this field is the uncorrected barometric altitude at boot
+        *	 time. This altitude will also drift and vary between flights*/
         public void altitude_monotonic_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 8); }
         /**
         *This altitude measure is strictly above mean sea level and might be non-monotonic (it might reset on events
-        *	like GPS lock or when a new QNH value is set). It should be the altitude to which global altitude waypoints
-        *	are compared to. Note that it is *not* the GPS altitude, however, most GPS modules already output AMSL
-        *	by default and not the WGS84 altitude*/
+        *	 like GPS lock or when a new QNH value is set). It should be the altitude to which global altitude waypoints
+        *	 are compared to. Note that it is *not* the GPS altitude, however, most GPS modules already output AMSL
+        *	 by default and not the WGS84 altitude*/
         public float altitude_amsl_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  12, 4))); }
         /**
         *This altitude measure is strictly above mean sea level and might be non-monotonic (it might reset on events
-        *	like GPS lock or when a new QNH value is set). It should be the altitude to which global altitude waypoints
-        *	are compared to. Note that it is *not* the GPS altitude, however, most GPS modules already output AMSL
-        *	by default and not the WGS84 altitude*/
+        *	 like GPS lock or when a new QNH value is set). It should be the altitude to which global altitude waypoints
+        *	 are compared to. Note that it is *not* the GPS altitude, however, most GPS modules already output AMSL
+        *	 by default and not the WGS84 altitude*/
         public void altitude_amsl_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 12); }
         /**
         *This is the local altitude in the local coordinate frame. It is not the altitude above home, but in reference
-        *	to the coordinate origin (0, 0, 0). It is up-positive*/
+        *	 to the coordinate origin (0, 0, 0). It is up-positive*/
         public float altitude_local_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  16, 4))); }
         /**
         *This is the local altitude in the local coordinate frame. It is not the altitude above home, but in reference
-        *	to the coordinate origin (0, 0, 0). It is up-positive*/
+        *	 to the coordinate origin (0, 0, 0). It is up-positive*/
         public void altitude_local_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 16); }
         public float altitude_relative_GET()//This is the altitude above the home position. It resets on each change of the current home position
@@ -4179,24 +4179,24 @@ public class GroundControl extends Host
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 20); }
         /**
         *This is the altitude above terrain. It might be fed by a terrain database or an altimeter. Values smaller
-        *	than -1000 should be interpreted as unknown*/
+        *	 than -1000 should be interpreted as unknown*/
         public float altitude_terrain_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  24, 4))); }
         /**
         *This is the altitude above terrain. It might be fed by a terrain database or an altimeter. Values smaller
-        *	than -1000 should be interpreted as unknown*/
+        *	 than -1000 should be interpreted as unknown*/
         public void altitude_terrain_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 24); }
         /**
         *This is not the altitude, but the clear space below the system according to the fused clearance estimate.
-        *	It generally should max out at the maximum range of e.g. the laser altimeter. It is generally a moving
-        *	target. A negative value indicates no measurement available*/
+        *	 It generally should max out at the maximum range of e.g. the laser altimeter. It is generally a moving
+        *	 target. A negative value indicates no measurement available*/
         public float bottom_clearance_GET()
         {  return (float)(Float.intBitsToFloat((int) get_bytes(data,  28, 4))); }
         /**
         *This is not the altitude, but the clear space below the system according to the fused clearance estimate.
-        *	It generally should max out at the maximum range of e.g. the laser altimeter. It is generally a moving
-        *	target. A negative value indicates no measurement available*/
+        *	 It generally should max out at the maximum range of e.g. the laser altimeter. It is generally a moving
+        *	 target. A negative value indicates no measurement available*/
         public void bottom_clearance_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 28); }
         static final Meta meta = new Meta(141, 0, 0, 1, 32, 256);
@@ -4217,7 +4217,7 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 1, data,  1); }
         /**
         *The requested unique resource identifier (URI). It is not necessarily a straight domain name (depends
-        *	on the URI type enum*/
+        *	 on the URI type enum*/
         public char[] uri_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 2, dst_max = pos + 120; pos < dst_max ; pos++,  BYTE += 1)
@@ -4226,11 +4226,11 @@ public class GroundControl extends Host
         }
         /**
         *The requested unique resource identifier (URI). It is not necessarily a straight domain name (depends
-        *	on the URI type enum*/
+        *	 on the URI type enum*/
         public char[] uri_GET()
         {return uri_GET(new char[120], 0);}/**
 *The requested unique resource identifier (URI). It is not necessarily a straight domain name (depends
-*	on the URI type enum*/
+*	 on the URI type enum*/
         public void uri_SET(char[]  src, int pos)
         {
             for(int BYTE =  2, src_max = pos + 120; pos < src_max; pos++, BYTE += 1)
@@ -4242,7 +4242,7 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 1, data,  122); }
         /**
         *The storage path the autopilot wants the URI to be stored in. Will only be valid if the transfer_type
-        *	has a storage associated (e.g. MAVLink FTP)*/
+        *	 has a storage associated (e.g. MAVLink FTP)*/
         public char[] storage_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 123, dst_max = pos + 120; pos < dst_max ; pos++,  BYTE += 1)
@@ -4251,11 +4251,11 @@ public class GroundControl extends Host
         }
         /**
         *The storage path the autopilot wants the URI to be stored in. Will only be valid if the transfer_type
-        *	has a storage associated (e.g. MAVLink FTP)*/
+        *	 has a storage associated (e.g. MAVLink FTP)*/
         public char[] storage_GET()
         {return storage_GET(new char[120], 0);}/**
 *The storage path the autopilot wants the URI to be stored in. Will only be valid if the transfer_type
-*	has a storage associated (e.g. MAVLink FTP)*/
+*	 has a storage associated (e.g. MAVLink FTP)*/
         public void storage_SET(char[]  src, int pos)
         {
             for(int BYTE =  123, src_max = pos + 120; pos < src_max; pos++, BYTE += 1)
@@ -4487,7 +4487,7 @@ public class GroundControl extends Host
         BATTERY_STATUS(int bytes) { super(meta, bytes); }
         /**
         *Battery voltage of cells, in millivolts (1 = 1 millivolt). Cells above the valid cell count for this battery
-        *	should have the UINT16_MAX value*/
+        *	 should have the UINT16_MAX value*/
         public char[] voltages_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 0, dst_max = pos + 10; pos < dst_max ; pos++,  BYTE += 2)
@@ -4496,11 +4496,11 @@ public class GroundControl extends Host
         }
         /**
         *Battery voltage of cells, in millivolts (1 = 1 millivolt). Cells above the valid cell count for this battery
-        *	should have the UINT16_MAX value*/
+        *	 should have the UINT16_MAX value*/
         public char[] voltages_GET()
         {return voltages_GET(new char[10], 0);}/**
 *Battery voltage of cells, in millivolts (1 = 1 millivolt). Cells above the valid cell count for this battery
-*	should have the UINT16_MAX value*/
+*	 should have the UINT16_MAX value*/
         public void voltages_SET(char[]  src, int pos)
         {
             for(int BYTE =  0, src_max = pos + 10; pos < src_max; pos++, BYTE += 2)
@@ -4524,12 +4524,12 @@ public class GroundControl extends Host
         {  set_bytes((int)(src) & -1L, 4, data,  25); }
         /**
         *Consumed energy, in HectoJoules (intergrated U*I*dt)  (1 = 100 Joule), -1: autopilot does not provide
-        *	energy consumption estimat*/
+        *	 energy consumption estimat*/
         public int energy_consumed_GET()
         {  return (int)((int) get_bytes(data,  29, 4)); }
         /**
         *Consumed energy, in HectoJoules (intergrated U*I*dt)  (1 = 100 Joule), -1: autopilot does not provide
-        *	energy consumption estimat*/
+        *	 energy consumption estimat*/
         public void energy_consumed_SET(int  src)
         {  set_bytes((int)(src) & -1L, 4, data,  29); }
         public byte battery_remaining_GET()//Remaining battery energy: (0%: 0, 100%: 100), -1: autopilot does not estimate the remaining battery
@@ -4582,7 +4582,7 @@ public class GroundControl extends Host
         {  set_bytes((src) & -1L, 8, data,  20); }
         /**
         *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-        *	should allow to identify the commit using the main version number even for very large code bases*/
+        *	 should allow to identify the commit using the main version number even for very large code bases*/
         public char[] flight_custom_version_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 28, dst_max = pos + 8; pos < dst_max ; pos++,  BYTE += 1)
@@ -4591,11 +4591,11 @@ public class GroundControl extends Host
         }
         /**
         *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-        *	should allow to identify the commit using the main version number even for very large code bases*/
+        *	 should allow to identify the commit using the main version number even for very large code bases*/
         public char[] flight_custom_version_GET()
         {return flight_custom_version_GET(new char[8], 0);}/**
 *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-*	should allow to identify the commit using the main version number even for very large code bases*/
+*	 should allow to identify the commit using the main version number even for very large code bases*/
         public void flight_custom_version_SET(char[]  src, int pos)
         {
             for(int BYTE =  28, src_max = pos + 8; pos < src_max; pos++, BYTE += 1)
@@ -4603,7 +4603,7 @@ public class GroundControl extends Host
         }
         /**
         *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-        *	should allow to identify the commit using the main version number even for very large code bases*/
+        *	 should allow to identify the commit using the main version number even for very large code bases*/
         public char[] middleware_custom_version_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 36, dst_max = pos + 8; pos < dst_max ; pos++,  BYTE += 1)
@@ -4612,11 +4612,11 @@ public class GroundControl extends Host
         }
         /**
         *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-        *	should allow to identify the commit using the main version number even for very large code bases*/
+        *	 should allow to identify the commit using the main version number even for very large code bases*/
         public char[] middleware_custom_version_GET()
         {return middleware_custom_version_GET(new char[8], 0);}/**
 *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-*	should allow to identify the commit using the main version number even for very large code bases*/
+*	 should allow to identify the commit using the main version number even for very large code bases*/
         public void middleware_custom_version_SET(char[]  src, int pos)
         {
             for(int BYTE =  36, src_max = pos + 8; pos < src_max; pos++, BYTE += 1)
@@ -4624,7 +4624,7 @@ public class GroundControl extends Host
         }
         /**
         *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-        *	should allow to identify the commit using the main version number even for very large code bases*/
+        *	 should allow to identify the commit using the main version number even for very large code bases*/
         public char[] os_custom_version_GET(char[]  dst_ch, int pos)
         {
             for(int BYTE = 44, dst_max = pos + 8; pos < dst_max ; pos++,  BYTE += 1)
@@ -4633,11 +4633,11 @@ public class GroundControl extends Host
         }
         /**
         *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-        *	should allow to identify the commit using the main version number even for very large code bases*/
+        *	 should allow to identify the commit using the main version number even for very large code bases*/
         public char[] os_custom_version_GET()
         {return os_custom_version_GET(new char[8], 0);}/**
 *Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but
-*	should allow to identify the commit using the main version number even for very large code bases*/
+*	 should allow to identify the commit using the main version number even for very large code bases*/
         public void os_custom_version_SET(char[]  src, int pos)
         {
             for(int BYTE =  44, src_max = pos + 8; pos < src_max; pos++, BYTE += 1)
@@ -4649,7 +4649,7 @@ public class GroundControl extends Host
         {  set_bits(- 1 +   src, 17, data, 416); }
         /**
         *UID if provided by hardware (supersedes the uid field. If this is non-zero, use this field, otherwise
-        *	use uid*/
+        *	 use uid*/
         public char[]  uid2_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  433 && !try_visit_field(ph, 433)) return null;
@@ -4657,7 +4657,7 @@ public class GroundControl extends Host
         }
         /**
         *UID if provided by hardware (supersedes the uid field. If this is non-zero, use this field, otherwise
-        *	use uid*/
+        *	 use uid*/
         public char[] uid2_GET(Bounds.Inside ph, char[]  dst_ch, int pos)
         {
             for(int BYTE = ph.BYTE, dst_max = pos + 18; pos < dst_max ; pos++,  BYTE += 1)
@@ -4669,13 +4669,13 @@ public class GroundControl extends Host
             return 18;
         }/**
 *UID if provided by hardware (supersedes the uid field. If this is non-zero, use this field, otherwise
-*	use uid*/
+*	 use uid*/
         public void uid2_SET(char[]  src, int pos, Bounds.Inside ph)
         {
             if(ph.field_bit != 433)insert_field(ph, 433, 0);
             for(int BYTE =  ph.BYTE, src_max = pos + 18; pos < src_max; pos++, BYTE += 1)
                 set_bytes((char)(src[pos]) & -1L, 1, data,  BYTE);
-        } static final Meta meta = new Meta(148, 2, 4, 1, 56, 433, 0, _LB);
+        } static final Meta meta = new Meta(148, 2, 4, 1, 56, 433, 0, _Fw);
     }/**
 *The location of a landing area captured from a downward facing camera*/
     public static class LANDING_TARGET extends Pack  implements CommunicationChannel.Sendable
@@ -4767,7 +4767,7 @@ public class GroundControl extends Host
                 set_bytes(Float.floatToIntBits(src[pos]) & -1L, 4, data, BYTE);
         }/**
 *Boolean indicating known position (1) or default unkown position (0), for validation of positioning of
-*	the landing targe*/
+*	 the landing targe*/
         public char  position_valid_TRY(Bounds.Inside ph)
         {
             if(ph.field_bit !=  242 && !try_visit_field(ph, 242)) return 0;
@@ -4775,12 +4775,12 @@ public class GroundControl extends Host
         }
         /**
         *Boolean indicating known position (1) or default unkown position (0), for validation of positioning of
-        *	the landing targe*/
+        *	 the landing targe*/
         public void position_valid_SET(char  src, Bounds.Inside ph)
         {
             if(ph.field_bit != 242)insert_field(ph, 242, 0);
             set_bytes((char)(src) & -1L, 1, data,  ph.BYTE);
-        } static final Meta meta = new Meta(149, 0, 0, 1, 31, 238, 0, _DB, _IB, _lB, _BB, _sB);
+        } static final Meta meta = new Meta(149, 0, 0, 1, 31, 238, 0, _Xw, _lw, _Bw, _ww, _jw);
     }/**
 *Sensor and DSC control loads.*/
     public static class CPU_LOAD extends Pack  implements CommunicationChannel.Sendable
@@ -4911,7 +4911,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(179, 0, 0, 0, 12, 96);
     }/**
 *Mid Level commands sent from the GS to the autopilot. These are only sent when being operated in mid-level
-*	commands mode from the ground*/
+*	 commands mode from the ground*/
     public static class MID_LVL_CMDS extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -4952,7 +4952,7 @@ public class GroundControl extends Host
         {  set_bytes((byte)(src) & -1L, 1, data,  3); }
         /**
         *Orders the camera mount to move home. The other fields are ignored when this field is set. 1: move home,
-        *	0 ignore*/
+        *	 0 ignore*/
         public void moveHome_SET(byte  src)
         {  set_bytes((byte)(src) & -1L, 1, data,  4); }
         static final Meta meta = new Meta(184, 0, 0, 0, 5, 40);
@@ -5028,7 +5028,7 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 2, data,  0); }
         /**
         *Depends on the value of r2Type (0) Current consumption in uS of PWM, 20 uS = 90Amp (1) Distance in cm
-        *	(2) Distance in cm (3) Absolute valu*/
+        *	 (2) Distance in cm (3) Absolute valu*/
         public void reading2_SET(char  src)
         {  set_bytes((char)(src) & -1L, 2, data,  2); }
         public void r2Type_SET(char  src) //It is the value of reading 2: 0 - Current, 1 - Foreward Sonar, 2 - Back Sonar, 3 - RPM
@@ -5076,7 +5076,7 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 2, data,  0); }
         /**
         *The quality indicator, 0=fix not available or invalid, 1=GPS fix, 2=C/A differential GPS, 6=Dead reckoning
-        *	mode, 7=Manual input mode (fixed position), 8=Simulator mode, 9= WAAS*/
+        *	 mode, 7=Manual input mode (fixed position), 8=Simulator mode, 9= WAAS*/
         public void gpsQuality_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  2); }
         public void msgsType_SET(char  src) //Indicates if GN, GL or GP messages are being received
@@ -5087,12 +5087,12 @@ public class GroundControl extends Host
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 5); }
         /**
         *Magnetic variation direction E/W. Easterly variation (E) subtracts from True course and Westerly variation
-        *	(W) adds to True cours*/
+        *	 (W) adds to True cours*/
         public void magDir_SET(byte  src)
         {  set_bytes((byte)(src) & -1L, 1, data,  9); }
         /**
         *Positioning system mode indicator. A - Autonomous;D-Differential; E-Estimated (dead reckoning) mode;M-Manual
-        *	input; N-Data not vali*/
+        *	 input; N-Data not vali*/
         public void modeInd_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  10); }
         static final Meta meta = new Meta(194, 1, 0, 0, 11, 88);
@@ -5134,8 +5134,8 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(196, 0, 0, 0, 11, 88);
     }/**
 *The boot message indicates that a system is starting. The onboard software version allows to keep track
-*	of onboard soft/firmware revisions. This message allows the sensor and control MCUs to communicate version
-*	numbers on startup*/
+*	 of onboard soft/firmware revisions. This message allows the sensor and control MCUs to communicate version
+*	 numbers on startup*/
     public static class BOOT extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -5145,13 +5145,13 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(197, 0, 1, 0, 4, 32);
     }/**
 *Estimator status message including flags, innovation test ratios and estimated accuracies. The flags message
-*	is an integer bitmask containing information on which EKF outputs are valid. See the ESTIMATOR_STATUS_FLAGS
-*	enum definition for further information. The innovaton test ratios show the magnitude of the sensor innovation
-*	divided by the innovation check threshold. Under normal operation the innovaton test ratios should be
-*	below 0.5 with occasional values up to 1.0. Values greater than 1.0 should be rare under normal operation
-*	and indicate that a measurement has been rejected by the filter. The user should be notified if an innovation
-*	test ratio greater than 1.0 is recorded. Notifications for values in the range between 0.5 and 1.0 should
-*	be optional and controllable by the user*/
+*	 is an integer bitmask containing information on which EKF outputs are valid. See the ESTIMATOR_STATUS_FLAGS
+*	 enum definition for further information. The innovaton test ratios show the magnitude of the sensor innovation
+*	 divided by the innovation check threshold. Under normal operation the innovaton test ratios should be
+*	 below 0.5 with occasional values up to 1.0. Values greater than 1.0 should be rare under normal operation
+*	 and indicate that a measurement has been rejected by the filter. The user should be notified if an innovation
+*	 test ratio greater than 1.0 is recorded. Notifications for values in the range between 0.5 and 1.0 should
+*	 be optional and controllable by the user*/
     public static class ESTIMATOR_STATUS extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -5242,7 +5242,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(231, 0, 0, 1, 40, 320);
     }/**
 *GPS sensor input message.  This is a raw sensor value sent by the GPS. This is NOT the global position
-*	estimate of the sytem*/
+*	 estimate of the sytem*/
     public static class GPS_INPUT extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -5327,12 +5327,12 @@ public class GroundControl extends Host
         GPS_RTCM_DATA() { super(meta, 0); }
         /**
         *LSB: 1 means message is fragmented, next 2 bits are the fragment ID, the remaining 5 bits are used for
-        *	the sequence ID. Messages are only to be flushed to the GPS when the entire message has been reconstructed
-        *	on the autopilot. The fragment ID specifies which order the fragments should be assembled into a buffer,
-        *	while the sequence ID is used to detect a mismatch between different buffers. The buffer is considered
-        *	fully reconstructed when either all 4 fragments are present, or all the fragments before the first fragment
-        *	with a non full payload is received. This management is used to ensure that normal GPS operation doesn't
-        *	corrupt RTCM data, and to recover from a unreliable transport delivery order*/
+        *	 the sequence ID. Messages are only to be flushed to the GPS when the entire message has been reconstructed
+        *	 on the autopilot. The fragment ID specifies which order the fragments should be assembled into a buffer,
+        *	 while the sequence ID is used to detect a mismatch between different buffers. The buffer is considered
+        *	 fully reconstructed when either all 4 fragments are present, or all the fragments before the first fragment
+        *	 with a non full payload is received. This management is used to ensure that normal GPS operation doesn't
+        *	 corrupt RTCM data, and to recover from a unreliable transport delivery order*/
         public void flags_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  0); }
         public void len_SET(char  src) //data length
@@ -5389,7 +5389,7 @@ public class GroundControl extends Host
         {  set_bytes((byte)(src) & -1L, 1, data,  34); }
         /**
         *failsafe (each bit represents a failsafe where 0=ok, 1=failsafe active (bit0:RC, bit1:batt, bit2:GPS,
-        *	bit3:GCS, bit4:fence*/
+        *	 bit3:GCS, bit4:fence*/
         public void failsafe_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  35); }
         public void wp_num_SET(char  src) //current waypoint number
@@ -5424,13 +5424,13 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(241, 0, 3, 1, 32, 256);
     }/**
 *This message can be requested by sending the MAV_CMD_GET_HOME_POSITION command. The position the system
-*	will return to and land on. The position is set automatically by the system during the takeoff in case
-*	it was not explicitely set by the operator before or after. The position the system will return to and
-*	land on. The global and local positions encode the position in the respective coordinate frames, while
-*	the q parameter encodes the orientation of the surface. Under normal conditions it describes the heading
-*	and terrain slope, which can be used by the aircraft to adjust the approach. The approach 3D vector describes
-*	the point to which the system should fly in normal flight mode and then perform a landing sequence along
-*	the vector*/
+*	 will return to and land on. The position is set automatically by the system during the takeoff in case
+*	 it was not explicitely set by the operator before or after. The position the system will return to and
+*	 land on. The global and local positions encode the position in the respective coordinate frames, while
+*	 the q parameter encodes the orientation of the surface. Under normal conditions it describes the heading
+*	 and terrain slope, which can be used by the aircraft to adjust the approach. The approach 3D vector describes
+*	 the point to which the system should fly in normal flight mode and then perform a landing sequence along
+*	 the vector*/
     public static class HOME_POSITION extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -5449,7 +5449,7 @@ public class GroundControl extends Host
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 20); }
         /**
         *World to surface normal and heading transformation of the takeoff position. Used to indicate the heading
-        *	and slope of the groun*/
+        *	 and slope of the groun*/
         public void q_SET(float[]  src, int pos)
         {
             for(int BYTE =  24, src_max = pos + 4; pos < src_max; pos++, BYTE += 4)
@@ -5457,37 +5457,37 @@ public class GroundControl extends Host
         }
         /**
         *Local X position of the end of the approach vector. Multicopters should set this position based on their
-        *	takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
-        *	fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
-        *	from the threshold / touchdown zone*/
+        *	 takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
+        *	 fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
+        *	 from the threshold / touchdown zone*/
         public void approach_x_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 40); }
         /**
         *Local Y position of the end of the approach vector. Multicopters should set this position based on their
-        *	takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
-        *	fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
-        *	from the threshold / touchdown zone*/
+        *	 takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
+        *	 fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
+        *	 from the threshold / touchdown zone*/
         public void approach_y_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 44); }
         /**
         *Local Z position of the end of the approach vector. Multicopters should set this position based on their
-        *	takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
-        *	fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
-        *	from the threshold / touchdown zone*/
+        *	 takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
+        *	 fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
+        *	 from the threshold / touchdown zone*/
         public void approach_z_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 48); }
         public void time_usec_SET(long  src, Bounds.Inside ph)//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
         {
             if(ph.field_bit != 416)insert_field(ph, 416, 0);
             set_bytes((src) & -1L, 8, data,  ph.BYTE);
-        } static final Meta meta = new Meta(242, 0, 0, 0, 53, 416, 0, _MJ);
+        } static final Meta meta = new Meta(242, 0, 0, 0, 53, 416, 0, _bg);
     }/**
 *The position the system will return to and land on. The position is set automatically by the system during
-*	the takeoff in case it was not explicitely set by the operator before or after. The global and local
-*	positions encode the position in the respective coordinate frames, while the q parameter encodes the
-*	orientation of the surface. Under normal conditions it describes the heading and terrain slope, which
-*	can be used by the aircraft to adjust the approach. The approach 3D vector describes the point to which
-*	the system should fly in normal flight mode and then perform a landing sequence along the vector*/
+*	 the takeoff in case it was not explicitely set by the operator before or after. The global and local
+*	 positions encode the position in the respective coordinate frames, while the q parameter encodes the
+*	 orientation of the surface. Under normal conditions it describes the heading and terrain slope, which
+*	 can be used by the aircraft to adjust the approach. The approach 3D vector describes the point to which
+*	 the system should fly in normal flight mode and then perform a landing sequence along the vector*/
     public static class SET_HOME_POSITION extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -5508,7 +5508,7 @@ public class GroundControl extends Host
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 21); }
         /**
         *World to surface normal and heading transformation of the takeoff position. Used to indicate the heading
-        *	and slope of the groun*/
+        *	 and slope of the groun*/
         public void q_SET(float[]  src, int pos)
         {
             for(int BYTE =  25, src_max = pos + 4; pos < src_max; pos++, BYTE += 4)
@@ -5516,30 +5516,30 @@ public class GroundControl extends Host
         }
         /**
         *Local X position of the end of the approach vector. Multicopters should set this position based on their
-        *	takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
-        *	fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
-        *	from the threshold / touchdown zone*/
+        *	 takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
+        *	 fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
+        *	 from the threshold / touchdown zone*/
         public void approach_x_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 41); }
         /**
         *Local Y position of the end of the approach vector. Multicopters should set this position based on their
-        *	takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
-        *	fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
-        *	from the threshold / touchdown zone*/
+        *	 takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
+        *	 fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
+        *	 from the threshold / touchdown zone*/
         public void approach_y_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 45); }
         /**
         *Local Z position of the end of the approach vector. Multicopters should set this position based on their
-        *	takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
-        *	fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
-        *	from the threshold / touchdown zone*/
+        *	 takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing
+        *	 fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened
+        *	 from the threshold / touchdown zone*/
         public void approach_z_SET(float  src)
         {  set_bytes(Float.floatToIntBits(src) & -1L, 4, data, 49); }
         public void time_usec_SET(long  src, Bounds.Inside ph)//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
         {
             if(ph.field_bit != 424)insert_field(ph, 424, 0);
             set_bytes((src) & -1L, 8, data,  ph.BYTE);
-        } static final Meta meta = new Meta(243, 0, 0, 0, 54, 424, 0, _Us);
+        } static final Meta meta = new Meta(243, 0, 0, 0, 54, 424, 0, _Tj);
     }/**
 *This interface replaces DATA_STREAM*/
     public static class MESSAGE_INTERVAL extends Pack  implements CommunicationChannel.Sendable
@@ -5599,7 +5599,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(246, 3, 1, 0, 28, 213, 0, _fs);
+        } static final Meta meta = new Meta(246, 3, 1, 0, 28, 213, 0, _Yj);
     }/**
 *Information about a potential collision*/
     public static class COLLISION extends Pack  implements CommunicationChannel.Sendable
@@ -5619,8 +5619,8 @@ public class GroundControl extends Host
         public void action_SET(@MAV_COLLISION_ACTION int  src) //Action that is being taken to avoid this collision
         {  set_bits(- 0 +   src, 3, data, 129); }
         public void threat_level_SET(@MAV_COLLISION_THREAT_LEVEL int  src) //How concerned the aircraft is about this collision
-        {  set_bits(- 0 +   src, 2, data, 132); }
-        static final Meta meta = new Meta(247, 0, 1, 0, 17, 134);
+        {  set_bits(- 0 +   src, 3, data, 132); }
+        static final Meta meta = new Meta(247, 0, 1, 0, 17, 135);
     }/**
 *Message implementing parts of the V2 payload specs in V1 frames for transitional support.*/
     public static class V2_EXTENSION extends Pack  implements CommunicationChannel.Sendable
@@ -5629,11 +5629,11 @@ public class GroundControl extends Host
         V2_EXTENSION() { super(meta, 0); }
         /**
         *A code that identifies the software component that understands this message (analogous to usb device classes
-        *	or mime type strings).  If this code is less than 32768, it is considered a 'registered' protocol extension
-        *	and the corresponding entry should be added to https:github.com/mavlink/mavlink/extension-message-ids.xml.
+        *	 or mime type strings).  If this code is less than 32768, it is considered a 'registered' protocol extension
+        *	 and the corresponding entry should be added to https:github.com/mavlink/mavlink/extension-message-ids.xml.
         *	 Software creators can register blocks of message IDs as needed (useful for GCS specific metadata, etc...).
-        *	Message_types greater than 32767 are considered local experiments and should not be checked in to any
-        *	widely distributed codebase*/
+        *	 Message_types greater than 32767 are considered local experiments and should not be checked in to any
+        *	 widely distributed codebase*/
         public void message_type_SET(char  src)
         {  set_bytes((char)(src) & -1L, 2, data,  0); }
         public void target_network_SET(char  src) //Network ID (0 for broadcast)
@@ -5644,9 +5644,9 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 1, data,  4); }
         /**
         *Variable length payload. The length is defined by the remaining message length when subtracting the header
-        *	and other fields.  The entire content of this block is opaque unless you understand any the encoding
-        *	message_type.  The particular encoding used can be extension specific and might not always be documented
-        *	as part of the mavlink specification*/
+        *	 and other fields.  The entire content of this block is opaque unless you understand any the encoding
+        *	 message_type.  The particular encoding used can be extension specific and might not always be documented
+        *	 as part of the mavlink specification*/
         public void payload_SET(char[]  src, int pos)
         {
             for(int BYTE =  5, src_max = pos + 249; pos < src_max; pos++, BYTE += 1)
@@ -5655,7 +5655,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(248, 1, 0, 0, 254, 2032);
     }/**
 *Send raw controller memory. The use of this message is discouraged for normal packets, but a quite efficient
-*	way for testing new messages and getting experimental debug output*/
+*	 way for testing new messages and getting experimental debug output*/
     public static class MEMORY_VECT extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -5691,10 +5691,10 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(250, 0, 0, 1, 21, 160, 0, _vs);
+        } static final Meta meta = new Meta(250, 0, 0, 1, 21, 160, 0, _uj);
     }/**
 *Send a key-value pair as float. The use of this message is discouraged for normal packets, but a quite
-*	efficient way for testing new messages and getting experimental debug output*/
+*	 efficient way for testing new messages and getting experimental debug output*/
     public static class NAMED_VALUE_FLOAT extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -5710,10 +5710,10 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(251, 0, 1, 0, 9, 64, 0, _Ms);
+        } static final Meta meta = new Meta(251, 0, 1, 0, 9, 64, 0, _bj);
     }/**
 *Send a key-value pair as integer. The use of this message is discouraged for normal packets, but a quite
-*	efficient way for testing new messages and getting experimental debug output*/
+*	 efficient way for testing new messages and getting experimental debug output*/
     public static class NAMED_VALUE_INT extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -5729,11 +5729,11 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(252, 0, 1, 0, 9, 64, 0, _uX);
+        } static final Meta meta = new Meta(252, 0, 1, 0, 9, 64, 0, _QW);
     }/**
 *Status text message. These messages are printed in yellow in the COMM console of QGroundControl. WARNING:
-*	They consume quite some bandwidth, so use only for important status and error messages. If implemented
-*	wisely, these messages are buffered on the MCU and sent only at a limited rate (e.g. 10 Hz)*/
+*	 They consume quite some bandwidth, so use only for important status and error messages. If implemented
+*	 wisely, these messages are buffered on the MCU and sent only at a limited rate (e.g. 10 Hz)*/
     public static class STATUSTEXT extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -5747,10 +5747,10 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(253, 0, 0, 0, 2, 3, 0, _FX);
+        } static final Meta meta = new Meta(253, 0, 0, 0, 2, 3, 0, _PW);
     }/**
 *Send a debug value. The index is used to discriminate between values. These values show up in the plot
-*	of QGroundControl as DEBUG N*/
+*	 of QGroundControl as DEBUG N*/
     public static class DEBUG extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -5764,7 +5764,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(254, 0, 1, 0, 9, 72);
     }/**
 *Setup a MAVLink2 signing key. If called with secret_key of all zero and zero initial_timestamp will disable
-*	signin*/
+*	 signin*/
     public static class SETUP_SIGNING extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -5811,7 +5811,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(258, 0, 0, 0, 3, 16, 0, _lX);
+        } static final Meta meta = new Meta(258, 0, 0, 0, 3, 16, 0, _BW);
     }/**
 *WIP: Information about a camera*/
     public static class CAMERA_INFORMATION extends Pack  implements CommunicationChannel.Sendable
@@ -5855,7 +5855,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(259, 3, 2, 0, 93, 734, 0, _oX);
+        } static final Meta meta = new Meta(259, 3, 2, 0, 93, 734, 0, _VW);
     }/**
 *WIP: Settings of a camera, can be requested using MAV_CMD_REQUEST_CAMERA_SETTINGS.*/
     public static class CAMERA_SETTINGS extends Pack  implements CommunicationChannel.Sendable
@@ -5865,8 +5865,8 @@ public class GroundControl extends Host
         public void time_boot_ms_SET(long  src) //Timestamp (milliseconds since system boot)
         {  set_bytes((src) & -1L, 4, data,  0); }
         public void mode_id_SET(@CAMERA_MODE int  src) //Camera mode (CAMERA_MODE)
-        {  set_bits(- 0 +   src, 2, data, 32); }
-        static final Meta meta = new Meta(260, 0, 1, 0, 5, 34);
+        {  set_bits(- 0 +   src, 3, data, 32); }
+        static final Meta meta = new Meta(260, 0, 1, 0, 5, 35);
     }/**
 *WIP: Information about a storage medium.*/
     public static class STORAGE_INFORMATION extends Pack  implements CommunicationChannel.Sendable
@@ -5904,7 +5904,7 @@ public class GroundControl extends Host
         {  set_bytes((src) & -1L, 4, data,  4); }
         /**
         *Current status of image capturing (0: idle, 1: capture in progress, 2: interval set but idle, 3: interval
-        *	set and capture in progress*/
+        *	 set and capture in progress*/
         public void image_status_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  8); }
         public void video_status_SET(char  src) //Current status of video capturing (0: idle, 1: capture in progress)
@@ -5950,7 +5950,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(263, 0, 1, 1, 51, 402, 2, _LZ);
+        } static final Meta meta = new Meta(263, 0, 1, 1, 51, 402, 2, _Fy);
     }/**
 *WIP: Information about flight since last arming*/
     public static class FLIGHT_INFORMATION extends Pack  implements CommunicationChannel.Sendable
@@ -5997,7 +5997,7 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 1, data,  4); }
         /**
         *offset into data where first message starts. This can be used for recovery, when a previous message got
-        *	lost (set to 255 if no start exists)*/
+        *	 lost (set to 255 if no start exists)*/
         public void first_message_offset_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  5); }
         public void data__SET(char[]  src, int pos)  //logged data
@@ -6022,7 +6022,7 @@ public class GroundControl extends Host
         {  set_bytes((char)(src) & -1L, 1, data,  4); }
         /**
         *offset into data where first message starts. This can be used for recovery, when a previous message got
-        *	lost (set to 255 if no start exists)*/
+        *	 lost (set to 255 if no start exists)*/
         public void first_message_offset_SET(char  src)
         {  set_bytes((char)(src) & -1L, 1, data,  5); }
         public void data__SET(char[]  src, int pos)  //logged data
@@ -6071,7 +6071,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(269, 3, 1, 0, 17, 130, 2, _RZ);
+        } static final Meta meta = new Meta(269, 3, 1, 0, 17, 130, 2, _Uy);
     }/**
 *WIP: Message that sets video stream settings*/
     public static class SET_VIDEO_STREAM_SETTINGS extends Pack  implements CommunicationChannel.Sendable
@@ -6101,7 +6101,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(270, 3, 1, 0, 18, 138, 2, _SZ);
+        } static final Meta meta = new Meta(270, 3, 1, 0, 18, 138, 2, _Ky);
     }/**
 *Configure AP SSID and Password.*/
     public static class WIFI_CONFIG_AP extends Pack  implements CommunicationChannel.Sendable
@@ -6122,13 +6122,13 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(299, 0, 0, 0, 1, 2, 2, _zZ, _iZ);
+        } static final Meta meta = new Meta(299, 0, 0, 0, 1, 2, 2, _ry, _Cy);
     }/**
 *WIP: Version and capability of protocol version. This message is the response to REQUEST_PROTOCOL_VERSION
-*	and is used as part of the handshaking to establish which MAVLink version should be used on the network.
-*	Every node should respond to REQUEST_PROTOCOL_VERSION to enable the handshaking. Library implementers
-*	should consider adding this into the default decoding state machine to allow the protocol core to respond
-*	directly*/
+*	 and is used as part of the handshaking to establish which MAVLink version should be used on the network.
+*	 Every node should respond to REQUEST_PROTOCOL_VERSION to enable the handshaking. Library implementers
+*	 should consider adding this into the default decoding state machine to allow the protocol core to respond
+*	 directly*/
     public static class PROTOCOL_VERSION extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -6152,7 +6152,7 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(300, 3, 0, 0, 22, 176);
     }/**
 *General status information of an UAVCAN node. Please refer to the definition of the UAVCAN message "uavcan.protocol.NodeStatus"
-*	for the background information. The UAVCAN specification is available at http:uavcan.org*/
+*	 for the background information. The UAVCAN specification is available at http:uavcan.org*/
     public static class UAVCAN_NODE_STATUS extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -6195,11 +6195,11 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(310, 1, 1, 1, 16, 125);
     }/**
 *General information describing a particular UAVCAN node. Please refer to the definition of the UAVCAN
-*	service "uavcan.protocol.GetNodeInfo" for the background information. This message should be emitted
-*	by the system whenever a new node appears online, or an existing node reboots. Additionally, it can be
-*	emitted upon request from the other end of the MAVLink channel (see MAV_CMD_UAVCAN_GET_NODE_INFO). It
-*	is also not prohibited to emit this message unconditionally at a low frequency. The UAVCAN specification
-*	is available at http:uavcan.org*/
+*	 service "uavcan.protocol.GetNodeInfo" for the background information. This message should be emitted
+*	 by the system whenever a new node appears online, or an existing node reboots. Additionally, it can be
+*	 emitted upon request from the other end of the MAVLink channel (see MAV_CMD_UAVCAN_GET_NODE_INFO). It
+*	 is also not prohibited to emit this message unconditionally at a low frequency. The UAVCAN specification
+*	 is available at http:uavcan.org*/
     public static class UAVCAN_NODE_INFO extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -6230,7 +6230,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(311, 0, 2, 1, 37, 288, 0, _Uf);
+        } static final Meta meta = new Meta(311, 0, 2, 1, 37, 288, 0, _TY);
     }/**
 *Request to read the value of a parameter with the either the param_id string id or param_index.*/
     public static class PARAM_EXT_REQUEST_READ extends Pack  implements CommunicationChannel.Sendable
@@ -6245,20 +6245,20 @@ public class GroundControl extends Host
         {  set_bytes((short)(src) & -1L, 2, data,  2); }
         /**
         *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-        *	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-        *	ID is stored as strin*/
+        *	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+        *	 ID is stored as strin*/
         public void param_id_SET(String src, Bounds.Inside ph)
         {param_id_SET(src.toCharArray(), 0, src.length(), ph);}/**
 *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-*	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-*	ID is stored as strin*/
+*	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+*	 ID is stored as strin*/
         public void param_id_SET(char[]  src, int pos, int items, Bounds.Inside ph)
         {
             if(ph.field_bit != 32 && insert_field(ph, 32, items) || ! try_visit_item(ph, 0))
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(320, 0, 0, 0, 5, 32, 0, _Jf);
+        } static final Meta meta = new Meta(320, 0, 0, 0, 5, 32, 0, _gY);
     }/**
 *Request all parameters of this component. After this request, all parameters are emitted.*/
     public static class PARAM_EXT_REQUEST_LIST extends Pack  implements CommunicationChannel.Sendable
@@ -6272,8 +6272,8 @@ public class GroundControl extends Host
         static final Meta meta = new Meta(321, 0, 0, 0, 2, 16);
     }/**
 *Emit the value of a parameter. The inclusion of param_count and param_index in the message allows the
-*	recipient to keep track of received parameters and allows them to re-request missing parameters after
-*	a loss or timeout*/
+*	 recipient to keep track of received parameters and allows them to re-request missing parameters after
+*	 a loss or timeout*/
     public static class PARAM_EXT_VALUE extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -6286,13 +6286,13 @@ public class GroundControl extends Host
         {  set_bits(- 1 +   src, 4, data, 32); }
         /**
         *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-        *	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-        *	ID is stored as strin*/
+        *	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+        *	 ID is stored as strin*/
         public void param_id_SET(String src, Bounds.Inside ph)
         {param_id_SET(src.toCharArray(), 0, src.length(), ph);}/**
 *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-*	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-*	ID is stored as strin*/
+*	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+*	 ID is stored as strin*/
         public void param_id_SET(char[]  src, int pos, int items, Bounds.Inside ph)
         {
             if(ph.field_bit != 38 && insert_field(ph, 38, items) || ! try_visit_item(ph, 0))
@@ -6306,12 +6306,12 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(322, 2, 0, 0, 5, 38, 2, _ff, _ef);
+        } static final Meta meta = new Meta(322, 2, 0, 0, 5, 38, 2, _YY, _GY);
     }/**
 *Set a parameter value. In order to deal with message loss (and retransmission of PARAM_EXT_SET), when
-*	setting a parameter value and the new value is the same as the current value, you will immediately get
-*	a PARAM_ACK_ACCEPTED response. If the current state is PARAM_ACK_IN_PROGRESS, you will accordingly receive
-*	a PARAM_ACK_IN_PROGRESS in response*/
+*	 setting a parameter value and the new value is the same as the current value, you will immediately get
+*	 a PARAM_ACK_ACCEPTED response. If the current state is PARAM_ACK_IN_PROGRESS, you will accordingly receive
+*	 a PARAM_ACK_IN_PROGRESS in response*/
     public static class PARAM_EXT_SET extends Pack  implements CommunicationChannel.Sendable
     {
 
@@ -6324,13 +6324,13 @@ public class GroundControl extends Host
         {  set_bits(- 1 +   src, 4, data, 16); }
         /**
         *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-        *	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-        *	ID is stored as strin*/
+        *	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+        *	 ID is stored as strin*/
         public void param_id_SET(String src, Bounds.Inside ph)
         {param_id_SET(src.toCharArray(), 0, src.length(), ph);}/**
 *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-*	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-*	ID is stored as strin*/
+*	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+*	 ID is stored as strin*/
         public void param_id_SET(char[]  src, int pos, int items, Bounds.Inside ph)
         {
             if(ph.field_bit != 22 && insert_field(ph, 22, items) || ! try_visit_item(ph, 0))
@@ -6344,7 +6344,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(323, 0, 0, 0, 3, 22, 2, _of, _xf);
+        } static final Meta meta = new Meta(323, 0, 0, 0, 3, 22, 2, _VY, _EY);
     }/**
 *Response from a PARAM_EXT_SET message.*/
     public static class PARAM_EXT_ACK extends Pack  implements CommunicationChannel.Sendable
@@ -6357,13 +6357,13 @@ public class GroundControl extends Host
         {  set_bits(- 0 +   src, 2, data, 4); }
         /**
         *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-        *	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-        *	ID is stored as strin*/
+        *	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+        *	 ID is stored as strin*/
         public void param_id_SET(String src, Bounds.Inside ph)
         {param_id_SET(src.toCharArray(), 0, src.length(), ph);}/**
 *Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination
-*	(NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
-*	ID is stored as strin*/
+*	 (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the
+*	 ID is stored as strin*/
         public void param_id_SET(char[]  src, int pos, int items, Bounds.Inside ph)
         {
             if(ph.field_bit != 8 && insert_field(ph, 8, items) || ! try_visit_item(ph, 0))
@@ -6377,7 +6377,7 @@ public class GroundControl extends Host
                 insert_item(ph, 0, items);
             for(int BYTE =  ph.BYTE, src_max = pos + ph.items; pos < src_max; pos++, BYTE += 2)
                 set_bytes((short)(src[pos]) & -1L, 2, data,  BYTE);
-        } static final Meta meta = new Meta(324, 0, 0, 0, 1, 8, 2, _mf, _wf);
+        } static final Meta meta = new Meta(324, 0, 0, 0, 1, 8, 2, _iY, _cY);
     }/**
 *Obstacle distances in front of the sensor, starting from the left in increment degrees to the right*/
     public static class OBSTACLE_DISTANCE extends Pack  implements CommunicationChannel.Sendable
@@ -6386,8 +6386,8 @@ public class GroundControl extends Host
         OBSTACLE_DISTANCE() { super(meta, 0); }
         /**
         *Distance of obstacles in front of the sensor starting on the left side. A value of 0 means that the obstacle
-        *	is right in front of the sensor. A value of max_distance +1 means no obstace is present. A value of UINT16_MAX
-        *	for unknown/not used. In a array element, each unit corresponds to 1cm*/
+        *	 is right in front of the sensor. A value of max_distance +1 means no obstace is present. A value of UINT16_MAX
+        *	 for unknown/not used. In a array element, each unit corresponds to 1cm*/
         public void distances_SET(char[]  src, int pos)
         {
             for(int BYTE =  0, src_max = pos + 72; pos < src_max; pos++, BYTE += 2)
@@ -6417,36 +6417,36 @@ public class GroundControl extends Host
         public interface Sendable {}
         /**
         *Reports the current commanded vehicle position, velocity, and acceleration as specified by the autopilot.
-        *	This should match the commands sent in SET_POSITION_TARGET_LOCAL_NED if the vehicle is being controlled
-        *	this way*/
+        *	 This should match the commands sent in SET_POSITION_TARGET_LOCAL_NED if the vehicle is being controlled
+        *	 this way*/
         public static POSITION_TARGET_LOCAL_NED new_POSITION_TARGET_LOCAL_NED() {return new  POSITION_TARGET_LOCAL_NED();}
         public static SET_POSITION_TARGET_LOCAL_NED new_SET_POSITION_TARGET_LOCAL_NED() {return new  SET_POSITION_TARGET_LOCAL_NED();}
         /**
         *Sets a desired vehicle position, velocity, and/or acceleration in a global coordinate system (WGS84).
-        *	Used by an external controller to command the vehicle (manual controller or other system)*/
+        *	 Used by an external controller to command the vehicle (manual controller or other system)*/
         public static SET_POSITION_TARGET_GLOBAL_INT new_SET_POSITION_TARGET_GLOBAL_INT() {return new  SET_POSITION_TARGET_GLOBAL_INT();}
         /**
         *Reports the current commanded vehicle position, velocity, and acceleration as specified by the autopilot.
-        *	This should match the commands sent in SET_POSITION_TARGET_GLOBAL_INT if the vehicle is being controlled
-        *	this way*/
+        *	 This should match the commands sent in SET_POSITION_TARGET_GLOBAL_INT if the vehicle is being controlled
+        *	 this way*/
         public static POSITION_TARGET_GLOBAL_INT new_POSITION_TARGET_GLOBAL_INT() {return new  POSITION_TARGET_GLOBAL_INT();}
         /**
         *The offset in X, Y, Z and yaw between the LOCAL_POSITION_NED messages of MAV X and the global coordinate
-        *	frame in NED coordinates. Coordinate frame is right-handed, Z-axis down (aeronautical frame, NED / north-east-down
-        *	convention*/
+        *	 frame in NED coordinates. Coordinate frame is right-handed, Z-axis down (aeronautical frame, NED / north-east-down
+        *	 convention*/
         public static LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET new_LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET() {return new  LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET();}
         /**
         *DEPRECATED PACKET! Suffers from missing airspeed fields and singularities due to Euler angles. Please
-        *	use HIL_STATE_QUATERNION instead. Sent from simulation to autopilot. This packet is useful for high throughput
-        *	applications such as hardware in the loop simulations*/
+        *	 use HIL_STATE_QUATERNION instead. Sent from simulation to autopilot. This packet is useful for high throughput
+        *	 applications such as hardware in the loop simulations*/
         public static HIL_STATE new_HIL_STATE() {return new  HIL_STATE();}
         /**
         *Sent from autopilot to simulation. Hardware in the loop control outputs*/
         public static HIL_CONTROLS new_HIL_CONTROLS() {return new  HIL_CONTROLS();}
         /**
         *Sent from simulation to autopilot. The RAW values of the RC channels received. The standard PPM modulation
-        *	is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%. Individual receivers/transmitters might
-        *	violate this specification*/
+        *	 is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%. Individual receivers/transmitters might
+        *	 violate this specification*/
         public static HIL_RC_INPUTS_RAW new_HIL_RC_INPUTS_RAW() {return new  HIL_RC_INPUTS_RAW();}
         /**
         *Sent from autopilot to simulation. Hardware in the loop control outputs (replacement for HIL_CONTROLS*/
@@ -6491,15 +6491,15 @@ public class GroundControl extends Host
         public static HIL_OPTICAL_FLOW new_HIL_OPTICAL_FLOW() {return new  HIL_OPTICAL_FLOW();}
         /**
         *Sent from simulation to autopilot, avoids in contrast to HIL_STATE singularities. This packet is useful
-        *	for high throughput applications such as hardware in the loop simulations*/
+        *	 for high throughput applications such as hardware in the loop simulations*/
         public static HIL_STATE_QUATERNION new_HIL_STATE_QUATERNION() {return new  HIL_STATE_QUATERNION();}
         /**
         *The RAW IMU readings for secondary 9DOF sensor setup. This message should contain the scaled values to
-        *	the described unit*/
+        *	 the described unit*/
         public static SCALED_IMU2 new_SCALED_IMU2() {return new  SCALED_IMU2();}
         /**
         *Request a list of available logs. On some systems calling this may stop on-board logging until LOG_REQUEST_END
-        *	is called*/
+        *	 is called*/
         public static LOG_REQUEST_LIST new_LOG_REQUEST_LIST() {return new  LOG_REQUEST_LIST();}
         /**
         *Reply to LOG_REQUEST_LIST*/
@@ -6527,8 +6527,8 @@ public class GroundControl extends Host
         public static POWER_STATUS new_POWER_STATUS() {return new  POWER_STATUS();}
         /**
         *Control a serial port. This can be used for raw access to an onboard serial peripheral such as a GPS or
-        *	telemetry radio. It is designed to make it possible to update the devices firmware via MAVLink messages
-        *	or change the devices settings. A message with zero bytes can be used to change just the baudrate*/
+        *	 telemetry radio. It is designed to make it possible to update the devices firmware via MAVLink messages
+        *	 or change the devices settings. A message with zero bytes can be used to change just the baudrate*/
         public static SERIAL_CONTROL new_SERIAL_CONTROL() {return new  SERIAL_CONTROL();}
         /**
         *RTK GPS data. Gives information on the relative baseline calculation the GPS is reporting*/
@@ -6538,7 +6538,7 @@ public class GroundControl extends Host
         public static GPS2_RTK new_GPS2_RTK() {return new  GPS2_RTK();}
         /**
         *The RAW IMU readings for 3rd 9DOF sensor setup. This message should contain the scaled values to the described
-        *	unit*/
+        *	 unit*/
         public static SCALED_IMU3 new_SCALED_IMU3() {return new  SCALED_IMU3();}
         public static DATA_TRANSMISSION_HANDSHAKE new_DATA_TRANSMISSION_HANDSHAKE() {return new  DATA_TRANSMISSION_HANDSHAKE();}
         public static ENCAPSULATED_DATA new_ENCAPSULATED_DATA() {return new  ENCAPSULATED_DATA();}
@@ -6551,7 +6551,7 @@ public class GroundControl extends Host
         public static TERRAIN_DATA new_TERRAIN_DATA() {return new  TERRAIN_DATA();}
         /**
         *Request that the vehicle report terrain height at the given location. Used by GCS to check if vehicle
-        *	has all terrain data needed for a mission*/
+        *	 has all terrain data needed for a mission*/
         public static TERRAIN_CHECK new_TERRAIN_CHECK() {return new  TERRAIN_CHECK();}
         /**
         *Response from a TERRAIN_CHECK request*/
@@ -6612,7 +6612,7 @@ public class GroundControl extends Host
         public static GPS_DATE_TIME new_GPS_DATE_TIME() {return new  GPS_DATE_TIME();}
         /**
         *Mid Level commands sent from the GS to the autopilot. These are only sent when being operated in mid-level
-        *	commands mode from the ground*/
+        *	 commands mode from the ground*/
         public static MID_LVL_CMDS new_MID_LVL_CMDS() {return new  MID_LVL_CMDS();}
         /**
         *This message sets the control surfaces for selective passthrough mode.*/
@@ -6652,23 +6652,23 @@ public class GroundControl extends Host
         public static SENSOR_DIAG new_SENSOR_DIAG() {return new  SENSOR_DIAG();}
         /**
         *The boot message indicates that a system is starting. The onboard software version allows to keep track
-        *	of onboard soft/firmware revisions. This message allows the sensor and control MCUs to communicate version
-        *	numbers on startup*/
+        *	 of onboard soft/firmware revisions. This message allows the sensor and control MCUs to communicate version
+        *	 numbers on startup*/
         public static BOOT new_BOOT() {return new  BOOT();}
         /**
         *Estimator status message including flags, innovation test ratios and estimated accuracies. The flags message
-        *	is an integer bitmask containing information on which EKF outputs are valid. See the ESTIMATOR_STATUS_FLAGS
-        *	enum definition for further information. The innovaton test ratios show the magnitude of the sensor innovation
-        *	divided by the innovation check threshold. Under normal operation the innovaton test ratios should be
-        *	below 0.5 with occasional values up to 1.0. Values greater than 1.0 should be rare under normal operation
-        *	and indicate that a measurement has been rejected by the filter. The user should be notified if an innovation
-        *	test ratio greater than 1.0 is recorded. Notifications for values in the range between 0.5 and 1.0 should
-        *	be optional and controllable by the user*/
+        *	 is an integer bitmask containing information on which EKF outputs are valid. See the ESTIMATOR_STATUS_FLAGS
+        *	 enum definition for further information. The innovaton test ratios show the magnitude of the sensor innovation
+        *	 divided by the innovation check threshold. Under normal operation the innovaton test ratios should be
+        *	 below 0.5 with occasional values up to 1.0. Values greater than 1.0 should be rare under normal operation
+        *	 and indicate that a measurement has been rejected by the filter. The user should be notified if an innovation
+        *	 test ratio greater than 1.0 is recorded. Notifications for values in the range between 0.5 and 1.0 should
+        *	 be optional and controllable by the user*/
         public static ESTIMATOR_STATUS new_ESTIMATOR_STATUS() {return new  ESTIMATOR_STATUS();}
         public static WIND_COV new_WIND_COV() {return new  WIND_COV();}
         /**
         *GPS sensor input message.  This is a raw sensor value sent by the GPS. This is NOT the global position
-        *	estimate of the sytem*/
+        *	 estimate of the sytem*/
         public static GPS_INPUT new_GPS_INPUT() {return new  GPS_INPUT();}
         public static GPS_RTCM_DATA new_GPS_RTCM_DATA() {return new  GPS_RTCM_DATA();}
         /**
@@ -6679,21 +6679,21 @@ public class GroundControl extends Host
         public static VIBRATION new_VIBRATION() {return new  VIBRATION();}
         /**
         *This message can be requested by sending the MAV_CMD_GET_HOME_POSITION command. The position the system
-        *	will return to and land on. The position is set automatically by the system during the takeoff in case
-        *	it was not explicitely set by the operator before or after. The position the system will return to and
-        *	land on. The global and local positions encode the position in the respective coordinate frames, while
-        *	the q parameter encodes the orientation of the surface. Under normal conditions it describes the heading
-        *	and terrain slope, which can be used by the aircraft to adjust the approach. The approach 3D vector describes
-        *	the point to which the system should fly in normal flight mode and then perform a landing sequence along
-        *	the vector*/
+        *	 will return to and land on. The position is set automatically by the system during the takeoff in case
+        *	 it was not explicitely set by the operator before or after. The position the system will return to and
+        *	 land on. The global and local positions encode the position in the respective coordinate frames, while
+        *	 the q parameter encodes the orientation of the surface. Under normal conditions it describes the heading
+        *	 and terrain slope, which can be used by the aircraft to adjust the approach. The approach 3D vector describes
+        *	 the point to which the system should fly in normal flight mode and then perform a landing sequence along
+        *	 the vector*/
         public static HOME_POSITION new_HOME_POSITION() {return new  HOME_POSITION();}
         /**
         *The position the system will return to and land on. The position is set automatically by the system during
-        *	the takeoff in case it was not explicitely set by the operator before or after. The global and local
-        *	positions encode the position in the respective coordinate frames, while the q parameter encodes the
-        *	orientation of the surface. Under normal conditions it describes the heading and terrain slope, which
-        *	can be used by the aircraft to adjust the approach. The approach 3D vector describes the point to which
-        *	the system should fly in normal flight mode and then perform a landing sequence along the vector*/
+        *	 the takeoff in case it was not explicitely set by the operator before or after. The global and local
+        *	 positions encode the position in the respective coordinate frames, while the q parameter encodes the
+        *	 orientation of the surface. Under normal conditions it describes the heading and terrain slope, which
+        *	 can be used by the aircraft to adjust the approach. The approach 3D vector describes the point to which
+        *	 the system should fly in normal flight mode and then perform a landing sequence along the vector*/
         public static SET_HOME_POSITION new_SET_HOME_POSITION() {return new  SET_HOME_POSITION();}
         /**
         *This interface replaces DATA_STREAM*/
@@ -6712,29 +6712,29 @@ public class GroundControl extends Host
         public static V2_EXTENSION new_V2_EXTENSION() {return new  V2_EXTENSION();}
         /**
         *Send raw controller memory. The use of this message is discouraged for normal packets, but a quite efficient
-        *	way for testing new messages and getting experimental debug output*/
+        *	 way for testing new messages and getting experimental debug output*/
         public static MEMORY_VECT new_MEMORY_VECT() {return new  MEMORY_VECT();}
         public static DEBUG_VECT new_DEBUG_VECT() {return new  DEBUG_VECT();}
         /**
         *Send a key-value pair as float. The use of this message is discouraged for normal packets, but a quite
-        *	efficient way for testing new messages and getting experimental debug output*/
+        *	 efficient way for testing new messages and getting experimental debug output*/
         public static NAMED_VALUE_FLOAT new_NAMED_VALUE_FLOAT() {return new  NAMED_VALUE_FLOAT();}
         /**
         *Send a key-value pair as integer. The use of this message is discouraged for normal packets, but a quite
-        *	efficient way for testing new messages and getting experimental debug output*/
+        *	 efficient way for testing new messages and getting experimental debug output*/
         public static NAMED_VALUE_INT new_NAMED_VALUE_INT() {return new  NAMED_VALUE_INT();}
         /**
         *Status text message. These messages are printed in yellow in the COMM console of QGroundControl. WARNING:
-        *	They consume quite some bandwidth, so use only for important status and error messages. If implemented
-        *	wisely, these messages are buffered on the MCU and sent only at a limited rate (e.g. 10 Hz)*/
+        *	 They consume quite some bandwidth, so use only for important status and error messages. If implemented
+        *	 wisely, these messages are buffered on the MCU and sent only at a limited rate (e.g. 10 Hz)*/
         public static STATUSTEXT new_STATUSTEXT() {return new  STATUSTEXT();}
         /**
         *Send a debug value. The index is used to discriminate between values. These values show up in the plot
-        *	of QGroundControl as DEBUG N*/
+        *	 of QGroundControl as DEBUG N*/
         public static DEBUG new_DEBUG() {return new  DEBUG();}
         /**
         *Setup a MAVLink2 signing key. If called with secret_key of all zero and zero initial_timestamp will disable
-        *	signin*/
+        *	 signin*/
         public static SETUP_SIGNING new_SETUP_SIGNING() {return new  SETUP_SIGNING();}
         /**
         *Report button state change*/
@@ -6783,22 +6783,22 @@ public class GroundControl extends Host
         public static WIFI_CONFIG_AP new_WIFI_CONFIG_AP() {return new  WIFI_CONFIG_AP();}
         /**
         *WIP: Version and capability of protocol version. This message is the response to REQUEST_PROTOCOL_VERSION
-        *	and is used as part of the handshaking to establish which MAVLink version should be used on the network.
-        *	Every node should respond to REQUEST_PROTOCOL_VERSION to enable the handshaking. Library implementers
-        *	should consider adding this into the default decoding state machine to allow the protocol core to respond
-        *	directly*/
+        *	 and is used as part of the handshaking to establish which MAVLink version should be used on the network.
+        *	 Every node should respond to REQUEST_PROTOCOL_VERSION to enable the handshaking. Library implementers
+        *	 should consider adding this into the default decoding state machine to allow the protocol core to respond
+        *	 directly*/
         public static PROTOCOL_VERSION new_PROTOCOL_VERSION() {return new  PROTOCOL_VERSION();}
         /**
         *General status information of an UAVCAN node. Please refer to the definition of the UAVCAN message "uavcan.protocol.NodeStatus"
-        *	for the background information. The UAVCAN specification is available at http:uavcan.org*/
+        *	 for the background information. The UAVCAN specification is available at http:uavcan.org*/
         public static UAVCAN_NODE_STATUS new_UAVCAN_NODE_STATUS() {return new  UAVCAN_NODE_STATUS();}
         /**
         *General information describing a particular UAVCAN node. Please refer to the definition of the UAVCAN
-        *	service "uavcan.protocol.GetNodeInfo" for the background information. This message should be emitted
-        *	by the system whenever a new node appears online, or an existing node reboots. Additionally, it can be
-        *	emitted upon request from the other end of the MAVLink channel (see MAV_CMD_UAVCAN_GET_NODE_INFO). It
-        *	is also not prohibited to emit this message unconditionally at a low frequency. The UAVCAN specification
-        *	is available at http:uavcan.org*/
+        *	 service "uavcan.protocol.GetNodeInfo" for the background information. This message should be emitted
+        *	 by the system whenever a new node appears online, or an existing node reboots. Additionally, it can be
+        *	 emitted upon request from the other end of the MAVLink channel (see MAV_CMD_UAVCAN_GET_NODE_INFO). It
+        *	 is also not prohibited to emit this message unconditionally at a low frequency. The UAVCAN specification
+        *	 is available at http:uavcan.org*/
         public static UAVCAN_NODE_INFO new_UAVCAN_NODE_INFO() {return new  UAVCAN_NODE_INFO();}
         /**
         *Request to read the value of a parameter with the either the param_id string id or param_index.*/
@@ -6808,14 +6808,14 @@ public class GroundControl extends Host
         public static PARAM_EXT_REQUEST_LIST new_PARAM_EXT_REQUEST_LIST() {return new  PARAM_EXT_REQUEST_LIST();}
         /**
         *Emit the value of a parameter. The inclusion of param_count and param_index in the message allows the
-        *	recipient to keep track of received parameters and allows them to re-request missing parameters after
-        *	a loss or timeout*/
+        *	 recipient to keep track of received parameters and allows them to re-request missing parameters after
+        *	 a loss or timeout*/
         public static PARAM_EXT_VALUE new_PARAM_EXT_VALUE() {return new  PARAM_EXT_VALUE();}
         /**
         *Set a parameter value. In order to deal with message loss (and retransmission of PARAM_EXT_SET), when
-        *	setting a parameter value and the new value is the same as the current value, you will immediately get
-        *	a PARAM_ACK_ACCEPTED response. If the current state is PARAM_ACK_IN_PROGRESS, you will accordingly receive
-        *	a PARAM_ACK_IN_PROGRESS in response*/
+        *	 setting a parameter value and the new value is the same as the current value, you will immediately get
+        *	 a PARAM_ACK_ACCEPTED response. If the current state is PARAM_ACK_IN_PROGRESS, you will accordingly receive
+        *	 a PARAM_ACK_IN_PROGRESS in response*/
         public static PARAM_EXT_SET new_PARAM_EXT_SET() {return new  PARAM_EXT_SET();}
         /**
         *Response from a PARAM_EXT_SET message.*/
@@ -7751,32 +7751,32 @@ public class GroundControl extends Host
         }
         /**
         *The heartbeat message shows that a system is present and responding. The type of the MAV and Autopilot
-        *	hardware allow the receiving system to treat further messages from this system appropriate (e.g. by laying
-        *	out the user interface based on the autopilot)*/
+        *	 hardware allow the receiving system to treat further messages from this system appropriate (e.g. by laying
+        *	 out the user interface based on the autopilot)*/
         public final Collection<OnReceive.Handler<HEARTBEAT, CommunicationChannel>> on_HEARTBEAT = new OnReceive<>();
         /**
         *The general system state. If the system is following the MAVLink standard, the system state is mainly
-        *	defined by three orthogonal states/modes: The system mode, which is either LOCKED (motors shut down and
-        *	locked), MANUAL (system under RC control), GUIDED (system with autonomous position control, position
-        *	setpoint controlled manually) or AUTO (system guided by path/waypoint planner). The NAV_MODE defined
-        *	the current flight state: LIFTOFF (often an open-loop maneuver), LANDING, WAYPOINTS or VECTOR. This represents
-        *	the internal navigation state machine. The system status shows whether the system is currently active
-        *	or not and if an emergency occured. During the CRITICAL and EMERGENCY states the MAV is still considered
-        *	to be active, but should start emergency procedures autonomously. After a failure occured it should first
-        *	move from active to critical to allow manual intervention and then move to emergency after a certain
-        *	timeout*/
+        *	 defined by three orthogonal states/modes: The system mode, which is either LOCKED (motors shut down and
+        *	 locked), MANUAL (system under RC control), GUIDED (system with autonomous position control, position
+        *	 setpoint controlled manually) or AUTO (system guided by path/waypoint planner). The NAV_MODE defined
+        *	 the current flight state: LIFTOFF (often an open-loop maneuver), LANDING, WAYPOINTS or VECTOR. This represents
+        *	 the internal navigation state machine. The system status shows whether the system is currently active
+        *	 or not and if an emergency occured. During the CRITICAL and EMERGENCY states the MAV is still considered
+        *	 to be active, but should start emergency procedures autonomously. After a failure occured it should first
+        *	 move from active to critical to allow manual intervention and then move to emergency after a certain
+        *	 timeout*/
         public final Collection<OnReceive.Handler<SYS_STATUS, CommunicationChannel>> on_SYS_STATUS = new OnReceive<>();
         /**
         *The system time is the time of the master clock, typically the computer clock of the main onboard computer*/
         public final Collection<OnReceive.Handler<SYSTEM_TIME, CommunicationChannel>> on_SYSTEM_TIME = new OnReceive<>();
         /**
         *Reports the current commanded vehicle position, velocity, and acceleration as specified by the autopilot.
-        *	This should match the commands sent in SET_POSITION_TARGET_LOCAL_NED if the vehicle is being controlled
-        *	this way*/
+        *	 This should match the commands sent in SET_POSITION_TARGET_LOCAL_NED if the vehicle is being controlled
+        *	 this way*/
         public final Collection<OnReceive.Handler<POSITION_TARGET_LOCAL_NED, CommunicationChannel>> on_POSITION_TARGET_LOCAL_NED = new OnReceive<>();
         /**
         *A ping message either requesting or responding to a ping. This allows to measure the system latencies,
-        *	including serial port, radio modem and UDP connections*/
+        *	 including serial port, radio modem and UDP connections*/
         public final Collection<OnReceive.Handler<PING, CommunicationChannel>> on_PING = new OnReceive<>();
         /**
         *Request to control this MAV*/
@@ -7786,132 +7786,132 @@ public class GroundControl extends Host
         public final Collection<OnReceive.Handler<CHANGE_OPERATOR_CONTROL_ACK, CommunicationChannel>> on_CHANGE_OPERATOR_CONTROL_ACK = new OnReceive<>();
         /**
         *Emit an encrypted signature / key identifying this system. PLEASE NOTE: This protocol has been kept simple,
-        *	so transmitting the key requires an encrypted channel for true safety*/
+        *	 so transmitting the key requires an encrypted channel for true safety*/
         public final Collection<OnReceive.Handler<AUTH_KEY, CommunicationChannel>> on_AUTH_KEY = new OnReceive<>();
         /**
         *THIS INTERFACE IS DEPRECATED. USE COMMAND_LONG with MAV_CMD_DO_SET_MODE INSTEAD. Set the system mode,
-        *	as defined by enum MAV_MODE. There is no target component id as the mode is by definition for the overall
-        *	aircraft, not only for one component*/
+        *	 as defined by enum MAV_MODE. There is no target component id as the mode is by definition for the overall
+        *	 aircraft, not only for one component*/
         public final Collection<OnReceive.Handler<SET_MODE, CommunicationChannel>> on_SET_MODE = new OnReceive<>();
         /**
         *value[float]. This allows to send a parameter to any other component (such as the GCS) without the need
-        *	of previous knowledge of possible parameter names. Thus the same GCS can store different parameters for
-        *	different autopilots. See also http:qgroundcontrol.org/parameter_interface for a full documentation
-        *	of QGroundControl and IMU code*/
+        *	 of previous knowledge of possible parameter names. Thus the same GCS can store different parameters for
+        *	 different autopilots. See also http:qgroundcontrol.org/parameter_interface for a full documentation
+        *	 of QGroundControl and IMU code*/
         public final Collection<OnReceive.Handler<PARAM_REQUEST_READ, CommunicationChannel>> on_PARAM_REQUEST_READ = new OnReceive<>();
         /**
         *Request all parameters of this component. After this request, all parameters are emitted.*/
         public final Collection<OnReceive.Handler<PARAM_REQUEST_LIST, CommunicationChannel>> on_PARAM_REQUEST_LIST = new OnReceive<>();
         /**
         *Emit the value of a onboard parameter. The inclusion of param_count and param_index in the message allows
-        *	the recipient to keep track of received parameters and allows him to re-request missing parameters after
-        *	a loss or timeout*/
+        *	 the recipient to keep track of received parameters and allows him to re-request missing parameters after
+        *	 a loss or timeout*/
         public final Collection<OnReceive.Handler<PARAM_VALUE, CommunicationChannel>> on_PARAM_VALUE = new OnReceive<>();
         /**
         *Set a parameter value TEMPORARILY to RAM. It will be reset to default on system reboot. Send the ACTION
-        *	MAV_ACTION_STORAGE_WRITE to PERMANENTLY write the RAM contents to EEPROM. IMPORTANT: The receiving component
-        *	should acknowledge the new parameter value by sending a param_value message to all communication partners.
-        *	This will also ensure that multiple GCS all have an up-to-date list of all parameters. If the sending
-        *	GCS did not receive a PARAM_VALUE message within its timeout time, it should re-send the PARAM_SET message*/
+        *	 MAV_ACTION_STORAGE_WRITE to PERMANENTLY write the RAM contents to EEPROM. IMPORTANT: The receiving component
+        *	 should acknowledge the new parameter value by sending a param_value message to all communication partners.
+        *	 This will also ensure that multiple GCS all have an up-to-date list of all parameters. If the sending
+        *	 GCS did not receive a PARAM_VALUE message within its timeout time, it should re-send the PARAM_SET message*/
         public final Collection<OnReceive.Handler<PARAM_SET, CommunicationChannel>> on_PARAM_SET = new OnReceive<>();
         /**
         *The global position, as returned by the Global Positioning System (GPS). This is
-        *	NOT the global position estimate of the system, but rather a RAW sensor value. See message GLOBAL_POSITION for the global position estimate. Coordinate frame is right-handed, Z-axis up (GPS frame).*/
+        *	 NOT the global position estimate of the system, but rather a RAW sensor value. See message GLOBAL_POSITION for the global position estimate. Coordinate frame is right-handed, Z-axis up (GPS frame).*/
         public final Collection<OnReceive.Handler<GPS_RAW_INT, CommunicationChannel>> on_GPS_RAW_INT = new OnReceive<>();
         /**
         *The positioning status, as reported by GPS. This message is intended to display status information about
-        *	each satellite visible to the receiver. See message GLOBAL_POSITION for the global position estimate.
-        *	This message can contain information for up to 20 satellites*/
+        *	 each satellite visible to the receiver. See message GLOBAL_POSITION for the global position estimate.
+        *	 This message can contain information for up to 20 satellites*/
         public final Collection<OnReceive.Handler<GPS_STATUS, CommunicationChannel>> on_GPS_STATUS = new OnReceive<>();
         /**
         *The RAW IMU readings for the usual 9DOF sensor setup. This message should contain the scaled values to
-        *	the described unit*/
+        *	 the described unit*/
         public final Collection<OnReceive.Handler<SCALED_IMU, CommunicationChannel>> on_SCALED_IMU = new OnReceive<>();
         /**
         *The RAW IMU readings for the usual 9DOF sensor setup. This message should always contain the true raw
-        *	values without any scaling to allow data capture and system debugging*/
+        *	 values without any scaling to allow data capture and system debugging*/
         public final Collection<OnReceive.Handler<RAW_IMU, CommunicationChannel>> on_RAW_IMU = new OnReceive<>();
         /**
         *The RAW pressure readings for the typical setup of one absolute pressure and one differential pressure
-        *	sensor. The sensor values should be the raw, UNSCALED ADC values*/
+        *	 sensor. The sensor values should be the raw, UNSCALED ADC values*/
         public final Collection<OnReceive.Handler<RAW_PRESSURE, CommunicationChannel>> on_RAW_PRESSURE = new OnReceive<>();
         /**
         *The pressure readings for the typical setup of one absolute and differential pressure sensor. The units
-        *	are as specified in each field*/
+        *	 are as specified in each field*/
         public final Collection<OnReceive.Handler<SCALED_PRESSURE, CommunicationChannel>> on_SCALED_PRESSURE = new OnReceive<>();
         /**
         *The attitude in the aeronautical frame (right-handed, Z-down, X-front, Y-right).*/
         public final Collection<OnReceive.Handler<ATTITUDE, CommunicationChannel>> on_ATTITUDE = new OnReceive<>();
         /**
         *The attitude in the aeronautical frame (right-handed, Z-down, X-front, Y-right), expressed as quaternion.
-        *	Quaternion order is w, x, y, z and a zero rotation would be expressed as (1 0 0 0)*/
+        *	 Quaternion order is w, x, y, z and a zero rotation would be expressed as (1 0 0 0)*/
         public final Collection<OnReceive.Handler<ATTITUDE_QUATERNION, CommunicationChannel>> on_ATTITUDE_QUATERNION = new OnReceive<>();
         /**
         *The filtered local position (e.g. fused computer vision and accelerometers). Coordinate frame is right-handed,
-        *	Z-axis down (aeronautical frame, NED / north-east-down convention*/
+        *	 Z-axis down (aeronautical frame, NED / north-east-down convention*/
         public final Collection<OnReceive.Handler<LOCAL_POSITION_NED, CommunicationChannel>> on_LOCAL_POSITION_NED = new OnReceive<>();
         /**
         *nt.*/
         public final Collection<OnReceive.Handler<GLOBAL_POSITION_INT, CommunicationChannel>> on_GLOBAL_POSITION_INT = new OnReceive<>();
         /**
         *The scaled values of the RC channels received. (-100%) -10000, (0%) 0, (100%) 10000. Channels that are
-        *	inactive should be set to UINT16_MAX*/
+        *	 inactive should be set to UINT16_MAX*/
         public final Collection<OnReceive.Handler<RC_CHANNELS_SCALED, CommunicationChannel>> on_RC_CHANNELS_SCALED = new OnReceive<>();
         /**
         *The RAW values of the RC channels received. The standard PPM modulation is as follows: 1000 microseconds:
-        *	0%, 2000 microseconds: 100%. Individual receivers/transmitters might violate this specification*/
+        *	 0%, 2000 microseconds: 100%. Individual receivers/transmitters might violate this specification*/
         public final Collection<OnReceive.Handler<RC_CHANNELS_RAW, CommunicationChannel>> on_RC_CHANNELS_RAW = new OnReceive<>();
         /**
         *The RAW values of the servo outputs (for RC input from the remote, use the RC_CHANNELS messages). The
-        *	standard PPM modulation is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%*/
+        *	 standard PPM modulation is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%*/
         public final Collection<OnReceive.Handler<SERVO_OUTPUT_RAW, CommunicationChannel>> on_SERVO_OUTPUT_RAW = new OnReceive<>();
         /**
         *Request a partial list of mission items from the system/component. http:qgroundcontrol.org/mavlink/waypoint_protocol.
-        *	If start and end index are the same, just send one waypoint*/
+        *	 If start and end index are the same, just send one waypoint*/
         public final Collection<OnReceive.Handler<MISSION_REQUEST_PARTIAL_LIST, CommunicationChannel>> on_MISSION_REQUEST_PARTIAL_LIST = new OnReceive<>();
         /**
         *This message is sent to the MAV to write a partial list. If start index == end index, only one item will
-        *	be transmitted / updated. If the start index is NOT 0 and above the current list size, this request should
-        *	be REJECTED*/
+        *	 be transmitted / updated. If the start index is NOT 0 and above the current list size, this request should
+        *	 be REJECTED*/
         public final Collection<OnReceive.Handler<MISSION_WRITE_PARTIAL_LIST, CommunicationChannel>> on_MISSION_WRITE_PARTIAL_LIST = new OnReceive<>();
         /**
         *Message encoding a mission item. This message is emitted to announce
-        *	the presence of a mission item and to set a mission item on the system. The mission item can be either in x, y, z meters (type: LOCAL) or x:lat, y:lon, z:altitude. Local frame is Z-down, right handed (NED), global frame is Z-up, right handed (ENU). See also http:qgroundcontrol.org/mavlink/waypoint_protocol.*/
+        *	 the presence of a mission item and to set a mission item on the system. The mission item can be either in x, y, z meters (type: LOCAL) or x:lat, y:lon, z:altitude. Local frame is Z-down, right handed (NED), global frame is Z-up, right handed (ENU). See also http:qgroundcontrol.org/mavlink/waypoint_protocol.*/
         public final Collection<OnReceive.Handler<MISSION_ITEM, CommunicationChannel>> on_MISSION_ITEM = new OnReceive<>();
         /**
         *Request the information of the mission item with the sequence number seq. The response of the system to
-        *	this message should be a MISSION_ITEM message. http:qgroundcontrol.org/mavlink/waypoint_protoco*/
+        *	 this message should be a MISSION_ITEM message. http:qgroundcontrol.org/mavlink/waypoint_protoco*/
         public final Collection<OnReceive.Handler<MISSION_REQUEST, CommunicationChannel>> on_MISSION_REQUEST = new OnReceive<>();
         /**
         *Set the mission item with sequence number seq as current item. This means that the MAV will continue to
-        *	this mission item on the shortest path (not following the mission items in-between)*/
+        *	 this mission item on the shortest path (not following the mission items in-between)*/
         public final Collection<OnReceive.Handler<MISSION_SET_CURRENT, CommunicationChannel>> on_MISSION_SET_CURRENT = new OnReceive<>();
         /**
         *Message that announces the sequence number of the current active mission item. The MAV will fly towards
-        *	this mission item*/
+        *	 this mission item*/
         public final Collection<OnReceive.Handler<MISSION_CURRENT, CommunicationChannel>> on_MISSION_CURRENT = new OnReceive<>();
         /**
         *Request the overall list of mission items from the system/component.*/
         public final Collection<OnReceive.Handler<MISSION_REQUEST_LIST, CommunicationChannel>> on_MISSION_REQUEST_LIST = new OnReceive<>();
         /**
         *This message is emitted as response to MISSION_REQUEST_LIST by the MAV and to initiate a write transaction.
-        *	The GCS can then request the individual mission item based on the knowledge of the total number of waypoints*/
+        *	 The GCS can then request the individual mission item based on the knowledge of the total number of waypoints*/
         public final Collection<OnReceive.Handler<MISSION_COUNT, CommunicationChannel>> on_MISSION_COUNT = new OnReceive<>();
         /**
         *Delete all mission items at once.*/
         public final Collection<OnReceive.Handler<MISSION_CLEAR_ALL, CommunicationChannel>> on_MISSION_CLEAR_ALL = new OnReceive<>();
         /**
         *A certain mission item has been reached. The system will either hold this position (or circle on the orbit)
-        *	or (if the autocontinue on the WP was set) continue to the next waypoint*/
+        *	 or (if the autocontinue on the WP was set) continue to the next waypoint*/
         public final Collection<OnReceive.Handler<MISSION_ITEM_REACHED, CommunicationChannel>> on_MISSION_ITEM_REACHED = new OnReceive<>();
         /**
         *Ack message during waypoint handling. The type field states if this message is a positive ack (type=0)
-        *	or if an error happened (type=non-zero)*/
+        *	 or if an error happened (type=non-zero)*/
         public final Collection<OnReceive.Handler<MISSION_ACK, CommunicationChannel>> on_MISSION_ACK = new OnReceive<>();
         /**
         *As local waypoints exist, the global waypoint reference allows to transform between the local coordinate
-        *	frame and the global (GPS) coordinate frame. This can be necessary when e.g. in- and outdoor settings
-        *	are connected and the MAV should move from in- to outdoor*/
+        *	 frame and the global (GPS) coordinate frame. This can be necessary when e.g. in- and outdoor settings
+        *	 are connected and the MAV should move from in- to outdoor*/
         public final Collection<OnReceive.Handler<SET_GPS_GLOBAL_ORIGIN, CommunicationChannel>> on_SET_GPS_GLOBAL_ORIGIN = new OnReceive<>();
         /**
         *Once the MAV sets a new GPS-Local correspondence, this message announces the origin (0,0,0) positio*/
@@ -7921,36 +7921,36 @@ public class GroundControl extends Host
         public final Collection<OnReceive.Handler<PARAM_MAP_RC, CommunicationChannel>> on_PARAM_MAP_RC = new OnReceive<>();
         /**
         *Request the information of the mission item with the sequence number seq. The response of the system to
-        *	this message should be a MISSION_ITEM_INT message. http:qgroundcontrol.org/mavlink/waypoint_protoco*/
+        *	 this message should be a MISSION_ITEM_INT message. http:qgroundcontrol.org/mavlink/waypoint_protoco*/
         public final Collection<OnReceive.Handler<MISSION_REQUEST_INT, CommunicationChannel>> on_MISSION_REQUEST_INT = new OnReceive<>();
         /**
         *Set a safety zone (volume), which is defined by two corners of a cube. This message can be used to tell
-        *	the MAV which setpoints/waypoints to accept and which to reject. Safety areas are often enforced by national
-        *	or competition regulations*/
+        *	 the MAV which setpoints/waypoints to accept and which to reject. Safety areas are often enforced by national
+        *	 or competition regulations*/
         public final Collection<OnReceive.Handler<SAFETY_SET_ALLOWED_AREA, CommunicationChannel>> on_SAFETY_SET_ALLOWED_AREA = new OnReceive<>();
         /**
         *Read out the safety zone the MAV currently assumes.*/
         public final Collection<OnReceive.Handler<SAFETY_ALLOWED_AREA, CommunicationChannel>> on_SAFETY_ALLOWED_AREA = new OnReceive<>();
         /**
         *The attitude in the aeronautical frame (right-handed, Z-down, X-front, Y-right), expressed as quaternion.
-        *	Quaternion order is w, x, y, z and a zero rotation would be expressed as (1 0 0 0)*/
+        *	 Quaternion order is w, x, y, z and a zero rotation would be expressed as (1 0 0 0)*/
         public final Collection<OnReceive.Handler<ATTITUDE_QUATERNION_COV, CommunicationChannel>> on_ATTITUDE_QUATERNION_COV = new OnReceive<>();
         /**
         *The state of the fixed wing navigation and position controller.*/
         public final Collection<OnReceive.Handler<NAV_CONTROLLER_OUTPUT, CommunicationChannel>> on_NAV_CONTROLLER_OUTPUT = new OnReceive<>();
         /**
         *The filtered global position (e.g. fused GPS and accelerometers). The position is in GPS-frame (right-handed,
-        *	Z-up). It  is designed as scaled integer message since the resolution of float is not sufficient. NOTE:
-        *	This message is intended for onboard networks / companion computers and higher-bandwidth links and optimized
-        *	for accuracy and completeness. Please use the GLOBAL_POSITION_INT message for a minimal subset*/
+        *	 Z-up). It  is designed as scaled integer message since the resolution of float is not sufficient. NOTE:
+        *	 This message is intended for onboard networks / companion computers and higher-bandwidth links and optimized
+        *	 for accuracy and completeness. Please use the GLOBAL_POSITION_INT message for a minimal subset*/
         public final Collection<OnReceive.Handler<GLOBAL_POSITION_INT_COV, CommunicationChannel>> on_GLOBAL_POSITION_INT_COV = new OnReceive<>();
         /**
         *The filtered local position (e.g. fused computer vision and accelerometers). Coordinate frame is right-handed,
-        *	Z-axis down (aeronautical frame, NED / north-east-down convention*/
+        *	 Z-axis down (aeronautical frame, NED / north-east-down convention*/
         public final Collection<OnReceive.Handler<LOCAL_POSITION_NED_COV, CommunicationChannel>> on_LOCAL_POSITION_NED_COV = new OnReceive<>();
         /**
         *The PPM values of the RC channels received. The standard PPM modulation is as follows: 1000 microseconds:
-        *	0%, 2000 microseconds: 100%. Individual receivers/transmitters might violate this specification*/
+        *	 0%, 2000 microseconds: 100%. Individual receivers/transmitters might violate this specification*/
         public final Collection<OnReceive.Handler<RC_CHANNELS, CommunicationChannel>> on_RC_CHANNELS = new OnReceive<>();
         /**
         *THIS INTERFACE IS DEPRECATED. USE SET_MESSAGE_INTERVAL INSTEAD.*/
@@ -7960,18 +7960,18 @@ public class GroundControl extends Host
         public final Collection<OnReceive.Handler<DATA_STREAM, CommunicationChannel>> on_DATA_STREAM = new OnReceive<>();
         /**
         *This message provides an API for manually controlling the vehicle using standard joystick axes nomenclature,
-        *	along with a joystick-like input device. Unused axes can be disabled an buttons are also transmit as
-        *	boolean values of their*/
+        *	 along with a joystick-like input device. Unused axes can be disabled an buttons are also transmit as
+        *	 boolean values of their*/
         public final Collection<OnReceive.Handler<MANUAL_CONTROL, CommunicationChannel>> on_MANUAL_CONTROL = new OnReceive<>();
         /**
         *The RAW values of the RC channels sent to the MAV to override info received from the RC radio. A value
-        *	of UINT16_MAX means no change to that channel. A value of 0 means control of that channel should be released
-        *	back to the RC radio. The standard PPM modulation is as follows: 1000 microseconds: 0%, 2000 microseconds:
-        *	100%. Individual receivers/transmitters might violate this specification*/
+        *	 of UINT16_MAX means no change to that channel. A value of 0 means control of that channel should be released
+        *	 back to the RC radio. The standard PPM modulation is as follows: 1000 microseconds: 0%, 2000 microseconds:
+        *	 100%. Individual receivers/transmitters might violate this specification*/
         public final Collection<OnReceive.Handler<RC_CHANNELS_OVERRIDE, CommunicationChannel>> on_RC_CHANNELS_OVERRIDE = new OnReceive<>();
         /**
         *Message encoding a mission item. This message is emitted to announce
-        *	the presence of a mission item and to set a mission item on the system. The mission item can be either in x, y, z meters (type: LOCAL) or x:lat, y:lon, z:altitude. Local frame is Z-down, right handed (NED), global frame is Z-up, right handed (ENU). See alsohttp:qgroundcontrol.org/mavlink/waypoint_protocol.*/
+        *	 the presence of a mission item and to set a mission item on the system. The mission item can be either in x, y, z meters (type: LOCAL) or x:lat, y:lon, z:altitude. Local frame is Z-down, right handed (NED), global frame is Z-up, right handed (ENU). See alsohttp:qgroundcontrol.org/mavlink/waypoint_protocol.*/
         public final Collection<OnReceive.Handler<MISSION_ITEM_INT, CommunicationChannel>> on_MISSION_ITEM_INT = new OnReceive<>();
         /**
         *Metrics typically displayed on a HUD for fixed wing aircraft*/
@@ -7990,39 +7990,39 @@ public class GroundControl extends Host
         public final Collection<OnReceive.Handler<MANUAL_SETPOINT, CommunicationChannel>> on_MANUAL_SETPOINT = new OnReceive<>();
         /**
         *Sets a desired vehicle attitude. Used by an external controller to command the vehicle (manual controller
-        *	or other system)*/
+        *	 or other system)*/
         public final Collection<OnReceive.Handler<SET_ATTITUDE_TARGET, CommunicationChannel>> on_SET_ATTITUDE_TARGET = new OnReceive<>();
         /**
         *Reports the current commanded attitude of the vehicle as specified by the autopilot. This should match
-        *	the commands sent in a SET_ATTITUDE_TARGET message if the vehicle is being controlled this way*/
+        *	 the commands sent in a SET_ATTITUDE_TARGET message if the vehicle is being controlled this way*/
         public final Collection<OnReceive.Handler<ATTITUDE_TARGET, CommunicationChannel>> on_ATTITUDE_TARGET = new OnReceive<>();
         public final Collection<OnReceive.Handler<SET_POSITION_TARGET_LOCAL_NED, CommunicationChannel>> on_SET_POSITION_TARGET_LOCAL_NED = new OnReceive<>();
         /**
         *Sets a desired vehicle position, velocity, and/or acceleration in a global coordinate system (WGS84).
-        *	Used by an external controller to command the vehicle (manual controller or other system)*/
+        *	 Used by an external controller to command the vehicle (manual controller or other system)*/
         public final Collection<OnReceive.Handler<SET_POSITION_TARGET_GLOBAL_INT, CommunicationChannel>> on_SET_POSITION_TARGET_GLOBAL_INT = new OnReceive<>();
         /**
         *Reports the current commanded vehicle position, velocity, and acceleration as specified by the autopilot.
-        *	This should match the commands sent in SET_POSITION_TARGET_GLOBAL_INT if the vehicle is being controlled
-        *	this way*/
+        *	 This should match the commands sent in SET_POSITION_TARGET_GLOBAL_INT if the vehicle is being controlled
+        *	 this way*/
         public final Collection<OnReceive.Handler<POSITION_TARGET_GLOBAL_INT, CommunicationChannel>> on_POSITION_TARGET_GLOBAL_INT = new OnReceive<>();
         /**
         *The offset in X, Y, Z and yaw between the LOCAL_POSITION_NED messages of MAV X and the global coordinate
-        *	frame in NED coordinates. Coordinate frame is right-handed, Z-axis down (aeronautical frame, NED / north-east-down
-        *	convention*/
+        *	 frame in NED coordinates. Coordinate frame is right-handed, Z-axis down (aeronautical frame, NED / north-east-down
+        *	 convention*/
         public final Collection<OnReceive.Handler<LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET, CommunicationChannel>> on_LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET = new OnReceive<>();
         /**
         *DEPRECATED PACKET! Suffers from missing airspeed fields and singularities due to Euler angles. Please
-        *	use HIL_STATE_QUATERNION instead. Sent from simulation to autopilot. This packet is useful for high throughput
-        *	applications such as hardware in the loop simulations*/
+        *	 use HIL_STATE_QUATERNION instead. Sent from simulation to autopilot. This packet is useful for high throughput
+        *	 applications such as hardware in the loop simulations*/
         public final Collection<OnReceive.Handler<HIL_STATE, CommunicationChannel>> on_HIL_STATE = new OnReceive<>();
         /**
         *Sent from autopilot to simulation. Hardware in the loop control outputs*/
         public final Collection<OnReceive.Handler<HIL_CONTROLS, CommunicationChannel>> on_HIL_CONTROLS = new OnReceive<>();
         /**
         *Sent from simulation to autopilot. The RAW values of the RC channels received. The standard PPM modulation
-        *	is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%. Individual receivers/transmitters might
-        *	violate this specification*/
+        *	 is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%. Individual receivers/transmitters might
+        *	 violate this specification*/
         public final Collection<OnReceive.Handler<HIL_RC_INPUTS_RAW, CommunicationChannel>> on_HIL_RC_INPUTS_RAW = new OnReceive<>();
         /**
         *Sent from autopilot to simulation. Hardware in the loop control outputs (replacement for HIL_CONTROLS*/
@@ -8067,15 +8067,15 @@ public class GroundControl extends Host
         public final Collection<OnReceive.Handler<HIL_OPTICAL_FLOW, CommunicationChannel>> on_HIL_OPTICAL_FLOW = new OnReceive<>();
         /**
         *Sent from simulation to autopilot, avoids in contrast to HIL_STATE singularities. This packet is useful
-        *	for high throughput applications such as hardware in the loop simulations*/
+        *	 for high throughput applications such as hardware in the loop simulations*/
         public final Collection<OnReceive.Handler<HIL_STATE_QUATERNION, CommunicationChannel>> on_HIL_STATE_QUATERNION = new OnReceive<>();
         /**
         *The RAW IMU readings for secondary 9DOF sensor setup. This message should contain the scaled values to
-        *	the described unit*/
+        *	 the described unit*/
         public final Collection<OnReceive.Handler<SCALED_IMU2, CommunicationChannel>> on_SCALED_IMU2 = new OnReceive<>();
         /**
         *Request a list of available logs. On some systems calling this may stop on-board logging until LOG_REQUEST_END
-        *	is called*/
+        *	 is called*/
         public final Collection<OnReceive.Handler<LOG_REQUEST_LIST, CommunicationChannel>> on_LOG_REQUEST_LIST = new OnReceive<>();
         /**
         *Reply to LOG_REQUEST_LIST*/
@@ -8103,8 +8103,8 @@ public class GroundControl extends Host
         public final Collection<OnReceive.Handler<POWER_STATUS, CommunicationChannel>> on_POWER_STATUS = new OnReceive<>();
         /**
         *Control a serial port. This can be used for raw access to an onboard serial peripheral such as a GPS or
-        *	telemetry radio. It is designed to make it possible to update the devices firmware via MAVLink messages
-        *	or change the devices settings. A message with zero bytes can be used to change just the baudrate*/
+        *	 telemetry radio. It is designed to make it possible to update the devices firmware via MAVLink messages
+        *	 or change the devices settings. A message with zero bytes can be used to change just the baudrate*/
         public final Collection<OnReceive.Handler<SERIAL_CONTROL, CommunicationChannel>> on_SERIAL_CONTROL = new OnReceive<>();
         /**
         *RTK GPS data. Gives information on the relative baseline calculation the GPS is reporting*/
@@ -8114,7 +8114,7 @@ public class GroundControl extends Host
         public final Collection<OnReceive.Handler<GPS2_RTK, CommunicationChannel>> on_GPS2_RTK = new OnReceive<>();
         /**
         *The RAW IMU readings for 3rd 9DOF sensor setup. This message should contain the scaled values to the described
-        *	unit*/
+        *	 unit*/
         public final Collection<OnReceive.Handler<SCALED_IMU3, CommunicationChannel>> on_SCALED_IMU3 = new OnReceive<>();
         public final Collection<OnReceive.Handler<DATA_TRANSMISSION_HANDSHAKE, CommunicationChannel>> on_DATA_TRANSMISSION_HANDSHAKE = new OnReceive<>();
         public final Collection<OnReceive.Handler<ENCAPSULATED_DATA, CommunicationChannel>> on_ENCAPSULATED_DATA = new OnReceive<>();
@@ -8127,7 +8127,7 @@ public class GroundControl extends Host
         public final Collection<OnReceive.Handler<TERRAIN_DATA, CommunicationChannel>> on_TERRAIN_DATA = new OnReceive<>();
         /**
         *Request that the vehicle report terrain height at the given location. Used by GCS to check if vehicle
-        *	has all terrain data needed for a mission*/
+        *	 has all terrain data needed for a mission*/
         public final Collection<OnReceive.Handler<TERRAIN_CHECK, CommunicationChannel>> on_TERRAIN_CHECK = new OnReceive<>();
         /**
         *Response from a TERRAIN_CHECK request*/
@@ -8170,18 +8170,18 @@ public class GroundControl extends Host
         public final Collection<OnReceive.Handler<LANDING_TARGET, CommunicationChannel>> on_LANDING_TARGET = new OnReceive<>();
         /**
         *Estimator status message including flags, innovation test ratios and estimated accuracies. The flags message
-        *	is an integer bitmask containing information on which EKF outputs are valid. See the ESTIMATOR_STATUS_FLAGS
-        *	enum definition for further information. The innovaton test ratios show the magnitude of the sensor innovation
-        *	divided by the innovation check threshold. Under normal operation the innovaton test ratios should be
-        *	below 0.5 with occasional values up to 1.0. Values greater than 1.0 should be rare under normal operation
-        *	and indicate that a measurement has been rejected by the filter. The user should be notified if an innovation
-        *	test ratio greater than 1.0 is recorded. Notifications for values in the range between 0.5 and 1.0 should
-        *	be optional and controllable by the user*/
+        *	 is an integer bitmask containing information on which EKF outputs are valid. See the ESTIMATOR_STATUS_FLAGS
+        *	 enum definition for further information. The innovaton test ratios show the magnitude of the sensor innovation
+        *	 divided by the innovation check threshold. Under normal operation the innovaton test ratios should be
+        *	 below 0.5 with occasional values up to 1.0. Values greater than 1.0 should be rare under normal operation
+        *	 and indicate that a measurement has been rejected by the filter. The user should be notified if an innovation
+        *	 test ratio greater than 1.0 is recorded. Notifications for values in the range between 0.5 and 1.0 should
+        *	 be optional and controllable by the user*/
         public final Collection<OnReceive.Handler<ESTIMATOR_STATUS, CommunicationChannel>> on_ESTIMATOR_STATUS = new OnReceive<>();
         public final Collection<OnReceive.Handler<WIND_COV, CommunicationChannel>> on_WIND_COV = new OnReceive<>();
         /**
         *GPS sensor input message.  This is a raw sensor value sent by the GPS. This is NOT the global position
-        *	estimate of the sytem*/
+        *	 estimate of the sytem*/
         public final Collection<OnReceive.Handler<GPS_INPUT, CommunicationChannel>> on_GPS_INPUT = new OnReceive<>();
     }
 
@@ -8256,27 +8256,27 @@ public class GroundControl extends Host
         int
         MAV_MODE_FLAG_CUSTOM_MODE_ENABLED = 1,//0b00000001 Reserved for future use.
         /**
-        *0b00000010 system has a test mode enabled. This flag is intended for temporary system tests and should
-        *	not be used for stable implementations*/
+        ** 0b00000010 system has a test mode enabled. This flag is intended for temporary system tests and should
+        *		 * not be used for stable implementations*/
         MAV_MODE_FLAG_TEST_ENABLED = 2,
         /**
-        *0b00000100 autonomous mode enabled, system finds its own goal positions. Guided flag can be set or not,
-        *	depends on the actual implementation*/
+        ** 0b00000100 autonomous mode enabled, system finds its own goal positions. Guided flag can be set or not,
+        *		 * depends on the actual implementation*/
         MAV_MODE_FLAG_AUTO_ENABLED = 4,
         MAV_MODE_FLAG_GUIDED_ENABLED = 8,//0b00001000 guided mode enabled, system flies waypoints / mission items.
         /**
-        *0b00010000 system stabilizes electronically its attitude (and optionally position). It needs however further
-        *	control inputs to move around*/
+        ** 0b00010000 system stabilizes electronically its attitude (and optionally position). It needs however further
+        *		 * control inputs to move around*/
         MAV_MODE_FLAG_STABILIZE_ENABLED = 16,
         /**
-        *0b00100000 hardware in the loop simulation. All motors / actuators are blocked, but internal software
-        *	is full operational*/
+        ** 0b00100000 hardware in the loop simulation. All motors / actuators are blocked, but internal software
+        *		 * is full operational*/
         MAV_MODE_FLAG_HIL_ENABLED = 32,
         MAV_MODE_FLAG_MANUAL_INPUT_ENABLED = 64,//0b01000000 remote control input is enabled.
         /**
         *0b10000000 MAV safety set to armed. Motors are enabled / running / can start. Ready to fly. Additional
-        *	note: this flag is to be ignore when sent in the command MAV_CMD_DO_SET_MODE and MAV_CMD_COMPONENT_ARM_DISARM
-        *	shall be used instead. The flag can still be used to report the armed state*/
+        *				 note: this flag is to be ignore when sent in the command MAV_CMD_DO_SET_MODE and MAV_CMD_COMPONENT_ARM_DISARM
+        *				 shall be used instead. The flag can still be used to report the armed state*/
         MAV_MODE_FLAG_SAFETY_ARMED = 128;
     }
 
@@ -8292,7 +8292,7 @@ public class GroundControl extends Host
         MAV_STATE_CRITICAL = 5,//System is in a non-normal flight mode. It can however still navigate.
         /**
         *System is in a non-normal flight mode. It lost control over parts or over the whole airframe. It is in
-        *	mayday and going down*/
+        *	 mayday and going down*/
         MAV_STATE_EMERGENCY = 6,
         MAV_STATE_POWEROFF = 7,//System just initialized its power-down sequence, will shut down now.
         MAV_STATE_FLIGHT_TERMINATION = 8;//System is terminating itself.
@@ -8338,48 +8338,48 @@ public class GroundControl extends Host
         int
         /**
         *Global coordinate frame, WGS84 coordinate system. First value / x: latitude, second value / y: longitude,
-        *	third value / z: positive altitude over mean sea level (MSL*/
+        *				 third value / z: positive altitude over mean sea level (MSL*/
         MAV_FRAME_GLOBAL = 0,
         MAV_FRAME_LOCAL_NED = 1,//Local coordinate frame, Z-up (x: north, y: east, z: down).
         MAV_FRAME_MISSION = 2,//NOT a coordinate frame, indicates a mission command.
         /**
-        *Global coordinate frame, WGS84 coordinate system, relative altitude over ground with respect to the home
-        *	position. First value / x: latitude, second value / y: longitude, third value / z: positive altitude
-        *	with 0 being at the altitude of the home location*/
+        ** Global coordinate frame, WGS84 coordinate system, relative altitude over ground with respect to the home
+        *		 * position. First value / x: latitude, second value / y: longitude, third value / z: positive altitude
+        *		 * with 0 being at the altitude of the home location*/
         MAV_FRAME_GLOBAL_RELATIVE_ALT = 3,
         MAV_FRAME_LOCAL_ENU = 4,//Local coordinate frame, Z-down (x: east, y: north, z: up)
         /**
-        *Global coordinate frame, WGS84 coordinate system. First value / x: latitude in degrees*1.0e-7, second
-        *	value / y: longitude in degrees*1.0e-7, third value / z: positive altitude over mean sea level (MSL*/
+        ** Global coordinate frame, WGS84 coordinate system. First value / x: latitude in degrees*1.0e-7, second
+        *		 * value / y: longitude in degrees*1.0e-7, third value / z: positive altitude over mean sea level (MSL*/
         MAV_FRAME_GLOBAL_INT = 5,
         /**
-        *Global coordinate frame, WGS84 coordinate system, relative altitude over ground with respect to the home
-        *	position. First value / x: latitude in degrees*10e-7, second value / y: longitude in degrees*10e-7, third
-        *	value / z: positive altitude with 0 being at the altitude of the home location*/
+        ** Global coordinate frame, WGS84 coordinate system, relative altitude over ground with respect to the home
+        *		 * position. First value / x: latitude in degrees*10e-7, second value / y: longitude in degrees*10e-7, third
+        *		 * value / z: positive altitude with 0 being at the altitude of the home location*/
         MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6,
         /**
-        *Offset to the current local frame. Anything expressed in this frame should be added to the current local
-        *	frame position*/
+        ** Offset to the current local frame. Anything expressed in this frame should be added to the current local
+        *		 * frame position*/
         MAV_FRAME_LOCAL_OFFSET_NED = 7,
         /**
-        *Setpoint in body NED frame. This makes sense if all position control is externalized - e.g. useful to
-        *	command 2 m/s^2 acceleration to the right*/
+        ** Setpoint in body NED frame. This makes sense if all position control is externalized - e.g. useful to
+        *		 * command 2 m/s^2 acceleration to the right*/
         MAV_FRAME_BODY_NED = 8,
         /**
-        *Offset in body NED frame. This makes sense if adding setpoints to the current flight path, to avoid an
-        *	obstacle - e.g. useful to command 2 m/s^2 acceleration to the east*/
+        ** Offset in body NED frame. This makes sense if adding setpoints to the current flight path, to avoid an
+        *		 * obstacle - e.g. useful to command 2 m/s^2 acceleration to the east*/
         MAV_FRAME_BODY_OFFSET_NED = 9,
         /**
-        *Global coordinate frame with above terrain level altitude. WGS84 coordinate system, relative altitude
-        *	over terrain with respect to the waypoint coordinate. First value / x: latitude in degrees, second value
-        *	/ y: longitude in degrees, third value / z: positive altitude in meters with 0 being at ground level
-        *	in terrain model*/
+        ** Global coordinate frame with above terrain level altitude. WGS84 coordinate system, relative altitude
+        *		 * over terrain with respect to the waypoint coordinate. First value / x: latitude in degrees, second value
+        *		 * / y: longitude in degrees, third value / z: positive altitude in meters with 0 being at ground level
+        *		 * in terrain model*/
         MAV_FRAME_GLOBAL_TERRAIN_ALT = 10,
         /**
-        *Global coordinate frame with above terrain level altitude. WGS84 coordinate system, relative altitude
-        *	over terrain with respect to the waypoint coordinate. First value / x: latitude in degrees*10e-7, second
-        *	value / y: longitude in degrees*10e-7, third value / z: positive altitude in meters with 0 being at ground
-        *	level in terrain model*/
+        ** Global coordinate frame with above terrain level altitude. WGS84 coordinate system, relative altitude
+        *		 * over terrain with respect to the waypoint coordinate. First value / x: latitude in degrees*10e-7, second
+        *		 * value / y: longitude in degrees*10e-7, third value / z: positive altitude in meters with 0 being at ground
+        *		 * level in terrain model*/
         MAV_FRAME_GLOBAL_TERRAIN_ALT_INT = 11;
     }
 
@@ -8396,20 +8396,20 @@ public class GroundControl extends Host
         MAV_MODE_STABILIZE_DISARMED = 80,//System is allowed to be active, under assisted RC control.
         MAV_MODE_GUIDED_DISARMED = 88,//System is allowed to be active, under autonomous control, manual setpoint
         /**
-        *System is allowed to be active, under autonomous control and navigation (the trajectory is decided onboard
-        *	and not pre-programmed by waypoints*/
+        ** System is allowed to be active, under autonomous control and navigation (the trajectory is decided onboard
+        *		 * and not pre-programmed by waypoints*/
         MAV_MODE_AUTO_DISARMED = 92,
         MAV_MODE_MANUAL_ARMED = 192,//System is allowed to be active, under manual (RC) control, no stabilization
         MAV_MODE_TEST_ARMED = 194,//UNDEFINED mode. This solely depends on the autopilot - use with caution, intended for developers only
         MAV_MODE_STABILIZE_ARMED = 208,//System is allowed to be active, under assisted RC control.
         MAV_MODE_GUIDED_ARMED = 216,//System is allowed to be active, under autonomous control, manual setpoint
         /**
-        *System is allowed to be active, under autonomous control and navigation (the trajectory is decided onboard
-        *	and not pre-programmed by waypoints*/
+        ** System is allowed to be active, under autonomous control and navigation (the trajectory is decided onboard
+        *		 * and not pre-programmed by waypoints*/
         MAV_MODE_AUTO_ARMED = 220;
     }
 
-    protected static int en__p(int id)
+    protected static int en__O(int id)
     {
         switch(id)
         {
@@ -8439,7 +8439,7 @@ public class GroundControl extends Host
         assert(false);//("Unknown enum ID " + id);
         return  Integer.MIN_VALUE;
     }
-    protected static int id__p(int en)
+    protected static int id__O(int en)
     {
         switch(en)
         {
@@ -8515,13 +8515,13 @@ public class GroundControl extends Host
         MAV_MISSION_TYPE_MISSION = 0,//Items are mission commands for main mission.
         MAV_MISSION_TYPE_FENCE = 1,//Specifies GeoFence area(s). Items are MAV_CMD_FENCE_ GeoFence items.
         /**
-        *Specifies the rally points for the vehicle. Rally points are alternative RTL points. Items are MAV_CMD_RALLY_POINT
-        *	rally point items*/
+        ** Specifies the rally points for the vehicle. Rally points are alternative RTL points. Items are MAV_CMD_RALLY_POINT
+        *		 * rally point items*/
         MAV_MISSION_TYPE_RALLY = 2,
         MAV_MISSION_TYPE_ALL = 255;//Only used in MISSION_CLEAR_ALL to clear all mission types.
     }
 
-    protected static int en__m(int id)
+    protected static int en__i(int id)
     {
         switch(id)
         {
@@ -8539,1211 +8539,1211 @@ public class GroundControl extends Host
     }
     /**
     *Commands to be executed by the MAV. They can be executed on user request, or as part of a mission script.
-    *	If the action is used in a mission, the parameter mapping to the waypoint/mission message is as follows:
-    *	Param 1, Param 2, Param 3, Param 4, X: Param 5, Y:Param 6, Z:Param 7. This command list is similar what
-    *	ARINC 424 is for commercial aircraft: A data format how to interpret waypoint/mission data*/
+    *	 If the action is used in a mission, the parameter mapping to the waypoint/mission message is as follows:
+    *	 Param 1, Param 2, Param 3, Param 4, X: Param 5, Y:Param 6, Z:Param 7. This command list is similar what
+    *	 ARINC 424 is for commercial aircraft: A data format how to interpret waypoint/mission data*/
     public @interface MAV_CMD
     {
 
         int
         /**
         *Navigate to waypoint.
-        *	1	Hold time in decimal seconds. (ignored by fixed wing, time to stay at waypoint for rotary wing)
-        *	2	Acceptance radius in meters (if the sphere with this radius is hit, the waypoint counts as reached)
-        *	3	0 to pass through the WP, if 	>	0 radius in meters to pass by WP. Positive value for clockwise orbit, negative value for counter-clockwise orbit. Allows trajectory control.
-        *	4	Desired yaw angle at waypoint (rotary wing). NaN for unchanged.
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Altitude*/
+        *				 1	Hold time in decimal seconds. (ignored by fixed wing, time to stay at waypoint for rotary wing)
+        *				 2	Acceptance radius in meters (if the sphere with this radius is hit, the waypoint counts as reached)
+        *				 3	0 to pass through the WP, if 	>	0 radius in meters to pass by WP. Positive value for clockwise orbit, negative value for counter-clockwise orbit. Allows trajectory control.
+        *				 4	Desired yaw angle at waypoint (rotary wing). NaN for unchanged.
+        *				 5	Latitude
+        *				 6	Longitude
+        *				 7	Altitude*/
         MAV_CMD_NAV_WAYPOINT = 16,
         /**
-        *Loiter around this waypoint an unlimited amount of time
-        *	1	Empty
-        *	2	Empty
-        *	3	Radius around waypoint, in meters. If positive loiter clockwise, else counter-clockwise
-        *	4	Desired yaw angle.
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Altitude*/
+        ** Loiter around this waypoint an unlimited amount of time
+        *		 * 1	Empty
+        *		 * 2	Empty
+        *		 * 3	Radius around waypoint, in meters. If positive loiter clockwise, else counter-clockwise
+        *		 * 4	Desired yaw angle.
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Altitude*/
         MAV_CMD_NAV_LOITER_UNLIM = 17,
         /**
-        *Loiter around this waypoint for X turns
-        *	1	Turns
-        *	2	Empty
-        *	3	Radius around waypoint, in meters. If positive loiter clockwise, else counter-clockwise
-        *	4	Forward moving aircraft this sets exit xtrack location: 0 for center of loiter wp, 1 for exit location. Else, this is desired yaw angle
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Altitude*/
+        ** Loiter around this waypoint for X turns
+        *		 * 1	Turns
+        *		 * 2	Empty
+        *		 * 3	Radius around waypoint, in meters. If positive loiter clockwise, else counter-clockwise
+        *		 * 4	Forward moving aircraft this sets exit xtrack location: 0 for center of loiter wp, 1 for exit location. Else, this is desired yaw angle
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Altitude*/
         MAV_CMD_NAV_LOITER_TURNS = 18,
         /**
-        *Loiter around this waypoint for X seconds
-        *	1	Seconds (decimal)
-        *	2	Empty
-        *	3	Radius around waypoint, in meters. If positive loiter clockwise, else counter-clockwise
-        *	4	Forward moving aircraft this sets exit xtrack location: 0 for center of loiter wp, 1 for exit location. Else, this is desired yaw angle
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Altitude*/
+        ** Loiter around this waypoint for X seconds
+        *		 * 1	Seconds (decimal)
+        *		 * 2	Empty
+        *		 * 3	Radius around waypoint, in meters. If positive loiter clockwise, else counter-clockwise
+        *		 * 4	Forward moving aircraft this sets exit xtrack location: 0 for center of loiter wp, 1 for exit location. Else, this is desired yaw angle
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Altitude*/
         MAV_CMD_NAV_LOITER_TIME = 19,
         /**
-        *Return to launch location
-        *	1	Empty
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Return to launch location
+        *		 * 1	Empty
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_NAV_RETURN_TO_LAUNCH = 20,
         /**
-        *Land at location
-        *	1	Abort Alt
-        *	2	Empty
-        *	3	Empty
-        *	4	Desired yaw angle. NaN for unchanged.
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Altitude (ground level)*/
+        ** Land at location
+        *		 * 1	Abort Alt
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Desired yaw angle. NaN for unchanged.
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Altitude (ground level)*/
         MAV_CMD_NAV_LAND = 21,
         /**
-        *Takeoff from ground / hand
-        *	1	Minimum pitch (if airspeed sensor present), desired pitch without sensor
-        *	2	Empty
-        *	3	Empty
-        *	4	Yaw angle (if magnetometer present), ignored without magnetometer. NaN for unchanged.
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Altitude*/
+        ** Takeoff from ground / hand
+        *		 * 1	Minimum pitch (if airspeed sensor present), desired pitch without sensor
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Yaw angle (if magnetometer present), ignored without magnetometer. NaN for unchanged.
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Altitude*/
         MAV_CMD_NAV_TAKEOFF = 22,
         /**
-        *Land at local position (local frame only)
-        *	1	Landing target number (if available)
-        *	2	Maximum accepted offset from desired landing position [m] - computed magnitude from spherical coordinates: d = sqrt(x^2 + y^2 + z^2), which gives the maximum accepted distance between the desired landing position and the position where the vehicle is about to land
-        *	3	Landing descend rate [ms^-1]
-        *	4	Desired yaw angle [rad]
-        *	5	Y-axis position [m]
-        *	6	X-axis position [m]
-        *	7	Z-axis / ground level position [m]*/
+        ** Land at local position (local frame only)
+        *		 * 1	Landing target number (if available)
+        *		 * 2	Maximum accepted offset from desired landing position [m] - computed magnitude from spherical coordinates: d = sqrt(x^2 + y^2 + z^2), which gives the maximum accepted distance between the desired landing position and the position where the vehicle is about to land
+        *		 * 3	Landing descend rate [ms^-1]
+        *		 * 4	Desired yaw angle [rad]
+        *		 * 5	Y-axis position [m]
+        *		 * 6	X-axis position [m]
+        *		 * 7	Z-axis / ground level position [m]*/
         MAV_CMD_NAV_LAND_LOCAL = 23,
         /**
-        *Takeoff from local position (local frame only)
-        *	1	Minimum pitch (if airspeed sensor present), desired pitch without sensor [rad]
-        *	2	Empty
-        *	3	Takeoff ascend rate [ms^-1]
-        *	4	Yaw angle [rad] (if magnetometer or another yaw estimation source present), ignored without one of these
-        *	5	Y-axis position [m]
-        *	6	X-axis position [m]
-        *	7	Z-axis position [m]*/
+        ** Takeoff from local position (local frame only)
+        *		 * 1	Minimum pitch (if airspeed sensor present), desired pitch without sensor [rad]
+        *		 * 2	Empty
+        *		 * 3	Takeoff ascend rate [ms^-1]
+        *		 * 4	Yaw angle [rad] (if magnetometer or another yaw estimation source present), ignored without one of these
+        *		 * 5	Y-axis position [m]
+        *		 * 6	X-axis position [m]
+        *		 * 7	Z-axis position [m]*/
         MAV_CMD_NAV_TAKEOFF_LOCAL = 24,
         /**
-        *Vehicle following, i.e. this waypoint represents the position of a moving vehicle
-        *	1	Following logic to use (e.g. loitering or sinusoidal following) - depends on specific autopilot implementation
-        *	2	Ground speed of vehicle to be followed
-        *	3	Radius around waypoint, in meters. If positive loiter clockwise, else counter-clockwise
-        *	4	Desired yaw angle.
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Altitude*/
+        ** Vehicle following, i.e. this waypoint represents the position of a moving vehicle
+        *		 * 1	Following logic to use (e.g. loitering or sinusoidal following) - depends on specific autopilot implementation
+        *		 * 2	Ground speed of vehicle to be followed
+        *		 * 3	Radius around waypoint, in meters. If positive loiter clockwise, else counter-clockwise
+        *		 * 4	Desired yaw angle.
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Altitude*/
         MAV_CMD_NAV_FOLLOW = 25,
         /**
-        *Continue on the current course and climb/descend to specified altitude.  When the altitude is reached
-        *	continue to the next command (i.e., don't proceed to the next command until the desired altitude is reached
-        *	1	Climb or Descend (0 = Neutral, command completes when within 5m of this command's altitude, 1 = Climbing, command completes when at or above this command's altitude, 2 = Descending, command completes when at or below this command's altitude.
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Desired altitude in meters*/
+        ** Continue on the current course and climb/descend to specified altitude.  When the altitude is reached
+        *		 * continue to the next command (i.e., don't proceed to the next command until the desired altitude is reached
+        *		 * 1	Climb or Descend (0 = Neutral, command completes when within 5m of this command's altitude, 1 = Climbing, command completes when at or above this command's altitude, 2 = Descending, command completes when at or below this command's altitude.
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Desired altitude in meters*/
         MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT = 30,
         /**
-        *Begin loiter at the specified Latitude and Longitude.  If Lat=Lon=0, then loiter at the current position.
-        *	 Don't consider the navigation command complete (don't leave loiter) until the altitude has been reached.
-        *	 Additionally, if the Heading Required parameter is non-zero the  aircraft will not leave the loiter
-        *	until heading toward the next waypoint.
-        *	1	Heading Required (0 = False)
-        *	2	Radius in meters. If positive loiter clockwise, negative counter-clockwise, 0 means no change to standard loiter.
-        *	3	Empty
-        *	4	Forward moving aircraft this sets exit xtrack location: 0 for center of loiter wp, 1 for exit location
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Altitude*/
+        ** Begin loiter at the specified Latitude and Longitude.  If Lat=Lon=0, then loiter at the current position.
+        *		 * Don't consider the navigation command complete (don't leave loiter) until the altitude has been reached.
+        *		 * Additionally, if the Heading Required parameter is non-zero the  aircraft will not leave the loiter
+        *		 * until heading toward the next waypoint.
+        *		 * 1	Heading Required (0 = False)
+        *		 * 2	Radius in meters. If positive loiter clockwise, negative counter-clockwise, 0 means no change to standard loiter.
+        *		 * 3	Empty
+        *		 * 4	Forward moving aircraft this sets exit xtrack location: 0 for center of loiter wp, 1 for exit location
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Altitude*/
         MAV_CMD_NAV_LOITER_TO_ALT = 31,
         /**
-        *Being following a target
-        *	1	System ID (the system ID of the FOLLOW_TARGET beacon). Send 0 to disable follow-me and return to the default position hold mode
-        *	2	RESERVED
-        *	3	RESERVED
-        *	4	altitude flag: 0: Keep current altitude, 1: keep altitude difference to target, 2: go to a fixed altitude above home
-        *	5	altitude
-        *	6	RESERVED
-        *	7	TTL in seconds in which the MAV should go to the default position hold mode after a message rx timeout*/
+        ** Being following a target
+        *		 * 1	System ID (the system ID of the FOLLOW_TARGET beacon). Send 0 to disable follow-me and return to the default position hold mode
+        *		 * 2	RESERVED
+        *		 * 3	RESERVED
+        *		 * 4	altitude flag: 0: Keep current altitude, 1: keep altitude difference to target, 2: go to a fixed altitude above home
+        *		 * 5	altitude
+        *		 * 6	RESERVED
+        *		 * 7	TTL in seconds in which the MAV should go to the default position hold mode after a message rx timeout*/
         MAV_CMD_DO_FOLLOW = 32,
         /**
-        *Reposition the MAV after a follow target command has been sent
-        *	1	Camera q1 (where 0 is on the ray from the camera to the tracking device)
-        *	2	Camera q2
-        *	3	Camera q3
-        *	4	Camera q4
-        *	5	altitude offset from target (m)
-        *	6	X offset from target (m)
-        *	7	Y offset from target (m)*/
+        ** Reposition the MAV after a follow target command has been sent
+        *		 * 1	Camera q1 (where 0 is on the ray from the camera to the tracking device)
+        *		 * 2	Camera q2
+        *		 * 3	Camera q3
+        *		 * 4	Camera q4
+        *		 * 5	altitude offset from target (m)
+        *		 * 6	X offset from target (m)
+        *		 * 7	Y offset from target (m)*/
         MAV_CMD_DO_FOLLOW_REPOSITION = 33,
         /**
-        *Sets the region of interest (ROI) for a sensor set or the vehicle itself. This can then be used by the
-        *	vehicles control system to control the vehicle attitude and the attitude of various sensors such as cameras
-        *	1	Region of intereset mode. (see MAV_ROI enum)
-        *	2	Waypoint index/ target ID. (see MAV_ROI enum)
-        *	3	ROI index (allows a vehicle to manage multiple ROI's)
-        *	4	Empty
-        *	5	x the location of the fixed ROI (see MAV_FRAME)
-        *	6	y
-        *	7	z*/
+        ** Sets the region of interest (ROI) for a sensor set or the vehicle itself. This can then be used by the
+        *		 * vehicles control system to control the vehicle attitude and the attitude of various sensors such as cameras
+        *		 * 1	Region of intereset mode. (see MAV_ROI enum)
+        *		 * 2	Waypoint index/ target ID. (see MAV_ROI enum)
+        *		 * 3	ROI index (allows a vehicle to manage multiple ROI's)
+        *		 * 4	Empty
+        *		 * 5	x the location of the fixed ROI (see MAV_FRAME)
+        *		 * 6	y
+        *		 * 7	z*/
         MAV_CMD_NAV_ROI = 80,
         /**
-        *Control autonomous path planning on the MAV.
-        *	1	0: Disable local obstacle avoidance / local path planning (without resetting map), 1: Enable local path planning, 2: Enable and reset local path planning
-        *	2	0: Disable full path planning (without resetting map), 1: Enable, 2: Enable and reset map/occupancy grid, 3: Enable and reset planned route, but not occupancy grid
-        *	3	Empty
-        *	4	Yaw angle at goal, in compass degrees, [0..360]
-        *	5	Latitude/X of goal
-        *	6	Longitude/Y of goal
-        *	7	Altitude/Z of goal*/
+        ** Control autonomous path planning on the MAV.
+        *		 * 1	0: Disable local obstacle avoidance / local path planning (without resetting map), 1: Enable local path planning, 2: Enable and reset local path planning
+        *		 * 2	0: Disable full path planning (without resetting map), 1: Enable, 2: Enable and reset map/occupancy grid, 3: Enable and reset planned route, but not occupancy grid
+        *		 * 3	Empty
+        *		 * 4	Yaw angle at goal, in compass degrees, [0..360]
+        *		 * 5	Latitude/X of goal
+        *		 * 6	Longitude/Y of goal
+        *		 * 7	Altitude/Z of goal*/
         MAV_CMD_NAV_PATHPLANNING = 81,
         /**
-        *Navigate to waypoint using a spline path.
-        *	1	Hold time in decimal seconds. (ignored by fixed wing, time to stay at waypoint for rotary wing)
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Latitude/X of goal
-        *	6	Longitude/Y of goal
-        *	7	Altitude/Z of goal*/
+        ** Navigate to waypoint using a spline path.
+        *		 * 1	Hold time in decimal seconds. (ignored by fixed wing, time to stay at waypoint for rotary wing)
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Latitude/X of goal
+        *		 * 6	Longitude/Y of goal
+        *		 * 7	Altitude/Z of goal*/
         MAV_CMD_NAV_SPLINE_WAYPOINT = 82,
         /**
-        *Takeoff from ground using VTOL mode
-        *	1	Empty
-        *	2	Front transition heading, see VTOL_TRANSITION_HEADING enum.
-        *	3	Empty
-        *	4	Yaw angle in degrees. NaN for unchanged.
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Altitude*/
+        ** Takeoff from ground using VTOL mode
+        *		 * 1	Empty
+        *		 * 2	Front transition heading, see VTOL_TRANSITION_HEADING enum.
+        *		 * 3	Empty
+        *		 * 4	Yaw angle in degrees. NaN for unchanged.
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Altitude*/
         MAV_CMD_NAV_VTOL_TAKEOFF = 84,
         /**
-        *Land using VTOL mode
-        *	1	Empty
-        *	2	Empty
-        *	3	Approach altitude (with the same reference as the Altitude field). NaN if unspecified.
-        *	4	Yaw angle in degrees. NaN for unchanged.
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Altitude (ground level)*/
+        ** Land using VTOL mode
+        *		 * 1	Empty
+        *		 * 2	Empty
+        *		 * 3	Approach altitude (with the same reference as the Altitude field). NaN if unspecified.
+        *		 * 4	Yaw angle in degrees. NaN for unchanged.
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Altitude (ground level)*/
         MAV_CMD_NAV_VTOL_LAND = 85,
         /**
-        *hand control over to an external controller
-        *	1	On / Off (	>	0.5f on)
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** hand control over to an external controller
+        *		 * 1	On / Off (	>	0.5f on)
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_NAV_GUIDED_ENABLE = 92,
         /**
-        *Delay the next navigation command a number of seconds or until a specified time
-        *	1	Delay in seconds (decimal, -1 to enable time-of-day fields)
-        *	2	hour (24h format, UTC, -1 to ignore)
-        *	3	minute (24h format, UTC, -1 to ignore)
-        *	4	second (24h format, UTC)
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Delay the next navigation command a number of seconds or until a specified time
+        *		 * 1	Delay in seconds (decimal, -1 to enable time-of-day fields)
+        *		 * 2	hour (24h format, UTC, -1 to ignore)
+        *		 * 3	minute (24h format, UTC, -1 to ignore)
+        *		 * 4	second (24h format, UTC)
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_NAV_DELAY = 93,
         /**
-        *Descend and place payload.  Vehicle descends until it detects a hanging payload has reached the ground,
-        *	the gripper is opened to release the payloa
-        *	1	Maximum distance to descend (meters)
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Latitude (deg * 1E7)
-        *	6	Longitude (deg * 1E7)
-        *	7	Altitude (meters)*/
+        ** Descend and place payload.  Vehicle descends until it detects a hanging payload has reached the ground,
+        *		 * the gripper is opened to release the payloa
+        *		 * 1	Maximum distance to descend (meters)
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Latitude (deg * 1E7)
+        *		 * 6	Longitude (deg * 1E7)
+        *		 * 7	Altitude (meters)*/
         MAV_CMD_NAV_PAYLOAD_PLACE = 94,
         /**
-        *NOP - This command is only used to mark the upper limit of the NAV/ACTION commands in the enumeratio
-        *	1	Empty
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** NOP - This command is only used to mark the upper limit of the NAV/ACTION commands in the enumeratio
+        *		 * 1	Empty
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_NAV_LAST = 95,
         /**
-        *Delay mission state machine.
-        *	1	Delay in seconds (decimal)
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Delay mission state machine.
+        *		 * 1	Delay in seconds (decimal)
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_CONDITION_DELAY = 112,
         /**
-        *Ascend/descend at rate.  Delay mission state machine until desired altitude reached.
-        *	1	Descent / Ascend rate (m/s)
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Finish Altitude*/
+        ** Ascend/descend at rate.  Delay mission state machine until desired altitude reached.
+        *		 * 1	Descent / Ascend rate (m/s)
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Finish Altitude*/
         MAV_CMD_CONDITION_CHANGE_ALT = 113,
         /**
-        *Delay mission state machine until within desired distance of next NAV point.
-        *	1	Distance (meters)
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Delay mission state machine until within desired distance of next NAV point.
+        *		 * 1	Distance (meters)
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_CONDITION_DISTANCE = 114,
         /**
-        *Reach a certain target angle.
-        *	1	target angle: [0-360], 0 is north
-        *	2	speed during yaw change:[deg per second]
-        *	3	direction: negative: counter clockwise, positive: clockwise [-1,1]
-        *	4	relative offset or absolute angle: [ 1,0]
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Reach a certain target angle.
+        *		 * 1	target angle: [0-360], 0 is north
+        *		 * 2	speed during yaw change:[deg per second]
+        *		 * 3	direction: negative: counter clockwise, positive: clockwise [-1,1]
+        *		 * 4	relative offset or absolute angle: [ 1,0]
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_CONDITION_YAW = 115,
         /**
-        *NOP - This command is only used to mark the upper limit of the CONDITION commands in the enumeratio
-        *	1	Empty
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** NOP - This command is only used to mark the upper limit of the CONDITION commands in the enumeratio
+        *		 * 1	Empty
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_CONDITION_LAST = 159,
         /**
-        *Set system mode.
-        *	1	Mode, as defined by ENUM MAV_MODE
-        *	2	Custom mode - this is system specific, please refer to the individual autopilot specifications for details.
-        *	3	Custom sub mode - this is system specific, please refer to the individual autopilot specifications for details.
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Set system mode.
+        *		 * 1	Mode, as defined by ENUM MAV_MODE
+        *		 * 2	Custom mode - this is system specific, please refer to the individual autopilot specifications for details.
+        *		 * 3	Custom sub mode - this is system specific, please refer to the individual autopilot specifications for details.
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_SET_MODE = 176,
         /**
-        *Jump to the desired command in the mission list.  Repeat this action only the specified number of time
-        *	1	Sequence number
-        *	2	Repeat count
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Jump to the desired command in the mission list.  Repeat this action only the specified number of time
+        *		 * 1	Sequence number
+        *		 * 2	Repeat count
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_JUMP = 177,
         /**
-        *Change speed and/or throttle set points.
-        *	1	Speed type (0=Airspeed, 1=Ground Speed)
-        *	2	Speed  (m/s, -1 indicates no change)
-        *	3	Throttle  ( Percent, -1 indicates no change)
-        *	4	absolute or relative [0,1]
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Change speed and/or throttle set points.
+        *		 * 1	Speed type (0=Airspeed, 1=Ground Speed)
+        *		 * 2	Speed  (m/s, -1 indicates no change)
+        *		 * 3	Throttle  ( Percent, -1 indicates no change)
+        *		 * 4	absolute or relative [0,1]
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_CHANGE_SPEED = 178,
         /**
-        *Changes the home location either to the current location or a specified location.
-        *	1	Use current (1=use current location, 0=use specified location)
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Altitude*/
+        ** Changes the home location either to the current location or a specified location.
+        *		 * 1	Use current (1=use current location, 0=use specified location)
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Altitude*/
         MAV_CMD_DO_SET_HOME = 179,
         /**
-        *Set a system parameter.  Caution!  Use of this command requires knowledge of the numeric enumeration value
-        *	of the parameter
-        *	1	Parameter number
-        *	2	Parameter value
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Set a system parameter.  Caution!  Use of this command requires knowledge of the numeric enumeration value
+        *		 * of the parameter
+        *		 * 1	Parameter number
+        *		 * 2	Parameter value
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_SET_PARAMETER = 180,
         /**
-        *Set a relay to a condition.
-        *	1	Relay number
-        *	2	Setting (1=on, 0=off, others possible depending on system hardware)
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Set a relay to a condition.
+        *		 * 1	Relay number
+        *		 * 2	Setting (1=on, 0=off, others possible depending on system hardware)
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_SET_RELAY = 181,
         /**
-        *Cycle a relay on and off for a desired number of cyles with a desired period.
-        *	1	Relay number
-        *	2	Cycle count
-        *	3	Cycle time (seconds, decimal)
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Cycle a relay on and off for a desired number of cyles with a desired period.
+        *		 * 1	Relay number
+        *		 * 2	Cycle count
+        *		 * 3	Cycle time (seconds, decimal)
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_REPEAT_RELAY = 182,
         /**
-        *Set a servo to a desired PWM value.
-        *	1	Servo number
-        *	2	PWM (microseconds, 1000 to 2000 typical)
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Set a servo to a desired PWM value.
+        *		 * 1	Servo number
+        *		 * 2	PWM (microseconds, 1000 to 2000 typical)
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_SET_SERVO = 183,
         /**
-        *Cycle a between its nominal setting and a desired PWM for a desired number of cycles with a desired period
-        *	1	Servo number
-        *	2	PWM (microseconds, 1000 to 2000 typical)
-        *	3	Cycle count
-        *	4	Cycle time (seconds)
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Cycle a between its nominal setting and a desired PWM for a desired number of cycles with a desired period
+        *		 * 1	Servo number
+        *		 * 2	PWM (microseconds, 1000 to 2000 typical)
+        *		 * 3	Cycle count
+        *		 * 4	Cycle time (seconds)
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_REPEAT_SERVO = 184,
         /**
-        *Terminate flight immediately
-        *	1	Flight termination activated if 	>	0.5
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Terminate flight immediately
+        *		 * 1	Flight termination activated if 	>	0.5
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_FLIGHTTERMINATION = 185,
         /**
-        *Change altitude set point.
-        *	1	Altitude in meters
-        *	2	Mav frame of new altitude (see MAV_FRAME)
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Change altitude set point.
+        *		 * 1	Altitude in meters
+        *		 * 2	Mav frame of new altitude (see MAV_FRAME)
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_CHANGE_ALTITUDE = 186,
         /**
-        *Mission command to perform a landing. This is used as a marker in a mission to tell the autopilot where
-        *	a sequence of mission items that represents a landing starts. It may also be sent via a COMMAND_LONG
-        *	to trigger a landing, in which case the nearest (geographically) landing sequence in the mission will
-        *	be used. The Latitude/Longitude is optional, and may be set to 0 if not needed. If specified then it
-        *	will be used to help find the closest landing sequence
-        *	1	Empty
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Empty*/
+        ** Mission command to perform a landing. This is used as a marker in a mission to tell the autopilot where
+        *		 * a sequence of mission items that represents a landing starts. It may also be sent via a COMMAND_LONG
+        *		 * to trigger a landing, in which case the nearest (geographically) landing sequence in the mission will
+        *		 * be used. The Latitude/Longitude is optional, and may be set to 0 if not needed. If specified then it
+        *		 * will be used to help find the closest landing sequence
+        *		 * 1	Empty
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Empty*/
         MAV_CMD_DO_LAND_START = 189,
         /**
-        *Mission command to perform a landing from a rally point.
-        *	1	Break altitude (meters)
-        *	2	Landing speed (m/s)
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Mission command to perform a landing from a rally point.
+        *		 * 1	Break altitude (meters)
+        *		 * 2	Landing speed (m/s)
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_RALLY_LAND = 190,
         /**
-        *Mission command to safely abort an autonmous landing.
-        *	1	Altitude (meters)
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Mission command to safely abort an autonmous landing.
+        *		 * 1	Altitude (meters)
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_GO_AROUND = 191,
         /**
-        *Reposition the vehicle to a specific WGS84 global position.
-        *	1	Ground speed, less than 0 (-1) for default
-        *	2	Bitmask of option flags, see the MAV_DO_REPOSITION_FLAGS enum.
-        *	3	Reserved
-        *	4	Yaw heading, NaN for unchanged. For planes indicates loiter direction (0: clockwise, 1: counter clockwise)
-        *	5	Latitude (deg * 1E7)
-        *	6	Longitude (deg * 1E7)
-        *	7	Altitude (meters)*/
+        ** Reposition the vehicle to a specific WGS84 global position.
+        *		 * 1	Ground speed, less than 0 (-1) for default
+        *		 * 2	Bitmask of option flags, see the MAV_DO_REPOSITION_FLAGS enum.
+        *		 * 3	Reserved
+        *		 * 4	Yaw heading, NaN for unchanged. For planes indicates loiter direction (0: clockwise, 1: counter clockwise)
+        *		 * 5	Latitude (deg * 1E7)
+        *		 * 6	Longitude (deg * 1E7)
+        *		 * 7	Altitude (meters)*/
         MAV_CMD_DO_REPOSITION = 192,
         /**
-        *If in a GPS controlled position mode, hold the current position or continue.
-        *	1	0: Pause current mission or reposition command, hold current position. 1: Continue mission. A VTOL capable vehicle should enter hover mode (multicopter and VTOL planes). A plane should loiter with the default loiter radius.
-        *	2	Reserved
-        *	3	Reserved
-        *	4	Reserved
-        *	5	Reserved
-        *	6	Reserved
-        *	7	Reserved*/
+        ** If in a GPS controlled position mode, hold the current position or continue.
+        *		 * 1	0: Pause current mission or reposition command, hold current position. 1: Continue mission. A VTOL capable vehicle should enter hover mode (multicopter and VTOL planes). A plane should loiter with the default loiter radius.
+        *		 * 2	Reserved
+        *		 * 3	Reserved
+        *		 * 4	Reserved
+        *		 * 5	Reserved
+        *		 * 6	Reserved
+        *		 * 7	Reserved*/
         MAV_CMD_DO_PAUSE_CONTINUE = 193,
         /**
-        *Set moving direction to forward or reverse.
-        *	1	Direction (0=Forward, 1=Reverse)
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Set moving direction to forward or reverse.
+        *		 * 1	Direction (0=Forward, 1=Reverse)
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_SET_REVERSE = 194,
         /**
-        *Control onboard camera system.
-        *	1	Camera ID (-1 for all)
-        *	2	Transmission: 0: disabled, 1: enabled compressed, 2: enabled raw
-        *	3	Transmission mode: 0: video stream, 	>	0: single images every n seconds (decimal)
-        *	4	Recording: 0: disabled, 1: enabled compressed, 2: enabled raw
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Control onboard camera system.
+        *		 * 1	Camera ID (-1 for all)
+        *		 * 2	Transmission: 0: disabled, 1: enabled compressed, 2: enabled raw
+        *		 * 3	Transmission mode: 0: video stream, 	>	0: single images every n seconds (decimal)
+        *		 * 4	Recording: 0: disabled, 1: enabled compressed, 2: enabled raw
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_CONTROL_VIDEO = 200,
         /**
-        *Sets the region of interest (ROI) for a sensor set or the vehicle itself. This can then be used by the
-        *	vehicles control system to control the vehicle attitude and the attitude of various sensors such as cameras
-        *	1	Region of intereset mode. (see MAV_ROI enum)
-        *	2	Waypoint index/ target ID. (see MAV_ROI enum)
-        *	3	ROI index (allows a vehicle to manage multiple ROI's)
-        *	4	Empty
-        *	5	MAV_ROI_WPNEXT: pitch offset from next waypoint, MAV_ROI_LOCATION: latitude
-        *	6	MAV_ROI_WPNEXT: roll offset from next waypoint, MAV_ROI_LOCATION: longitude
-        *	7	MAV_ROI_WPNEXT: yaw offset from next waypoint, MAV_ROI_LOCATION: altitude*/
+        ** Sets the region of interest (ROI) for a sensor set or the vehicle itself. This can then be used by the
+        *		 * vehicles control system to control the vehicle attitude and the attitude of various sensors such as cameras
+        *		 * 1	Region of intereset mode. (see MAV_ROI enum)
+        *		 * 2	Waypoint index/ target ID. (see MAV_ROI enum)
+        *		 * 3	ROI index (allows a vehicle to manage multiple ROI's)
+        *		 * 4	Empty
+        *		 * 5	MAV_ROI_WPNEXT: pitch offset from next waypoint, MAV_ROI_LOCATION: latitude
+        *		 * 6	MAV_ROI_WPNEXT: roll offset from next waypoint, MAV_ROI_LOCATION: longitude
+        *		 * 7	MAV_ROI_WPNEXT: yaw offset from next waypoint, MAV_ROI_LOCATION: altitude*/
         MAV_CMD_DO_SET_ROI = 201,
         /**
-        *Mission command to configure an on-board camera controller system.
-        *	1	Modes: P, TV, AV, M, Etc
-        *	2	Shutter speed: Divisor number for one second
-        *	3	Aperture: F stop number
-        *	4	ISO number e.g. 80, 100, 200, Etc
-        *	5	Exposure type enumerator
-        *	6	Command Identity
-        *	7	Main engine cut-off time before camera trigger in seconds/10 (0 means no cut-off)*/
+        ** Mission command to configure an on-board camera controller system.
+        *		 * 1	Modes: P, TV, AV, M, Etc
+        *		 * 2	Shutter speed: Divisor number for one second
+        *		 * 3	Aperture: F stop number
+        *		 * 4	ISO number e.g. 80, 100, 200, Etc
+        *		 * 5	Exposure type enumerator
+        *		 * 6	Command Identity
+        *		 * 7	Main engine cut-off time before camera trigger in seconds/10 (0 means no cut-off)*/
         MAV_CMD_DO_DIGICAM_CONFIGURE = 202,
         /**
-        *Mission command to control an on-board camera controller system.
-        *	1	Session control e.g. show/hide lens
-        *	2	Zoom's absolute position
-        *	3	Zooming step value to offset zoom from the current position
-        *	4	Focus Locking, Unlocking or Re-locking
-        *	5	Shooting Command
-        *	6	Command Identity
-        *	7	Test shot identifier. If set to 1, image will only be captured, but not counted towards internal frame count.*/
+        ** Mission command to control an on-board camera controller system.
+        *		 * 1	Session control e.g. show/hide lens
+        *		 * 2	Zoom's absolute position
+        *		 * 3	Zooming step value to offset zoom from the current position
+        *		 * 4	Focus Locking, Unlocking or Re-locking
+        *		 * 5	Shooting Command
+        *		 * 6	Command Identity
+        *		 * 7	Test shot identifier. If set to 1, image will only be captured, but not counted towards internal frame count.*/
         MAV_CMD_DO_DIGICAM_CONTROL = 203,
         /**
-        *Mission command to configure a camera or antenna mount
-        *	1	Mount operation mode (see MAV_MOUNT_MODE enum)
-        *	2	stabilize roll? (1 = yes, 0 = no)
-        *	3	stabilize pitch? (1 = yes, 0 = no)
-        *	4	stabilize yaw? (1 = yes, 0 = no)
-        *	5	roll input (0 = angle, 1 = angular rate)
-        *	6	pitch input (0 = angle, 1 = angular rate)
-        *	7	yaw input (0 = angle, 1 = angular rate)*/
+        ** Mission command to configure a camera or antenna mount
+        *		 * 1	Mount operation mode (see MAV_MOUNT_MODE enum)
+        *		 * 2	stabilize roll? (1 = yes, 0 = no)
+        *		 * 3	stabilize pitch? (1 = yes, 0 = no)
+        *		 * 4	stabilize yaw? (1 = yes, 0 = no)
+        *		 * 5	roll input (0 = angle, 1 = angular rate)
+        *		 * 6	pitch input (0 = angle, 1 = angular rate)
+        *		 * 7	yaw input (0 = angle, 1 = angular rate)*/
         MAV_CMD_DO_MOUNT_CONFIGURE = 204,
         /**
-        *Mission command to control a camera or antenna mount
-        *	1	pitch depending on mount mode (degrees or degrees/second depending on pitch input).
-        *	2	roll depending on mount mode (degrees or degrees/second depending on roll input).
-        *	3	yaw depending on mount mode (degrees or degrees/second depending on yaw input).
-        *	4	alt in meters depending on mount mode.
-        *	5	latitude in degrees * 1E7, set if appropriate mount mode.
-        *	6	longitude in degrees * 1E7, set if appropriate mount mode.
-        *	7	MAV_MOUNT_MODE enum value*/
+        ** Mission command to control a camera or antenna mount
+        *		 * 1	pitch depending on mount mode (degrees or degrees/second depending on pitch input).
+        *		 * 2	roll depending on mount mode (degrees or degrees/second depending on roll input).
+        *		 * 3	yaw depending on mount mode (degrees or degrees/second depending on yaw input).
+        *		 * 4	alt in meters depending on mount mode.
+        *		 * 5	latitude in degrees * 1E7, set if appropriate mount mode.
+        *		 * 6	longitude in degrees * 1E7, set if appropriate mount mode.
+        *		 * 7	MAV_MOUNT_MODE enum value*/
         MAV_CMD_DO_MOUNT_CONTROL = 205,
         /**
-        *Mission command to set camera trigger distance for this flight. The camera is trigerred each time this
-        *	distance is exceeded. This command can also be used to set the shutter integration time for the camera
-        *	1	Camera trigger distance (meters). 0 to stop triggering.
-        *	2	Camera shutter integration time (milliseconds). -1 or 0 to ignore
-        *	3	Trigger camera once immediately. (0 = no trigger, 1 = trigger)
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Mission command to set camera trigger distance for this flight. The camera is trigerred each time this
+        *		 * distance is exceeded. This command can also be used to set the shutter integration time for the camera
+        *		 * 1	Camera trigger distance (meters). 0 to stop triggering.
+        *		 * 2	Camera shutter integration time (milliseconds). -1 or 0 to ignore
+        *		 * 3	Trigger camera once immediately. (0 = no trigger, 1 = trigger)
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_SET_CAM_TRIGG_DIST = 206,
         /**
-        *Mission command to enable the geofence
-        *	1	enable? (0=disable, 1=enable, 2=disable_floor_only)
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Mission command to enable the geofence
+        *		 * 1	enable? (0=disable, 1=enable, 2=disable_floor_only)
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_FENCE_ENABLE = 207,
         /**
-        *Mission command to trigger a parachute
-        *	1	action (0=disable, 1=enable, 2=release, for some systems see PARACHUTE_ACTION enum, not in general message set.)
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Mission command to trigger a parachute
+        *		 * 1	action (0=disable, 1=enable, 2=release, for some systems see PARACHUTE_ACTION enum, not in general message set.)
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_PARACHUTE = 208,
         /**
-        *Mission command to perform motor test
-        *	1	motor sequence number (a number from 1 to max number of motors on the vehicle)
-        *	2	throttle type (0=throttle percentage, 1=PWM, 2=pilot throttle channel pass-through. See MOTOR_TEST_THROTTLE_TYPE enum)
-        *	3	throttle
-        *	4	timeout (in seconds)
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Mission command to perform motor test
+        *		 * 1	motor sequence number (a number from 1 to max number of motors on the vehicle)
+        *		 * 2	throttle type (0=throttle percentage, 1=PWM, 2=pilot throttle channel pass-through. See MOTOR_TEST_THROTTLE_TYPE enum)
+        *		 * 3	throttle
+        *		 * 4	timeout (in seconds)
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_MOTOR_TEST = 209,
         /**
-        *Change to/from inverted flight
-        *	1	inverted (0=normal, 1=inverted)
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Change to/from inverted flight
+        *		 * 1	inverted (0=normal, 1=inverted)
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_INVERTED_FLIGHT = 210,
         /**
-        *Sets a desired vehicle turn angle and speed change
-        *	1	yaw angle to adjust steering by in centidegress
-        *	2	speed - normalized to 0 .. 1
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Sets a desired vehicle turn angle and speed change
+        *		 * 1	yaw angle to adjust steering by in centidegress
+        *		 * 2	speed - normalized to 0 .. 1
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_NAV_SET_YAW_SPEED = 213,
         /**
-        *Mission command to set camera trigger interval for this flight. If triggering is enabled, the camera is
-        *	triggered each time this interval expires. This command can also be used to set the shutter integration
-        *	time for the camera
-        *	1	Camera trigger cycle time (milliseconds). -1 or 0 to ignore.
-        *	2	Camera shutter integration time (milliseconds). Should be less than trigger cycle time. -1 or 0 to ignore.
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Mission command to set camera trigger interval for this flight. If triggering is enabled, the camera is
+        *		 * triggered each time this interval expires. This command can also be used to set the shutter integration
+        *		 * time for the camera
+        *		 * 1	Camera trigger cycle time (milliseconds). -1 or 0 to ignore.
+        *		 * 2	Camera shutter integration time (milliseconds). Should be less than trigger cycle time. -1 or 0 to ignore.
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL = 214,
         /**
-        *Mission command to control a camera or antenna mount, using a quaternion as reference.
-        *	1	q1 - quaternion param #1, w (1 in null-rotation)
-        *	2	q2 - quaternion param #2, x (0 in null-rotation)
-        *	3	q3 - quaternion param #3, y (0 in null-rotation)
-        *	4	q4 - quaternion param #4, z (0 in null-rotation)
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Mission command to control a camera or antenna mount, using a quaternion as reference.
+        *		 * 1	q1 - quaternion param #1, w (1 in null-rotation)
+        *		 * 2	q2 - quaternion param #2, x (0 in null-rotation)
+        *		 * 3	q3 - quaternion param #3, y (0 in null-rotation)
+        *		 * 4	q4 - quaternion param #4, z (0 in null-rotation)
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_MOUNT_CONTROL_QUAT = 220,
         /**
-        *set id of master controller
-        *	1	System ID
-        *	2	Component ID
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** set id of master controller
+        *		 * 1	System ID
+        *		 * 2	Component ID
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_GUIDED_MASTER = 221,
         /**
-        *set limits for external control
-        *	1	timeout - maximum time (in seconds) that external controller will be allowed to control vehicle. 0 means no timeout
-        *	2	absolute altitude min (in meters, AMSL) - if vehicle moves below this alt, the command will be aborted and the mission will continue.  0 means no lower altitude limit
-        *	3	absolute altitude max (in meters)- if vehicle moves above this alt, the command will be aborted and the mission will continue.  0 means no upper altitude limit
-        *	4	horizontal move limit (in meters, AMSL) - if vehicle moves more than this distance from it's location at the moment the command was executed, the command will be aborted and the mission will continue. 0 means no horizontal altitude limit
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** set limits for external control
+        *		 * 1	timeout - maximum time (in seconds) that external controller will be allowed to control vehicle. 0 means no timeout
+        *		 * 2	absolute altitude min (in meters, AMSL) - if vehicle moves below this alt, the command will be aborted and the mission will continue.  0 means no lower altitude limit
+        *		 * 3	absolute altitude max (in meters)- if vehicle moves above this alt, the command will be aborted and the mission will continue.  0 means no upper altitude limit
+        *		 * 4	horizontal move limit (in meters, AMSL) - if vehicle moves more than this distance from it's location at the moment the command was executed, the command will be aborted and the mission will continue. 0 means no horizontal altitude limit
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_GUIDED_LIMITS = 222,
         /**
-        *Control vehicle engine. This is interpreted by the vehicles engine controller to change the target engine
-        *	state. It is intended for vehicles with internal combustion engine
-        *	1	0: Stop engine, 1:Start Engine
-        *	2	0: Warm start, 1:Cold start. Controls use of choke where applicable
-        *	3	Height delay (meters). This is for commanding engine start only after the vehicle has gained the specified height. Used in VTOL vehicles during takeoff to start engine after the aircraft is off the ground. Zero for no delay.
-        *	4	Empty
-        *	5	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Control vehicle engine. This is interpreted by the vehicles engine controller to change the target engine
+        *		 * state. It is intended for vehicles with internal combustion engine
+        *		 * 1	0: Stop engine, 1:Start Engine
+        *		 * 2	0: Warm start, 1:Cold start. Controls use of choke where applicable
+        *		 * 3	Height delay (meters). This is for commanding engine start only after the vehicle has gained the specified height. Used in VTOL vehicles during takeoff to start engine after the aircraft is off the ground. Zero for no delay.
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_ENGINE_CONTROL = 223,
         /**
-        *NOP - This command is only used to mark the upper limit of the DO commands in the enumeration
-        *	1	Empty
-        *	2	Empty
-        *	3	Empty
-        *	4	Empty
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** NOP - This command is only used to mark the upper limit of the DO commands in the enumeration
+        *		 * 1	Empty
+        *		 * 2	Empty
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_DO_LAST = 240,
         /**
-        *Trigger calibration. This command will be only accepted if in pre-flight mode. Except for Temperature
-        *	Calibration, only one sensor should be set in a single message and all others should be zero
-        *	1	1: gyro calibration, 3: gyro temperature calibration
-        *	2	1: magnetometer calibration
-        *	3	1: ground pressure calibration
-        *	4	1: radio RC calibration, 2: RC trim calibration
-        *	5	1: accelerometer calibration, 2: board level calibration, 3: accelerometer temperature calibration
-        *	6	1: APM: compass/motor interference calibration (PX4: airspeed calibration, deprecated), 2: airspeed calibration
-        *	7	1: ESC calibration, 3: barometer temperature calibration*/
+        ** Trigger calibration. This command will be only accepted if in pre-flight mode. Except for Temperature
+        *		 * Calibration, only one sensor should be set in a single message and all others should be zero
+        *		 * 1	1: gyro calibration, 3: gyro temperature calibration
+        *		 * 2	1: magnetometer calibration
+        *		 * 3	1: ground pressure calibration
+        *		 * 4	1: radio RC calibration, 2: RC trim calibration
+        *		 * 5	1: accelerometer calibration, 2: board level calibration, 3: accelerometer temperature calibration
+        *		 * 6	1: APM: compass/motor interference calibration (PX4: airspeed calibration, deprecated), 2: airspeed calibration
+        *		 * 7	1: ESC calibration, 3: barometer temperature calibration*/
         MAV_CMD_PREFLIGHT_CALIBRATION = 241,
         /**
-        *Set sensor offsets. This command will be only accepted if in pre-flight mode.
-        *	1	Sensor to adjust the offsets for: 0: gyros, 1: accelerometer, 2: magnetometer, 3: barometer, 4: optical flow, 5: second magnetometer, 6: third magnetometer
-        *	2	X axis offset (or generic dimension 1), in the sensor's raw units
-        *	3	Y axis offset (or generic dimension 2), in the sensor's raw units
-        *	4	Z axis offset (or generic dimension 3), in the sensor's raw units
-        *	5	Generic dimension 4, in the sensor's raw units
-        *	6	Generic dimension 5, in the sensor's raw units
-        *	7	Generic dimension 6, in the sensor's raw units*/
+        ** Set sensor offsets. This command will be only accepted if in pre-flight mode.
+        *		 * 1	Sensor to adjust the offsets for: 0: gyros, 1: accelerometer, 2: magnetometer, 3: barometer, 4: optical flow, 5: second magnetometer, 6: third magnetometer
+        *		 * 2	X axis offset (or generic dimension 1), in the sensor's raw units
+        *		 * 3	Y axis offset (or generic dimension 2), in the sensor's raw units
+        *		 * 4	Z axis offset (or generic dimension 3), in the sensor's raw units
+        *		 * 5	Generic dimension 4, in the sensor's raw units
+        *		 * 6	Generic dimension 5, in the sensor's raw units
+        *		 * 7	Generic dimension 6, in the sensor's raw units*/
         MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS = 242,
         /**
-        *Trigger UAVCAN config. This command will be only accepted if in pre-flight mode.
-        *	1	1: Trigger actuator ID assignment and direction mapping.
-        *	2	Reserved
-        *	3	Reserved
-        *	4	Reserved
-        *	5	Reserved
-        *	6	Reserved
-        *	7	Reserved*/
+        ** Trigger UAVCAN config. This command will be only accepted if in pre-flight mode.
+        *		 * 1	1: Trigger actuator ID assignment and direction mapping.
+        *		 * 2	Reserved
+        *		 * 3	Reserved
+        *		 * 4	Reserved
+        *		 * 5	Reserved
+        *		 * 6	Reserved
+        *		 * 7	Reserved*/
         MAV_CMD_PREFLIGHT_UAVCAN = 243,
         /**
-        *Request storage of different parameter values and logs. This command will be only accepted if in pre-flight
-        *	mode
-        *	1	Parameter storage: 0: READ FROM FLASH/EEPROM, 1: WRITE CURRENT TO FLASH/EEPROM, 2: Reset to defaults
-        *	2	Mission storage: 0: READ FROM FLASH/EEPROM, 1: WRITE CURRENT TO FLASH/EEPROM, 2: Reset to defaults
-        *	3	Onboard logging: 0: Ignore, 1: Start default rate logging, -1: Stop logging, 	>	1: start logging with rate of param 3 in Hz (e.g. set to 1000 for 1000 Hz logging)
-        *	4	Reserved
-        *	5	Empty
-        *	6	Empty
-        *	7	Empty*/
+        ** Request storage of different parameter values and logs. This command will be only accepted if in pre-flight
+        *		 * mode
+        *		 * 1	Parameter storage: 0: READ FROM FLASH/EEPROM, 1: WRITE CURRENT TO FLASH/EEPROM, 2: Reset to defaults
+        *		 * 2	Mission storage: 0: READ FROM FLASH/EEPROM, 1: WRITE CURRENT TO FLASH/EEPROM, 2: Reset to defaults
+        *		 * 3	Onboard logging: 0: Ignore, 1: Start default rate logging, -1: Stop logging, 	>	1: start logging with rate of param 3 in Hz (e.g. set to 1000 for 1000 Hz logging)
+        *		 * 4	Reserved
+        *		 * 5	Empty
+        *		 * 6	Empty
+        *		 * 7	Empty*/
         MAV_CMD_PREFLIGHT_STORAGE = 245,
         /**
-        *Request the reboot or shutdown of system components.
-        *	1	0: Do nothing for autopilot, 1: Reboot autopilot, 2: Shutdown autopilot, 3: Reboot autopilot and keep it in the bootloader until upgraded.
-        *	2	0: Do nothing for onboard computer, 1: Reboot onboard computer, 2: Shutdown onboard computer, 3: Reboot onboard computer and keep it in the bootloader until upgraded.
-        *	3	WIP: 0: Do nothing for camera, 1: Reboot onboard camera, 2: Shutdown onboard camera, 3: Reboot onboard camera and keep it in the bootloader until upgraded
-        *	4	WIP: 0: Do nothing for mount (e.g. gimbal), 1: Reboot mount, 2: Shutdown mount, 3: Reboot mount and keep it in the bootloader until upgraded
-        *	5	Reserved, send 0
-        *	6	Reserved, send 0
-        *	7	WIP: ID (e.g. camera ID -1 for all IDs)*/
+        ** Request the reboot or shutdown of system components.
+        *		 * 1	0: Do nothing for autopilot, 1: Reboot autopilot, 2: Shutdown autopilot, 3: Reboot autopilot and keep it in the bootloader until upgraded.
+        *		 * 2	0: Do nothing for onboard computer, 1: Reboot onboard computer, 2: Shutdown onboard computer, 3: Reboot onboard computer and keep it in the bootloader until upgraded.
+        *		 * 3	WIP: 0: Do nothing for camera, 1: Reboot onboard camera, 2: Shutdown onboard camera, 3: Reboot onboard camera and keep it in the bootloader until upgraded
+        *		 * 4	WIP: 0: Do nothing for mount (e.g. gimbal), 1: Reboot mount, 2: Shutdown mount, 3: Reboot mount and keep it in the bootloader until upgraded
+        *		 * 5	Reserved, send 0
+        *		 * 6	Reserved, send 0
+        *		 * 7	WIP: ID (e.g. camera ID -1 for all IDs)*/
         MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN = 246,
         /**
-        *Hold / continue the current action
-        *	1	MAV_GOTO_DO_HOLD: hold MAV_GOTO_DO_CONTINUE: continue with next item in mission plan
-        *	2	MAV_GOTO_HOLD_AT_CURRENT_POSITION: Hold at current position MAV_GOTO_HOLD_AT_SPECIFIED_POSITION: hold at specified position
-        *	3	MAV_FRAME coordinate frame of hold point
-        *	4	Desired yaw angle in degrees
-        *	5	Latitude / X position
-        *	6	Longitude / Y position
-        *	7	Altitude / Z position*/
+        ** Hold / continue the current action
+        *		 * 1	MAV_GOTO_DO_HOLD: hold MAV_GOTO_DO_CONTINUE: continue with next item in mission plan
+        *		 * 2	MAV_GOTO_HOLD_AT_CURRENT_POSITION: Hold at current position MAV_GOTO_HOLD_AT_SPECIFIED_POSITION: hold at specified position
+        *		 * 3	MAV_FRAME coordinate frame of hold point
+        *		 * 4	Desired yaw angle in degrees
+        *		 * 5	Latitude / X position
+        *		 * 6	Longitude / Y position
+        *		 * 7	Altitude / Z position*/
         MAV_CMD_OVERRIDE_GOTO = 252,
         /**
-        *start running a mission
-        *	1	first_item: the first mission item to run
-        *	2	last_item:  the last mission item to run (after this item is run, the mission ends)*/
+        ** start running a mission
+        *		 * 1	first_item: the first mission item to run
+        *		 * 2	last_item:  the last mission item to run (after this item is run, the mission ends)*/
         MAV_CMD_MISSION_START = 300,
         /**
-        *Arms / Disarms a component
-        *	1	1 to arm, 0 to disarm*/
+        ** Arms / Disarms a component
+        *		 * 1	1 to arm, 0 to disarm*/
         MAV_CMD_COMPONENT_ARM_DISARM = 400,
         /**
-        *Request the home position from the vehicle.
-        *	1	Reserved
-        *	2	Reserved
-        *	3	Reserved
-        *	4	Reserved
-        *	5	Reserved
-        *	6	Reserved
-        *	7	Reserved*/
+        ** Request the home position from the vehicle.
+        *		 * 1	Reserved
+        *		 * 2	Reserved
+        *		 * 3	Reserved
+        *		 * 4	Reserved
+        *		 * 5	Reserved
+        *		 * 6	Reserved
+        *		 * 7	Reserved*/
         MAV_CMD_GET_HOME_POSITION = 410,
         /**
-        *Starts receiver pairing
-        *	1	0:Spektrum
-        *	2	0:Spektrum DSM2, 1:Spektrum DSMX*/
+        ** Starts receiver pairing
+        *		 * 1	0:Spektrum
+        *		 * 2	0:Spektrum DSM2, 1:Spektrum DSMX*/
         MAV_CMD_START_RX_PAIR = 500,
         /**
-        *Request the interval between messages for a particular MAVLink message ID
-        *	1	The MAVLink message ID*/
+        ** Request the interval between messages for a particular MAVLink message ID
+        *		 * 1	The MAVLink message ID*/
         MAV_CMD_GET_MESSAGE_INTERVAL = 510,
         /**
-        *Request the interval between messages for a particular MAVLink message ID. This interface replaces REQUEST_DATA_STREA
-        *	1	The MAVLink message ID
-        *	2	The interval between two messages, in microseconds. Set to -1 to disable and 0 to request default rate.*/
+        ** Request the interval between messages for a particular MAVLink message ID. This interface replaces REQUEST_DATA_STREA
+        *		 * 1	The MAVLink message ID
+        *		 * 2	The interval between two messages, in microseconds. Set to -1 to disable and 0 to request default rate.*/
         MAV_CMD_SET_MESSAGE_INTERVAL = 511,
         /**
-        *Request MAVLink protocol version compatibility
-        *	1	1: Request supported protocol versions by all nodes on the network
-        *	2	Reserved (all remaining params)*/
+        ** Request MAVLink protocol version compatibility
+        *		 * 1	1: Request supported protocol versions by all nodes on the network
+        *		 * 2	Reserved (all remaining params)*/
         MAV_CMD_REQUEST_PROTOCOL_VERSION = 519,
         /**
-        *Request autopilot capabilities
-        *	1	1: Request autopilot version
-        *	2	Reserved (all remaining params)*/
+        ** Request autopilot capabilities
+        *		 * 1	1: Request autopilot version
+        *		 * 2	Reserved (all remaining params)*/
         MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES = 520,
         /**
-        *WIP: Request camera information (CAMERA_INFORMATION).
-        *	1	0: No action 1: Request camera capabilities
-        *	2	Reserved (all remaining params)*/
+        ** WIP: Request camera information (CAMERA_INFORMATION).
+        *		 * 1	0: No action 1: Request camera capabilities
+        *		 * 2	Reserved (all remaining params)*/
         MAV_CMD_REQUEST_CAMERA_INFORMATION = 521,
         /**
-        *WIP: Request camera settings (CAMERA_SETTINGS).
-        *	1	0: No Action 1: Request camera settings
-        *	2	Reserved (all remaining params)*/
+        ** WIP: Request camera settings (CAMERA_SETTINGS).
+        *		 * 1	0: No Action 1: Request camera settings
+        *		 * 2	Reserved (all remaining params)*/
         MAV_CMD_REQUEST_CAMERA_SETTINGS = 522,
         /**
-        *WIP: Request storage information (STORAGE_INFORMATION). Use the command's target_component to target a
-        *	specific component's storage
-        *	1	Storage ID (0 for all, 1 for first, 2 for second, etc.)
-        *	2	0: No Action 1: Request storage information
-        *	3	Reserved (all remaining params)*/
+        ** WIP: Request storage information (STORAGE_INFORMATION). Use the command's target_component to target a
+        *		 * specific component's storage
+        *		 * 1	Storage ID (0 for all, 1 for first, 2 for second, etc.)
+        *		 * 2	0: No Action 1: Request storage information
+        *		 * 3	Reserved (all remaining params)*/
         MAV_CMD_REQUEST_STORAGE_INFORMATION = 525,
         /**
-        *WIP: Format a storage medium. Once format is complete, a STORAGE_INFORMATION message is sent. Use the
-        *	command's target_component to target a specific component's storage
-        *	1	Storage ID (1 for first, 2 for second, etc.)
-        *	2	0: No action 1: Format storage
-        *	3	Reserved (all remaining params)*/
+        ** WIP: Format a storage medium. Once format is complete, a STORAGE_INFORMATION message is sent. Use the
+        *		 * command's target_component to target a specific component's storage
+        *		 * 1	Storage ID (1 for first, 2 for second, etc.)
+        *		 * 2	0: No action 1: Format storage
+        *		 * 3	Reserved (all remaining params)*/
         MAV_CMD_STORAGE_FORMAT = 526,
         /**
-        *WIP: Request camera capture status (CAMERA_CAPTURE_STATUS)
-        *	1	0: No Action 1: Request camera capture status
-        *	2	Reserved (all remaining params)*/
+        ** WIP: Request camera capture status (CAMERA_CAPTURE_STATUS)
+        *		 * 1	0: No Action 1: Request camera capture status
+        *		 * 2	Reserved (all remaining params)*/
         MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS = 527,
         /**
-        *WIP: Request flight information (FLIGHT_INFORMATION)
-        *	1	1: Request flight information
-        *	2	Reserved (all remaining params)*/
+        ** WIP: Request flight information (FLIGHT_INFORMATION)
+        *		 * 1	1: Request flight information
+        *		 * 2	Reserved (all remaining params)*/
         MAV_CMD_REQUEST_FLIGHT_INFORMATION = 528,
         /**
-        *WIP: Reset all camera settings to Factory Default
-        *	1	0: No Action 1: Reset all settings
-        *	2	Reserved (all remaining params)*/
+        ** WIP: Reset all camera settings to Factory Default
+        *		 * 1	0: No Action 1: Reset all settings
+        *		 * 2	Reserved (all remaining params)*/
         MAV_CMD_RESET_CAMERA_SETTINGS = 529,
         /**
-        *Set camera running mode. Use NAN for reserved values.
-        *	1	Reserved (Set to 0)
-        *	2	Camera mode (see CAMERA_MODE enum)
-        *	3	Reserved (all remaining params)*/
+        ** Set camera running mode. Use NAN for reserved values.
+        *		 * 1	Reserved (Set to 0)
+        *		 * 2	Camera mode (see CAMERA_MODE enum)
+        *		 * 3	Reserved (all remaining params)*/
         MAV_CMD_SET_CAMERA_MODE = 530,
         /**
-        *Start image capture sequence. Sends CAMERA_IMAGE_CAPTURED after each capture. Use NAN for reserved values
-        *	1	Reserved (Set to 0)
-        *	2	Duration between two consecutive pictures (in seconds)
-        *	3	Number of images to capture total - 0 for unlimited capture
-        *	4	Reserved (all remaining params)*/
+        ** Start image capture sequence. Sends CAMERA_IMAGE_CAPTURED after each capture. Use NAN for reserved values
+        *		 * 1	Reserved (Set to 0)
+        *		 * 2	Duration between two consecutive pictures (in seconds)
+        *		 * 3	Number of images to capture total - 0 for unlimited capture
+        *		 * 4	Reserved (all remaining params)*/
         MAV_CMD_IMAGE_START_CAPTURE = 2000,
         /**
-        *Stop image capture sequence Use NAN for reserved values.
-        *	1	Reserved (Set to 0)
-        *	2	Reserved (all remaining params)*/
+        ** Stop image capture sequence Use NAN for reserved values.
+        *		 * 1	Reserved (Set to 0)
+        *		 * 2	Reserved (all remaining params)*/
         MAV_CMD_IMAGE_STOP_CAPTURE = 2001,
         /**
-        *WIP: Re-request a CAMERA_IMAGE_CAPTURE packet. Use NAN for reserved values.
-        *	1	Sequence number for missing CAMERA_IMAGE_CAPTURE packet
-        *	2	Reserved (all remaining params)*/
+        ** WIP: Re-request a CAMERA_IMAGE_CAPTURE packet. Use NAN for reserved values.
+        *		 * 1	Sequence number for missing CAMERA_IMAGE_CAPTURE packet
+        *		 * 2	Reserved (all remaining params)*/
         MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE = 2002,
         /**
-        *Enable or disable on-board camera triggering system.
-        *	1	Trigger enable/disable (0 for disable, 1 for start), -1 to ignore
-        *	2	1 to reset the trigger sequence, -1 or 0 to ignore
-        *	3	1 to pause triggering, but without switching the camera off or retracting it. -1 to ignore*/
+        ** Enable or disable on-board camera triggering system.
+        *		 * 1	Trigger enable/disable (0 for disable, 1 for start), -1 to ignore
+        *		 * 2	1 to reset the trigger sequence, -1 or 0 to ignore
+        *		 * 3	1 to pause triggering, but without switching the camera off or retracting it. -1 to ignore*/
         MAV_CMD_DO_TRIGGER_CONTROL = 2003,
         /**
-        *Starts video capture (recording). Use NAN for reserved values.
-        *	1	Reserved (Set to 0)
-        *	2	Frequency CAMERA_CAPTURE_STATUS messages should be sent while recording (0 for no messages, otherwise frequency in Hz)
-        *	3	Reserved (all remaining params)*/
+        ** Starts video capture (recording). Use NAN for reserved values.
+        *		 * 1	Reserved (Set to 0)
+        *		 * 2	Frequency CAMERA_CAPTURE_STATUS messages should be sent while recording (0 for no messages, otherwise frequency in Hz)
+        *		 * 3	Reserved (all remaining params)*/
         MAV_CMD_VIDEO_START_CAPTURE = 2500,
         /**
-        *Stop the current video capture (recording). Use NAN for reserved values.
-        *	1	Reserved (Set to 0)
-        *	2	Reserved (all remaining params)*/
+        ** Stop the current video capture (recording). Use NAN for reserved values.
+        *		 * 1	Reserved (Set to 0)
+        *		 * 2	Reserved (all remaining params)*/
         MAV_CMD_VIDEO_STOP_CAPTURE = 2501,
         /**
-        *WIP: Start video streaming
-        *	1	Camera ID (0 for all cameras, 1 for first, 2 for second, etc.)
-        *	2	Reserved*/
+        ** WIP: Start video streaming
+        *		 * 1	Camera ID (0 for all cameras, 1 for first, 2 for second, etc.)
+        *		 * 2	Reserved*/
         MAV_CMD_VIDEO_START_STREAMING = 2502,
         /**
-        *WIP: Stop the current video streaming
-        *	1	Camera ID (0 for all cameras, 1 for first, 2 for second, etc.)
-        *	2	Reserved*/
+        ** WIP: Stop the current video streaming
+        *		 * 1	Camera ID (0 for all cameras, 1 for first, 2 for second, etc.)
+        *		 * 2	Reserved*/
         MAV_CMD_VIDEO_STOP_STREAMING = 2503,
         /**
-        *WIP: Request video stream information (VIDEO_STREAM_INFORMATION)
-        *	1	Camera ID (0 for all cameras, 1 for first, 2 for second, etc.)
-        *	2	0: No Action 1: Request video stream information
-        *	3	Reserved (all remaining params)*/
+        ** WIP: Request video stream information (VIDEO_STREAM_INFORMATION)
+        *		 * 1	Camera ID (0 for all cameras, 1 for first, 2 for second, etc.)
+        *		 * 2	0: No Action 1: Request video stream information
+        *		 * 3	Reserved (all remaining params)*/
         MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION = 2504,
         /**
-        *Request to start streaming logging data over MAVLink (see also LOGGING_DATA message)
-        *	1	Format: 0: ULog
-        *	2	Reserved (set to 0)
-        *	3	Reserved (set to 0)
-        *	4	Reserved (set to 0)
-        *	5	Reserved (set to 0)
-        *	6	Reserved (set to 0)
-        *	7	Reserved (set to 0)*/
+        ** Request to start streaming logging data over MAVLink (see also LOGGING_DATA message)
+        *		 * 1	Format: 0: ULog
+        *		 * 2	Reserved (set to 0)
+        *		 * 3	Reserved (set to 0)
+        *		 * 4	Reserved (set to 0)
+        *		 * 5	Reserved (set to 0)
+        *		 * 6	Reserved (set to 0)
+        *		 * 7	Reserved (set to 0)*/
         MAV_CMD_LOGGING_START = 2510,
         /**
-        *Request to stop streaming log data over MAVLink
-        *	1	Reserved (set to 0)
-        *	2	Reserved (set to 0)
-        *	3	Reserved (set to 0)
-        *	4	Reserved (set to 0)
-        *	5	Reserved (set to 0)
-        *	6	Reserved (set to 0)
-        *	7	Reserved (set to 0)*/
+        ** Request to stop streaming log data over MAVLink
+        *		 * 1	Reserved (set to 0)
+        *		 * 2	Reserved (set to 0)
+        *		 * 3	Reserved (set to 0)
+        *		 * 4	Reserved (set to 0)
+        *		 * 5	Reserved (set to 0)
+        *		 * 6	Reserved (set to 0)
+        *		 * 7	Reserved (set to 0)*/
         MAV_CMD_LOGGING_STOP = 2511,
         /**
-        *1	Landing gear ID (default: 0, -1 for all)
-        *	2	Landing gear position (Down: 0, Up: 1, NAN for no change)
-        *	3	Reserved, set to NAN
-        *	4	Reserved, set to NAN
-        *	5	Reserved, set to NAN
-        *	6	Reserved, set to NAN
-        *	7	Reserved, set to NAN*/
+        ** 1	Landing gear ID (default: 0, -1 for all)
+        *		 * 2	Landing gear position (Down: 0, Up: 1, NAN for no change)
+        *		 * 3	Reserved, set to NAN
+        *		 * 4	Reserved, set to NAN
+        *		 * 5	Reserved, set to NAN
+        *		 * 6	Reserved, set to NAN
+        *		 * 7	Reserved, set to NAN*/
         MAV_CMD_AIRFRAME_CONFIGURATION = 2520,
         /**
-        *Create a panorama at the current position
-        *	1	Viewing angle horizontal of the panorama (in degrees, +- 0.5 the total angle)
-        *	2	Viewing angle vertical of panorama (in degrees)
-        *	3	Speed of the horizontal rotation (in degrees per second)
-        *	4	Speed of the vertical rotation (in degrees per second)*/
+        ** Create a panorama at the current position
+        *		 * 1	Viewing angle horizontal of the panorama (in degrees, +- 0.5 the total angle)
+        *		 * 2	Viewing angle vertical of panorama (in degrees)
+        *		 * 3	Speed of the horizontal rotation (in degrees per second)
+        *		 * 4	Speed of the vertical rotation (in degrees per second)*/
         MAV_CMD_PANORAMA_CREATE = 2800,
         /**
-        *Request VTOL transition
-        *	1	The target VTOL state, as defined by ENUM MAV_VTOL_STATE. Only MAV_VTOL_STATE_MC and MAV_VTOL_STATE_FW can be used.*/
+        ** Request VTOL transition
+        *		 * 1	The target VTOL state, as defined by ENUM MAV_VTOL_STATE. Only MAV_VTOL_STATE_MC and MAV_VTOL_STATE_FW can be used.*/
         MAV_CMD_DO_VTOL_TRANSITION = 3000,
         /**
-        *Request authorization to arm the vehicle to a external entity, the arm authorizer is resposible to request all data that is needs from the vehicle before authorize or deny the request. If approved the progress of command_ack message should be set with period of time that this authorization is valid in seconds or in case it was denied it should be set with one of the reasons in ARM_AUTH_DENIED_REASON.
-        *
-        *	1	Vehicle system id, this way ground station can request arm authorization on behalf of any vehicle*/
+        ** Request authorization to arm the vehicle to a external entity, the arm authorizer is resposible to request all data that is needs from the vehicle before authorize or deny the request. If approved the progress of command_ack message should be set with period of time that this authorization is valid in seconds or in case it was denied it should be set with one of the reasons in ARM_AUTH_DENIED_REASON.
+        *		 * <p>
+        *		 * 1	Vehicle system id, this way ground station can request arm authorization on behalf of any vehicle*/
         MAV_CMD_ARM_AUTHORIZATION_REQUEST = 3001,
         /**
-        *This command sets the submode to standard guided when vehicle is in guided mode. The vehicle holds position and altitude and the user can input the desired velocites along all three axes.*/
+        ** This command sets the submode to standard guided when vehicle is in guided mode. The vehicle holds position and altitude and the user can input the desired velocites along all three axes.*/
         MAV_CMD_SET_GUIDED_SUBMODE_STANDARD = 4000,
         /**
-        *This command sets submode circle when vehicle is in guided mode. Vehicle flies along a circle facing the center of the circle. The user can input the velocity along the circle and change the radius. If no input is given the vehicle will hold position.
-        *
-        *	1	Radius of desired circle in CIRCLE_MODE
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	Unscaled target latitude of center of circle in CIRCLE_MODE
-        *	6	Unscaled target longitude of center of circle in CIRCLE_MODE*/
+        ** This command sets submode circle when vehicle is in guided mode. Vehicle flies along a circle facing the center of the circle. The user can input the velocity along the circle and change the radius. If no input is given the vehicle will hold position.
+        *		 * <p>
+        *		 * 1	Radius of desired circle in CIRCLE_MODE
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	Unscaled target latitude of center of circle in CIRCLE_MODE
+        *		 * 6	Unscaled target longitude of center of circle in CIRCLE_MODE*/
         MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE = 4001,
         /**
-        *WIP: Delay mission state machine until gate has been reached.
-        *	1	Geometry: 0: orthogonal to path between previous and next waypoint.
-        *	2	Altitude: 0: ignore altitude
-        *	3	Empty
-        *	4	Empty
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Altitude*/
+        ** WIP: Delay mission state machine until gate has been reached.
+        *		 * 1	Geometry: 0: orthogonal to path between previous and next waypoint.
+        *		 * 2	Altitude: 0: ignore altitude
+        *		 * 3	Empty
+        *		 * 4	Empty
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Altitude*/
         MAV_CMD_CONDITION_GATE = 4501,
         /**
-        *Fence return point. There can only be one fence return point.
-        *
-        *	1	Reserved
-        *	2	Reserved
-        *	3	Reserved
-        *	4	Reserved
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Altitude*/
+        ** Fence return point. There can only be one fence return point.
+        *		 * <p>
+        *		 * 1	Reserved
+        *		 * 2	Reserved
+        *		 * 3	Reserved
+        *		 * 4	Reserved
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Altitude*/
         MAV_CMD_NAV_FENCE_RETURN_POINT = 5000,
         /**
-        *Fence vertex for an inclusion polygon (the polygon must not be self-intersecting). The vehicle must stay within this area. Minimum of 3 vertices required.
-        *
-        *	1	Polygon vertex count
-        *	2	Reserved
-        *	3	Reserved
-        *	4	Reserved
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Reserved*/
+        ** Fence vertex for an inclusion polygon (the polygon must not be self-intersecting). The vehicle must stay within this area. Minimum of 3 vertices required.
+        *		 * <p>
+        *		 * 1	Polygon vertex count
+        *		 * 2	Reserved
+        *		 * 3	Reserved
+        *		 * 4	Reserved
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Reserved*/
         MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION = 5001,
         /**
-        *Fence vertex for an exclusion polygon (the polygon must not be self-intersecting). The vehicle must stay outside this area. Minimum of 3 vertices required.
-        *
-        *	1	Polygon vertex count
-        *	2	Reserved
-        *	3	Reserved
-        *	4	Reserved
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Reserved*/
+        ** Fence vertex for an exclusion polygon (the polygon must not be self-intersecting). The vehicle must stay outside this area. Minimum of 3 vertices required.
+        *		 * <p>
+        *		 * 1	Polygon vertex count
+        *		 * 2	Reserved
+        *		 * 3	Reserved
+        *		 * 4	Reserved
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Reserved*/
         MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION = 5002,
         /**
-        *Circular fence area. The vehicle must stay inside this area.
-        *
-        *	1	radius in meters
-        *	2	Reserved
-        *	3	Reserved
-        *	4	Reserved
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Reserved*/
+        ** Circular fence area. The vehicle must stay inside this area.
+        *		 * <p>
+        *		 * 1	radius in meters
+        *		 * 2	Reserved
+        *		 * 3	Reserved
+        *		 * 4	Reserved
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Reserved*/
         MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION = 5003,
         /**
-        *Circular fence area. The vehicle must stay outside this area.
-        *
-        *	1	radius in meters
-        *	2	Reserved
-        *	3	Reserved
-        *	4	Reserved
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Reserved*/
+        ** Circular fence area. The vehicle must stay outside this area.
+        *		 * <p>
+        *		 * 1	radius in meters
+        *		 * 2	Reserved
+        *		 * 3	Reserved
+        *		 * 4	Reserved
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Reserved*/
         MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION = 5004,
         /**
-        *Rally point. You can have multiple rally points defined.
-        *
-        *	1	Reserved
-        *	2	Reserved
-        *	3	Reserved
-        *	4	Reserved
-        *	5	Latitude
-        *	6	Longitude
-        *	7	Altitude*/
+        ** Rally point. You can have multiple rally points defined.
+        *		 * <p>
+        *		 * 1	Reserved
+        *		 * 2	Reserved
+        *		 * 3	Reserved
+        *		 * 4	Reserved
+        *		 * 5	Latitude
+        *		 * 6	Longitude
+        *		 * 7	Altitude*/
         MAV_CMD_NAV_RALLY_POINT = 5100,
         /**
-        *Commands the vehicle to respond with a sequence of messages UAVCAN_NODE_INFO, one message per every UAVCAN
-        *	node that is online. Note that some of the response messages can be lost, which the receiver can detect
-        *	easily by checking whether every received UAVCAN_NODE_STATUS has a matching message UAVCAN_NODE_INFO
-        *	received earlier; if not, this command should be sent again in order to request re-transmission of the
-        *	node information messages
-        *	1	Reserved (set to 0)
-        *	2	Reserved (set to 0)
-        *	3	Reserved (set to 0)
-        *	4	Reserved (set to 0)
-        *	5	Reserved (set to 0)
-        *	6	Reserved (set to 0)
-        *	7	Reserved (set to 0)*/
+        ** Commands the vehicle to respond with a sequence of messages UAVCAN_NODE_INFO, one message per every UAVCAN
+        *		 * node that is online. Note that some of the response messages can be lost, which the receiver can detect
+        *		 * easily by checking whether every received UAVCAN_NODE_STATUS has a matching message UAVCAN_NODE_INFO
+        *		 * received earlier; if not, this command should be sent again in order to request re-transmission of the
+        *		 * node information messages
+        *		 * 1	Reserved (set to 0)
+        *		 * 2	Reserved (set to 0)
+        *		 * 3	Reserved (set to 0)
+        *		 * 4	Reserved (set to 0)
+        *		 * 5	Reserved (set to 0)
+        *		 * 6	Reserved (set to 0)
+        *		 * 7	Reserved (set to 0)*/
         MAV_CMD_UAVCAN_GET_NODE_INFO = 5200,
         /**
-        *Does nothing.
-        *	1	1 to arm, 0 to disarm*/
+        ** Does nothing.
+        *		 * 1	1 to arm, 0 to disarm*/
         MAV_CMD_DO_NOTHING = 10001,
         /**
-        *Return vehicle to base.
-        *	1	0: return to base, 1: track mobile base*/
+        ** Return vehicle to base.
+        *		 * 1	0: return to base, 1: track mobile base*/
         MAV_CMD_RETURN_TO_BASE = 10011,
         MAV_CMD_STOP_RETURN_TO_BASE = 10012,//Stops the vehicle from returning to base and resumes flight.
         /**
-        *Turns the vehicle's visible or infrared lights on or off.
-        *	1	0: visible lights, 1: infrared lights
-        *	2	0: turn on, 1: turn off*/
+        ** Turns the vehicle's visible or infrared lights on or off.
+        *		 * 1	0: visible lights, 1: infrared lights
+        *		 * 2	0: turn on, 1: turn off*/
         MAV_CMD_TURN_LIGHT = 10013,
         MAV_CMD_GET_MID_LEVEL_COMMANDS = 10014,//Requests vehicle to send current mid-level commands to ground station.
         /**
-        *Requests storage of mid-level commands.
-        *	1	Mid-level command storage: 0: read from flash/EEPROM, 1: write to flash/EEPROM*/
+        ** Requests storage of mid-level commands.
+        *		 * 1	Mid-level command storage: 0: read from flash/EEPROM, 1: write to flash/EEPROM*/
         MAV_CMD_MIDLEVEL_STORAGE = 10015,
         /**
-        *Deploy payload on a Lat / Lon / Alt position. This includes the navigation to reach the required release
-        *	position and velocity
-        *	1	Operation mode. 0: prepare single payload deploy (overwriting previous requests), but do not execute it. 1: execute payload deploy immediately (rejecting further deploy commands during execution, but allowing abort). 2: add payload deploy to existing deployment list.
-        *	2	Desired approach vector in degrees compass heading (0..360). A negative value indicates the system can define the approach vector at will.
-        *	3	Desired ground speed at release time. This can be overriden by the airframe in case it needs to meet minimum airspeed. A negative value indicates the system can define the ground speed at will.
-        *	4	Minimum altitude clearance to the release position in meters. A negative value indicates the system can define the clearance at will.
-        *	5	Latitude unscaled for MISSION_ITEM or in 1e7 degrees for MISSION_ITEM_INT
-        *	6	Longitude unscaled for MISSION_ITEM or in 1e7 degrees for MISSION_ITEM_INT
-        *	7	Altitude, in meters AMSL*/
+        ** Deploy payload on a Lat / Lon / Alt position. This includes the navigation to reach the required release
+        *		 * position and velocity
+        *		 * 1	Operation mode. 0: prepare single payload deploy (overwriting previous requests), but do not execute it. 1: execute payload deploy immediately (rejecting further deploy commands during execution, but allowing abort). 2: add payload deploy to existing deployment list.
+        *		 * 2	Desired approach vector in degrees compass heading (0..360). A negative value indicates the system can define the approach vector at will.
+        *		 * 3	Desired ground speed at release time. This can be overriden by the airframe in case it needs to meet minimum airspeed. A negative value indicates the system can define the ground speed at will.
+        *		 * 4	Minimum altitude clearance to the release position in meters. A negative value indicates the system can define the clearance at will.
+        *		 * 5	Latitude unscaled for MISSION_ITEM or in 1e7 degrees for MISSION_ITEM_INT
+        *		 * 6	Longitude unscaled for MISSION_ITEM or in 1e7 degrees for MISSION_ITEM_INT
+        *		 * 7	Altitude, in meters AMSL*/
         MAV_CMD_PAYLOAD_PREPARE_DEPLOY = 30001,
         /**
-        *Control the payload deployment.
-        *	1	Operation mode. 0: Abort deployment, continue normal mission. 1: switch to payload deploment mode. 100: delete first payload deployment request. 101: delete all payload deployment requests.
-        *	2	Reserved
-        *	3	Reserved
-        *	4	Reserved
-        *	5	Reserved
-        *	6	Reserved
-        *	7	Reserved*/
+        ** Control the payload deployment.
+        *		 * 1	Operation mode. 0: Abort deployment, continue normal mission. 1: switch to payload deploment mode. 100: delete first payload deployment request. 101: delete all payload deployment requests.
+        *		 * 2	Reserved
+        *		 * 3	Reserved
+        *		 * 4	Reserved
+        *		 * 5	Reserved
+        *		 * 6	Reserved
+        *		 * 7	Reserved*/
         MAV_CMD_PAYLOAD_CONTROL_DEPLOY = 30002,
         /**
-        *User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	Latitude unscaled
-        *	6	Longitude unscaled
-        *	7	Altitude, in meters AMSL*/
+        ** User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	Latitude unscaled
+        *		 * 6	Longitude unscaled
+        *		 * 7	Altitude, in meters AMSL*/
         MAV_CMD_WAYPOINT_USER_1 = 31000,
         /**
-        *User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	Latitude unscaled
-        *	6	Longitude unscaled
-        *	7	Altitude, in meters AMSL*/
+        ** User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	Latitude unscaled
+        *		 * 6	Longitude unscaled
+        *		 * 7	Altitude, in meters AMSL*/
         MAV_CMD_WAYPOINT_USER_2 = 31001,
         /**
-        *User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	Latitude unscaled
-        *	6	Longitude unscaled
-        *	7	Altitude, in meters AMSL*/
+        ** User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	Latitude unscaled
+        *		 * 6	Longitude unscaled
+        *		 * 7	Altitude, in meters AMSL*/
         MAV_CMD_WAYPOINT_USER_3 = 31002,
         /**
-        *User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	Latitude unscaled
-        *	6	Longitude unscaled
-        *	7	Altitude, in meters AMSL*/
+        ** User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	Latitude unscaled
+        *		 * 6	Longitude unscaled
+        *		 * 7	Altitude, in meters AMSL*/
         MAV_CMD_WAYPOINT_USER_4 = 31003,
         /**
-        *User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	Latitude unscaled
-        *	6	Longitude unscaled
-        *	7	Altitude, in meters AMSL*/
+        ** User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	Latitude unscaled
+        *		 * 6	Longitude unscaled
+        *		 * 7	Altitude, in meters AMSL*/
         MAV_CMD_WAYPOINT_USER_5 = 31004,
         /**
-        *User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example:
-        *	ROI item
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	Latitude unscaled
-        *	6	Longitude unscaled
-        *	7	Altitude, in meters AMSL*/
+        ** User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example:
+        *		 * ROI item
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	Latitude unscaled
+        *		 * 6	Longitude unscaled
+        *		 * 7	Altitude, in meters AMSL*/
         MAV_CMD_SPATIAL_USER_1 = 31005,
         /**
-        *User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example:
-        *	ROI item
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	Latitude unscaled
-        *	6	Longitude unscaled
-        *	7	Altitude, in meters AMSL*/
+        ** User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example:
+        *		 * ROI item
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	Latitude unscaled
+        *		 * 6	Longitude unscaled
+        *		 * 7	Altitude, in meters AMSL*/
         MAV_CMD_SPATIAL_USER_2 = 31006,
         /**
-        *User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example:
-        *	ROI item
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	Latitude unscaled
-        *	6	Longitude unscaled
-        *	7	Altitude, in meters AMSL*/
+        ** User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example:
+        *		 * ROI item
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	Latitude unscaled
+        *		 * 6	Longitude unscaled
+        *		 * 7	Altitude, in meters AMSL*/
         MAV_CMD_SPATIAL_USER_3 = 31007,
         /**
-        *User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example:
-        *	ROI item
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	Latitude unscaled
-        *	6	Longitude unscaled
-        *	7	Altitude, in meters AMSL*/
+        ** User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example:
+        *		 * ROI item
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	Latitude unscaled
+        *		 * 6	Longitude unscaled
+        *		 * 7	Altitude, in meters AMSL*/
         MAV_CMD_SPATIAL_USER_4 = 31008,
         /**
-        *User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example:
-        *	ROI item
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	Latitude unscaled
-        *	6	Longitude unscaled
-        *	7	Altitude, in meters AMSL*/
+        ** User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example:
+        *		 * ROI item
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	Latitude unscaled
+        *		 * 6	Longitude unscaled
+        *		 * 7	Altitude, in meters AMSL*/
         MAV_CMD_SPATIAL_USER_5 = 31009,
         /**
-        *User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER
-        *	item
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	User defined
-        *	6	User defined
-        *	7	User defined*/
+        ** User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER
+        *		 * item
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	User defined
+        *		 * 6	User defined
+        *		 * 7	User defined*/
         MAV_CMD_USER_1 = 31010,
         /**
-        *User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER
-        *	item
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	User defined
-        *	6	User defined
-        *	7	User defined*/
+        ** User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER
+        *		 * item
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	User defined
+        *		 * 6	User defined
+        *		 * 7	User defined*/
         MAV_CMD_USER_2 = 31011,
         /**
-        *User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER
-        *	item
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	User defined
-        *	6	User defined
-        *	7	User defined*/
+        ** User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER
+        *		 * item
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	User defined
+        *		 * 6	User defined
+        *		 * 7	User defined*/
         MAV_CMD_USER_3 = 31012,
         /**
-        *User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER
-        *	item
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	User defined
-        *	6	User defined
-        *	7	User defined*/
+        ** User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER
+        *		 * item
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	User defined
+        *		 * 6	User defined
+        *		 * 7	User defined*/
         MAV_CMD_USER_4 = 31013,
         /**
-        *User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER
-        *	item
-        *	1	User defined
-        *	2	User defined
-        *	3	User defined
-        *	4	User defined
-        *	5	User defined
-        *	6	User defined
-        *	7	User defined*/
+        ** User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER
+        *		 * item
+        *		 * 1	User defined
+        *		 * 2	User defined
+        *		 * 3	User defined
+        *		 * 4	User defined
+        *		 * 5	User defined
+        *		 * 6	User defined
+        *		 * 7	User defined*/
         MAV_CMD_USER_5 = 31014;
     }
 
-    protected static int en__u(int id)
+    protected static int en__Q(int id)
     {
         switch(id)
         {
@@ -10103,9 +10103,9 @@ public class GroundControl extends Host
         SERIAL_CONTROL_FLAG_REPLY = 1,//Set if this is a reply
         SERIAL_CONTROL_FLAG_RESPOND = 2,//Set if the sender wants the receiver to send a response as another SERIAL_CONTROL message
         /**
-        *Set if access to the serial port should be removed from whatever driver is currently using it, giving
-        *	exclusive access to the SERIAL_CONTROL protocol. The port can be handed back by sending a request without
-        *	this flag se*/
+        ** Set if access to the serial port should be removed from whatever driver is currently using it, giving
+        *		 * exclusive access to the SERIAL_CONTROL protocol. The port can be handed back by sending a request without
+        *		 * this flag se*/
         SERIAL_CONTROL_FLAG_EXCLUSIVE = 4,
         SERIAL_CONTROL_FLAG_BLOCKING = 8,//Block on writes to the serial port
         SERIAL_CONTROL_FLAG_MULTI = 16;//Send multiple replies until port is drained
@@ -10248,8 +10248,8 @@ public class GroundControl extends Host
         ESTIMATOR_POS_VERT_ABS = 32,//True if the vertical position (absolute) estimate is good
         ESTIMATOR_POS_VERT_AGL = 64,//True if the vertical position (above ground) estimate is good
         /**
-        *True if the EKF is in a constant position mode and is not using external measurements (eg GPS or optical
-        *	flow*/
+        ** True if the EKF is in a constant position mode and is not using external measurements (eg GPS or optical
+        *		 * flow*/
         ESTIMATOR_CONST_POS_MODE = 128,
         ESTIMATOR_PRED_POS_HORIZ_REL = 256,//True if the EKF has sufficient data to enter a mode that will provide a (relative) position estimat
         ESTIMATOR_PRED_POS_HORIZ_ABS = 512,//True if the EKF has sufficient data to enter a mode that will provide a (absolute) position estimat
@@ -10387,7 +10387,7 @@ public class GroundControl extends Host
 
     /**
     *Indicates the severity level, generally used for status messages to indicate their relative urgency. Based
-    *	on RFC-5424 using expanded definitions at: http:www.kiwisyslog.com/kb/info:-syslog-message-levels/*/
+    *	 on RFC-5424 using expanded definitions at: http:www.kiwisyslog.com/kb/info:-syslog-message-levels/*/
     public @interface MAV_SEVERITY
     {
 
@@ -10397,12 +10397,12 @@ public class GroundControl extends Host
         MAV_SEVERITY_CRITICAL = 2,//Action must be taken immediately. Indicates failure in a primary system.
         MAV_SEVERITY_ERROR = 3,//Indicates an error in secondary/redundant systems.
         /**
-        *Indicates about a possible future error if this is not resolved within a given timeframe. Example would
-        *	be a low battery warning*/
+        ** Indicates about a possible future error if this is not resolved within a given timeframe. Example would
+        *		 * be a low battery warning*/
         MAV_SEVERITY_WARNING = 4,
         /**
-        *An unusual event has occured, though not an error condition. This should be investigated for the root
-        *	cause*/
+        ** An unusual event has occured, though not an error condition. This should be investigated for the root
+        *		 * cause*/
         MAV_SEVERITY_NOTICE = 5,
         MAV_SEVERITY_INFO = 6,//Normal operational messages. Useful for logging. No action is required for these messages.
         MAV_SEVERITY_DEBUG = 7;//Useful non-operational messages that can assist in debugging. These should not occur during normal operation
@@ -10487,68 +10487,68 @@ public class GroundControl extends Host
         PARAM_ACK_VALUE_UNSUPPORTED = 1,//Parameter value UNKNOWN/UNSUPPORTED
         PARAM_ACK_FAILED = 2,//Parameter failed to set
         /**
-        *Parameter value received but not yet validated or set. A subsequent PARAM_EXT_ACK will follow once operation
-        *	is completed with the actual result. These are for parameters that may take longer to set. Instead of
-        *	waiting for an ACK and potentially timing out, you will immediately receive this response to let you
-        *	know it was received*/
+        ** Parameter value received but not yet validated or set. A subsequent PARAM_EXT_ACK will follow once operation
+        *		 * is completed with the actual result. These are for parameters that may take longer to set. Instead of
+        *		 * waiting for an ACK and potentially timing out, you will immediately receive this response to let you
+        *		 * know it was received*/
         PARAM_ACK_IN_PROGRESS = 3;
     }
 
 
-    private static final Field _E = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _m = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
+    private static final Field _t = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _i = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
+    private static final Field _N = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _S = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
     private static final Field _b = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _Y = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _M = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _gd = new Field(0, false, 1, 4, 1, 0, 0, 0);
-    private static final Field _Ad = new Field(0, true, 1, 4, 1, 0, 0, 0);
-    private static final Field _yd = new Field(0, true, 1, 4, 1, 0, 0, 0);
-    private static final Field _Cd = new Field(0, true, 1, 4, 1, 0, 0, 0);
-    private static final Field _Dd = new Field(0, true, 1, 4, 1, 0, 0, 0);
-    private static final Field _UF = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _gF = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _AF = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _yF = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _CF = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _DF = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _IF = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _lF = new Field(0, true, 1, 2, 1, 0, 0, 0);
-    private static final Field _Ba = new Field(0, true, 1, 8, 1, 0, 0, 0);
-    private static final Field _Za = new Field(0, true, 1, 8, 1, 0, 0, 0);
-    private static final Field _Na = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _ep = new Field(0, false, 1, 1, 1, 0, 0, 0);
-    private static final Field _Np = new Field(0, false, 1, 4, 1, 0, 0, 0);
-    private static final Field _Kp = new Field(0, false, 1, 1, 1, 0, 0, 0);
-    private static final Field _np = new Field(0, false, 1, 1, 1, 0, 0, 0);
-    private static final Field _Dg = new Field(0, false, 1, 4, 1, 0, 0, 0);
-    private static final Field _Ig = new Field(0, false, 1, 4, 1, 0, 0, 0);
-    private static final Field _LB = new Field(0, false, 18, 1, 1, 0, 0, 0);
-    private static final Field _DB = new Field(0, false, 1, 4, 1, 0, 0, 0);
-    private static final Field _IB = new Field(0, false, 1, 4, 1, 0, 0, 0);
-    private static final Field _lB = new Field(0, false, 1, 4, 1, 0, 0, 0);
-    private static final Field _BB = new Field(0, false, 4, 4, 1, 0, 0, 0);
-    private static final Field _sB = new Field(0, false, 1, 1, 1, 0, 0, 0);
-    private static final Field _MJ = new Field(0, true, 1, 8, 1, 0, 0, 0);
-    private static final Field _Us = new Field(0, true, 1, 8, 1, 0, 0, 0);
-    private static final Field _fs = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-    private static final Field _vs = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-    private static final Field _Ms = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-    private static final Field _uX = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
-    private static final Field _FX = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
-    private static final Field _lX = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _oX = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-    private static final Field _LZ = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-    private static final Field _RZ = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-    private static final Field _SZ = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-    private static final Field _zZ = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
-    private static final Field _iZ = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
-    private static final Field _Uf = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
-    private static final Field _Jf = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _ff = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _ef = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-    private static final Field _of = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _xf = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
-    private static final Field _mf = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
-    private static final Field _wf = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+    private static final Field _Af = new Field(0, false, 1, 4, 1, 0, 0, 0);
+    private static final Field _xf = new Field(0, true, 1, 4, 1, 0, 0, 0);
+    private static final Field _Zf = new Field(0, true, 1, 4, 1, 0, 0, 0);
+    private static final Field _hf = new Field(0, true, 1, 4, 1, 0, 0, 0);
+    private static final Field _Xf = new Field(0, true, 1, 4, 1, 0, 0, 0);
+    private static final Field _TP = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _AP = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _xP = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _ZP = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _hP = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _XP = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _lP = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _BP = new Field(0, true, 1, 2, 1, 0, 0, 0);
+    private static final Field _wk = new Field(0, true, 1, 8, 1, 0, 0, 0);
+    private static final Field _yk = new Field(0, true, 1, 8, 1, 0, 0, 0);
+    private static final Field _ak = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _GO = new Field(0, false, 1, 1, 1, 0, 0, 0);
+    private static final Field _aO = new Field(0, false, 1, 4, 1, 0, 0, 0);
+    private static final Field _pO = new Field(0, false, 1, 1, 1, 0, 0, 0);
+    private static final Field _sO = new Field(0, false, 1, 1, 1, 0, 0, 0);
+    private static final Field _XA = new Field(0, false, 1, 4, 1, 0, 0, 0);
+    private static final Field _lA = new Field(0, false, 1, 4, 1, 0, 0, 0);
+    private static final Field _Fw = new Field(0, false, 18, 1, 1, 0, 0, 0);
+    private static final Field _Xw = new Field(0, false, 1, 4, 1, 0, 0, 0);
+    private static final Field _lw = new Field(0, false, 1, 4, 1, 0, 0, 0);
+    private static final Field _Bw = new Field(0, false, 1, 4, 1, 0, 0, 0);
+    private static final Field _ww = new Field(0, false, 4, 4, 1, 0, 0, 0);
+    private static final Field _jw = new Field(0, false, 1, 1, 1, 0, 0, 0);
+    private static final Field _bg = new Field(0, true, 1, 8, 1, 0, 0, 0);
+    private static final Field _Tj = new Field(0, true, 1, 8, 1, 0, 0, 0);
+    private static final Field _Yj = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+    private static final Field _uj = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+    private static final Field _bj = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+    private static final Field _QW = new Field(5, true, -4, 2, 1, 0, 0, 0, 1);
+    private static final Field _PW = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
+    private static final Field _BW = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _VW = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+    private static final Field _Fy = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+    private static final Field _Uy = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+    private static final Field _Ky = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+    private static final Field _ry = new Field(5, true, -6, 2, 1, 0, 0, 0, 1);
+    private static final Field _Cy = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
+    private static final Field _TY = new Field(5, true, -7, 2, 1, 0, 0, 0, 1);
+    private static final Field _gY = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _YY = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _GY = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+    private static final Field _VY = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _EY = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
+    private static final Field _iY = new Field(5, true, -5, 2, 1, 0, 0, 0, 1);
+    private static final Field _cY = new Field(5, true, -8, 2, 1, 0, 0, 0, 1);
 
 }

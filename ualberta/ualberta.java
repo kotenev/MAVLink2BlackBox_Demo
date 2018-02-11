@@ -684,7 +684,7 @@ class GroundControl implements InJAVA, InCS {
 		 * Quaternion order is w, x, y, z and a zero rotation would be expressed as (1 0 0 0)
 		 */
 		@id(61) class ATTITUDE_QUATERNION_COV {
-			@A    long    time_usec;//Timestamp (microseconds since system boot or since UNIX epoch)
+			@A long time_usec;//Timestamp (microseconds since system boot or since UNIX epoch)
 			@D(4) float[] q;//Quaternion components, w, x, y, z (1 0 0 0 is the null-rotation)
 			float rollspeed;//Roll angular speed (rad/s)
 			float pitchspeed;//Pitch angular speed (rad/s)
@@ -893,9 +893,7 @@ class GroundControl implements InJAVA, InCS {
 			float alt;//Current altitude (MSL), in meters
 			float climb;//Current climb rate in meters/second
 		}
-	}
-	
-	interface CommonPacks {
+		
 		/**
 		 * Message encoding a command with parameters as scaled integers. Scaling depends on the actual command value
 		 */
@@ -916,8 +914,10 @@ class GroundControl implements InJAVA, InCS {
 		}
 		
 		/**
-		 * Send a command with up to seven parameters to the MAV
-		 */
+		 Send a command with up to seven parameters to the MAV*/
+	}
+	
+	interface CommonPacks {
 		@id(76) class COMMAND_LONG {
 			@A byte target_system;//System which should execute the command
 			@A byte target_component;//Component which should execute the command, 0 for all components
@@ -970,14 +970,14 @@ class GroundControl implements InJAVA, InCS {
 		 * or other system)
 		 */
 		@id(82) class SET_ATTITUDE_TARGET {
-			@A    int     time_boot_ms;//Timestamp in milliseconds since system boot
-			@A    byte    target_system;//System ID
-			@A    byte    target_component;//Component ID
+			@A int  time_boot_ms;//Timestamp in milliseconds since system boot
+			@A byte target_system;//System ID
+			@A byte target_component;//Component ID
 			/**
 			 * Mappings: If any of these bits are set, the corresponding input should be ignored: bit 1: body roll rate,
 			 * bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 6: reserved, bit 7: throttle, bit 8: attitud
 			 */
-			@A    byte    type_mask;
+			@A byte type_mask;
 			@D(4) float[] q;//Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
 			float body_roll_rate;//Body roll rate in radians per second
 			float body_pitch_rate;//Body roll rate in radians per second
@@ -990,12 +990,12 @@ class GroundControl implements InJAVA, InCS {
 		 * the commands sent in a SET_ATTITUDE_TARGET message if the vehicle is being controlled this way
 		 */
 		@id(83) class ATTITUDE_TARGET {
-			@A    int     time_boot_ms;//Timestamp in milliseconds since system boot
+			@A int  time_boot_ms;//Timestamp in milliseconds since system boot
 			/**
 			 * Mappings: If any of these bits are set, the corresponding input should be ignored: bit 1: body roll rate,
 			 * bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 7: reserved, bit 8: attitud
 			 */
-			@A    byte    type_mask;
+			@A byte type_mask;
 			@D(4) float[] q;//Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
 			float body_roll_rate;//Body roll rate in radians per second
 			float body_pitch_rate;//Body pitch rate in radians per second
@@ -1229,7 +1229,7 @@ class GroundControl implements InJAVA, InCS {
 		 * Sent from autopilot to simulation. Hardware in the loop control outputs (replacement for HIL_CONTROLS
 		 */
 		@id(93) class HIL_ACTUATOR_CONTROLS {
-			@A     long    time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
+			@A long time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
 			@D(16) float[] controls;//Control outputs -1 .. 1. Channel assignment depends on the simulated hardware.
 			MAV_MODE mode;//System mode (MAV_MODE), includes arming state.
 			@A long flags;//Flags as bitfield, reserved for future use.
@@ -1507,7 +1507,7 @@ class GroundControl implements InJAVA, InCS {
 		 * for high throughput applications such as hardware in the loop simulations
 		 */
 		@id(115) class HIL_STATE_QUATERNION {
-			@A    long    time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
+			@A long time_usec;//Timestamp (microseconds since UNIX epoch or microseconds since system boot)
 			@D(4) float[] attitude_quaternion;//Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation
 			float rollspeed;//Body frame roll / phi angular speed (rad/s)
 			float pitchspeed;//Body frame pitch / theta angular speed (rad/s)
@@ -1762,8 +1762,8 @@ class GroundControl implements InJAVA, InCS {
 		@id(134) class TERRAIN_DATA {
 			int lat;//Latitude of SW corner of first grid (degrees *10^7)
 			int lon;//Longitude of SW corner of first grid (in degrees *10^7)
-			@A     short   grid_spacing;//Grid spacing in meters
-			@A     byte    gridbit;//bit within the terrain request mask
+			@A short grid_spacing;//Grid spacing in meters
+			@A byte  gridbit;//bit within the terrain request mask
 			@D(16) short[] data;//Terrain data in meters AMSL
 		}
 		
@@ -1803,7 +1803,7 @@ class GroundControl implements InJAVA, InCS {
 		 * Motion capture attitude and position
 		 */
 		@id(138) class ATT_POS_MOCAP {
-			@A    long    time_usec;//Timestamp (micros since boot or Unix epoch)
+			@A long time_usec;//Timestamp (micros since boot or Unix epoch)
 			@D(4) float[] q;//Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
 			float x;//X position in meters (NED)
 			float y;//Y position in meters (NED)
@@ -1814,14 +1814,14 @@ class GroundControl implements InJAVA, InCS {
 		 * Set the vehicle attitude and body angular rates.
 		 */
 		@id(139) class SET_ACTUATOR_CONTROL_TARGET {
-			@A    long    time_usec;//Timestamp (micros since boot or Unix epoch)
+			@A long time_usec;//Timestamp (micros since boot or Unix epoch)
 			/**
 			 * Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use
 			 * this field to difference between instances
 			 */
-			@A    byte    group_mlx;
-			@A    byte    target_system;//System ID
-			@A    byte    target_component;//Component ID
+			@A byte group_mlx;
+			@A byte target_system;//System ID
+			@A byte target_component;//Component ID
 			/**
 			 * Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction
 			 * motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
@@ -1830,6 +1830,28 @@ class GroundControl implements InJAVA, InCS {
 			 */
 			@D(8) float[] controls;
 		}
+		
+		/**
+		 * Set the vehicle attitude and body angular rates.
+		 */
+		@id(140) class ACTUATOR_CONTROL_TARGET {
+			@A long time_usec;//Timestamp (micros since boot or Unix epoch)
+			/**
+			 * Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use
+			 * this field to difference between instances
+			 */
+			@A byte group_mlx;
+			/**
+			 * Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction
+			 * motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
+			 * (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through
+			 * mixer to repurpose them as generic outputs
+			 */
+			@D(8) float[] controls;
+		}
+		
+		/**
+		 The current system altitude.*/
 	}
 }
 
@@ -1837,29 +1859,6 @@ class MicroAirVehicle implements InC {
 	interface CommunicationInterface extends MicroAirVehicleHandledPacks, GroundControl.CommonPacks {}
 	
 	interface MicroAirVehicleHandledPacks {
-		
-		/**
-		 * Set the vehicle attitude and body angular rates.
-		 */
-		@id(140) class ACTUATOR_CONTROL_TARGET {
-			@A    long    time_usec;//Timestamp (micros since boot or Unix epoch)
-			/**
-			 * Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use
-			 * this field to difference between instances
-			 */
-			@A    byte    group_mlx;
-			/**
-			 * Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction
-			 * motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0):
-			 * (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through
-			 * mixer to repurpose them as generic outputs
-			 */
-			@D(8) float[] controls;
-		}
-		
-		/**
-		 * The current system altitude.
-		 */
 		@id(141) class ALTITUDE {
 			@A long time_usec;//Timestamp (micros since boot or Unix epoch)
 			/**
@@ -1938,7 +1937,7 @@ class MicroAirVehicle implements InC {
 			@D(4) float[] attitude_q;//(1 0 0 0 for unknown)
 			@D(3) float[] rates;//(0 0 0 for unknown)
 			@D(3) float[] position_cov;//eph epv
-			@A    long    custom_state;//button states or switches of a tracker device
+			@A long custom_state;//button states or switches of a tracker device
 		}
 		
 		/**
@@ -2033,9 +2032,9 @@ class MicroAirVehicle implements InC {
 			float     distance;//Distance to the target from the vehicle in meters
 			float     size_x;//Size in radians of target along x-axis
 			float     size_y;//Size in radians of target along y-axis
-			@I_    float   x;//X Position of the landing target on MAV_FRAME
-			@I_    float   y;//Y Position of the landing target on MAV_FRAME
-			@I_    float   z;//Z Position of the landing target on MAV_FRAME
+			@I_ float x;//X Position of the landing target on MAV_FRAME
+			@I_ float y;//Y Position of the landing target on MAV_FRAME
+			@I_ float z;//Z Position of the landing target on MAV_FRAME
 			@D_(4) float[] q;//Quaternion of landing target orientation (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
 			LANDING_TARGET_TYPE type;//LANDING_TARGET_TYPE enum specifying the type of landing target
 			/**
@@ -2339,9 +2338,9 @@ class MicroAirVehicle implements InC {
 		 * way for testing new messages and getting experimental debug output
 		 */
 		@id(249) class MEMORY_VECT {
-			@A     short  address;//Starting address of the debug variables
-			@A     byte   ver;//Version code of the type variable. 0=unknown, type ignored and assumed int16_t. 1=as below
-			@A     byte   type;//Type code of the memory variables. for ver = 1: 0=16 x int16_t, 1=16 x uint16_t, 2=16 x Q15, 3=16 x 1Q1
+			@A short address;//Starting address of the debug variables
+			@A byte  ver;//Version code of the type variable. 0=unknown, type ignored and assumed int16_t. 1=as below
+			@A byte  type;//Type code of the memory variables. for ver = 1: 0=16 x int16_t, 1=16 x uint16_t, 2=16 x Q15, 3=16 x 1Q1
 			@D(32) byte[] value;//Memory contents at specified address
 		}
 		
@@ -4113,9 +4112,6 @@ enum MAV_AUTOPILOT {
 			MAV_AUTOPILOT_SMARTAP                                      = 18;  //SmartAP Autopilot - http://sky-drones.com
 }
 
-/**
- * Generic micro air vehicle.
- */
 enum MAV_TYPE {
 	;
 	
@@ -4169,7 +4165,7 @@ enum FIRMWARE_VERSION_TYPE {
 /**
  * These flags encode the MAV mode.
  */
-enum MAV_MODE_FLAG {
+@BitFlags enum MAV_MODE_FLAG {
 	;
 	
 	final int
@@ -4208,7 +4204,7 @@ enum MAV_MODE_FLAG {
  * of a flag bit by combining the base_mode variable with AND with the flag position value. The result will
  * be either 0 or 1, depending on if the flag is set or not
  */
-enum MAV_MODE_FLAG_DECODE_POSITION {
+@BitFlags enum MAV_MODE_FLAG_DECODE_POSITION {
 	;
 	
 	final int
@@ -4264,9 +4260,6 @@ enum MAV_MODE {
 			MAV_MODE_TEST_ARMED    = 194;  //UNDEFINED mode. This solely depends on the autopilot - use with caution, intended for developers only
 }
 
-/**
- * Uninitialized system, state is unknown.
- */
 enum MAV_STATE {
 	MAV_STATE_BOOT, //System is booting up.
 	MAV_STATE_CALIBRATING, //System is calibrating and not flight-ready.
@@ -4284,8 +4277,6 @@ enum MAV_STATE {
 			MAV_STATE_UNINIT = 0;  //Uninitialized system, state is unknown.
 }
 
-/**
- */
 enum MAV_COMPONENT {
 	;
 	
@@ -4334,7 +4325,7 @@ enum MAV_COMPONENT {
 /**
  * These encode the sensors whose status is sent as part of the SYS_STATUS message.
  */
-enum MAV_SYS_STATUS_SENSOR {
+@BitFlags enum MAV_SYS_STATUS_SENSOR {
 	;
 	
 	final int
@@ -4366,10 +4357,6 @@ enum MAV_SYS_STATUS_SENSOR {
 			MAV_SYS_STATUS_SENSOR_BATTERY                = 33554432;  //0x2000000 Battery
 }
 
-/**
- * Global coordinate frame, WGS84 coordinate system. First value / x: latitude, second value / y: longitude,
- * third value / z: positive altitude over mean sea level (MSL
- */
 enum MAV_FRAME {
 	;
 	
@@ -4429,8 +4416,6 @@ enum MAV_FRAME {
 	MAV_FRAME_GLOBAL_TERRAIN_ALT_INT = 11;
 }
 
-/**
- */
 enum MAVLINK_DATA_STREAM_TYPE {
 	MAVLINK_DATA_STREAM_IMG_JPEG,
 	MAVLINK_DATA_STREAM_IMG_BMP,
@@ -4440,9 +4425,6 @@ enum MAVLINK_DATA_STREAM_TYPE {
 	MAVLINK_DATA_STREAM_IMG_PNG;
 }
 
-/**
- * Disable fenced mode
- */
 enum FENCE_ACTION {
 	;
 	
@@ -4454,9 +4436,6 @@ enum FENCE_ACTION {
 			FENCE_ACTION_RTL             = 4;  //Switch to RTL (return to launch) mode and head for the return point.
 }
 
-/**
- * No last fence breach
- */
 enum FENCE_BREACH {
 	;
 	
@@ -4666,7 +4645,7 @@ enum MAV_SEVERITY {
 /**
  * Power supply status flags (bitmask)
  */
-enum MAV_POWER_STATUS {
+@BitFlags enum MAV_POWER_STATUS {
 	;
 	
 	final int
@@ -4695,7 +4674,7 @@ enum SERIAL_CONTROL_DEV {
 /**
  * SERIAL_CONTROL flags (bitmask)
  */
-enum SERIAL_CONTROL_FLAG {
+@BitFlags enum SERIAL_CONTROL_FLAG {
 	;
 	
 	final int
@@ -4776,7 +4755,7 @@ enum MAV_SENSOR_ORIENTATION {
 /**
  * Bitmask of (optional) autopilot capabilities (64 bit). If a bit is set, the autopilot supports this capability
  */
-enum MAV_PROTOCOL_CAPABILITY {
+@BitFlags enum MAV_PROTOCOL_CAPABILITY {
 	;
 	
 	final int
@@ -4904,7 +4883,7 @@ enum ADSB_EMITTER_TYPE {
 	;
 	
 	final int
-			ADSB_EMITTER_TYPE_NO_INFO           = 0, //ADSB classification for the type of vehicle emitting the transponder signal
+			ADSB_EMITTER_TYPE_NO_INFO           = 0,
 			ADSB_EMITTER_TYPE_LIGHT             = 1,
 			ADSB_EMITTER_TYPE_SMALL             = 2,
 			ADSB_EMITTER_TYPE_LARGE             = 3,
@@ -4929,11 +4908,11 @@ enum ADSB_EMITTER_TYPE {
 /**
  * These flags indicate status such as data validity of each data source. Set = data valid
  */
-enum ADSB_FLAGS {
+@BitFlags enum ADSB_FLAGS {
 	;
 	
 	final int
-			ADSB_FLAGS_VALID_COORDS   = 1, //These flags indicate status such as data validity of each data source. Set = data valid
+			ADSB_FLAGS_VALID_COORDS   = 1,
 			ADSB_FLAGS_VALID_ALTITUDE = 2,
 			ADSB_FLAGS_VALID_HEADING  = 4,
 			ADSB_FLAGS_VALID_VELOCITY = 8,
@@ -4955,7 +4934,7 @@ enum MAV_DO_REPOSITION_FLAGS {
 /**
  * Flags in EKF_STATUS message
  */
-enum ESTIMATOR_STATUS_FLAGS {
+@BitFlags enum ESTIMATOR_STATUS_FLAGS {
 	;
 	
 	final int
@@ -4976,10 +4955,7 @@ enum ESTIMATOR_STATUS_FLAGS {
 			ESTIMATOR_GPS_GLITCH         = 1024;  //True if the EKF has detected a GPS glitch
 }
 
-/**
- * throttle as a percentage from 0 ~ 100
- */
-enum MOTOR_TEST_THROTTLE_TYPE {
+@BitFlags enum MOTOR_TEST_THROTTLE_TYPE {
 	;
 	
 	final int
@@ -4988,10 +4964,7 @@ enum MOTOR_TEST_THROTTLE_TYPE {
 			MOTOR_TEST_THROTTLE_PILOT   = 2;  //throttle pass-through from pilot's transmitter
 }
 
-/**
- * ignore altitude field
- */
-enum GPS_INPUT_IGNORE_FLAGS {
+@BitFlags enum GPS_INPUT_IGNORE_FLAGS {
 	;
 	
 	final int
@@ -5024,7 +4997,7 @@ enum MAV_COLLISION_ACTION {
 /**
  * Aircraft-rated danger from this threat.
  */
-enum MAV_COLLISION_THREAT_LEVEL {
+@BitFlags enum MAV_COLLISION_THREAT_LEVEL {
 	;
 	
 	final int
@@ -5096,7 +5069,7 @@ enum VTOL_TRANSITION_HEADING {
 /**
  * Camera capability flags (Bitmap).
  */
-enum CAMERA_CAP_FLAGS {
+@BitFlags enum CAMERA_CAP_FLAGS {
 	;
 	
 	final int
@@ -5130,7 +5103,7 @@ enum PARAM_ACK {
 /**
  * Camera Modes.
  */
-enum CAMERA_MODE {
+@BitFlags enum CAMERA_MODE {
 	;
 	
 	final int
@@ -5139,9 +5112,6 @@ enum CAMERA_MODE {
 			CAMERA_MODE_IMAGE_SURVEY = 2;  //Camera is in image survey capture mode. It allows for camera controller to do specific settings for surveys
 }
 
-/**
- * Not a specific reason
- */
 enum MAV_ARM_AUTH_DENIED_REASON {
 	;
 	
@@ -5173,7 +5143,7 @@ enum UALBERTA_AUTOPILOT_MODE {
  * Navigation filter mode
  */
 enum UALBERTA_NAV_MODE {
-	NAV_AHRS_INIT, //Navigation filter mode
+	NAV_AHRS_INIT,
 	NAV_AHRS, //AHRS mode
 	NAV_INS_GPS_INIT, //INS/GPS initialization mode
 	NAV_INS_GPS;  //INS/GPS mode

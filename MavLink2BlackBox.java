@@ -66,14 +66,16 @@ public class MavLink2BlackBox {
 		public String enums = "";
 		public String packs = "";
 		
-		private String  ENUM               = "";
+		private int     ENUM_POS           = -1;
+		private boolean is_BitFlags_enum   = true;
 		private String  ENUM_INITED        = "";
+		private int     ENUM_INITED_COUNT  = 0;
 		private int     ENUM_INITED_POS    = 0;
-		private String  ENUM_NOTINITED     = "";
+		private String  ENUM_NONINITED     = "";
 		private int     ENUM_NOTINITED_POS = 0;
 		private String  ENTRY              = "";
 		private String  FIELD              = "";
-		private String  MSG                = "";
+		private int     MSG_POS            = -1;
 		private boolean is_PARAM           = false;
 		private boolean is_INITED          = false;
 		private boolean is_File            = false;
@@ -115,25 +117,48 @@ public class MavLink2BlackBox {
 					FIELD = (e == null ? datatype : e) + " " + attributes.getValue("name") + ";";
 					break;
 				case "message":
-					MSG = "@id(" + attributes.getValue("id") + ") class " + attributes.getValue("name") + "{";
-					msgs_count--;
+					ENUM_POS = -1;
+					is_MAV_CMD = false;
+					FIELD = "";
+					MSG_POS = packs.length();
 					if (0 < msgs_count && msgs_count % msgs_part == 0)
 						packs += "@@@@@@@%%%%%@@@@@";
+					
+					packs += "@id(" + attributes.getValue("id") + ") class " + attributes.getValue("name") + "{";
+					msgs_count--;
 					break;
 				case "enum":
-					if (attributes.getValue("name").equals("MAV_CMD"))
-					{
-						
-						is_MAV_CMD = true;
-						
-					}
+					MSG_POS = -1;
+					ENTRY = "";
+					ENUM_INITED_COUNT = 0;
+					ENUM_POS = enums.length();
+					is_BitFlags_enum = true;
 					
-					ENUM = "enum " + attributes.getValue("name") + "\n{ ";
+					String enum_name = attributes.getValue("name");
+					
+					if (!(is_MAV_CMD = enum_name.equals("MAV_CMD"))) enums += "enum " + enum_name + "\n{ ";
+					
 					break;
 				case "entry":
+					if (is_MAV_CMD && MAV_CMD == "") MAV_CMD += "enum MAV_CMD {" +
+					                                            ";\n" +
+					                                            "final int\n";
+					
 					String value = attributes.getValue("value");
 					if (is_INITED = value != null)
+					{
+						ENUM_INITED_COUNT++;
+						if (is_BitFlags_enum)
+							try//            detect BitFlags enums
+							{
+								long val = Long.decode(value);
+								if (0 < val) is_BitFlags_enum = (val & (val - 1)) == 0;
+								
+							} catch (NumberFormatException e1) {}
+						
+						
 						ENTRY = attributes.getValue("name") + " = " + attributes.getValue("value") + ", ";
+					}
 					else
 						ENTRY = attributes.getValue("name") + ", ";
 					
@@ -156,10 +181,8 @@ public class MavLink2BlackBox {
 			
 			super.characters(chs, start, length);
 			for (; (chs[start] < 33) && 0 < length; start++, length--) ;
-			if (length < 1)
-			{
-				return;
-			}
+			if (length < 1) return;
+			
 			if (is_PARAM)
 			{
 				breaked = true;
@@ -230,15 +253,17 @@ public class MavLink2BlackBox {
 						MAV_CMD += ENUM_INITED;
 						ENUM_INITED = "";
 						is_MAV_CMD = false;
-						
 					}
 					else
 					{
-						if (ENUM_NOTINITED != "")
+						if (is_BitFlags_enum && 2 < ENUM_INITED_COUNT)
+							enums = enums.substring(0, ENUM_POS) + " @BitFlags " + enums.substring(ENUM_POS);
+						
+						if (ENUM_NONINITED != "")
 						{
-							int pos = ENUM_NOTINITED.length() - ENUM_NOTINITED_POS;
-							enums += ENUM_NOTINITED.substring(0, pos) + "; " + ENUM_NOTINITED.substring(pos + 1);
-							ENUM_NOTINITED = "";
+							int pos = ENUM_NONINITED.length() - ENUM_NOTINITED_POS;
+							enums += ENUM_NONINITED.substring(0, pos) + "; " + ENUM_NONINITED.substring(pos + 1);
+							ENUM_NONINITED = "";
 						}
 						else
 							enums += "\n;\n";
@@ -254,16 +279,7 @@ public class MavLink2BlackBox {
 					}
 					break;
 				case "entry":
-					if (ENUM != "")
-					{
-						if (is_MAV_CMD)
-						{
-							if (MAV_CMD == "")
-								MAV_CMD += ENUM + ";\n final int\n";
-						}
-						else enums += ENUM;
-						ENUM = "";
-					}
+					
 					
 					if (is_INITED)
 					{
@@ -286,17 +302,17 @@ public class MavLink2BlackBox {
 					else if (breaked)
 					{
 						ENUM_NOTINITED_POS = 2;
-						ENUM_NOTINITED += "\n" + ("/**\n" + description + "*/\n" + ENTRY);
+						ENUM_NONINITED += "\n" + ("/**\n" + description + "*/\n" + ENTRY);
 					}
 					else if (description == null || description.trim().length() == 0)
 					{
 						ENUM_NOTINITED_POS = 2;
-						ENUM_NOTINITED += "\n" + ENTRY;
+						ENUM_NONINITED += "\n" + ENTRY;
 					}
 					else
 					{
 						ENUM_NOTINITED_POS = description.length() + 4;
-						ENUM_NOTINITED += "\n" + (ENTRY + "//" + description);
+						ENUM_NONINITED += "\n" + (ENTRY + "//" + description);
 					}
 					
 					break;
@@ -308,32 +324,37 @@ public class MavLink2BlackBox {
 					is_opt = false;
 					break;
 				case "field":
-					if (MSG != "")
-					{
-						packs += MSG;
-						MSG = "";
-					}
 					
 					packs += "\n" + (breaked ? "/**\n" + description + "*/\n" + FIELD : FIELD + "//" + description);
 					break;
 				case "description":
-					if (MSG != "")
-					{
-						packs += "\n/**\n" + description + "*/\n" + MSG;
-						MSG = "";
-					}
+					if (-1 < MSG_POS && FIELD == "")
+						packs = packs.substring(0, MSG_POS) +
+						        "\n/**\n" +
+						        description + "*/\n" +
+						        packs.substring(MSG_POS);
 					
-					if (ENUM != "")
+					else if (-1 < ENUM_POS && ENTRY == "")
 					{
 						if (is_MAV_CMD)
 						{
 							if (MAV_CMD == "")
-								MAV_CMD += "\n/**\n" + description + "*/\n" + ENUM + ";\n final int\n";
+								MAV_CMD += "/**\n" +
+								           description +
+								           "*/\n" +
+								           "enum MAV_CMD {" +
+								           ";\n" +
+								           "final int\n";
 						}
-						else enums += "\n/**\n" + description + "*/\n" + ENUM;
-						ENUM = "";
+						else
+						{
+							int len = enums.length();
+							enums = enums.substring(0, ENUM_POS) + "\n/**\n" + description + "*/\n" + enums.substring(ENUM_POS);
+							ENUM_POS += enums.length() - len;
+						}
 					}
-					return;
+					else
+						return;
 			}
 			
 			breaked = false;

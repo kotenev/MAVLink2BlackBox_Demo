@@ -2,61 +2,61 @@
 #pragma once
 #include "MicroAirVehicle.h"
 const int pack_id_bytes = 2;
-static const Field _e = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _j = {5, true, -6, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _z = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _M = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _w = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _IP = {0, false, 1, 4, 1, 0, 0, 0, 0   };
-static const Field _nP = {0, true, 1, 4, 1, 0, 0, 0, 0   };
-static const Field _NP = {0, true, 1, 4, 1, 0, 0, 0, 0   };
-static const Field _mP = {0, true, 1, 4, 1, 0, 0, 0, 0   };
-static const Field _FP = {0, true, 1, 4, 1, 0, 0, 0, 0   };
-static const Field _XR = {0, true, 1, 2, 1, 0, 0, 0, 0   };
-static const Field _IR = {0, true, 1, 2, 1, 0, 0, 0, 0   };
-static const Field _nR = {0, true, 1, 2, 1, 0, 0, 0, 0   };
-static const Field _NR = {0, true, 1, 2, 1, 0, 0, 0, 0   };
-static const Field _mR = {0, true, 1, 2, 1, 0, 0, 0, 0   };
-static const Field _FR = {0, true, 1, 2, 1, 0, 0, 0, 0   };
-static const Field _YR = {0, true, 1, 2, 1, 0, 0, 0, 0   };
-static const Field _hR = {0, true, 1, 2, 1, 0, 0, 0, 0   };
-static const Field _OG = {0, true, 1, 8, 1, 0, 0, 0, 0   };
-static const Field _gG = {0, true, 1, 8, 1, 0, 0, 0, 0   };
-static const Field _ZG = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _Aa = {0, false, 1, 1, 1, 0, 0, 0, 0   };
-static const Field _Za = {0, false, 1, 4, 1, 0, 0, 0, 0   };
-static const Field _ya = {0, false, 1, 1, 1, 0, 0, 0, 0   };
-static const Field _Ea = {0, false, 1, 1, 1, 0, 0, 0, 0   };
-static const Field _FI = {0, false, 1, 4, 1, 0, 0, 0, 0   };
-static const Field _YI = {0, false, 1, 4, 1, 0, 0, 0, 0   };
-static const Field _oO = {0, false, 18, 1, 1, 0, 0, 0, 0   };
-static const Field _FO = {0, false, 1, 4, 1, 0, 0, 0, 0   };
-static const Field _YO = {0, false, 1, 4, 1, 0, 0, 0, 0   };
-static const Field _hO = {0, false, 1, 4, 1, 0, 0, 0, 0   };
-static const Field _OO = {0, false, 4, 4, 1, 0, 0, 0, 0   };
-static const Field _QO = {0, false, 1, 1, 1, 0, 0, 0, 0   };
-static const Field _wB = {0, true, 1, 8, 1, 0, 0, 0, 0   };
-static const Field _XQ = {0, true, 1, 8, 1, 0, 0, 0, 0   };
-static const Field _UQ = {5, true, -4, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _rQ = {5, true, -4, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _wQ = {5, true, -4, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _cD = {5, true, -4, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _RD = {5, true, -6, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _hD = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _vD = {5, true, -8, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _og = {5, true, -8, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _Tg = {5, true, -8, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _ig = {5, true, -8, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _Wg = {5, true, -6, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _Kg = {5, true, -7, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _XU = {5, true, -7, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _BU = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _UU = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _AU = {5, true, -8, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _vU = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _SU = {5, true, -8, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _jU = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
-static const Field _uU = {5, true, -8, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _d = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _Z = {5, true, -6, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _h = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _J = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _G = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _ei = {0, false, 1, 4, 1, 0, 0, 0, 0   };
+static const Field _oi = {0, true, 1, 4, 1, 0, 0, 0, 0   };
+static const Field _vi = {0, true, 1, 4, 1, 0, 0, 0, 0   };
+static const Field _Bi = {0, true, 1, 4, 1, 0, 0, 0, 0   };
+static const Field _Ni = {0, true, 1, 4, 1, 0, 0, 0, 0   };
+static const Field _Ms = {0, true, 1, 2, 1, 0, 0, 0, 0   };
+static const Field _es = {0, true, 1, 2, 1, 0, 0, 0, 0   };
+static const Field _os = {0, true, 1, 2, 1, 0, 0, 0, 0   };
+static const Field _vs = {0, true, 1, 2, 1, 0, 0, 0, 0   };
+static const Field _Bs = {0, true, 1, 2, 1, 0, 0, 0, 0   };
+static const Field _Ns = {0, true, 1, 2, 1, 0, 0, 0, 0   };
+static const Field _ys = {0, true, 1, 2, 1, 0, 0, 0, 0   };
+static const Field _xs = {0, true, 1, 2, 1, 0, 0, 0, 0   };
+static const Field _mQ = {0, true, 1, 8, 1, 0, 0, 0, 0   };
+static const Field _FQ = {0, true, 1, 8, 1, 0, 0, 0, 0   };
+static const Field _RQ = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _aW = {0, false, 1, 1, 1, 0, 0, 0, 0   };
+static const Field _RW = {0, false, 1, 4, 1, 0, 0, 0, 0   };
+static const Field _XW = {0, false, 1, 1, 1, 0, 0, 0, 0   };
+static const Field _EW = {0, false, 1, 1, 1, 0, 0, 0, 0   };
+static const Field _Ne = {0, false, 1, 4, 1, 0, 0, 0, 0   };
+static const Field _ye = {0, false, 1, 4, 1, 0, 0, 0, 0   };
+static const Field _nm = {0, false, 18, 1, 1, 0, 0, 0, 0   };
+static const Field _Nm = {0, false, 1, 4, 1, 0, 0, 0, 0   };
+static const Field _ym = {0, false, 1, 4, 1, 0, 0, 0, 0   };
+static const Field _xm = {0, false, 1, 4, 1, 0, 0, 0, 0   };
+static const Field _mm = {0, false, 4, 4, 1, 0, 0, 0, 0   };
+static const Field _tm = {0, false, 1, 1, 1, 0, 0, 0, 0   };
+static const Field _Gz = {0, true, 1, 8, 1, 0, 0, 0, 0   };
+static const Field _Mt = {0, true, 1, 8, 1, 0, 0, 0, 0   };
+static const Field _Ht = {5, true, -4, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _lt = {5, true, -4, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _Gt = {5, true, -4, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _gT = {5, true, -4, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _sT = {5, true, -6, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _xT = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _KT = {5, true, -8, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _nF = {5, true, -8, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _AF = {5, true, -8, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _OF = {5, true, -8, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _UF = {5, true, -6, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _IF = {5, true, -7, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _MH = {5, true, -7, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _zH = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _HH = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _aH = {5, true, -8, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _KH = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _rH = {5, true, -8, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _ZH = {5, true, -5, 2, 1, 0, 0, 0, 1, 1 };
+static const Field _pH = {5, true, -8, 2, 1, 0, 0, 0, 1, 1 };
 
 static const Meta meta0 = {0, 0, 1, 0, 0, 62,  8, 0, NULL};
 
@@ -103,7 +103,7 @@ Pack * c_CommunicationChannel_new_PING_4()
     pack->meta = (Meta *)&meta4;
     return pack;
 };
-static const Field * meta5fields[] = {&_e};
+static const Field * meta5fields[] = {&_d};
 static const Meta meta5 = {5, 0, 0, 0, 0, 24,  4, 1, (Field**)&meta5fields};
 
 
@@ -122,7 +122,7 @@ Pack * c_CommunicationChannel_new_CHANGE_OPERATOR_CONTROL_ACK_6()
     pack->meta = (Meta *)&meta6;
     return pack;
 };
-static const Field * meta7fields[] = {&_j};
+static const Field * meta7fields[] = {&_Z};
 static const Meta meta7 = {7, 0, 0, 0, 0, 0,  1, 1, (Field**)&meta7fields};
 
 
@@ -141,7 +141,7 @@ Pack * c_CommunicationChannel_new_SET_MODE_11()
     pack->meta = (Meta *)&meta11;
     return pack;
 };
-static const Field * meta20fields[] = {&_z};
+static const Field * meta20fields[] = {&_h};
 static const Meta meta20 = {20, 0, 0, 0, 0, 32,  5, 1, (Field**)&meta20fields};
 
 
@@ -160,7 +160,7 @@ Pack * c_CommunicationChannel_new_PARAM_REQUEST_LIST_21()
     pack->meta = (Meta *)&meta21;
     return pack;
 };
-static const Field * meta22fields[] = {&_M};
+static const Field * meta22fields[] = {&_J};
 static const Meta meta22 = {22, 2, 0, 0, 0, 68,  10, 1, (Field**)&meta22fields};
 
 
@@ -170,7 +170,7 @@ Pack * c_CommunicationChannel_new_PARAM_VALUE_22()
     pack->meta = (Meta *)&meta22;
     return pack;
 };
-static const Field * meta23fields[] = {&_w};
+static const Field * meta23fields[] = {&_G};
 static const Meta meta23 = {23, 0, 0, 0, 0, 52,  8, 1, (Field**)&meta23fields};
 
 
@@ -180,7 +180,7 @@ Pack * c_CommunicationChannel_new_PARAM_SET_23()
     pack->meta = (Meta *)&meta23;
     return pack;
 };
-static const Field * meta24fields[] = {&_IP, &_nP, &_NP, &_mP, &_FP};
+static const Field * meta24fields[] = {&_ei, &_oi, &_vi, &_Bi, &_Ni};
 static const Meta meta24 = {24, 4, 0, 1, 0, 236,  31, 5, (Field**)&meta24fields};
 
 
@@ -289,7 +289,7 @@ Pack * c_CommunicationChannel_new_RC_CHANNELS_RAW_35()
     pack->meta = (Meta *)&meta35;
     return pack;
 };
-static const Field * meta36fields[] = {&_XR, &_IR, &_nR, &_NR, &_mR, &_FR, &_YR, &_hR};
+static const Field * meta36fields[] = {&_Ms, &_es, &_os, &_vs, &_Bs, &_Ns, &_ys, &_xs};
 static const Meta meta36 = {36, 8, 1, 0, 0, 168,  22, 8, (Field**)&meta36fields};
 
 
@@ -398,7 +398,7 @@ Pack * c_CommunicationChannel_new_MISSION_ACK_47()
     pack->meta = (Meta *)&meta47;
     return pack;
 };
-static const Field * meta48fields[] = {&_OG};
+static const Field * meta48fields[] = {&_mQ};
 static const Meta meta48 = {48, 0, 0, 0, 0, 104,  14, 1, (Field**)&meta48fields};
 
 
@@ -408,7 +408,7 @@ Pack * c_CommunicationChannel_new_SET_GPS_GLOBAL_ORIGIN_48()
     pack->meta = (Meta *)&meta48;
     return pack;
 };
-static const Field * meta49fields[] = {&_gG};
+static const Field * meta49fields[] = {&_FQ};
 static const Meta meta49 = {49, 0, 0, 0, 0, 96,  13, 1, (Field**)&meta49fields};
 
 
@@ -418,7 +418,7 @@ Pack * c_CommunicationChannel_new_GPS_GLOBAL_ORIGIN_49()
     pack->meta = (Meta *)&meta49;
     return pack;
 };
-static const Field * meta50fields[] = {&_ZG};
+static const Field * meta50fields[] = {&_RQ};
 static const Meta meta50 = {50, 0, 0, 0, 0, 168,  22, 1, (Field**)&meta50fields};
 
 
@@ -572,7 +572,7 @@ Pack * c_CommunicationChannel_new_COMMAND_LONG_76()
     pack->meta = (Meta *)&meta76;
     return pack;
 };
-static const Field * meta77fields[] = {&_Aa, &_Za, &_ya, &_Ea};
+static const Field * meta77fields[] = {&_aW, &_RW, &_XW, &_EW};
 static const Meta meta77 = {77, 0, 0, 0, 0, 11,  3, 4, (Field**)&meta77fields};
 
 
@@ -681,7 +681,7 @@ Pack * c_CommunicationChannel_new_HIL_ACTUATOR_CONTROLS_93()
     pack->meta = (Meta *)&meta93;
     return pack;
 };
-static const Field * meta100fields[] = {&_FI, &_YI};
+static const Field * meta100fields[] = {&_Ne, &_ye};
 static const Meta meta100 = {100, 0, 0, 1, 0, 208,  27, 2, (Field**)&meta100fields};
 
 
@@ -1105,7 +1105,7 @@ Pack * c_CommunicationChannel_new_BATTERY_STATUS_147()
     pack->meta = (Meta *)&meta147;
     return pack;
 };
-static const Field * meta148fields[] = {&_oO};
+static const Field * meta148fields[] = {&_nm};
 static const Meta meta148 = {148, 2, 4, 1, 0, 433,  56, 1, (Field**)&meta148fields};
 
 
@@ -1115,7 +1115,7 @@ Pack * c_CommunicationChannel_new_AUTOPILOT_VERSION_148()
     pack->meta = (Meta *)&meta148;
     return pack;
 };
-static const Field * meta149fields[] = {&_FO, &_YO, &_hO, &_OO, &_QO};
+static const Field * meta149fields[] = {&_Nm, &_ym, &_xm, &_mm, &_tm};
 static const Meta meta149 = {149, 0, 0, 1, 0, 238,  31, 5, (Field**)&meta149fields};
 
 
@@ -1206,7 +1206,7 @@ Pack * c_CommunicationChannel_new_VIBRATION_241()
     pack->meta = (Meta *)&meta241;
     return pack;
 };
-static const Field * meta242fields[] = {&_wB};
+static const Field * meta242fields[] = {&_Gz};
 static const Meta meta242 = {242, 0, 0, 0, 0, 416,  53, 1, (Field**)&meta242fields};
 
 
@@ -1216,7 +1216,7 @@ Pack * c_CommunicationChannel_new_HOME_POSITION_242()
     pack->meta = (Meta *)&meta242;
     return pack;
 };
-static const Field * meta243fields[] = {&_XQ};
+static const Field * meta243fields[] = {&_Mt};
 static const Meta meta243 = {243, 0, 0, 0, 0, 424,  54, 1, (Field**)&meta243fields};
 
 
@@ -1228,62 +1228,62 @@ Pack * c_CommunicationChannel_new_SET_HOME_POSITION_243()
 };
 static const Meta meta244 = {244, 1, 0, 0, 0, 48,  6, 0, NULL};
 static const Meta meta245 = {245, 0, 0, 0, 0, 6,  1, 0, NULL};
-static const Field * meta246fields[] = {&_UQ};
+static const Field * meta246fields[] = {&_Ht};
 static const Meta meta246 = {246, 3, 1, 0, 0, 213,  28, 1, (Field**)&meta246fields};
-static const Meta meta247 = {247, 0, 1, 0, 0, 134,  17, 0, NULL};
+static const Meta meta247 = {247, 0, 1, 0, 0, 135,  17, 0, NULL};
 static const Meta meta248 = {248, 1, 0, 0, 0, 2032,  254, 0, NULL};
 static const Meta meta249 = {249, 1, 0, 0, 0, 288,  36, 0, NULL};
-static const Field * meta250fields[] = {&_rQ};
+static const Field * meta250fields[] = {&_lt};
 static const Meta meta250 = {250, 0, 0, 1, 0, 160,  21, 1, (Field**)&meta250fields};
-static const Field * meta251fields[] = {&_wQ};
+static const Field * meta251fields[] = {&_Gt};
 static const Meta meta251 = {251, 0, 1, 0, 0, 64,  9, 1, (Field**)&meta251fields};
-static const Field * meta252fields[] = {&_cD};
+static const Field * meta252fields[] = {&_gT};
 static const Meta meta252 = {252, 0, 1, 0, 0, 64,  9, 1, (Field**)&meta252fields};
-static const Field * meta253fields[] = {&_RD};
+static const Field * meta253fields[] = {&_sT};
 static const Meta meta253 = {253, 0, 0, 0, 0, 3,  2, 1, (Field**)&meta253fields};
 static const Meta meta254 = {254, 0, 1, 0, 0, 72,  9, 0, NULL};
 static const Meta meta256 = {256, 0, 0, 1, 0, 336,  42, 0, NULL};
 static const Meta meta257 = {257, 0, 2, 0, 0, 72,  9, 0, NULL};
-static const Field * meta258fields[] = {&_hD};
+static const Field * meta258fields[] = {&_xT};
 static const Meta meta258 = {258, 0, 0, 0, 0, 16,  3, 1, (Field**)&meta258fields};
-static const Field * meta259fields[] = {&_vD};
+static const Field * meta259fields[] = {&_KT};
 static const Meta meta259 = {259, 3, 2, 0, 0, 734,  93, 1, (Field**)&meta259fields};
-static const Meta meta260 = {260, 0, 1, 0, 0, 34,  5, 0, NULL};
+static const Meta meta260 = {260, 0, 1, 0, 0, 35,  5, 0, NULL};
 static const Meta meta261 = {261, 0, 1, 0, 0, 216,  27, 0, NULL};
 static const Meta meta262 = {262, 0, 2, 0, 0, 144,  18, 0, NULL};
-static const Field * meta263fields[] = {&_og};
+static const Field * meta263fields[] = {&_nF};
 static const Meta meta263 = {263, 0, 1, 1, 2, 402,  51, 1, (Field**)&meta263fields};
 static const Meta meta264 = {264, 0, 1, 3, 0, 224,  28, 0, NULL};
 static const Meta meta265 = {265, 0, 1, 0, 0, 128,  16, 0, NULL};
 static const Meta meta266 = {266, 1, 0, 0, 0, 2040,  255, 0, NULL};
 static const Meta meta267 = {267, 1, 0, 0, 0, 2040,  255, 0, NULL};
 static const Meta meta268 = {268, 1, 0, 0, 0, 32,  4, 0, NULL};
-static const Field * meta269fields[] = {&_Tg};
+static const Field * meta269fields[] = {&_AF};
 static const Meta meta269 = {269, 3, 1, 0, 2, 130,  17, 1, (Field**)&meta269fields};
-static const Field * meta270fields[] = {&_ig};
+static const Field * meta270fields[] = {&_OF};
 static const Meta meta270 = {270, 3, 1, 0, 2, 138,  18, 1, (Field**)&meta270fields};
-static const Field * meta299fields[] = {&_Wg, &_Kg};
+static const Field * meta299fields[] = {&_UF, &_IF};
 static const Meta meta299 = {299, 0, 0, 0, 2, 2,  1, 2, (Field**)&meta299fields};
 static const Meta meta300 = {300, 3, 0, 0, 0, 176,  22, 0, NULL};
 static const Meta meta310 = {310, 1, 1, 1, 0, 125,  16, 0, NULL};
-static const Field * meta311fields[] = {&_XU};
+static const Field * meta311fields[] = {&_MH};
 static const Meta meta311 = {311, 0, 2, 1, 0, 288,  37, 1, (Field**)&meta311fields};
-static const Field * meta320fields[] = {&_BU};
+static const Field * meta320fields[] = {&_zH};
 static const Meta meta320 = {320, 0, 0, 0, 0, 32,  5, 1, (Field**)&meta320fields};
 static const Meta meta321 = {321, 0, 0, 0, 0, 16,  2, 0, NULL};
-static const Field * meta322fields[] = {&_UU, &_AU};
+static const Field * meta322fields[] = {&_HH, &_aH};
 static const Meta meta322 = {322, 2, 0, 0, 2, 38,  5, 2, (Field**)&meta322fields};
-static const Field * meta323fields[] = {&_vU, &_SU};
+static const Field * meta323fields[] = {&_KH, &_rH};
 static const Meta meta323 = {323, 0, 0, 0, 2, 22,  3, 2, (Field**)&meta323fields};
-static const Field * meta324fields[] = {&_jU, &_uU};
+static const Field * meta324fields[] = {&_ZH, &_pH};
 static const Meta meta324 = {324, 0, 0, 0, 2, 8,  1, 2, (Field**)&meta324fields};
 static const Meta meta330 = {330, 74, 0, 1, 0, 1259,  158, 0, NULL};
 
-static Pack *  x__c(Pack* pack, int32_t id);
-Channel c_CommunicationChannel = {.process =  x__c }; //initialized channel instance
+static Pack *  x__g(Pack* pack, int32_t id);
+Channel c_CommunicationChannel = {.process =  x__g }; //initialized channel instance
 
 
-static Pack * x__c(Pack * pack, int32_t id)
+static Pack * x__g(Pack * pack, int32_t id)
 {
 #define rb_size0 (5)
     Meta * meta = NULL;
