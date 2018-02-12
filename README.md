@@ -4,7 +4,7 @@ The project repository has the following structure.
 Each directory corresponds to one of the [MAVLink’s](https://github.com/mavlink/mavlink/tree/master/message_definitions/v1.0) [XML protocol description files](https://github.com/mavlink/mavlink/tree/master/message_definitions/v1.0). 
 In the directory, in addition to a copy of the original [XML](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/ASLUAV.xml) [file](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/ASLUAV.xml) itself, there is its image in the **BlackBox** format, a [JAVA](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/ASLUAV.java) [file](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/ASLUAV.java), as the result of the converter program [**MavLink2BlackBox.java**](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/MavLink2BlackBox.java)
 
-**MAVLink**, unlike **BlackBox** does not describe the network topology. Therefore, for a more complete demonstration of the**BlackBox**possibilities, **MAVLink**packages are divided into three parts.
+**MAVLink**, unlike **BlackBox** does not describe the network topology. Therefore, for a more complete demonstration of the **BlackBox** possibilities, **MAVLink** packages are divided into three parts.
 
 1. **MicroAirVehicleHandledPacks** - packets that can be received and processed only on the unmanned device side **MicroAirVehicle**
 2. **GroundControlHandledPacks** - packages that can be received and processed only by the control panel **GroundControl**
