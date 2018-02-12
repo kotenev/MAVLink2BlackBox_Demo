@@ -1,4 +1,4 @@
-This project is designed to demonstrate the capabilities of [**BlackBox**](https://github.com/cheblin/BlackBox). As the model e have chosen the [**MAVLink**](http://qgroundcontrol.org/mavlink/start), a well-known protocol for managing a variety of unmanned devices. In general, **BlackBox**, has significantly more variety of data types, in comparison with **MAVLink**, and this demonstration shows only some of the **BlackBox** features. 
+This project is designed to demonstrate the capabilities of [**BlackBox**](https://github.com/cheblin/BlackBox). As the model we have chosen the [**MAVLink**](http://qgroundcontrol.org/mavlink/start), a well-known protocol for managing a variety of unmanned devices. In general, **BlackBox**, has significantly more variety of data types, in comparison with **MAVLink**, and this demonstration shows only some of the **BlackBox** features. 
 
 The project repository has the following structure.
 Each directory corresponds to one of the [MAVLink’s](https://github.com/mavlink/mavlink/tree/master/message_definitions/v1.0) [XML protocol description files](https://github.com/mavlink/mavlink/tree/master/message_definitions/v1.0). 
