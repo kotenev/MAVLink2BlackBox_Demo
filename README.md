@@ -129,7 +129,7 @@ If you have a project using **MAVLink** as an exchange protocol, then you should
  
 To do this, you need to do the following:
 
-1. Download and install any **JAVA** code editor convenient for you. This can be an [IntelliJ](https://www.jetbrains.com/idea/) [IDEA](https://www.jetbrains.com/idea/), or [Android](https://developer .android.com/studio/index.html) [Studio](https://developer.android.com/studio/index.html), if you plan to program for the Android platform.
+1. Download and install any **JAVA** code editor convenient for you. This can be an [IntelliJ IDEA](https://www.jetbrains.com/idea/), or [Android Studio](https://developer.android.com/studio/index.html), if you plan to program for the Android platform.
 2. Create the simplest empty JAVA project in the installed development environment.
 3. Download and connect to the JAVA project [annotations](https://github.com/cheblin/BlackBox/tree/master/org/unirail/BlackBox), needed to describe the data exchanged between the devices. For **Android Studio** you can download the [ready-made template of a similar project](https://github.com/cheblin/BlackBox/raw/master/BlackBoxDescriptionEditor.zip).
 4. Create a file in the project with the source code **JAVA**, and [following the rules](http://www.unirail.org/?lang=en) to describe the data of the protocol of exchange in the format [**BlackBox**]( https://github.com/cheblin/BlackBox/raw/master/BlackBoxDescriptionEditor.zip).
