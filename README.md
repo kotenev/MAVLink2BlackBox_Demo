@@ -115,7 +115,7 @@ For example, according to the above descriptor, the connections between the **Gr
 
 Each of the programming language folder, such as, for example**JAVA**, contains:
 
-- [source file](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/InJAVA/GroundControl/org/noname/GroundControl.java) [**API**](https://github. com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/InJAVA/GroundControl/org/noname/GroundControl.java) - a tool for creating, filling, sending, receiving and parsing packages.
+- [source file **API**](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/InJAVA/GroundControl/org/noname/GroundControl.java) - a tool for creating, filling, sending, receiving and parsing packages.
 - [file**of one of the**tests](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/InJAVA/GroundControl/org/noname/Test.java), where this **API** has been successfully tested
 - [file with a demonstration](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/InJAVA/GroundControl/org/noname/Demo.java) using the generated **API**
 - [**API** support libraries](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/InJAVA/GroundControl/org/unirail/BlackBox)
