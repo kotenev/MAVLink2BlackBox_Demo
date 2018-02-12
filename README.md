@@ -111,11 +111,11 @@ class MicroAirVehicle implements InC {
 ```
 Each of the project directories also contains the generated**BlackBox**source code, distributed over the folders of the specified programming languages.
 
-For example, according to the above descriptor, the connections between the **GroundControl** and **MicroAirVehicle** hosts will occur via the **SimpleProtocol** channel. For **GroundControl**, the source code will be generated in the languages [**JAVA**](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/InJAVA/GroundControl/org/noname) and [**C**](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/IncS/GroundControl) [**#**](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/InCS/GroundControl), and for**MicroAirVehicle**in [**C**](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/InC/MicroAirVehicle) only**. * *
+For example, according to the above descriptor, the connections between the **GroundControl** and **MicroAirVehicle** hosts will occur via the **SimpleProtocol** channel. For **GroundControl**, the source code will be generated in the [**JAVA**](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/InJAVA/GroundControl/org/noname) and [**C#**](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/IncS/GroundControl)languages, and for **MicroAirVehicle** in [**C**](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/InC/MicroAirVehicle) only.
 
 Each of the programming language folder, such as, for example**JAVA**, contains:
 
-- [source file **API**](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/InJAVA/GroundControl/org/noname/GroundControl.java) - a tool for creating, filling, sending, receiving and parsing packages.
+- [ **API** source file](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/InJAVA/GroundControl/org/noname/GroundControl.java) - means of creating, filling, sending, receiving and parsing packages.
 - [file**of one of the**tests](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/InJAVA/GroundControl/org/noname/Test.java), where this **API** has been successfully tested
 - [file with a demonstration](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/InJAVA/GroundControl/org/noname/Demo.java) using the generated **API**
 - [**API** support libraries](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/InJAVA/GroundControl/org/unirail/BlackBox)
