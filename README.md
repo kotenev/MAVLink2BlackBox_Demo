@@ -111,7 +111,7 @@ class MicroAirVehicle implements InC {
 ```
 Each of the project directories also contains the generated **BlackBox** source code, distributed over the folders of the specified programming languages.
 
-For example, according to the above descriptor, the connections between the **GroundControl** and **MicroAirVehicle** hosts will occur via the **SimpleProtocol** channel. For **GroundControl**, the source code will be generated in the [**JAVA**](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/InJAVA/GroundControl/org/noname) and [**C#**](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/IncS/GroundControl)languages, and for **MicroAirVehicle** in [**C**](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/InC/MicroAirVehicle) only.
+For example, according to the above descriptor, the connections between the **GroundControl** and **MicroAirVehicle** hosts will occur via the **SimpleProtocol** channel. For **GroundControl**, the source code will be generated in the [**JAVA**](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/InJAVA/GroundControl/org/noname) and [**C#**](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/IncS/GroundControl) languages, and for **MicroAirVehicle** in [**C**](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/InC/MicroAirVehicle) only.
 
 Each of the programming language folder, **JAVA** for example, contains:
 
