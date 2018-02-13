@@ -1,4 +1,4 @@
-This project is designed to demonstrate the capabilities of [**BlackBox**](https://github.com/cheblin/BlackBox). As the model we have chosen the [**MAVLink**](http://qgroundcontrol.org/mavlink/start), a well-known protocol for managing a variety of unmanned devices. In general, **BlackBox**, has significantly more variety of data types, in comparison with **MAVLink**, and this demonstration shows only some of the **BlackBox** features. 
+This project is designed to demonstrate the capabilities of [**BlackBox**](https://github.com/cheblin/BlackBox). As the model we have chosen the [**MAVLink**](http://qgroundcontrol.org/mavlink/start), a well-known protocol for managing a variety of unmanned devices. In general, **BlackBox**, has significantly more variety of data types, in comparison with **MAVLink**, and this demonstration shows only some of **BlackBox**'s features. 
 
 The project repository has the following structure.
 Each directory corresponds to one of the [MAVLink’s](https://github.com/mavlink/mavlink/tree/master/message_definitions/v1.0) [XML protocol description files](https://github.com/mavlink/mavlink/tree/master/message_definitions/v1.0). 
@@ -10,7 +10,7 @@ In the directory, in addition to a copy of the original [XML](https://github.com
 2. **GroundControlHandledPacks** - packages that can be received and processed only by the control panel **GroundControl**
 3. **CommonPacks** - packages that are sent and accepted by either party.
 
-And the following demonstration network topology is written to the resulting converter file.
+The following demonstration network topology is written to the resulting converter file.
 
 ![](http://www.unirail.org/wp-content/uploads/2018/02/Scheme.png)
 
@@ -116,8 +116,8 @@ For example, according to the above descriptor, the connections between the **Gr
 Each of the programming language folder, **JAVA** for example, contains:
 
 - [**API** source file](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/InJAVA/GroundControl/org/noname/GroundControl.java) - means of creating, filling, sending, receiving and parsing packages.
-- [file **of one of the** tests](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/InJAVA/GroundControl/org/noname/Test.java), where this **API** has been successfully tested
-- [file with a demonstration](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/InJAVA/GroundControl/org/noname/Demo.java) using the generated  **API**
+- [a file **of one of the** tests](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/InJAVA/GroundControl/org/noname/Test.java), where this **API** has been successfully tested
+- [a file with a demonstration](https://github.com/cheblin/MAVLink2BlackBox_Demo/blob/master/ASLUAV/InJAVA/GroundControl/org/noname/Demo.java) using the generated  **API**
 - [**API** support libraries](https://github.com/cheblin/MAVLink2BlackBox_Demo/tree/master/ASLUAV/InJAVA/GroundControl/org/unirail/BlackBox)
 
 If you have a project using **MAVLink** as an exchange protocol, then you should try **BlackBox**, which would allow you to benefit additional features such as:
@@ -133,6 +133,6 @@ To do this, you need to do the following:
 2. Create the simplest empty JAVA project in the installed development environment.
 3. Download and connect to the JAVA project [annotations](https://github.com/cheblin/BlackBox/tree/master/org/unirail/BlackBox), needed to describe the data exchanged between the devices. For **Android Studio** you can download the [ready-made template of a similar project](https://github.com/cheblin/BlackBox/raw/master/BlackBoxDescriptionEditor.zip).
 4. Create a file in the project with the source code **JAVA**, and [following the rules](http://www.unirail.org/) to describe the data of the protocol of exchange in the format [**BlackBox**]( https://github.com/cheblin/BlackBox/raw/master/BlackBoxDescriptionEditor.zip).
-5. Verify that the resulting **JAVA** file is compiled without errors, and send it in an attachment to the mailbox [**OneBlackBoxPlease@outlook.com**](mailto:OneBlackBoxPlease@outlook.com). In subject field of the letter you can specify the name of the project.
-6. If the file you have sent was received and does not contain errors, then you will receive a confirmation letter, otherwise you will get a notification of refusal with pointed out reason.
+5. Verify that the resulting **JAVA** file is compiled without errors, and send it in an attachment to the mailbox [**OneBlackBoxPlease@outlook.com**](mailto:OneBlackBoxPlease@outlook.com). In the subject field of the letter you can specify the name of the project.
+6. If the file you have sent was received and does not contain errors, then you will receive a confirmation letter, otherwise you will get a notification of refusal with the reason pointed out.
 7. If the system has accepted the file for processing, after some time, depending on the server load, an archive containing the generated and already tested sources codes in the specified programming languages will be sent back.
